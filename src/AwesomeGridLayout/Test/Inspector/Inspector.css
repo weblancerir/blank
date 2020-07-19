@@ -1,0 +1,90 @@
+.InspectorRoot {
+    position: fixed;
+    z-index: 9999999999;
+    top: 0;
+    bottom: 0;
+    width: 300px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #e5e5e5;
+}
+.InspectorPinRoot {
+    position: relative;
+    width: 300px;
+    height: 100%;
+}
+.InspectorDefaultMenuRoot {
+    position: relative;
+    height: 100%;
+    align-self: center;
+    justify-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.InspectorDefaultMenuRoot > span {
+    text-align: center;
+    font-weight: bold;
+    padding: 36px;
+}
+
+.InspectorOptionRoot {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 20px 12px 20px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.InspectorOptionTitle {
+    color: #707070;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.InspectorBreadcrumbsParentsRoot {
+    margin-bottom: 12px;
+}
+
+.InspectorBreadcrumbsTagName {
+    font-weight: bold;
+}
+
+.InspectorBreadcrumbsParentsButton {
+    margin-right: 12px !important;
+    font-size: 0.7rem !important;
+}
+
+.InspectorAlignsRoot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.InspectorAlignsButtons {
+    border: 1px solid #cfcfcf !important;
+}
+
+.InspectorSizeRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.InspectorSizeItem {
+    display: flex;
+    align-items: center;
+    width: 50%;
+}
+
+.InspectorSizeItemTitle {
+    color: #707070;
+    font-size: 10px;
+    width: 35%;
+    margin-right: 4px;
+}
+
+.InspectorSizeItemInput {
+    flex: 1;
+}

@@ -1,0 +1,431 @@
+.AdjustmentResizeRoot {
+    position: absolute;
+    z-index: 9999999;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.AdjustmentResizeRootPage {
+    position: fixed;
+    z-index: 9999999;
+    pointer-events: none;
+}
+
+.AdjustmentResizeRoot2 {
+    position: absolute;
+    z-index: 9999999;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.AdjustmentStretchRoot {
+    cursor: pointer ;
+    position: absolute;
+    z-index: 9999999;
+    pointer-events: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,.2);
+}
+.AdjustmentStretchButton {
+    width: 100%;
+    height: 100%;
+}
+.AdjustmentHelpLinesRoot {
+    position: absolute;
+    z-index: 9999999;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.AdjustmentHelpSizeRoot {
+    position: fixed;
+    z-index: 9999999;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.AdjustmentSnapLinesRoot {
+    position: fixed;
+    z-index: 9999999;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.AdjustmentGridLinesRoot {
+    position: fixed;
+    z-index: 9999999;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.AdjustmentPageControllersRoot{
+    align-self: start;
+    justify-self: end;
+    position: fixed;
+}
+.AdjustmentPageControllersAddSectionContainer{
+    align-self: start;
+    justify-self: end;
+    position: relative;
+    width: 20px;
+    height: 20px;
+}
+.AdjustmentPageControllersAddSection{
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #0007ff;
+    margin-top: -30px;
+    margin-left: 10px;
+}
+.AdjustmentPageControllersAddSectionFirst{
+    margin-top: -30px;
+    margin-left: -10px;
+}
+.AdjustmentPageControllersAddHorizontalSectionContainer{
+    align-self: end;
+    justify-self: start;
+    position: relative;
+    width: 20px;
+    height: 20px;
+}
+.AdjustmentPageControllersAddHorizontalSection{
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    width: 20px;
+    height: 20px;
+    background-color: #0007ff;
+    border-radius: 10px;
+    margin-top: -10px;
+    margin-left: -40px;
+}
+.AdjustmentPageControllersAddHorizontalSectionFirst{
+    margin-top: -30px;
+    margin-left: -40px;
+}
+.AdjustmentGridRoot {
+    position: fixed;
+    display: grid;
+    z-index: 10000000;
+    pointer-events: none;
+    border: 1px solid #116dff;
+    cursor: pointer;
+    box-shadow: 0 0 0 100vw rgba(0,0,0,.5);
+}
+.AdjustmentGridRowEditor {
+    float: left;
+    position: relative;
+    pointer-events: auto;
+    cursor: default;
+    display: flex;
+    left: -36px;
+    flex-direction: column;
+    width: 24px;
+    text-align: center;
+}
+.AdjustmentGridRowEditorItem {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    width: 24px;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    border-top: 1px solid #5e65ff;
+}
+.AdjustmentGridRowEditorItemBottom {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+.AdjustmentGridRowEditorItemTop {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+.AdjustmentGridLinesContainer {
+    position: absolute;
+    pointer-events: none;
+    display: grid;
+}
+.AdjustmentGridLinesY{
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background-image: linear-gradient(90deg,rgba(89,93,112,.6) 37.5%,rgba(207,209,220,.6) 0,rgba(207,209,220,.6) 50%,transparent 0);
+    background-size: 8px 6px;
+    background-repeat: repeat-x;
+    pointerEvents: none;
+}
+.AdjustmentGridLinesX{
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    background-image: linear-gradient(rgba(89,93,112,.6) 37.5%,rgba(207,209,220,.6) 0,rgba(207,209,220,.6) 50%,transparent 0);
+    background-size: 6px 8px;
+    background-repeat: repeat-y;
+    pointerEvents: none;
+}
+.AdjustmentHelpLinesSVG {
+    position: absolute;
+    overflow: visible;
+    stroke-width: 1px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.AdjustmentMoveRoot {
+    position: absolute;
+    pointer-events: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: move;
+}
+
+.AdjustmentMoveRootHide {
+    display: none;
+}
+
+.Adjustment-Pane {
+    position: absolute;
+    pointer-events: auto;
+}
+
+.Adjustment-Pane-Fixed {
+    position: fixed;
+    pointer-events: auto;
+}
+
+.Adjustment-CornerCircle {
+    width: 8px;
+    height: 8px;
+    box-sizing: border-box;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 6, 36, 0.2) 0 1px 1px 0;
+    border: 1px solid rgb(17, 109, 255);
+    border-image: initial;
+    border-radius: 4px;
+}
+
+.Adjustment-n-pane {
+    cursor: n-resize;
+    height: 4px;
+    left: 4px;
+    right: 4px;
+    top: -2px;
+}
+
+.Adjustment-n-pane::after {
+    z-index: 9999999;
+    content: "";
+    width: 8px;
+    height: 8px;
+    box-sizing: border-box;
+    background-color: #fff;
+    border: 1px solid #116dff;
+    box-shadow: 0 1px 1px 0 rgba(0,6,36,.2);
+    border-radius: 4px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -5px;
+    margin-top: -5px;
+}
+
+.Adjustment-n-pane::before {
+    content: "";
+    position: absolute;
+    height: 1px;
+    left: 0;
+    right: 0;
+    top: 50%;
+    background-color: #116dff;
+}
+
+.Adjustment-s-pane {
+    cursor: s-resize;
+    height: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: -2px;
+}
+
+.Adjustment-s-pane::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    box-sizing: border-box;
+    background-color: #fff;
+    border: 1px solid #116dff;
+    box-shadow: 0 1px 1px 0 rgba(0,6,36,.2);
+    border-radius: 4px;
+    position: absolute;
+    left: 50%;
+    bottom: 50%;
+    margin-left: -5px;
+    margin-bottom: -5px;
+}
+
+.Adjustment-s-pane::before {
+    content: "";
+    position: absolute;
+    height: 1px;
+    left: 0;
+    right: 0;
+    bottom: 50%;
+    background-color: #116dff;
+}
+
+.Adjustment-e-pane {
+    cursor: e-resize;
+    width: 4px;
+    top: 4px;
+    bottom: 4px;
+    right: -2px;
+}
+
+.Adjustment-e-pane::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    box-sizing: border-box;
+    background-color: #fff;
+    border: 1px solid #116dff;
+    box-shadow: 0 1px 1px 0 rgba(0,6,36,.2);
+    border-radius: 4px;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    margin-top: -5px;
+    margin-right: -5px;
+}
+
+.Adjustment-e-pane::before {
+    content: "";
+    position: absolute;
+    width: 1px;
+    top: 0;
+    bottom: 0;
+    right: 50%;
+    background-color: #116dff;
+}
+
+.Adjustment-w-pane {
+    cursor: w-resize;
+    width: 4px;
+    top: 4px;
+    bottom: 4px;
+    left: -2px;
+}
+
+.Adjustment-w-pane::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    box-sizing: border-box;
+    background-color: #fff;
+    border: 1px solid #116dff;
+    box-shadow: 0 1px 1px 0 rgba(0,6,36,.2);
+    border-radius: 4px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -5px;
+    margin-left: -5px;
+}
+
+.Adjustment-w-pane::before {
+    content: "";
+    position: absolute;
+    width: 1px;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    background-color: #116dff;
+}
+
+.Adjustment-ne-pane {
+    cursor: ne-resize;
+    top: -4px;
+    right: -4px;
+}
+
+.Adjustment-nw-pane {
+    cursor: nw-resize;
+    top: -4px;
+    left: -4px;
+}
+
+.Adjustment-se-pane {
+    cursor: se-resize;
+    bottom: -4px;
+    right: -4px;
+}
+
+.Adjustment-sw-pane {
+    cursor: sw-resize;
+    bottom: -4px;
+    left: -4px;
+}
+
+.Adjustment-e-pane-page {
+    cursor: e-resize;
+    content: "";
+    box-shadow: 0 2px 2px 2px rgba(0,6,36,.2);
+    border-radius: 4px;
+    width: 4px;
+    height: 50px;
+    background-color: #545454;
+    position: absolute;
+    top: 50%;
+    right: -40px;
+    transform: translateY(-50%);
+}
+
+.Adjustment-w-pane-page {
+    cursor: w-resize;
+    content: "";
+    box-shadow: 0 2px 2px 2px rgba(0,6,36,.2);
+    border-radius: 4px;
+    width: 4px;
+    height: 50px;
+    background-color: #545454;
+    position: absolute;
+    top: 50%;
+    left: -40px;
+    transform: translateY(-50%);
+}
+
+
+

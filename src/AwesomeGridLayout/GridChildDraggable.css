@@ -1,0 +1,6 @@
+.GridChildDraggableAbsolute {
+    position: absolute;
+}
+.GridChildDraggableFixed {
+    position: fixed !important;
+}

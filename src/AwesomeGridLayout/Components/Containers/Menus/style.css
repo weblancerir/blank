@@ -1,0 +1,73 @@
+.BorderWidth {
+    margin-left: 7px;
+    display: flex;
+    align-items: center;
+}
+
+.BorderWidthSlider{
+    flex: 1;
+}
+
+.BorderWidthInput{
+    width: 48px;
+}
+
+.CornersRow{
+    display: flex;
+    margin-bottom: 16px;
+}
+
+.CornersRowInput{
+    flex: 1;
+}
+
+.CornersRowShowTopLeft{
+    flex: 1;
+    padding: 24px;
+    margin: 0 24px;
+    border-top: 2px solid #53adff;
+    border-left: 2px solid #53adff;
+}
+
+.CornersRowShowTopRight{
+    flex: 1;
+    padding: 24px;
+    margin: 0 24px;
+    border-top: 2px solid #53adff;
+    border-right: 2px solid #53adff;
+}
+
+.CornersRowShowBottomLeft{
+    flex: 1;
+    padding: 24px;
+    margin: 0 24px;
+    border-bottom: 2px solid #53adff;
+    border-left: 2px solid #53adff;
+}
+
+.CornersRowShowBottomRight{
+    flex: 1;
+    padding: 24px;
+    margin: 0 24px;
+    border-bottom: 2px solid #53adff;
+    border-right: 2px solid #53adff;
+}
+
+.CornersLink{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.AngleRoot {
+    display: flex;
+    align-items: center;
+}
+
+.AngleSlider {
+    flex: 1;
+}
+
+.AngleInput {
+}

@@ -1,0 +1,15 @@
+.EditorBoundaryRoot {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.EditorBoundaryPageHolder {
+    text-align: center;
+    display: grid;
+    flex: 1;
+    height: 100%;
+    overflow-y: hidden;
+    overflow-x: overlay;
+}

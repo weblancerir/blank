@@ -1,0 +1,45 @@
+.StackSpacerRoot {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.37);
+    position: relative;
+    opacity: 0.3;
+}
+.StackSpacerRoot:hover {
+    opacity: 1;
+    cursor: ns-resize;
+}
+.StackSpacerText {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    color: rgb(255, 255, 255);
+    font-size: 0.75em;
+}
+.StackSpacerSizeText {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 5px;
+    margin: 0;
+    color: rgb(255, 255, 255);
+    font-size: 0.75em;
+}
+.StackSpacerResizerRoot {
+    cursor: ns-resize;
+    background-color: rgba(1, 1, 255, 0.9);
+    position: absolute;
+    bottom: -2px;
+    width: 100%;
+    max-width: 100px;
+    height: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}

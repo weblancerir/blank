@@ -1,0 +1,30 @@
+.MenuHolderRoot {
+    position: fixed;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 9999999999;
+}
+
+.MenuOptionRoot {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+.MenuOptionSection {
+    padding: 8px 16px;
+}
+
+.MenuOptionSection > .MenuOptionSectionTitle{
+    width: 100%;
+    font-size: 14px;
+    font-weight: bold;
+    color: #7a7a7a;
+    margin-top: 0;
+    margin-bottom: 12px;
+    text-align: left;
+}

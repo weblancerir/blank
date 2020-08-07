@@ -8,6 +8,7 @@ import AdjustmentGridRoot from "./AdjustmentGridRoot";
 import classNames from "classnames";
 
 export default class AdjustmentGridRow extends React.Component {
+    // TODO BUG: first and last grid line is not provided, fix the bug
     render () {
         let {gridLineManager, itemId, grid} = this.props;
         let rowLines = gridLineManager.getYlineRef(itemId);

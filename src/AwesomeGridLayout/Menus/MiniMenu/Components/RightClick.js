@@ -4,7 +4,7 @@ import IconButton from "../../../HelperComponents/IconButton";
 
 export default class RightClick extends React.Component {
     onClick = (e) => {
-        console.log("RightClick Clicked !!!");
+        this.props.onClick && this.props.onClick(e);
     };
 
     render() {

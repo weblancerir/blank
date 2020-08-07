@@ -80,10 +80,14 @@ export default class Inspector extends React.Component {
                     className="InspectorRoot"
                     style={
                         !this.props.inspectorPinned ? {
-                        right: `${this.state.percent - 100}%`,
-                        opacity: this.state.percent / 100
-                    } : {right: "0%", opacity: 1}
+                            right: `${this.state.percent - 100}%`,
+                            opacity: this.state.percent / 100
+                        } : {right: "0%", opacity: 1}
                     }
+                    onContextMenu={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                    }}
                 >
                     {
                         this.state.inspectorMenu || this.getDefaultMenu()

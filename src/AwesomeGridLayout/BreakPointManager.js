@@ -2,7 +2,7 @@ import {cloneObject, throttleDebounce} from "./AwesomeGridLayoutUtils";
 import merge from "lodash.merge";
 
 export default class BreakPointManager {
-    constructor(breakpoints, editorData, onBreakpointChange, onZoomLevelChange) {
+    constructor(breakpoints, editorData, onBreakpointChange, onZoomLevelChange, onHeightChange, onResize) {
         if (!breakpoints)
             breakpoints = this.getDefault();
         this.breakpoints = breakpoints;
@@ -11,11 +11,15 @@ export default class BreakPointManager {
         this.lastWidth = editorData && editorData.innerWidth;
         this.onBreakpointChange = onBreakpointChange || (() => {});
         this.onZoomLevelChange = onZoomLevelChange || (() => {});
+        this.onHeightChange = onHeightChange || (() => {});
 
+        window.addEventListener("resize", onResize);
         if (onBreakpointChange)
             window.addEventListener("resize", this.onWindowResize);
         if (onZoomLevelChange)
             window.addEventListener("resize", this.onDevicePixelRatioChange);
+        if (onHeightChange)
+            window.addEventListener("resize", this.onHeightResize);
     }
 
     updateBreakpoint = (name, start, end) => {
@@ -71,8 +75,11 @@ export default class BreakPointManager {
         return this;
     };
 
-    copyDesign = (designDatas) => {
-        this.cloneDesignDatas = cloneObject(designDatas);
+    copyDesign = (designDatas, sourceItem) => {
+        this.cloneDesignDatas = {
+            designDatas: cloneObject(designDatas),
+            sourceItem
+        };
     };
 
     getCopyDesign = () => {
@@ -83,10 +90,19 @@ export default class BreakPointManager {
         if (!this.getCopyDesign())
             return;
 
-        this.cloneDesignDatas.forEach((designData, index) => {
-            let bpName = designData.bpName;
-            let data = designData.data;
-            item.props.griddata.bpData[bpName] = cloneObject(data);
+        this.getCopyDesign().designDatas.forEach((designData, index) => {
+            let design = designData.design;
+            if (!designData.justOneBp) {
+                let bpName = designData.bpName;
+                if (!item.props.griddata.bpData[bpName])
+                    item.props.griddata.bpData[bpName] = {};
+                item.props.griddata.bpData[bpName].design = cloneObject(design);
+            } else {
+                let currentBpName = item.props.breakpointmanager.current();
+                if (!item.props.griddata.bpData[currentBpName])
+                    item.props.griddata.bpData[currentBpName] = {};
+                item.props.griddata.bpData[currentBpName].design = cloneObject(design);
+            }
         });
     };
 
@@ -125,6 +141,13 @@ export default class BreakPointManager {
             this.onZoomLevelChange(this.getDevicePixelRatio());
         }
     };
+
+    onHeightResize = throttleDebounce(() => {
+        if (this.lastHeight !== window.innerHeight) {
+            this.lastHeight = window.innerHeight;
+            this.onHeightChange();
+        }
+    }, 100);
 
     onWindowResize = throttleDebounce(() => {
         let newWidth = window.innerWidth -
@@ -208,9 +231,6 @@ export default class BreakPointManager {
         let currentBreakpointName = breakpointName ||
             this.current(this.getSize());
 
-        if (param === "style" && dataSet.id === "comp_Section_1")
-            console.log("bpData", dataSet.bpData[currentBreakpointName]);
-
         if (dataSet.bpData[currentBreakpointName] &&
             dataSet.bpData[currentBreakpointName][params[0]] !== undefined)
             firstParamResult =
@@ -218,8 +238,6 @@ export default class BreakPointManager {
         else {
             firstParamResult = this.findFirstUpperBreakPointParam(dataSet, params[0]
                 , this.getSize());
-            if (param === "style" && dataSet.id === "comp_Section_1")
-                console.log("Here", firstParamResult);
         }
 
         if (firstParamResult === undefined)

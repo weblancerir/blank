@@ -1,9 +1,8 @@
 import React from "react";
-import '../../../Menus/Menu.css';
-import ColorPicker from "../../../Menus/CommonComponents/ColorPicker";
-import NumberInput from "../../../Menus/CommonComponents/NumberInput";
-import IconButton from "../../../HelperComponents/IconButton";
-import {cloneObject} from "../../../AwesomeGridLayoutUtils";
+import '../../../../Menus/Menu.css';
+import NumberInput from "../../../../Menus/CommonComponents/NumberInput";
+import IconButton from "../../../../HelperComponents/IconButton";
+import {cloneObject} from "../../../../AwesomeGridLayoutUtils";
 
 export default class Corners extends React.Component {
     constructor(props) {
@@ -92,12 +91,12 @@ export default class Corners extends React.Component {
                             {
                                 this.state.link &&
                                 <img draggable={false} width={24} height={24}
-                                     src={require('../../../icons/chain.svg')} />
+                                     src={require('../../../../icons/chain.svg')} />
                             }
                             {
                                 !this.state.link &&
                                 <img draggable={false} width={24} height={24}
-                                     src={require('../../../icons/unlink.svg')} />
+                                     src={require('../../../../icons/unlink.svg')} />
                             }
                         </IconButton>
                     </div>

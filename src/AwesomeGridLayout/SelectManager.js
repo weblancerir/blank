@@ -8,15 +8,19 @@ import React from "react";
 import './AwesomwGridLayoutHelper.css';
 import {StyleSheet, css} from "aphrodite";
 import { bounce } from 'react-animations';
-import InspectorBreadcrumbs from "./Test/Inspector/InspectorBreadcrumbs";
+import throttle from "lodash.throttle";
 
 export default class SelectManager {
-    constructor(inputManager, groupSelectRef, pageAglRef, miniMenuHolderRef, inspectorRef) {
+    constructor(inputManager, groupSelectRef, pageAglRef, miniMenuHolderRef,
+                inspectorRef, resizeRef, helpLinesRef, hoverRef) {
         this.inputManager = inputManager;
         this.groupSelectRef = groupSelectRef;
         this.pageAglRef = pageAglRef;
         this.miniMenuHolderRef = miniMenuHolderRef;
         this.inspectorRef = inspectorRef;
+        this.resizeRef = resizeRef;
+        this.helpLinesRef = helpLinesRef;
+        this.hoverRef = hoverRef;
         window.addEventListener("keydown",(e) =>{
             e = e || window.event;
             let key = e.which || e.keyCode; // keyCode detection
@@ -63,7 +67,7 @@ export default class SelectManager {
         item.editGrid();
     };
 
-    selectItem = (item, clicked) => {
+    selectItem = (item, clicked, dontUpdateAdjustments) => {
         if (!this.getSelected()) {
             this.selectedItem = item;
         }
@@ -80,19 +84,29 @@ export default class SelectManager {
 
         if (this.selectedItem.props.id !== item.props.id){
             this.selectedItem.onSelect(false, undefined, true);
-            this.updateMenu();
         }
 
-        this.updateMiniMenu(item);
-        this.setInspector(
-            item.props.getInspector()
-        );
+        if (!dontUpdateAdjustments) {
+            if (this.selectedItem.props.id !== item.props.id){
+                this.updateMenu();
+            }
+
+            this.updateMiniMenu(item);
+            this.setInspector(
+                item.props.getInspector()
+            );
+            this.updateResizePanes(item, item.getSize(false));
+        }
 
         this.selectedItem = item;
     };
 
     clearMiniMenu = () => {
-        this.miniMenuHolderRef.current.clear();
+        this.miniMenuHolderRef.current.clearMiniMenu();
+    };
+
+    onContextMenu = (e, item) => {
+        this.miniMenuHolderRef.current.onContextMenu(e, item);
     };
 
     updateMiniMenu = (item) => {
@@ -141,6 +155,8 @@ export default class SelectManager {
         }
 
         item && this.group.push(item);
+
+        this.updateResizePanes();
 
         this.group.forEach(item => {
             item.setState({groupSelected: true,
@@ -221,6 +237,18 @@ export default class SelectManager {
         return this.selectedItem;
     };
 
+    updateParentsRect = throttleDebounce(() => {
+        if (!this.getSelected() || !this.getSelected().mounted)
+            return;
+
+        let item = this.getSelected();
+
+        if (item.props.parent)
+            item.props.parent.prepareRects(true, true);
+        if (item.state.helpLinesParent && item.state.helpLinesParent !== item.props.parent)
+            item.state.helpLinesParent.prepareRects(true, true);
+    }, 40);
+
     // change grid line positions and resize panes
     onScrollItem = throttleDebounce(() => {
         this.updateGroupRect();
@@ -231,10 +259,11 @@ export default class SelectManager {
         let item = this.getSelected();
 
         if (item.props.parent)
-            item.props.parent.prepareRects(true);
+            item.props.parent.prepareRects();
         if (item.state.helpLinesParent && item.state.helpLinesParent !== item.props.parent)
-            item.state.helpLinesParent.prepareRects(true);
-        let size = item.getSize(true, true);
+            item.state.helpLinesParent.prepareRects();
+
+        let size = item.getSize(false, true);
         item.updateGridLines(
             size.top, size.left,
             window.innerHeight - size.top - size.height,
@@ -243,7 +272,12 @@ export default class SelectManager {
         );
         item.updateGridEditor();
         this.updateMiniMenu();
-    }, 40);
+        this.updateResizePanes(item, size);
+
+        this.updateHelpSizeLines(item, item.state.helpLinesParent, size, item.state.dragging,
+            item.getBoundarySize(true));
+        this.updateHover(item, size);
+    }, 50);
 
     // updateSize
     updateSize = throttleDebounce(() => {
@@ -252,8 +286,41 @@ export default class SelectManager {
 
         let item = this.getSelected();
 
-        item.getSize(true, true);
+        let size = item.getSize(true, true);
+
+        this.updateResizePanes(item, size);
     }, 100);
+
+    updateResizePanes = (item, data) => {
+        this.resizeRef.current.update(item, data, item && item.getTransformStyleId());
+    };
+
+    updateHelpLines = throttle((item, helpLineParent, itemRect, dragging) => {
+        this.updateHelpSizeLines(item, helpLineParent, itemRect, dragging,
+            item.getBoundarySize());
+    }, 50);
+
+    getRuntimeGridItemStyle = () => {
+        if (this.helpLinesRef.current)
+            return this.helpLinesRef.current.getRuntimeGridItemStyle();
+    };
+
+    updateHover = (item, size, clear) => {
+        this.hoverRef.current.update(item, size, clear);
+    };
+
+    activateHover = (active) => {
+        this.hoverRef.current.activate(active);
+    };
+
+    activateResize = (active) => {
+        this.resizeRef.current.activate(active);
+    };
+
+    updateHelpSizeLines = (item, helpLineParent, itemRect, dragging, fakeItemRect) => {
+        if (this.helpLinesRef.current)
+            this.helpLinesRef.current.update(item, helpLineParent, itemRect, dragging, fakeItemRect);
+    };
 
     test1 = () => {
         createStack(this.group);
@@ -282,9 +349,9 @@ export default class SelectManager {
                     bpData: {
                         design:{
                             fillColor: `#5cff${Math.floor(Math.random() * 89) + 10  }`,
-                            animation: {
-                                name: "rotate"
-                            }
+                            // animation: {
+                            //     name: "foldIn"
+                            // }
                         },
                     }
                 }}

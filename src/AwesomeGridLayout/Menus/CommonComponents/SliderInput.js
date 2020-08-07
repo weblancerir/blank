@@ -1,6 +1,5 @@
 import React from "react";
 import './CommonMenu.css';
-import RCSlider from 'rc-slider';
 import Slider from "./Slider";
 import NumberInput from "./NumberInput";
 
@@ -9,13 +8,10 @@ export default class SliderInput extends React.Component {
         super(props);
 
         this.state = {
-            value: this.props.value || 0
         }
     }
 
     onChange = (value) => {
-        this.setState({value});
-
         this.props.onDesignChange &&
         this.props.onDesignChange(this.props.designKey, value);
 
@@ -28,18 +24,22 @@ export default class SliderInput extends React.Component {
             <>
                 <Slider
                     className="BorderWidthSlider"
-                    style={{ marginRight: 16 }}
+                    style={{ marginRight: 24 }}
+                    step={this.props.step}
                     min={this.props.min}
                     max={this.props.max}
-                    value={this.state.value}
+                    value={this.props.value || 0}
                     onChange={this.onChange}
+                    handleStyle={{
+                        marginLeft: 7
+                    }}
                 />
 
                 <NumberInput
                     className="BorderWidthInput"
                     min={this.props.min}
                     max={this.props.max}
-                    value={this.state.value}
+                    value={this.props.value || 0}
                     onChange={this.onChange}
                 />
             </>

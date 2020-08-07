@@ -6,6 +6,7 @@ import BorderDesign from "./Menus/BorderDesign";
 import '../../HelperStyle.css';
 import './ContainerBase.css';
 import {getCompositeDesignData, resolveDesignData} from "../../AwesomwGridLayoutHelper";
+import AnimationDesign from "./Menus/AnimationDesign";
 
 export default class ContainerBase extends AGLComponent{
     resolveDesignData = () => {
@@ -43,7 +44,23 @@ export default class ContainerBase extends AGLComponent{
                             x: e.clientX + 48 || 48,
                             y: e.clientY + 48 || 48
                         }}
-                        design={getCompositeDesignData(this)}
+                        onDesignChange={this.onDesignChange}
+                        select={this.props.select}
+                        item={this.getAgl()}
+                    />
+                }
+            />,
+            <MenuButton
+                key={2}
+                icon={ <img draggable={false} width={16} height={16}
+                            src={'static/icon/animation.svg'} /> }
+                select={this.props.select}
+                menu={(e) =>
+                    <AnimationDesign
+                        defaultPosition={{
+                            x: e.clientX + 48 || 48,
+                            y: e.clientY + 48 || 48
+                        }}
                         onDesignChange={this.onDesignChange}
                         select={this.props.select}
                         item={this.getAgl()}
@@ -54,7 +71,6 @@ export default class ContainerBase extends AGLComponent{
     };
 
     updateDesign = (compositeDesign) => {
-        this.getAgl().updateLayout();
     };
 
     getStaticChildren = () => {
@@ -62,6 +78,9 @@ export default class ContainerBase extends AGLComponent{
 
         let border = getCompositeDesignData(this).border;
         let fillColor = getCompositeDesignData(this).fillColor;
+
+        border.radius = border.radius || {};
+        border.shadow = border.shadow || {};
 
         return <div
             className="ContainerBaseBorderRoot"
@@ -82,6 +101,7 @@ export default class ContainerBase extends AGLComponent{
         return (
             <AGLWrapper
                 tagName="ContainerBase"
+                aglComponent={this}
                 {...this.props}
                 data={this.getData()}
                 getPrimaryOptions={this.getPrimaryOptions}
@@ -91,3 +111,7 @@ export default class ContainerBase extends AGLComponent{
         )
     }
 }
+
+ContainerBase.defaultProps = {
+    tagName: "ContainerBase"
+};

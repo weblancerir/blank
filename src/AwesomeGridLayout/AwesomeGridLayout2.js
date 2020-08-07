@@ -1,27 +1,30 @@
 import React from "react";
 import debounce from 'lodash.debounce';
-import {appendStyle, cloneObject, initGriddata, updateStyle} from "./AwesomeGridLayoutUtils";
+import {appendStyle, cloneObject, initGriddata, shallowEqual, updateStyle} from "./AwesomeGridLayoutUtils";
 import './AwesomeGridLayout.css';
-import AdjustmentResize from "./Adjustment/AdjustmentResize";
 import GridChildContainer from "./GridChildContainer";
-import AdjustmentHelpLines from "./Adjustment/AdjustmentHelpLines";
-import AdjustmentHelpSize from "./Adjustment/AdjustmentHelpSize";
 import DynamicComponents, {DynamicAnimations} from "./Dynamic/DynamicComponents";
 import classNames from "classnames";
 import Portal from "./Portal";
 import {
-    allowStretch,
     createItem,
-    getCompositeDesignData,
+    getCompositeDesignData, getPxValueFromCSSValue, getResizeDelta, getViewRatioStyle,
     isFixed,
-    isGroupSelected,
-    isStretch
+    isGroupSelected, isRightClick,
 } from "./AwesomwGridLayoutHelper";
 import AGLAnchor from "./AGLAnchor";
-import VisibilitySensor from 'react-visibility-sensor';
 import AdjustmentResizePage from "./Adjustment/AdjustmentResizePage";
 import EventTrigger from "./Test/EventTrigger";
-import MiniMenu from "./Menus/MiniMenu/MiniMenu";
+import {
+    addToCache,
+    getCachedBoundingRect,
+    getCachedClientHeight, getCachedScrollLeft,
+    getCachedScrollTop,
+    getCachedClientWidth, getCachedScrollHeight, getCachedScrollWidth
+} from "./Test/WindowCache";
+import ChildHolder from "./AnimationHolder";
+import VisibilitySensorWrapper from "./Test/VisibilitySensorWrapper";
+import AdjustmentHelpSize from "./Adjustment/AdjustmentHelpSize";
 
 export default class AwesomeGridLayout2 extends React.Component{
     constructor (props) {
@@ -35,9 +38,10 @@ export default class AwesomeGridLayout2 extends React.Component{
         };
 
         this.rootDivRef = React.createRef();
-        this.overflowRef = React.createRef();
+        this.overflowRef = !props.isPage? React.createRef(): this.rootDivRef;
         this.containerRef = React.createRef();
         this.backContainerRef = React.createRef();
+        this.transformRef = React.createRef();
         this.allChildRefs = {};
 
         this.children = {};
@@ -46,7 +50,7 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         this.props.idMan.setItem(this.props.id, this);
 
-        this.onPropsChange = new EventTrigger();
+        this.onPropsChange = new EventTrigger(this);
     }
 
     componentDidMount () {
@@ -57,12 +61,15 @@ export default class AwesomeGridLayout2 extends React.Component{
     componentDidUpdate (prevProps, prevState, snapshot) {
         if (this.needRender) {
             delete this.needRender;
-            this.updateLayout();
+            this.updateLayout(() => {
+                this.onSelect(this.getFromTempData("selected"), this.lateMounted);
+            });
         }
     }
 
     componentWillUnmount() {
         this.mounted = false;
+        this.props.editor.updateLayout();
     }
 
     callOverride = (funcName, ...args) => {
@@ -218,15 +225,14 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         let style = this.getDefaultStyle();
 
-        let designStyle = {...this.props.designStyle};
-        this.setDesignStyle(this.getFromData("designStyle") || designStyle, undefined,
+        this.setTransformStyle(this.getCompositeFromData("transform"), undefined,
             this.props.breakpointmanager.getHighestBpName());
-        this.setStyle(this.getFromData("style") || style, undefined,
-            this.props.breakpointmanager.getHighestBpName());
-        this.setGridItemStyle(this.getFromData("gridItemStyle") ||
+        this.setGridItemStyle(this.getCompositeFromData("gridItemStyle") ||
             this.props.defaultGridItemStyle,
             this.props.breakpointmanager.getHighestBpName());
-        this.setGrid(this.getFromData("grid") || this.props.defaultGrid, this.lateMounted,
+        this.setStyle(this.getCompositeFromData("style") || style, undefined,
+            this.props.breakpointmanager.getHighestBpName());
+        this.setGrid(this.getCompositeFromData("grid") || this.props.defaultGrid, undefined,
             this.props.breakpointmanager.getHighestBpName());
     };
 
@@ -248,22 +254,21 @@ export default class AwesomeGridLayout2 extends React.Component{
             return this.callOverride("lateMounted");
         }
 
-        this.invalidateSize();
+        let size = this.getSize(false, true, true);
         this.addToSnap();
-        this.onSelect(this.getFromTempData("selected"));
+        // this.onSelect(this.getFromTempData("selected"));
 
         let baseDocks = this.getBaseDocks();
         this.setDocks(baseDocks.top, baseDocks.left, baseDocks.bottom, baseDocks.right,
             this.getFromTempData("autoDock"),
             this.props.breakpointmanager.getHighestBpName(), true);
 
-
         if (this.props.onPageResize) {
-            let rect = this.getSize(false, true);
-            this.props.onPageResize(rect.width, this, true);
+            this.props.onPageResize(size.width, this, true);
         }
 
         this.props.onChildMounted && this.props.onChildMounted(this);
+        this.props.editor.updateLayout();
     };
 
     getPrimaryOptions = () => {
@@ -282,61 +287,64 @@ export default class AwesomeGridLayout2 extends React.Component{
         return true;
     };
 
-    addToSnap = () => {
+    addToSnap = debounce(() => {
         if (this.callOverride("addToSnap"))
             return;
 
-        let rect = this.getBoundarySize(false);
-        this.props.snap.addSnap(this.props.id,
-            [
-                {
-                    id: this.props.id,
-                    value: rect.top,
-                    p1: rect.left,
-                    p2: rect.left + rect.width
-                },
-                {
-                    id: this.props.id,
-                    value: rect.top + rect.height / 2,
-                    p1: rect.left,
-                    p2: rect.left + rect.width
-                },
-                {
-                    id: this.props.id,
-                    value: rect.top + rect.height,
-                    p1: rect.left,
-                    p2: rect.left + rect.width
-                }
-            ],
-            [
-                {
-                    id: this.props.id,
-                    value: rect.left,
-                    p1: rect.top,
-                    p2: rect.top + rect.height
-                },
-                {
-                    id: this.props.id,
-                    value: rect.left + rect.width / 2,
-                    p1: rect.top,
-                    p2: rect.top + rect.height
-                },
-                {
-                    id: this.props.id,
-                    value: rect.left + rect.width,
-                    p1: rect.top,
-                    p2: rect.top + rect.height
-                }
-            ],
-            this.getParentsId()
-        );
+        // let rect = this.getSize(false);
+        let rect = this.getBoundarySize() || this.getSize(false);
+        if (rect) {
+            this.props.snap.addSnap(this.props.id,
+                [
+                    {
+                        id: this.props.id,
+                        value: rect.top,
+                        p1: rect.left,
+                        p2: rect.left + rect.width
+                    },
+                    {
+                        id: this.props.id,
+                        value: rect.top + rect.height / 2,
+                        p1: rect.left,
+                        p2: rect.left + rect.width
+                    },
+                    {
+                        id: this.props.id,
+                        value: rect.top + rect.height,
+                        p1: rect.left,
+                        p2: rect.left + rect.width
+                    }
+                ],
+                [
+                    {
+                        id: this.props.id,
+                        value: rect.left,
+                        p1: rect.top,
+                        p2: rect.top + rect.height
+                    },
+                    {
+                        id: this.props.id,
+                        value: rect.left + rect.width / 2,
+                        p1: rect.top,
+                        p2: rect.top + rect.height
+                    },
+                    {
+                        id: this.props.id,
+                        value: rect.left + rect.width,
+                        p1: rect.top,
+                        p2: rect.top + rect.height
+                    }
+                ],
+                this.getParentsId()
+            );
+        }
 
         Object.values(this.allChildRefs).forEach(childRef => {
             if (childRef && childRef.current){
                 childRef.current.addToSnap();
             }
         });
-    };
+    }, 500);
 
     getParentsId = () => {
         let parentsId = [];
@@ -359,12 +367,13 @@ export default class AwesomeGridLayout2 extends React.Component{
         this.prepareRects();
         let xLineRef = this.props.gridLine.getXlineRef(this.props.id);
         for(let i = 0; i < xLineRef.length; i++) {
-            let current = xLineRef[i].current;
-            if (!current)
+            // let current = xLineRef[i].current;
+            let rect = this.getGridLineRect(xLineRef[i], i, 'x', this);
+            if (!rect)
                 continue;
 
             // let rect = current.getBoundingClientRect();
-            let rect = current.rect;
+            // let rect = current.rect;
             snaps.verticals.push({
                 id: this.props.id,
                 value: rect.left + ((i === xLineRef.length - 1)? 1: 0),
@@ -374,12 +383,13 @@ export default class AwesomeGridLayout2 extends React.Component{
         }
         let yLineRef = this.props.gridLine.getYlineRef(this.props.id);
         for(let i = 0; i < yLineRef.length; i++) {
-            let current = yLineRef[i].current;
-            if (!current)
+            // let current = yLineRef[i].current;
+            let rect = this.getGridLineRect(yLineRef[i], i, 'y', this);
+            if (!rect)
                 continue;
 
             // let rect = current.getBoundingClientRect();
-            let rect = current.rect;
+            // let rect = current.rect;
             snaps.horizontals.push({
                 id: this.props.id,
                 value: rect.top + ((i === yLineRef.length - 1)? 1: 0),
@@ -417,12 +427,14 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (tagName[0] == tagName[0].toUpperCase()) {
             AGLProps = {
                 aglRef: this.allChildRefs[props.id],
+                viewRef: this.props.viewRef,
                 breakpointmanager: this.props.breakpointmanager,
                 undoredo: this.props.undoredo,
                 dragdrop: this.props.dragdrop,
                 select: this.props.select,
                 snap: this.props.snap,
                 idMan: this.props.idMan,
+                input: this.props.input,
                 copyMan: this.props.copyMan,
                 window: this.props.window,
                 document: this.props.document,
@@ -433,13 +445,18 @@ export default class AwesomeGridLayout2 extends React.Component{
                 parent: this,
                 editor: this.props.editor,
                 onChildMounted: onChildMounted,
-                portalNodeId: fixed && `${this.props.id}_fixed_holder`,
+                portalNodeId: (fixed && `${this.props.id}_fixed_holder`) || props.portalNodeId,
                 ...this.getAllChildOverrideProps()
             };
         }
 
+        let component = tagName[0] === tagName[0].toUpperCase()? dynamicComponents[tagName]: tagName;
+
+        if (tagName[0] !== tagName[0].toUpperCase())
+            delete props.griddata;
+
         return React.createElement(
-            tagName[0] == tagName[0].toUpperCase()? dynamicComponents[tagName]: tagName,
+            component,
             {
                 ...props,
                 key: props.id,
@@ -448,51 +465,126 @@ export default class AwesomeGridLayout2 extends React.Component{
         );
     };
 
-    getSize = (updateState = true, force) => {
+    getSize = (updateState = true, force, fullForce) => {
         if (!this.rootDivRef.current)
             return;
 
         if (this.tempSize && !force)
             return cloneObject(this.tempSize);
 
-        let rect = this.rootDivRef.current.getBoundingClientRect();
+        let rect = fullForce ? this.rootDivRef.current.getBoundingClientRect() :
+            getCachedBoundingRect(this.props.id, this.rootDivRef.current);
+
+        let clientWidth = rect.width;
+        let clientHeight = rect.height;
+        let scrollTop = 0;
+        let scrollLeft = 0;
+        let scrollWidth = rect.width;
+        let scrollHeight = rect.height;
+        if (this.overflowRef.current) {
+            clientWidth = fullForce ? this.overflowRef.current.clientWidth :
+                getCachedClientWidth(this.props.id, this.overflowRef.current);
+            clientHeight = fullForce ? this.overflowRef.current.clientHeight :
+                getCachedClientHeight(this.props.id, this.overflowRef.current);
+            scrollTop = fullForce ? this.overflowRef.current.scrollTop :
+                getCachedScrollTop(this.props.id, this.overflowRef.current);
+            scrollLeft = fullForce ? this.overflowRef.current.scrollLeft :
+                getCachedScrollLeft(this.props.id, this.overflowRef.current);
+            scrollWidth = fullForce ? this.overflowRef.current.scrollWidth :
+                getCachedScrollWidth(this.props.id, this.overflowRef.current);
+            scrollHeight = fullForce ? this.overflowRef.current.scrollHeight :
+                getCachedScrollHeight(this.props.id, this.overflowRef.current);
+        }
+
+        let padding = cloneObject(this.getCompositeFromData("padding")) || {};
+        ['top', 'left', 'bottom', 'right'].forEach(key => {
+            padding[key] = getPxValueFromCSSValue(padding[key], 0, this) || 0;
+        });
         let temp = {
             x: rect.width,
             y: rect.height,
-            clientWidth: this.overflowRef.current.clientWidth,
-            clientHeight: this.overflowRef.current.clientHeight,
-            scrollLeft: this.overflowRef.current? this.overflowRef.current.scrollLeft : 0,
-            scrollTop: this.overflowRef.current? this.overflowRef.current.scrollTop: 0,
+            clientWidth: clientWidth,
+            clientHeight: clientHeight,
+            scrollTop: scrollTop,
+            scrollLeft: scrollLeft,
+            scrollWidth: scrollWidth,
+            scrollHeight: scrollHeight,
             top: rect.top,
             left: rect.left,
             bottom: rect.bottom,
             right: rect.right,
             width: rect.width,
-            height: rect.height
+            height: rect.height,
+            widthMinusPadding: rect.width - (padding.left||0)- (padding.right||0),
+            heightMinusPadding: rect.height - (padding.top||0)- (padding.bottom||0),
+            scrollWidthMinusPadding: scrollWidth - (padding.left||0)- (padding.right||0),
+            scrollHeightMinusPadding: scrollHeight - (padding.top||0)- (padding.bottom||0)
         };
 
         this.tempSize = temp;
 
-        if (updateState) {
-            this.setState({tempSize: this.tempSize}, () => {
-                // this.tempSize = undefined;
-            });
+        if (fullForce) {
+            addToCache(this.props.id, this.tempSize, "boundingRects");
+            addToCache(this.props.id, clientWidth, "clientsWidth");
+            addToCache(this.props.id, clientHeight, "clientsHeight");
+            addToCache(this.props.id, scrollTop, "scrollsTop");
+            addToCache(this.props.id, scrollLeft, "scrollsLeft");
+            addToCache(this.props.id, scrollWidth, "scrollsWidth");
+            addToCache(this.props.id, scrollHeight, "scrollsHeight");
         }
 
         return temp;
     };
 
-    getBoundarySize = (updateState = true, force) => {
-        return this.getSize(updateState, force);
+    getBoundarySize = (force) => {
+        if (this.transformRef.current) {
+            if (!force)
+                return getCachedBoundingRect(`${this.props.id}_transform`, this.transformRef.current);
+            else
+                return this.transformRef.current.getBoundingClientRect();
+        }
     };
 
-    invalidateSize = () => {
-        delete this.tempSize;
+    invalidateSize = (self = true, updateParent = true, updateChildren = true, sourceId) => {
+        if (this.callOverride("invalidateSize", self, updateParent, updateChildren, sourceId))
+            return;
+
+        if (!sourceId)
+            sourceId = this.props.id;
+
+        if (self)
+            delete this.tempSize;
+
+        if (updateChildren) {
+            Object.values(this.allChildRefs).forEach(childRef => {
+                if (childRef && childRef.current && sourceId !== childRef.current.props.id) {
+                    childRef.current.invalidateSize(true, false, true, sourceId);
+                }
+            });
+        }
+
+        if (updateParent) {
+            this.getParentsId().forEach(id => {
+                let parent = this.props.idMan.getItem(id);
+                if (parent && parent.mounted && sourceId !== parent.props.id) {
+                    parent.invalidateSize(true, false, false, sourceId);
+                }
+            });
+        }
+    };
+
+    onWindowSizeChange = () => {
+        this.addToSnap();
+        this.prepareRects();
         Object.values(this.allChildRefs).forEach(childRef => {
             if (childRef && childRef.current) {
-                childRef.current.invalidateSize();
+                childRef.current.onWindowSizeChange();
             }
         });
+    };
+
+    getRenderChildData = (id) => {
+        return this.children[id];
     };
 
     arrangeIndex = (child, type) => {
@@ -506,13 +598,17 @@ export default class AwesomeGridLayout2 extends React.Component{
         switch (type) {
             case "forward":
                 childData.zIndex = indexData.nextZIndex;
-                if (indexData.nextChild)
+                if (indexData.nextChild) {
                     indexData.nextChild.zIndex = currentIndex;
+                    this.getRenderChildData(indexData.nextChild.props.id).zIndex = currentIndex;
+                }
                 break;
             case "backward":
                 childData.zIndex = indexData.prevZIndex;
-                if (indexData.prevChild)
+                if (indexData.prevChild) {
                     indexData.prevChild.zIndex = currentIndex;
+                    this.getRenderChildData(indexData.prevChild.props.id).zIndex = currentIndex;
+                }
                 break;
             case "front":
                 childData.zIndex = indexData.lastZIndex + 1;
@@ -523,6 +619,8 @@ export default class AwesomeGridLayout2 extends React.Component{
             default:
                 break;
         }
+
+        this.getRenderChildData(childData.props.id).zIndex = childData.zIndex;
 
         this.updateLayout();
     };
@@ -554,12 +652,21 @@ export default class AwesomeGridLayout2 extends React.Component{
             for (let i = startIndex; i < lastIndex + 1; i++) {
                 let testChildData = allChildData[i];
                 testChildData.zIndex += change;
+                this.getRenderChildData(testChildData.props.id).zIndex = testChildData.zIndex;
             }
         }
 
         childData.zIndex = index;
+        this.getRenderChildData(childData.props.id).zIndex = childData.zIndex;
 
         this.updateLayout();
+    };
+
+    setChildZIndex = (childId, zIndex) => {
+        let allChildData = this.getFromTempData("savedChildren");
+        let childData = allChildData[childId];
+        childData.zIndex = zIndex;
+        this.getRenderChildData(childData.props.id).zIndex = childData.zIndex;
     };
 
     getNextIndexData = (currentIndex) => {
@@ -615,7 +722,7 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (this.callOverride("updateLayout", callback))
             return;
 
-        this.forceUpdate(callback);
+        this.setState({reload: true}, callback);
     };
 
     isPointInclude = (x, y, forceCalculate) => {
@@ -664,17 +771,17 @@ export default class AwesomeGridLayout2 extends React.Component{
         let gridItemStyle = this.getCompositeFromData("gridItemStyle");
         let transform = this.getCompositeFromData("transform");
         this.setStyle(style, undefined, undefined, true);
-        this.setDesignStyle(designStyle, undefined, undefined, true);
+        // this.setDesignStyle(designStyle, undefined, undefined, true);
         this.setGridItemStyle(gridItemStyle, undefined, true);
         this.setTransformStyle(transform, undefined, undefined, true);
 
-        this.setState({ windowWidth: width, devicePixelRatio }, () => {
-            Object.values(this.allChildRefs).forEach(childRef => {
-                if (childRef && childRef.current) {
-                    childRef.current.onBreakpointChange(width, newBreakpointName);
-                }
-            });
+        Object.values(this.allChildRefs).forEach(childRef => {
+            if (childRef && childRef.current) {
+                childRef.current.onBreakpointChange(width, newBreakpointName, devicePixelRatio);
+            }
         });
+
+        this.updateLayout();
     };
 
     delete = (fromUndoRedo) => {
@@ -746,6 +853,11 @@ export default class AwesomeGridLayout2 extends React.Component{
         this.props.idMan.removeId(this.props.id);
         this.props.gridLine.removeGridLine(this.props.id);
         this.props.snap.removeSnap(this.props.id);
+        this.state.selected && this.props.select.updateResizePanes();
+        this.state.selected && this.props.select.updateHelpSizeLines();
+        this.state.selected && this.props.select.setInspector();
+        if (this.state.selected)
+            this.props.select.selectedItem = false;
         Object.values(this.allChildRefs).forEach(childRef => {
             if (childRef && childRef.current) {
                 childRef.current.clearItem();
@@ -758,25 +870,34 @@ export default class AwesomeGridLayout2 extends React.Component{
         delete props.undoredo;
         delete props.dragdrop;
         delete props.select;
+        delete props.editor;
         delete props.snap;
         delete props.idMan;
+        delete props.input;
         delete props.copyMan;
         delete props.anchorMan;
         delete props.aglRef;
         delete props.parent;
         delete props.window;
         delete props.document;
+        delete props.viewRef;
+        delete props.aglComponent;
         if (!keepChildren)
             delete props.children;
         delete props.allChildRefs;
         delete props.gridLine;
-        delete props.portalNode;
+        delete props.page;
         delete props.gridEditorRef;
         delete props.onChildMounted;
 
         Object.keys(this.getAllOverrideProps(props)).forEach(key => {
             delete props[key];
         });
+
+        // Object.keys(props).forEach(key => {
+        //     if (typeof props[key] === "function")
+        //         delete props[key];
+        // });
 
         return props;
     };
@@ -810,10 +931,10 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (!this.props.dragdrop.getDragging()) {
             e.stopPropagation();
 
-            if (this.state.hover || this.getFromTempData("selected"))
-                return;
+            // if (this.getFromTempData("selected"))
+            //     return;
 
-            this.setState({hover: true});
+            this.setItemHover(true);
 
             this.setMouseOverForNonDragging(this);
 
@@ -825,18 +946,20 @@ export default class AwesomeGridLayout2 extends React.Component{
                 }, 10);
             }
         } else {
+            if (this.props.isPage)
+                return;
+
             if (this.props.dragdrop.getDragging().props.id === this.props.id)
                 return;
 
             e.stopPropagation();
 
-            let rect = this.rootDivRef.current.getBoundingClientRect();
+            let rect = getCachedBoundingRect(this.props.id, this.rootDivRef.current);
             if (e.clientX < rect.x - 1 || e.clientX > (rect.x + rect.width) ||
                 e.clientY < rect.y - 1 || e.clientY > (rect.y + rect.height))
                 return;
 
-            if (!this.state.hover)
-                this.setState({hover: true});
+            this.setItemHover(true);
 
             if (this.props.parent && this.props.parent.onMouseOut) {
                 setTimeout(() => {
@@ -863,6 +986,13 @@ export default class AwesomeGridLayout2 extends React.Component{
         this.props.dragdrop.setMouseOverForNonDragging(this);
     };
 
+    setItemHover = (hover) => {
+        if (hover)
+            this.props.select.updateHover(this, this.getSize(false));
+        else
+            this.props.select.updateHover(this, undefined, true);
+    };
+
     onMouseEnter = (e) => {
         this.onMouseOver(e, true);
     };
@@ -871,42 +1001,56 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (outAllParent && this.props.parent && this.props.parent.onMouseOut)
             this.props.parent.onMouseOut(e);
 
-        if (!this.state.hover)
-            return;
-
-        this.setState({hover: false});
+        this.setItemHover(false);
     };
 
-    prepareRects = (force) => {
-        if (this.callOverride("prepareRects", force))
-            return;
+    prepareRects = (forceRect, forceGridLines, callback, gridType) => {
+        if (this.hasOverride("prepareRects"))
+            return this.callOverride("prepareRects", forceRect, forceGridLines);
 
-        this.rootDivRef.current.rect = this.getSize(false, true);
-        if (force || !this.props.gridLine.isPrepared(this.props.id)) {
-            this.props.gridLine.prepareRects(this.props.id);
+        let rect = this.getSize(false, forceRect);
+
+        if (forceGridLines || !this.props.gridLine.isPrepared(this.props.id)) {
+            // if (this.props.gridLine.hasGridLine(this.props.id)) {
+                this.props.gridLine.prepareRects(this.props.id);
+            // }
+            // else {
+            //     this.toggleGridLines(true, () => {
+            //         this.props.gridLine.prepareRects(this.props.id);
+            //         if (callback)
+            //             callback(rect);
+            //     }, gridType || "B");
+            // }
         }
 
-        return this.rootDivRef.current.rect;
+        return rect;
     };
 
     onChildDrop = (child, newId, fixed, onNewChildMounted) => {
         if (this.callOverride("onChildDrop", child, newId, fixed, onNewChildMounted))
             return;
 
-        let childRect = child.getSize(false, true);
+        let childRect = child.getSize(false);
         let thisRect = this.getSize(false, true);
 
         let calcResult, gridItemStyle, coordinates, newProps;
 
-        if (!newId)
+        if (!newId) {
+            let relativeY = childRect.top - thisRect.top;
+            if (fixed) {
+                relativeY = childRect.top - this.props.breakpointmanager.getWindowHeight() / 8;
+            }
+            this.prepareRects();
             calcResult = this.calculateChildGridItem(child,
-                childRect.left - thisRect.left, childRect.top - thisRect.top, this,
+                childRect.left - thisRect.left, relativeY, this,
                 childRect.width,
                 childRect.height,
                 thisRect
             );
-        else {
-            this.prepareRects(true);
+        }
+        else
+        {
+            this.prepareRects();
             calcResult = this.calculateChildGridItem(child,
                 thisRect.width / 2 - childRect.width / 2,
                 thisRect.height / 2 - childRect.height / 2,
@@ -968,21 +1112,16 @@ export default class AwesomeGridLayout2 extends React.Component{
             newChild.setGridItemStyle(gridItemStyle,
                 this.props.breakpointmanager.getHighestBpName());
             if (!newId) {
-                newChild.toggleHelpLines(this);
+                newChild.state.selected && newChild.toggleHelpLines(this);
             }
 
         }, (agl) => {
-            // setTimeout(() => {
-            //     let size = agl.getSize(false);
-            //     agl.updateGridLines(
-            //         size.top,
-            //         size.left,
-            //         size.top + size.clientHeight,
-            //         size.left + size.clientWidth,
-            //         "A"
-            //     );
-            // }, 0);
-
+            window.requestAnimationFrame(() => {
+                this.invalidateSize(true, true, true);
+                window.requestAnimationFrame(() => {
+                    this.props.select.onScrollItem();
+                });
+            });
             if (onNewChildMounted)
                 onNewChildMounted(agl);
         }, fixed, undefined);
@@ -1039,29 +1178,7 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         this.nonePointerEventForChildren(true);
 
-        if (!group && this.props.dragdrop.getMouseOverForNonDragging() &&
-            !this.props.dragdrop.getMouseOverForNonDragging().getParentsId().includes(this.props.id))
-        {
-            this.setMouseOver(this.props.dragdrop.getMouseOverForNonDragging(), {
-                x: e.clientX,
-                y: e.clientY
-            }, (draggingItem, mouseOver) => {
-                // on new parent state changed
-                draggingItem.toggleHelpLines(mouseOver);
-            });
-        }
-
         let thisRect = this.getSize(false);
-        this.dragData = {
-            firstPos: {
-                top: thisRect.top,
-                left: thisRect.left
-            },
-            x: thisRect.left,
-            y: thisRect.top,
-            lastMouseX: e.clientX,
-            lastMouseY: e.clientY,
-        };
 
         let runtimeStyle = {...this.state.runtimeStyle};
         runtimeStyle.position = "fixed";
@@ -1070,26 +1187,47 @@ export default class AwesomeGridLayout2 extends React.Component{
         runtimeStyle.marginTop = "auto";
         runtimeStyle.marginLeft = "auto";
         runtimeStyle.marginRight = "auto";
-        // runtimeStyle.width =
-        //     getRotatedRectangle(thisRect.width, thisRect.height, this.getFromData("rotateDegree")).x2;
-        // runtimeStyle.height =
-        //     getRotatedRectangle(thisRect.width, thisRect.height, this.getFromData("rotateDegree")).y2;
-        runtimeStyle.width =thisRect.width;
-        runtimeStyle.height =thisRect.height;
+        runtimeStyle.width = thisRect.width;
+        runtimeStyle.height = thisRect.height;
         runtimeStyle.minWidth = "auto";
         runtimeStyle.minHeight = "auto";
         runtimeStyle.opacity = 0.7;
         runtimeStyle.zIndex = 999999;
         runtimeStyle.pointerEvents = "none";
 
-        runtimeStyle.top = thisRect.top;
-        runtimeStyle.left = thisRect.left;
+        if (!this.moveWithMouse) {
+            runtimeStyle.top = thisRect.top;
+            runtimeStyle.left = thisRect.left;
+        } else {
+            runtimeStyle.top = e.clientY - thisRect.height / 2;
+            runtimeStyle.left = e.clientX - thisRect.width / 2;
+        }
+
+        this.dragData = {
+            firstPos: {
+                top: runtimeStyle.top,
+                left: runtimeStyle.left
+            },
+            firstBoundaryPos: this.getBoundarySize() && {
+                top: this.moveWithMouse? e.clientX - thisRect.width / 2 : this.getBoundarySize().top,
+                left: this.moveWithMouse? e.clientY - thisRect.height / 2 : this.getBoundarySize().left
+            },
+            x: runtimeStyle.left,
+            y: runtimeStyle.top,
+            lastMouseX: e.clientX,
+            lastMouseY: e.clientY,
+        };
 
         this.setRuntimeStyle(runtimeStyle);
         this.draggingStart = true;
-        this.setState({dragging: true, draggingStart: true});
+        this.setDraggingState(true, true, undefined, runtimeStyle);
 
         this.props.select.updateMenu();
+        this.props.select.clearMiniMenu();
+
+        if (this.props.dragdrop.getMouseOverForNonDragging()) {
+            this.props.dragdrop.getMouseOverForNonDragging().onMouseOver(e);
+        }
 
         if (group && callGroup)
             this.state.groupDragStart(e, this);
@@ -1125,9 +1263,23 @@ export default class AwesomeGridLayout2 extends React.Component{
         runtimeStyle.top = this.dragData.y;
         runtimeStyle.left = this.dragData.x;
 
+        // For snaps
+        let boundarySize = this.getBoundarySize();
+        if (boundarySize)
+            boundarySize = {
+                top: this.dragData.firstBoundaryPos.top + (this.dragData.y - this.dragData.firstPos.top),
+                left: this.dragData.firstBoundaryPos.left + (this.dragData.x - this.dragData.firstPos.left),
+                width: boundarySize.width,
+                height: boundarySize.height
+            };
+        else
+            boundarySize = runtimeStyle;
+
         if (!isFixed(this) && !group)
-            this.checkSnapOnDrag(runtimeStyle);
+            this.checkSnapOnDrag(runtimeStyle, boundarySize);
         this.setRuntimeStyle(runtimeStyle);
+
+        this.props.select.updateResizePanes(this, runtimeStyle);
 
         if (!group)
             this.updateGridLines(
@@ -1138,7 +1290,9 @@ export default class AwesomeGridLayout2 extends React.Component{
                 "A"
             );
 
-        this.props.select.updateMiniMenu();
+        if (!group)
+            this.props.select.updateHelpLines(this, this.state.helpLinesParent,
+                cloneObject(runtimeStyle), this.state.dragging);
 
         if (group && callGroup)
             this.state.groupDrag(e, this);
@@ -1173,27 +1327,27 @@ export default class AwesomeGridLayout2 extends React.Component{
             this.state.groupDragStop(e, this);
 
         if (group)
-            this.props.parent.prepareRects(true);
+            // this.props.parent.prepareRects(true);
+            this.props.parent.prepareRects();
 
         let {top, left, width, height} = this.state.runtimeStyle;
 
         this.props.snap.drawSnap();
+        this.getSize(true, true);
         if (group || !this.props.dragdrop.setDraggingStop()){
-            this.getSize(true, true);
             let parentRect = this.props.parent.getSize(false);
             this.setPosition(
                 group,
                 left - parentRect.left,
                 top - parentRect.top,
                 this.dragData.firstPos.left - parentRect.left,
-                this.dragData.firstPos.top - parentRect.top,
-                width, height);
+                this.dragData.firstPos.top - parentRect.top, width, height, parentRect);
             return;
         } else if (!group) {
             this.dropped = true;
         }
 
-        this.setState({dragging: false, draggingStart: false});
+        // this.setState({dragging: false, draggingStart: false});
 
         if (!group)
             this.updateGridLines(
@@ -1206,12 +1360,15 @@ export default class AwesomeGridLayout2 extends React.Component{
         this.props.select.updateMiniMenu();
     };
 
-    setPosition = (group, relativeX, relativeY, firstRelativeX, firstRelativeY, width, height, fromUndoRedo) => {
+    setPosition = (group, relativeX, relativeY, firstRelativeX, firstRelativeY,
+                   width, height, parentRect, fromUndoRedo) => {
         if (!fromUndoRedo) {
             let itemId = this.props.id;
             let parentId = this.props.parent.props.id;
-            let redoData = [group, relativeX, relativeY, firstRelativeX, firstRelativeY, width, height];
-            let undoData = [group, firstRelativeX, firstRelativeY, undefined, undefined, width, height];
+            let redoData = [group, relativeX, relativeY, firstRelativeX, firstRelativeY,
+                width, height, parentRect];
+            let undoData = [group, firstRelativeX, firstRelativeY, undefined, undefined,
+                width, height, parentRect];
             this.props.undoredo.add((idMan) => {
                 idMan.getItem(itemId).onSelect(true);
                 idMan.getItem(itemId).props.dragdrop.setMouseOver(idMan.getItem(parentId));
@@ -1225,46 +1382,76 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         if (this.hasOverride("setPosition"))
             return this.callOverride("setPosition",
-                group, relativeX, relativeY, firstRelativeX, firstRelativeY, width, height, fromUndoRedo);
+                group, relativeX, relativeY, firstRelativeX, firstRelativeY,
+                width, height, parentRect, fromUndoRedo);
 
         let {gridItemStyle, coordinates} = this.calculateGridItem(relativeX, relativeY, this.props.parent,
-            width, height);
+            width, height, parentRect);
 
         if (gridItemStyle.justifySelf !== "stretch"){
-            this.setProps("width", width, coordinates);
+            this.setProps("width", width, coordinates, undefined, undefined, true);
         } else {
-            this.setProps("width", "auto");
+            this.setProps("width", "auto", undefined, undefined, undefined, true);
         }
         if (this.getCompositeFromData("style").height === "auto")
-            this.setProps("minHeight", height, coordinates);
+            this.setProps("minHeight", height, coordinates, undefined, undefined, true);
         else {
-            this.setProps("height", height, coordinates);
-            this.setProps("minHeight", height, coordinates);
+            this.setProps("height", height, coordinates, undefined, undefined, true);
+            this.setProps("minHeight", height, coordinates, undefined, undefined, true);
         }
 
         this.setGridItemStyle(gridItemStyle);
 
         this.nonePointerEventForChildren(false);
         this.setRuntimeStyle();
-        this.setState({dragging: false, draggingStart: false}, () => {
+        // this.setState({dragging: false, draggingStart: false}, () => {
+        //     this.addToSnap();
+        // });
+        let top = relativeY + parentRect.top;
+        let left = relativeX + parentRect.left;
+        this.setDraggingState(false, false, () => {
             this.addToSnap();
-        });
+        }, {top, left, width, height});
+
+        if (!group)
+            this.props.select.updateHelpLines(this, this.state.helpLinesParent,
+                {top, left, width, height}, this.state.dragging);
 
         this.dropped = false;
 
-        this.props.select.updateSize();
+        // this.props.select.updateSize();
+        // this.props.select.updateResizePanes(this, {top, left, width, height});
+        // this.props.select.updateMiniMenu();
+
+        setTimeout(() => {
+            if (!this.mounted)
+                return;
+
+            // for fixing helpline
+            this.props.select.onScrollItem();
+        }, 100);
+
+        this.invalidateSize(false, true, true);
     };
 
-    checkSnapOnDrag = (runtimeStyle) => {
-        if (this.callOverride("checkSnapOnDrag", runtimeStyle))
+    setDraggingState = (dragging, draggingStart, callback, rect) => {
+        let fakeStyle = cloneObject({
+            ...this.getCompositeFromData("style"),
+            ...this.getCompositeFromData("gridItemStyle"),
+        });
+        this.setState({dragging, draggingStart, fakeStyle}, callback);
+    };
+
+    checkSnapOnDrag = (runtimeStyle, boundarySize) => {
+        if (this.callOverride("checkSnapOnDrag", runtimeStyle, boundarySize))
             return;
 
         let snapDelta1 = this.getSnapDelta(
-            runtimeStyle.top, runtimeStyle.left);
+            boundarySize.top, boundarySize.left);
         let snapDelta2 = this.getSnapDelta(
-            runtimeStyle.top + runtimeStyle.height/2, runtimeStyle.left + runtimeStyle.width/2);
+            boundarySize.top + boundarySize.height/2, boundarySize.left + boundarySize.width/2);
         let snapDelta3 = this.getSnapDelta(
-            runtimeStyle.top + runtimeStyle.height, runtimeStyle.left + runtimeStyle.width);
+            boundarySize.top + boundarySize.height, boundarySize.left + boundarySize.width);
 
         let snapDelta = {
             deltaX: snapDelta2.snapV? snapDelta2.deltaX:
@@ -1279,28 +1466,34 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         runtimeStyle.left += snapDelta.deltaX;
         runtimeStyle.top += snapDelta.deltaY;
+        if (boundarySize !== runtimeStyle) {
+            boundarySize.left += snapDelta.deltaX;
+            boundarySize.top += snapDelta.deltaY;
+        }
 
         let pointOfSnapH = {
-            p1: runtimeStyle.left,
-            p2: runtimeStyle.left + runtimeStyle.width
+            p1: boundarySize.left,
+            p2: boundarySize.left + boundarySize.width
         };
         let pointOfSnapV = {
-            p1: runtimeStyle.top,
-            p2: runtimeStyle.top + runtimeStyle.height
+            p1: boundarySize.top,
+            p2: boundarySize.top + boundarySize.height
         };
 
         this.props.snap.drawSnap(snapDelta.snapH, snapDelta.snapV, pointOfSnapH, pointOfSnapV);
     };
 
     getSnapDelta = (top, left) => {
-        let parentGridLines;
+        let parentGridLines = [];
         if (this.props.parent) {
             if (this.resizing) {
                 parentGridLines = this.props.parent.getGridLineSnaps();
             } else {
                 // dragging
-                parentGridLines = this.props.dragdrop.mouseOver &&
-                    this.props.dragdrop.mouseOver.getGridLineSnaps();
+                if (this.props.dragdrop.mouseOver &&
+                    this.props.gridLine.hasGridLine(this.props.dragdrop.mouseOver.props.id))
+                    parentGridLines = this.props.dragdrop.mouseOver &&
+                        this.props.dragdrop.mouseOver.getGridLineSnaps();
             }
         }
 
@@ -1342,6 +1535,15 @@ export default class AwesomeGridLayout2 extends React.Component{
             );
 
         this.setGridItemStyle(gridItemStyle, breakpointName);
+
+        if (gridItemStyle.justifySelf !== "stretch" && this.getCompositeFromData("style").width === "auto")
+        {
+            this.setStyleParam("width", `${this.getSize(false).width}px`, undefined, undefined, true);
+        }
+        else if (gridItemStyle.justifySelf === "stretch")
+        {
+            this.setStyleParam("width", "auto", undefined, undefined, true);
+        }
     };
 
     getDocks = () => {
@@ -1358,6 +1560,10 @@ export default class AwesomeGridLayout2 extends React.Component{
         }
     };
 
+    getRuntimeGridItemStyle = () => {
+        return this.props.select.getRuntimeGridItemStyle();
+    };
+
     calculateGridItem = (relativeX, relativeY, parent, width, height, parentRect, fromState, dontAutoDock) => {
         if (this.hasOverride("calculateGridItem"))
             return this.callOverride(
@@ -1372,30 +1578,34 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (!parentRect)
             parentRect = parent.getSize(false, true);
 
-        let {gridArea, coordinates} = this.calculateGridArea(
-            parentRect.left + relativeX,
-            parentRect.top + relativeY,
-            width,
-            height,
-            parent,
-            parentRect
-        );
-
+        let gridArea, coordinates;
         if (isFixed(this)) {
             gridArea = {x1: 1, x2: 2, y1: 1, y2: 2};
             coordinates = {
                 cy1: parentRect.top,
-                cy2: parentRect.top + parentRect.clientHeight,
+                cy2: parentRect.top + parentRect.height,
                 cx1: parentRect.left,
-                cx2: parentRect.left + parentRect.clientWidth
+                cx2: parentRect.left + parentRect.width
             }
+        } else {
+            let result = this.calculateGridArea(
+                parentRect.left + relativeX,
+                parentRect.top + relativeY,
+                width,
+                height,
+                parent,
+                parentRect
+            );
+            gridArea = result.gridArea;
+            coordinates = result.coordinates;
         }
 
         let coordinatesAbs = cloneObject(coordinates);
 
         this.coordinateToRelative(coordinates, parentRect);
 
-        let gridItemStyle = {...(this.state.gridItemStyle || this.props.defaultGridItemStyle)};
+        let oldGridItemStyle = this.getCompositeFromData("gridItemStyle");
+        let gridItemStyle = cloneObject(oldGridItemStyle);
         gridItemStyle.gridArea = `${gridArea.y1}/${gridArea.x1}/${gridArea.y2}/${gridArea.x2}`;
 
         let centerX = (relativeX  - coordinates.cx1) + width / 2;
@@ -1406,6 +1616,11 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         let yLineRef = this.props.gridLine.getYlineRef(parent.props.id);
         let cy2IsLastLine = gridArea.y2 === yLineRef.length || isFixed(this);
+        let xLineRef = this.props.gridLine.getXlineRef(parent.props.id);
+        let cx2IsLastLine = gridArea.x2 === xLineRef.length || isFixed(this);
+
+        let widthForPercent = coordinates.cx2 - coordinates.cx1/* + (cx2IsLastLine?1:0)*/;
+        let heightForPercent = coordinates.cy2 - coordinates.cy1/* + (cy2IsLastLine?1:0)*/;
 
         let autoDock = this.getFromTempData("autoDock");
         let docks = this.getDocks() || {top: true};
@@ -1423,7 +1638,7 @@ export default class AwesomeGridLayout2 extends React.Component{
                 delete docks.right;
             }
 
-            if (cy2IsLastLine && (relativeY + height >= coordinates.cy2)) {
+            if (cy2IsLastLine && (relativeY + height >= coordinates.cy2) && relativeY >= 0) {
                 delete docks.top;
                 docks.bottom = true;
             } else {
@@ -1432,25 +1647,23 @@ export default class AwesomeGridLayout2 extends React.Component{
             }
         }
 
-        console.log("docks", docks, autoDock, dontAutoDock);
-
         gridItemStyle.alignSelf = "center";
         gridItemStyle.justifySelf = "center";
 
         let centerDiffX = (centerX - (coordinates.cx2 - coordinates.cx1) / 2);
         let centerDiffY = (centerY - (coordinates.cy2 - coordinates.cy1) / 2);
         if (centerDiffX >= 0) {
-            gridItemStyle.marginRight = `${(-centerDiffX * 2 / parentRect.width * 100).toString()}%`;
+            gridItemStyle.marginRight = `${(-centerDiffX * 2 / widthForPercent * 100).toString()}%`;
             gridItemStyle.marginLeft = "0%";
         } else {
             gridItemStyle.marginRight = "0%";
-            gridItemStyle.marginLeft = `${(centerDiffX * 2 / parentRect.width * 100).toString()}%`;
+            gridItemStyle.marginLeft = `${(centerDiffX * 2 / widthForPercent * 100).toString()}%`;
         }
         gridItemStyle.marginTop =
             this.getPxOrPcOrValue(
                 `${(centerDiffY * 2).toString()}`,
-                parentRect.height,
-                this.getUnit(gridItemStyle.marginTop));
+                widthForPercent,
+                "px");
         gridItemStyle.marginBottom = "0px";
 
         if (docks.top) {
@@ -1458,8 +1671,8 @@ export default class AwesomeGridLayout2 extends React.Component{
             gridItemStyle.marginTop =
                 this.getPxOrPcOrValue(
                 `${(relativeY - coordinates.cy1).toString()}`,
-                    parentRect.height,
-                    this.getUnit(gridItemStyle.marginTop));
+                    widthForPercent,
+                    this.getUnit(oldGridItemStyle.marginTop) || "px");
         } else if (docks.bottom) {
             gridItemStyle.marginTop = "0px";
         }
@@ -1468,8 +1681,8 @@ export default class AwesomeGridLayout2 extends React.Component{
             gridItemStyle.marginLeft =
                 this.getPxOrPcOrValue(
                     `${(relativeX - coordinates.cx1).toString()}`,
-                    parentRect.width,
-                    this.getUnit(gridItemStyle.marginLeft));
+                    widthForPercent,
+                    this.getUnit(oldGridItemStyle.marginLeft) || "%");
         } else if (docks.right) {
             gridItemStyle.marginLeft = "0%";
         }
@@ -1478,8 +1691,8 @@ export default class AwesomeGridLayout2 extends React.Component{
             gridItemStyle.marginBottom =
                 this.getPxOrPcOrValue(
                     `${(coordinates.cy2 - relativeY - height).toString()}`,
-                    parentRect.height,
-                    this.getUnit(gridItemStyle.marginBottom));
+                    widthForPercent,
+                    this.getUnit(oldGridItemStyle.marginBottom) || "px");
         } else if (docks.top) {
             gridItemStyle.marginBottom = "0px";
         }
@@ -1488,11 +1701,14 @@ export default class AwesomeGridLayout2 extends React.Component{
             gridItemStyle.marginRight =
                 this.getPxOrPcOrValue(
                     `${(coordinates.cx2 - (relativeX + width)).toString()}`,
-                    parentRect.width,
-                    this.getUnit(gridItemStyle.marginRight));
+                    widthForPercent,
+                    this.getUnit(oldGridItemStyle.marginRight) || "%");
         } else if (docks.left) {
             gridItemStyle.marginRight = "0%";
         }
+
+        gridItemStyle.widthForPercent = widthForPercent;
+        gridItemStyle.heightForPercent = heightForPercent;
 
         /*if (gridItemStyle.justifySelf !== "stretch") {
             if (centerX < parentCenterPlusX && centerX > parentCenterMinusX) {
@@ -1564,30 +1780,43 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (!parentRect)
             parentRect = parent.getSize(false, true);
 
-        let {gridArea, coordinates} = child.calculateGridArea(
-            parentRect.left + relativeX,
-            parentRect.top + relativeY,
-            width,
-            height,
-            parent,
-            parentRect
-        );
+        if (isFixed(child)) {
+            if (relativeY < 0) relativeY = 0;
+            if (relativeY > parentRect.scrollHeightMinusPadding - height)
+                relativeY = parentRect.scrollHeightMinusPadding - height;
+            if (relativeX < 0) relativeX = 0;
+            if (relativeX > parentRect.scrollWidthMinusPadding - width)
+                relativeX = parentRect.scrollWidthMinusPadding - width;
+        }
 
+        let gridArea, coordinates;
         if (isFixed(child)) {
             gridArea = {x1: 1, x2: 2, y1: 1, y2: 2};
             coordinates = {
                 cy1: parentRect.top,
-                cy2: parentRect.top + parentRect.clientHeight,
+                cy2: parentRect.top + parentRect.height,
                 cx1: parentRect.left,
-                cx2: parentRect.left + parentRect.clientWidth
+                cx2: parentRect.left + parentRect.width
             }
+        } else {
+            let result = this.calculateGridArea(
+                parentRect.left + relativeX,
+                parentRect.top + relativeY,
+                width,
+                height,
+                parent,
+                parentRect
+            );
+            gridArea = result.gridArea;
+            coordinates = result.coordinates;
         }
 
         let coordinatesAbs = cloneObject(coordinates);
 
         child.coordinateToRelative(coordinates, parentRect);
 
-        let gridItemStyle = {...(child.state.gridItemStyle || child.props.defaultGridItemStyle)};
+        let oldGridItemStyle = child.getCompositeFromData("gridItemStyle");
+        let gridItemStyle = cloneObject(oldGridItemStyle);
         gridItemStyle.gridArea = `${gridArea.y1}/${gridArea.x1}/${gridArea.y2}/${gridArea.x2}`;
 
         let centerX = (relativeX  - coordinates.cx1) + width / 2;
@@ -1597,10 +1826,15 @@ export default class AwesomeGridLayout2 extends React.Component{
         let parentCenterPlusX = (coordinates.cx2 - coordinates.cx1) / 2 * (1 + 0.1);
 
         let yLineRef = this.props.gridLine.getYlineRef(parent.props.id);
-        let cy2IsLastLine = gridArea.y2 === yLineRef.length || isFixed(this);
+        let cy2IsLastLine = gridArea.y2 === yLineRef.length || isFixed(child);
+        let xLineRef = this.props.gridLine.getXlineRef(parent.props.id);
+        let cx2IsLastLine = gridArea.x2 === xLineRef.length || isFixed(child);
 
-        let autoDock = this.getFromTempData("autoDock");
-        let docks = this.getDocks() || {top: true};
+        let widthForPercent = coordinates.cx2 - coordinates.cx1 + (cx2IsLastLine?1:0);
+        let heightForPercent = coordinates.cy2 - coordinates.cy1 + (cy2IsLastLine?1:0);
+
+        let autoDock = child.getFromTempData("autoDock");
+        let docks = child.getDocks() || {top: true};
 
         if (autoDock && !dontAutoDock) {
             if (centerX < parentCenterPlusX && centerX > parentCenterMinusX) {
@@ -1615,7 +1849,7 @@ export default class AwesomeGridLayout2 extends React.Component{
                 delete docks.right;
             }
 
-            if (cy2IsLastLine && (relativeY + height >= coordinates.cy2)) {
+            if (cy2IsLastLine && (relativeY + height >= coordinates.cy2) && relativeY >= 0) {
                 delete docks.top;
                 docks.bottom = true;
             } else {
@@ -1629,18 +1863,18 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         let centerDiffX = (centerX - (coordinates.cx2 - coordinates.cx1) / 2);
         let centerDiffY = (centerY - (coordinates.cy2 - coordinates.cy1) / 2);
-        if (centerDiffX > 0) {
-            gridItemStyle.marginRight = `${(-centerDiffX * 2 / parentRect.width * 100).toString()}%`;
+        if (centerDiffX >= 0) {
+            gridItemStyle.marginRight = `${(-centerDiffX * 2 / widthForPercent * 100).toString()}%`;
             gridItemStyle.marginLeft = "0%";
         } else {
             gridItemStyle.marginRight = "0%";
-            gridItemStyle.marginLeft = `${(centerDiffX * 2 / parentRect.width * 100).toString()}%`;
+            gridItemStyle.marginLeft = `${(centerDiffX * 2 / widthForPercent * 100).toString()}%`;
         }
         gridItemStyle.marginTop =
             this.getPxOrPcOrValue(
                 `${(centerDiffY * 2).toString()}`,
-                parentRect.height,
-                this.getUnit(gridItemStyle.marginTop));
+                widthForPercent,
+                "px");
         gridItemStyle.marginBottom = "0px";
 
         if (docks.top) {
@@ -1648,8 +1882,8 @@ export default class AwesomeGridLayout2 extends React.Component{
             gridItemStyle.marginTop =
                 this.getPxOrPcOrValue(
                     `${(relativeY - coordinates.cy1).toString()}`,
-                    parentRect.height,
-                    this.getUnit(gridItemStyle.marginTop));
+                    widthForPercent,
+                    this.getUnit(oldGridItemStyle.marginTop) || "px");
         } else if (docks.bottom) {
             gridItemStyle.marginTop = "0px";
         }
@@ -1658,8 +1892,8 @@ export default class AwesomeGridLayout2 extends React.Component{
             gridItemStyle.marginLeft =
                 this.getPxOrPcOrValue(
                     `${(relativeX - coordinates.cx1).toString()}`,
-                    parentRect.width,
-                    this.getUnit(gridItemStyle.marginLeft));
+                    widthForPercent,
+                    this.getUnit(oldGridItemStyle.marginLeft) || "%");
         } else if (docks.right) {
             gridItemStyle.marginLeft = "0%";
         }
@@ -1668,8 +1902,8 @@ export default class AwesomeGridLayout2 extends React.Component{
             gridItemStyle.marginBottom =
                 this.getPxOrPcOrValue(
                     `${(coordinates.cy2 - relativeY - height).toString()}`,
-                    parentRect.height,
-                    this.getUnit(gridItemStyle.marginBottom));
+                    widthForPercent,
+                    this.getUnit(oldGridItemStyle.marginBottom) || "px");
         } else if (docks.top) {
             gridItemStyle.marginBottom = "0px";
         }
@@ -1678,11 +1912,14 @@ export default class AwesomeGridLayout2 extends React.Component{
             gridItemStyle.marginRight =
                 this.getPxOrPcOrValue(
                     `${(coordinates.cx2 - (relativeX + width)).toString()}`,
-                    parentRect.width,
-                    this.getUnit(gridItemStyle.marginRight));
+                    widthForPercent,
+                    this.getUnit(oldGridItemStyle.marginRight) || "%");
         } else if (docks.left) {
             gridItemStyle.marginRight = "0%";
         }
+
+        gridItemStyle.widthForPercent = widthForPercent;
+        gridItemStyle.heightForPercent = heightForPercent;
 
         /*
         let parentCenterMinusX = (coordinates.cx2 - coordinates.cx1) / 2 * (1 - 0.1);
@@ -1753,7 +1990,7 @@ export default class AwesomeGridLayout2 extends React.Component{
 
     getUnit = (value) => {
         if (!value)
-            return "px";
+            return;
 
         if (value.includes("%")) {
             return "%";
@@ -1774,27 +2011,14 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (this.resizing)
             return;
 
-        this.onSelect(true);
+        // this.onSelect(true);
+
 
         this.resizing = true;
 
         let runtimeStyle = {...this.state.runtimeStyle};
-        // runtimeStyle.position = "fixed";
-        // runtimeStyle.gridArea = "auto/auto/auto/auto";
-        // runtimeStyle.marginBottom = "auto";
-        // runtimeStyle.marginTop = "auto";
-        // runtimeStyle.marginLeft = "auto";
-        // runtimeStyle.marginRight = "auto";
         runtimeStyle.width = this.getSize().x;
         runtimeStyle.height = this.getSize().y;
-        // runtimeStyle.minWidth = "auto";
-        // runtimeStyle.minHeight = "auto";
-        // runtimeStyle.opacity = 0.7;
-        // runtimeStyle.zIndex = 999999;
-
-        // runtimeStyle.top = this.getSize().top;
-        // runtimeStyle.left = this.getSize().left;
-        // let right = window.innerWidth - runtimeStyle.left - runtimeStyle.width;
 
         this.resizeData = {
             firstX: runtimeStyle.width,
@@ -1804,7 +2028,15 @@ export default class AwesomeGridLayout2 extends React.Component{
         };
 
         this.setRuntimeStyle(runtimeStyle);
-        this.setState({dragging: true});
+
+        this.setDraggingState(true, false, undefined, runtimeStyle);
+
+        this.props.select.activateHover(false);
+
+        if (this.props.onPageResizeStart)
+            this.props.onPageResizeStart();
+
+        window.requestAnimationFrame(this.pageResizeCalculate);
     };
 
     onResizeStart = (e, dir, delta, group) => {
@@ -1832,7 +2064,11 @@ export default class AwesomeGridLayout2 extends React.Component{
         runtimeStyle.height = thisRect.height;
         runtimeStyle.minWidth = "auto";
         runtimeStyle.minHeight = "auto";
-        runtimeStyle.zIndex = 99999;
+        runtimeStyle.maxWidth = "unset";
+        runtimeStyle.maxHeight = "unset";
+        runtimeStyle.opacity = 0.7;
+        runtimeStyle.zIndex = 999999;
+        runtimeStyle.pointerEvents = "none";
 
         runtimeStyle.top = thisRect.top;
         runtimeStyle.left = thisRect.left;
@@ -1842,10 +2078,22 @@ export default class AwesomeGridLayout2 extends React.Component{
             firstY: runtimeStyle.height,
             firstTop: runtimeStyle.top,
             firstLeft: runtimeStyle.left,
+            lastWidth: runtimeStyle.width,
+            lastHeight: runtimeStyle.height,
+            firstBoundaryWidth: this.getBoundarySize() && this.getBoundarySize().width,
+            firstBoundaryHeight: this.getBoundarySize() && this.getBoundarySize().height,
+            firstBoundaryTop: this.getBoundarySize() && this.getBoundarySize().top,
+            firstBoundaryLeft: this.getBoundarySize() && this.getBoundarySize().left
         };
 
+        this.setDraggingState(true, false, undefined, runtimeStyle);
+
+        this.props.select.clearMiniMenu();
+        this.props.select.activateHover(false);
+
         this.setRuntimeStyle(runtimeStyle);
-        this.setState({dragging: true});
+
+        window.requestAnimationFrame(this.onResizeCalculate);
     };
 
     pageResize = (e, dir, delta) => {
@@ -1871,8 +2119,6 @@ export default class AwesomeGridLayout2 extends React.Component{
                 this.resizeData.left = 50;
         }
 
-        this.setRuntimeStyle(runtimeStyle);
-
         this.updateGridLines(
             this.resizeData.top,
             this.resizeData.left,
@@ -1881,12 +2127,38 @@ export default class AwesomeGridLayout2 extends React.Component{
             "A"
         );
 
-        this.invalidateSize();
+        this.updatePageAdjustments();
+
+        this.resizeData.onResizeData = {
+            runtimeStyle: runtimeStyle,
+        };
+    };
+
+    updatePageAdjustments = () => {
         this.backContainerRef.current.updateAdjustments();
+    };
+
+    pageResizeCalculate = () => {
+        if (this.callOverride("pageResizeCalculate"))
+            return;
+
+        if (!this.resizing)
+            return;
+
+        if (!this.resizeData.onResizeData) {
+            window.requestAnimationFrame(this.pageResizeCalculate);
+            return;
+        }
+
+        let {runtimeStyle} = this.resizeData.onResizeData;
+
+        this.setRuntimeStyle(runtimeStyle);
 
         if (this.props.onPageResize) {
             this.props.onPageResize(runtimeStyle.width, this);
         }
+
+        window.requestAnimationFrame(this.pageResizeCalculate);
     };
 
     onResize = (e, dir, delta, group) => {
@@ -1895,56 +2167,73 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         let runtimeStyle = {...this.state.runtimeStyle};
 
-        let deltaY = delta.y;
-        let deltaX = delta.x;
-        if (dir.includes('n')) {
-            if (this.resizeData.firstY <= deltaY)
-                deltaY = this.resizeData.firstY;
-            runtimeStyle.height = this.resizeData.firstY - deltaY;
-            runtimeStyle.top = this.resizeData.firstTop + deltaY;
-        }
-        if (dir.includes('s')) {
-            if (this.resizeData.firstY <= -deltaY)
-                deltaY = -this.resizeData.firstY;
-            runtimeStyle.height = this.resizeData.firstY + deltaY;
-        }
-        if (dir.includes('e')) {
-            if (this.resizeData.firstX <= -deltaX)
-                deltaX = -this.resizeData.firstX;
-            runtimeStyle.width = this.resizeData.firstX + deltaX;
-        }
-        if (dir.includes('w')) {
-            if (this.resizeData.firstX <= deltaX)
-                deltaX = this.resizeData.firstX;
-            runtimeStyle.width = this.resizeData.firstX - deltaX;
-            runtimeStyle.left = this.resizeData.firstLeft + deltaX;
-        }
+        let degree = (this.getCompositeFromData("transform") || {}).rotateDegree || 0;
 
-        if (!group)
-            this.checkSnapOnResize(runtimeStyle, dir, this.resizeData);
+        let finalDelta = getResizeDelta(degree, dir, delta);
+        runtimeStyle.left = this.resizeData.firstLeft + finalDelta.left;
+        runtimeStyle.top = this.resizeData.firstTop + finalDelta.top;
+        runtimeStyle.width = this.resizeData.firstX + finalDelta.width;
+        runtimeStyle.height = this.resizeData.firstY + finalDelta.height;
 
-        this.setRuntimeStyle(runtimeStyle);
+        let rect = {
+            top: runtimeStyle.top,
+            left: runtimeStyle.left,
+            width: runtimeStyle.width,
+            height: runtimeStyle.height
+        };
+
+        // For snaps
+        let boundarySize = this.getBoundarySize();
+
+        if (!group && !boundarySize)
+            this.checkSnapOnResize(rect, dir, this.resizeData);
+
+        this.props.select.updateResizePanes(this, rect);
 
         if (!group)
             this.setResizeHelpData({
                 x: e.clientX,
                 y: e.clientY,
-                width: (dir.includes('w') || dir.includes('e')) && runtimeStyle.width,
-                height: (dir.includes('n') || dir.includes('s')) && runtimeStyle.height,
+                width: (dir.includes('w') || dir.includes('e')) && rect.width,
+                height: (dir.includes('n') || dir.includes('s')) && rect.height,
             });
 
         if (!group)
             this.updateGridLines(
-                runtimeStyle.top,
-                runtimeStyle.left,
-                window.innerHeight - runtimeStyle.top - runtimeStyle.height,
-                window.innerWidth - runtimeStyle.left - runtimeStyle.width,
+                rect.top,
+                rect.left,
+                window.innerHeight - rect.top - rect.height,
+                window.innerWidth - rect.left - rect.width,
                 "A"
             );
 
-        this.invalidateSize();
+        this.props.select.updateHelpLines(this, this.state.helpLinesParent,
+            rect, this.state.dragging);
 
-        this.props.select.updateMiniMenu();
+        this.resizeData.onResizeData = {
+            runtimeStyle: runtimeStyle,
+        };
+    };
+
+    onResizeCalculate = () => {
+        if (this.callOverride("onResizeCalculate"))
+            return;
+
+        if (!this.resizing)
+            return;
+
+        if (!this.resizeData.onResizeData) {
+            window.requestAnimationFrame(this.onResizeCalculate);
+            return;
+        }
+
+        let {runtimeStyle, animationCss} = this.resizeData.onResizeData;
+        // runtimeStyle.width = this.resizeData.lastWidth;
+        // runtimeStyle.height = this.resizeData.lastHeight;
+
+        this.setRuntimeStyle(runtimeStyle/*, animationCss*/);
+
+        window.requestAnimationFrame(this.onResizeCalculate);
     };
 
     setResizeHelpData = (resizeHelpData) => {
@@ -1953,6 +2242,7 @@ export default class AwesomeGridLayout2 extends React.Component{
 
     pageResizeStop = (e, dir, delta) => {
         let {width, height} = this.state.runtimeStyle;
+        this.props.select.activateHover(true);
         this.setPageSize(this.resizeData.top, this.resizeData.left, width, height);
     };
 
@@ -1972,9 +2262,12 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         this.setRuntimeStyle();
         this.invalidateSize();
-        this.setState({dragging: false}, () => {
+        // this.setState({dragging: false}, () => {
+        //     this.addToSnap();
+        // });
+        this.setDraggingState(false, false, () => {
             this.addToSnap();
-        });
+        }, {top, left, width, height});
         this.resizing = false;
 
         this.updateGridLines(
@@ -1985,7 +2278,8 @@ export default class AwesomeGridLayout2 extends React.Component{
         );
 
         this.props.select.onScrollItem(this);
-        this.prepareRects(true);
+        // this.prepareRects(true);
+        this.prepareRects();
 
         if (this.props.onPageResizeStop)
             this.props.onPageResizeStop(width, this);
@@ -1996,19 +2290,22 @@ export default class AwesomeGridLayout2 extends React.Component{
     onResizeStop = (e, dir, delta, group) => {
         if (this.hasOverride("onResizeStop"))
             return this.callOverride("onResizeStop", e, dir, delta, group);
+        this.resizing = false;
 
         if (this.props.onItemPreResizeStop) {
             this.props.onItemPreResizeStop(this, e, dir, delta, this.state.runtimeStyle);
         }
         this.getSize(true, true);
-        this.resizing = false;
 
         if (group)
-            this.props.parent.prepareRects(true);
+            this.props.parent.prepareRects();
+        // this.props.parent.prepareRects(true);
 
         let parentRect = this.props.parent.getSize(false);
 
         let {top, left, width, height} = this.state.runtimeStyle;
+        // width = this.resizeData.lastWidth;
+        // height = this.resizeData.lastHeight;
         this.setSize(
             dir, delta, group,
             left - parentRect.left,
@@ -2016,21 +2313,22 @@ export default class AwesomeGridLayout2 extends React.Component{
             this.resizeData.firstLeft - parentRect.left,
             this.resizeData.firstTop - parentRect.top,
             this.resizeData.firstX,
-            this.resizeData.firstY
+            this.resizeData.firstY, parentRect
         );
         this.props.select.updateMiniMenu();
+        this.props.select.activateHover(true);
     };
 
     setSize = (dir, delta, group, relativeX, relativeY, width, height, firstRelativeX,
-               firstRelativeY, firstWidth, firstHeight, fromUndoRedo) =>
+               firstRelativeY, firstWidth, firstHeight, parentRect, fromUndoRedo) =>
     {
         if (!fromUndoRedo) {
             let itemId = this.props.id;
             let redoData = [dir, delta, group, relativeX, relativeY, width, height, firstRelativeX,
-                firstRelativeY, firstWidth, firstHeight];
+                firstRelativeY, firstWidth, firstHeight, parentRect];
             let undoData = [dir, delta, group, firstRelativeX,
                 firstRelativeY, firstWidth, firstHeight, undefined,
-                undefined, undefined, undefined];
+                undefined, undefined, undefined, parentRect];
             this.props.undoredo.add((idMan) => {
                 idMan.getItem(itemId).onSelect(true);
                 idMan.getItem(itemId).props.dragdrop.setMouseOver(idMan.getItem(itemId).props.parent);
@@ -2045,7 +2343,7 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (this.hasOverride("setSize"))
             return this.callOverride("setSize",
                 dir, delta, group, relativeX, relativeY, height, width, firstRelativeX,
-                firstRelativeY, firstWidth, firstHeight, fromUndoRedo);
+                firstRelativeY, firstWidth, firstHeight, parentRect, fromUndoRedo);
 
         let gridItemStyle, coordinates;
         let calcResult = this.calculateGridItem(relativeX, relativeY, this.props.parent, width, height);
@@ -2055,29 +2353,39 @@ export default class AwesomeGridLayout2 extends React.Component{
         coordinates = calcResult.coordinates;
 
         if (gridItemStyle.justifySelf !== "stretch" && this.getCompositeFromData("style").width !== "auto")
-            this.setProps("width", width, coordinates);
+            this.setProps("width", width, coordinates, undefined, undefined, true);
         else
-            this.setProps("width", "auto");
-        if (this.getCompositeFromData("style").height === "auto")
-            if (this.getCompositeFromData("style").minHeight !== "auto")
-                this.setProps("minHeight", height, coordinates);
-            else
-                this.setProps("minHeight", "auto", coordinates);
-        else {
-            this.setProps("height", height, coordinates);
-            if (this.getCompositeFromData("style").minHeight !== "auto")
-                this.setProps("minHeight", height, coordinates);
-            else
-                this.setProps("minHeight", "auto", coordinates);
+            this.setProps("width", "auto", undefined, undefined, undefined, true);
+
+        if (this.getCompositeFromData("style").minWidth) {
+            this.setProps("minWidth", width, coordinates, undefined, undefined, true);
+        }
+        if (this.getCompositeFromData("style").maxWidth) {
+            this.setProps("maxWidth", width, coordinates, undefined, undefined, true);
         }
 
-        this.setGridItemStyle(gridItemStyle);
+        if (this.getCompositeFromData("style").height !== "auto") {
+            this.setProps("height", height, coordinates, undefined, undefined, true);
+        }
+        if (!this.getFromTempData("isVerticalSection")) {
+            if (this.getCompositeFromData("style").minHeight) {
+                this.setProps("minHeight", height, coordinates, undefined, undefined, true);
+            }
+            if (this.getCompositeFromData("style").maxHeight) {
+                this.setProps("maxHeight", height, coordinates, undefined, undefined, true);
+            }
+        }
+
+        if (!this.getFromTempData("isSection"))
+            this.setGridItemStyle(gridItemStyle);
         this.setRuntimeStyle();
         this.setResizeHelpData();
-        this.invalidateSize();
-        this.setState({dragging: false}, () => {
+
+        let top = relativeY + parentRect.top;
+        let left = relativeX + parentRect.left;
+        this.setDraggingState(false, false, () => {
             this.addToSnap();
-        });
+        }, {top, left, width, height});
         this.props.snap.drawSnap();
 
         if (!group)
@@ -2088,16 +2396,21 @@ export default class AwesomeGridLayout2 extends React.Component{
                 "A"
             );
 
+        if (!group)
+            this.props.select.updateHelpLines(this, this.state.helpLinesParent,
+                this.getSize(false), this.state.dragging);
+
         setTimeout(() => {
             if (!this.mounted)
                 return;
 
             // for fixing helpline
-            console.log("onScrollItem3");
             this.props.select.onScrollItem();
         }, 100);
 
         this.resizeData = undefined;
+
+        this.invalidateSize(false, true, true);
     };
 
     checkSnapOnResize = (runtimeStyle, dir, resizeData) => {
@@ -2152,7 +2465,7 @@ export default class AwesomeGridLayout2 extends React.Component{
         this.props.snap.drawSnap(snapDelta.snapH, snapDelta.snapV, pointOfSnapH, pointOfSnapV);
     };
 
-    setProps = (prop, value, gridCoordinates, data, breakpointName) => {
+    setProps = (prop, value, gridCoordinates, data, breakpointName, dontAddToSnap) => {
         if (this.hasOverride("setProps"))
             return this.callOverride("setProps", prop, value, gridCoordinates, data, breakpointName);
 
@@ -2160,7 +2473,7 @@ export default class AwesomeGridLayout2 extends React.Component{
             prop === "minWidth" || prop === "minHeight" ||
             prop === "maxWidth" || prop === "maxHeight")
         {
-            this.setNewSize(prop, value, gridCoordinates, data, breakpointName);
+            this.setNewSize(prop, value, gridCoordinates, data, breakpointName, dontAddToSnap);
         } else {
             this.setDataInBreakpoint(prop, value, data, breakpointName);
         }
@@ -2197,27 +2510,52 @@ export default class AwesomeGridLayout2 extends React.Component{
             .getCompositeFromData(data || this.props.griddata, prop, undefined)
     };
 
-    setNewSize = (prop, value, gridCoordinates, data, breakpointName) => {
+    setNewSize = (prop, value, gridCoordinates, data, breakpointName, dontAddToSnap) => {
         if (this.hasOverride("setNewSize"))
             return this.callOverride("setNewSize", prop, value, gridCoordinates, data, breakpointName);
 
         let oldStyle = this.getCompositeFromData("style", data, breakpointName);
         let oldValue = oldStyle && oldStyle[prop];
 
-        if (!oldValue || !this.isPercent(oldValue) || value === "auto" || isNaN(value)) {
-            if (!isNaN(value)) {
-                value+="px";
-            }
-            this.setStyleParam(prop, value, data, breakpointName);
+        if (value === undefined) {
+            this.setStyleParam(prop, value, data, breakpointName, dontAddToSnap);
             return;
         }
 
-        let parentRect = {
-            width: gridCoordinates? (gridCoordinates.cx2 - gridCoordinates.cx1): window.innerWidth,
-            height: gridCoordinates?(gridCoordinates.cy2 - gridCoordinates.cy1): window.innerHeight
-        };
-        let newValue = (value / parentRect[this.getParentProps(prop)] * 100).toString() + "%";
-        this.setStyleParam(prop, newValue, data, breakpointName);
+        if (!oldValue || (!this.isPercent(oldValue) && !this.isViewRatio(oldValue)) ||
+            value === "auto" || isNaN(value)) {
+            if (!isNaN(value)) {
+                value+="px";
+            }
+            this.setStyleParam(prop, value, data, breakpointName, dontAddToSnap);
+            return;
+        }
+
+        if (isNaN(value) && value.includes('px'))
+            value = parseFloat(value.replace('px', ''));
+
+        if (this.isPercent(oldValue)) {
+            let parentRect = {
+                width: gridCoordinates? (gridCoordinates.cx2 - gridCoordinates.cx1): window.innerWidth,
+                height: gridCoordinates?(gridCoordinates.cy2 - gridCoordinates.cy1): window.innerHeight
+            };
+            let newValue = (value / parentRect[this.getParentProps(prop)] * 100).toString() + "%";
+            this.setStyleParam(prop, newValue, data, breakpointName, dontAddToSnap);
+        } else if (this.isViewRatio(oldValue)) {
+            let parentValue;
+            let postFix;
+            if (oldValue.includes('vh')) {
+                parentValue = this.props.breakpointmanager.getWindowHeight();
+                postFix = 'vh'
+            }
+            if (oldValue.includes('vw')) {
+                parentValue = this.props.breakpointmanager.getWindowWidth();
+                postFix = 'vw'
+            }
+            let newValue = (value / parentValue * 100).toString() + postFix;
+            newValue = getViewRatioStyle(newValue);
+            this.setStyleParam(prop, newValue, data, breakpointName, dontAddToSnap);
+        }
     };
 
     getParentProps = (prop) => {
@@ -2240,12 +2578,21 @@ export default class AwesomeGridLayout2 extends React.Component{
         return false;
     };
 
-    setRuntimeStyle = (newRuntimeStyle) => {
+    isViewRatio = (value) => {
+        if (isNaN(value)) {
+            if (value.includes("vh") || value.includes("vw"))
+                return true;
+        }
+
+        return false;
+    };
+
+    setRuntimeStyle = (newRuntimeStyle, animationCss) => {
         if (this.callOverride("setRuntimeStyle", newRuntimeStyle))
             return;
 
         let runtimeStyle = newRuntimeStyle && {...newRuntimeStyle};
-        this.setState({runtimeStyle});
+        this.setState({runtimeStyle, animationCss});
         this.onPropsChange.trigger();
     };
 
@@ -2292,7 +2639,7 @@ export default class AwesomeGridLayout2 extends React.Component{
         return gridItemStyle.gridArea;
     };
 
-    setStyleParam = (param, value, data, breakpointName) => {
+    setStyleParam = (param, value, data, breakpointName, dontAddToSnap) => {
         if (this.hasOverride("setStyleParam"))
             return this.callOverride("setStyleParam", param, value, data, breakpointName);
 
@@ -2300,7 +2647,7 @@ export default class AwesomeGridLayout2 extends React.Component{
         style[param] = value;
         if (value === undefined)
             delete style[param];
-        this.setStyle(style, data, breakpointName);
+        this.setStyle(style, data, breakpointName, undefined, dontAddToSnap);
     };
 
     getStyleId = () => {
@@ -2374,7 +2721,7 @@ export default class AwesomeGridLayout2 extends React.Component{
         return {transform: rules.join(' ')};
     };
 
-    setStyle = (newStyle, data, breakpointName, dontOverride) => {
+    setStyle = (newStyle, data, breakpointName, dontOverride, dontAddToSnap) => {
         if (this.callOverride("setStyle", newStyle, data, breakpointName, dontOverride))
             return;
 
@@ -2387,13 +2734,19 @@ export default class AwesomeGridLayout2 extends React.Component{
             let styleNode = document.getElementById(this.getStyleId());
 
             if (!styleNode) {
-                appendStyle(this.getCompositeFromData("style"), this.getStyleId(), this.getStyleId(), this);
+                appendStyle(
+                    this.getCompositeFromData("style"),
+                    this.getStyleId(), this.getStyleId(), this);
             } else {
-                updateStyle(styleNode, this.getCompositeFromData("style"), this.getStyleId());
+                updateStyle(styleNode,
+                    this.getCompositeFromData("style"),
+                    this.getStyleId());
             }
 
-            this.invalidateSize();
-            this.addToSnap();
+            if (!dontAddToSnap) {
+                this.invalidateSize();
+                this.addToSnap();
+            }
         }
 
         this.onPropsChange.trigger();
@@ -2429,6 +2782,55 @@ export default class AwesomeGridLayout2 extends React.Component{
         });
     };
 
+    getGridLineRect = (ref, index, dir, item) => {
+        if (ref.current) {
+            return ref.current.rect;
+        }
+
+        let parentRect = item.props.parent && item.props.parent.getSize(false) || {
+            width: item.props.breakpointmanager.getWindowWidth()
+        };
+        let padding = cloneObject(item.getCompositeFromData("padding")) || {};
+        ['top', 'left', 'bottom', 'right'].forEach(key => {
+            padding[key] = getPxValueFromCSSValue(padding[key], parentRect.width, item) || 0;
+        });
+
+        let thisRect = item.getSize(false);
+        if (dir === 'x') {
+            if (index === 0) {
+                return {
+                    left: thisRect.left - thisRect.scrollLeft + padding.left ,
+                    top: thisRect.top - thisRect.scrollTop + padding.top,
+                    height: thisRect.scrollHeight - padding.top - padding.bottom,
+                    width: 1
+                }
+            } else {
+                return {
+                    left: thisRect.left - thisRect.scrollLeft + thisRect.scrollWidth - padding.right - 1,
+                    top: thisRect.top - thisRect.scrollTop + padding.top,
+                    height: thisRect.scrollHeight - padding.top - padding.bottom,
+                    width: 1
+                }
+            }
+        } else {
+            if (index === 0) {
+                return {
+                    top: thisRect.top - thisRect.scrollTop + padding.top ,
+                    left: thisRect.left - thisRect.scrollLeft + padding.left,
+                    height: 1,
+                    width: thisRect.scrollWidth - padding.left - padding.right,
+                }
+            } else {
+                return {
+                    top: thisRect.top - thisRect.scrollTop + thisRect.scrollHeight - padding.bottom - 1,
+                    left: thisRect.left - thisRect.scrollLeft + padding.left,
+                    height: 1,
+                    width: thisRect.scrollWidth - padding.left - padding.right,
+                }
+            }
+        }
+    };
+
     getGridLineOfPoint = (left, top, parent, after = false, parentRect) => {
         if (!parentRect)
             parentRect = parent.getSize(false);
@@ -2436,16 +2838,18 @@ export default class AwesomeGridLayout2 extends React.Component{
         let cx;
         let xLineRef = this.props.gridLine.getXlineRef(parent.props.id);
         for(let i = 0; i < xLineRef.length; i++) {
-            let rect = xLineRef[i].current.rect;
+            let rect = this.getGridLineRect(xLineRef[i], i, 'x', parent);
             if (left < rect.left || (after && left <= rect.left)) {
                 x = i;
                 if (!after) {
                     if (xLineRef[i - 1]) {
                         // rect = xLineRef[i - 1].current.getBoundingClientRect();
-                        rect = xLineRef[i - 1].current.rect;
+                        // rect = xLineRef[i - 1].current.rect;
+                        rect = this.getGridLineRect(xLineRef[i - 1], i - 1, 'x', parent);
                         cx = rect.left;
                     } else {
-                        cx = parentRect.left - parentRect.scrollLeft;
+                        // cx = parentRect.left - parentRect.scrollLeft;
+                        cx = rect.left;
                     }
                 } else {
                     cx = rect.left;
@@ -2456,7 +2860,8 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (x === undefined) {
             x = xLineRef.length;
             // let rect = xLineRef[xLineRef.length - 1].current.getBoundingClientRect();
-            let rect = xLineRef[xLineRef.length - 1].current.rect;
+            // let rect = xLineRef[xLineRef.length - 1].current.rect;
+            let rect = this.getGridLineRect(xLineRef[xLineRef.length - 1], xLineRef.length - 1, 'x', parent);
             cx = rect.left;
         }
 
@@ -2465,16 +2870,19 @@ export default class AwesomeGridLayout2 extends React.Component{
         let yLineRef = this.props.gridLine.getYlineRef(parent.props.id);
         for(let i = 0; i < yLineRef.length; i++) {
             // let rect = yLineRef[i].current.getBoundingClientRect();
-            let rect = yLineRef[i].current.rect;
+            // let rect = yLineRef[i].current.rect;
+            let rect = this.getGridLineRect(yLineRef[i], i, 'y', parent);
             if (top < rect.top || (after && top <= rect.top)) {
                 y = i;
                 if (!after) {
                     if (yLineRef[i - 1]) {
                         // rect = yLineRef[i - 1].current.getBoundingClientRect();
-                        rect = yLineRef[i - 1].current.rect;
+                        // rect = yLineRef[i - 1].current.rect;
+                        rect = this.getGridLineRect(yLineRef[i - 1], i - 1, 'y', parent);
                         cy = rect.top;
                     } else {
-                        cy = parentRect.top - parentRect.scrollTop;
+                        // cy = parentRect.top - parentRect.scrollTop;
+                        cy = rect.top;
                     }
                 } else {
                     cy = rect.top;
@@ -2485,7 +2893,8 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (y === undefined) {
             y = yLineRef.length;
             // let rect = yLineRef[yLineRef.length - 1].current.getBoundingClientRect();
-            let rect = yLineRef[yLineRef.length - 1].current.rect;
+            // let rect = yLineRef[yLineRef.length - 1].current.rect;
+            let rect = this.getGridLineRect(yLineRef[yLineRef.length - 1], yLineRef.length - 1, 'y', parent);
             cy = rect.top;
         }
 
@@ -2508,6 +2917,12 @@ export default class AwesomeGridLayout2 extends React.Component{
     };
 
     calculateGridArea = (left, top, width, height, parent, parentRect) => {
+        if (!this.props.gridLine.hasGridLine(parent.props.id)) {
+            return {
+                gridArea: {x1: 1, y1: 1, x2: 2, y2: 2},
+                coordinates: {cx1: 0, cy1: 0, cx2: 0, cy2: 0}
+            }
+        }
         let gridLine1 = this.getGridLineOfPoint(left, top, parent, false, parentRect);
         let gridLine2 = this.getGridLineOfPoint(left + width, top + height, parent, true, parentRect);
         return {
@@ -2516,11 +2931,12 @@ export default class AwesomeGridLayout2 extends React.Component{
         };
     };
 
-    onMouseDown = (e) => {
+    onMouseDown = (e, moveWithMouse) => {
         if (this.isLeftClick(e)) {
             e.stopPropagation();
             e.preventDefault();
             this.mouseDown = true;
+            this.moveWithMouse = moveWithMouse;
             this.mouseMoved = {
                 deltaX: 0,
                 deltaY: 0,
@@ -2529,6 +2945,11 @@ export default class AwesomeGridLayout2 extends React.Component{
                 startMillis: (new Date()).getTime()
             };
             window.addEventListener("mousemove", this.onMouseMove);
+            window.addEventListener("mouseup", this.onMouseUp);
+        } else if (isRightClick(e)) {
+            e.stopPropagation();
+            e.preventDefault();
+            this.mouseDown = true;
             window.addEventListener("mouseup", this.onMouseUp);
         }
     };
@@ -2574,6 +2995,15 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (!this.mouseDown)
             return;
 
+        delete this.moveWithMouse;
+
+        if (isRightClick(e)) {
+            this.onContextMenu(e);
+            this.mouseDown = false;
+            window.removeEventListener("mouseup", this.onMouseUp);
+            return;
+        }
+
         let currentMillis = new Date().getTime();
         if (!this.moving && currentMillis - this.mouseMoved.startMillis < 500) {
             if (!this.dropped) {
@@ -2584,8 +3014,10 @@ export default class AwesomeGridLayout2 extends React.Component{
             }
         }
 
-        if (this.moving) {
-            this.canMove() && this.onDragStop(e, isGroupSelected(this), true);
+        if (this.moving && this.canMove()) {
+            window.requestAnimationFrame(() => {
+                this.onDragStop(e, isGroupSelected(this), true);
+            });
         }
 
         this.moving = false;
@@ -2595,7 +3027,7 @@ export default class AwesomeGridLayout2 extends React.Component{
         window.removeEventListener("mouseup", this.onMouseUp);
     };
 
-    onSelect = (selected, callback, deselectParent, clicked) => {
+    onSelect = (selected, callback, deselectParent, clicked, dontUpdateAdjustment) => {
         if (this.callOverride("onSelect", selected, callback, deselectParent))
             return;
 
@@ -2605,10 +3037,12 @@ export default class AwesomeGridLayout2 extends React.Component{
             return;
 
         if (selected) {
-            this.getSize(true, true);
-            this.props.select.selectItem(this, clicked);
+            this.props.select.selectItem(this, clicked, dontUpdateAdjustment);
             this.toggleGridLines(selected, undefined, "A");
+        } else {
+            this.props.select.updateHelpSizeLines();
         }
+
         if (this.props.parent) {
             if (selected || deselectParent)
                 this.props.parent.toggleGridLines(selected, () => {
@@ -2616,13 +3050,22 @@ export default class AwesomeGridLayout2 extends React.Component{
                 }, "B");
         } else {
             selected && this.props.gridLine.removeGridLineByType("B");
+            this.props.select.updateHelpSizeLines();
         }
 
         this.setTempData("selected", selected);
 
         if (!this.mounted)
             return;
-        this.setState({selected, groupSelected: false}, callback);
+
+        this.setState({selected, groupSelected: false}, () => {
+            selected && this.setItemHover(true);
+
+            this.props.editor.updateLayout();
+
+            if (callback)
+                callback();
+        });
     };
 
     toggleGridLines = (showGridLines, callback, gridType) => {
@@ -2634,18 +3077,20 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         if (!showGridLines) {
             this.props.gridLine.removeGridLine(this.props.id);
+            this.updateLayout();
             return;
         }
 
         if (this.props.gridLine.hasGridLine(this.props.id, gridType)) {
             if (callback)
                 callback();
+
+            this.updateLayout();
+
             return;
         }
 
         let grid = this.getCompositeFromData("grid");
-        console.log("grid", this.props.id, this.props.griddata, grid);
-        let rect = this.getSize(false, true);
         this.props.gridLine.addGrid(
             this.props.id,
             grid.x,
@@ -2654,13 +3099,18 @@ export default class AwesomeGridLayout2 extends React.Component{
             grid.gridTemplateRows,
             grid.gridTemplateColumns,
             {
-                top: rect.top,
-                left: rect.left,
-                bottom: window.innerHeight - rect.top - rect.height,
-                right: window.innerWidth - rect.left - rect.width,
+                top: 0,
+                left: 0,
+                bottom: 0,
+                right: 0,
             },
-            callback
-        )
+            () => {
+                if (callback)
+                    callback();
+
+                this.updateLayout();
+            }
+        );
     };
 
     toggleHelpLines = (helpLinesParent, callback) => {
@@ -2670,7 +3120,14 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (this.mounted) {
             this.setState({
                 helpLinesParent: helpLinesParent !== this && helpLinesParent
-            }, callback);
+            }, () => {
+                helpLinesParent &&
+                this.props.select.updateHelpLines(this, this.state.helpLinesParent,
+                    this.getSize(false), this.state.dragging);
+
+                if (callback)
+                    callback();
+            });
         }
     };
 
@@ -2678,8 +3135,9 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (this.callOverride("onScroll", e))
             return;
 
-        console.log("onScrollItem1");
-        this.props.select.onScrollItem(e, this);
+        this.invalidateSize(true, false, true);
+        this.props.select.updateParentsRect();
+        this.props.select.onScrollItem();
         this.onScrollEnd(e);
     };
 
@@ -2709,7 +3167,10 @@ export default class AwesomeGridLayout2 extends React.Component{
 
     playAnimation = (disable) => {
         let compositeDesign = getCompositeDesignData(this);
-        if (!compositeDesign.animation)
+        if (!compositeDesign.animation || !compositeDesign.animation.name)
+            return;
+
+        if (this.getFromData("dontAnimate"))
             return;
 
         // Component going to show animation, so add end listener for more action
@@ -2720,201 +3181,196 @@ export default class AwesomeGridLayout2 extends React.Component{
             showAnimation: true,
             onAnimationEnd
         };
-        if (disable) stateChange.disableVS = true;
+
+        if (disable) {
+            stateChange.disableVS = true;
+            this.setTempData("dontAnimate", true);
+        }
+
+        this.props.select.activateHover(false);
+        this.props.select.activateResize(false);
 
         this.setState(stateChange);
     };
 
     onAnimationEnd = () => {
         this.setState({forceKey: undefined, showAnimation: undefined});
+        this.props.select.activateHover(true);
+        this.props.select.activateResize(true);
     };
 
-    getCompositeAnimationCss = (compositeAnimation) => {
-        if (!(compositeAnimation && this.state.forceKey && this.state.showAnimation))
+    getCompositeAnimationCss = (compositeAnimation = {}) => {
+        if (!(compositeAnimation.name && this.state.forceKey && this.state.showAnimation))
             return;
 
         return DynamicAnimations[compositeAnimation.name]
             .getAnimationCSS(this, compositeAnimation.options);
     };
 
+    onContextMenu = (e) => {
+        e.preventDefault();
+        this.onSelect(true);
+        this.props.select.onContextMenu(e, this);
+    };
+
+    getContextMenu = () => {
+        if (this.hasOverride("getContextMenu"))
+            return this.callOverride("getContextMenu");
+    };
+
     render () {
+        let {className, animationCss, as, editor, select, id, getStaticChildren,
+            isPage, page, getChildrenOverride, modifyContainerStyleOverride} = this.props;
+        let {selected, runtimeStyle, portalNodeId, disableVS, showAnimation, forceKey, grid,
+            draggingStart, showGridLines, resizeHelpData} = this.state;
+        let isContainer = this.props.griddata.isContainer;
+        let children = this.children;
+        let resizeData = this.resizeData;
+        let size = runtimeStyle || this.getSize(false);
         let compositeDesign = getCompositeDesignData(this);
+        let compositeTransform = this.getCompositeFromData("transform") || {};
+        let compositeStyle = this.getCompositeFromData("style");
+        let overflowData = this.getCompositeFromData("overflowData");
+        let anchor = this.getFromTempData("anchor");
+        let selectAsParent = this.props.gridLine.hasGridLine(this.props.id, "B") !== undefined;
+
         let classes = classNames(
-            !this.state.hover? "AwesomeGridLayoutRoot": "AwesomeGridLayoutRootHover",
+            "AwesomeGridLayoutRoot",
             "AwesomeGridLayoutGrid",
-            this.canMove() && "AwesomeGridLayoutCursorMove",
-            this.props.className,
+            className,
             this.getDesignStyleId(),
             this.getGridItemStyleId(),
             this.getStyleId(),
+            this.getCompositeAnimationCss(compositeDesign.animation)
         );
 
         let holderClasses = classNames(
             "AwesomeGridLayoutHolder",
             this.getTransformStyleId(),
-            this.getCompositeAnimationCss(compositeDesign.animation)
         );
 
-        let size = this.getSize(false);
-
-        let TagAs = this.props.as || "div";
+        let TagAs = as || "div";
 
         return (
-            <Portal nodeId={this.state.portalNodeId} disabled={!this.state.portalNodeId}
-                document={this.props.document}
-            >
-                <VisibilitySensor
-                    partialVisibility onChange={(v) => {
-                        if (compositeDesign.animation && compositeDesign.animation.once && v) {
-                            !this.props.editor && this.playAnimation(true);
-                            return;
-                        }
-
-                        if (compositeDesign.animation && v)
-                            !this.props.editor && this.playAnimation();
-                    }}
-                    containment={this.props.select.getPageOverflowRef()}
-                    active={compositeDesign.animation && !this.state.disableVS}
+            <Portal nodeId={portalNodeId} disabled={!portalNodeId}>
+                <VisibilitySensorWrapper
+                    animation={compositeDesign.animation}
+                    editor={editor}
+                    playAnimation={this.playAnimation}
+                    select={select}
+                    disableVS={disableVS}
                 >
                         <TagAs
-                            onMouseDown={!this.state.showAnimation ? this.onMouseDown : undefined}
+                            onMouseDown={!showAnimation ? this.onMouseDown : undefined}
                             onMouseOver={this.onMouseOver}
                             onMouseEnter={this.onMouseEnter}
                             onMouseOut={this.onMouseOut}
-                            id={this.props.id}
+                            id={id}
                             className={classes}
-                            style={this.state.runtimeStyle}
+                            style={{
+                                ...runtimeStyle,
+                                ...(this.canMove() && {cursor: "move"}),
+                                ...(isPage && {overflowY: "auto", overflowX: "hidden"}),
+                                ...(overflowData.state === 'hide' && {
+                                    overflowY: 'hidden',
+                                    overflowX: 'hidden',
+                                }),
+                                ...(showAnimation && {
+                                    opacity: 0
+                                })
+                            }}
                             ref={this.rootDivRef}
-                            key={this.props.id}
+                            key={id}
+                            onAnimationEnd={this.onAnimationEnd}
                         >
                             {
-                                this.state.selected && this.getFromTempData("resizable") &&
-                                !this.state.showAnimation &&
-                                !isGroupSelected(this) &&
-                                <AdjustmentResize
-                                    id={this.props.id}
-                                    key={`${this.props.id}_resize`}
-                                    sides={this.props.resizeSides || ['n','s','e','w','ne','nw','se','sw']}
-                                    onResizeStart={this.onResizeStart}
-                                    onResize={this.onResize}
-                                    onResizeStop={this.onResizeStop}
-                                    draggingStart={this.state.draggingStart}
-                                    isStretch={isStretch(this)}
-                                    allowStretch={allowStretch(this)}
-                                    itemId={this.props.id}
-                                    idMan={this.props.idMan}
-                                    transform={this.getCompositeFromData("style").transform}
-                                    data={
-                                        this.getBoundarySize(false)
-                                    }
-                                    document={this.props.document}
-                                />
-                            }
-
-                            {
                                 this.getFromTempData("pageResize") &&
-                                !this.state.showAnimation &&
+                                !showAnimation &&
                                 <AdjustmentResizePage
-                                    id={this.props.id}
-                                    key={`${this.props.id}_resize`}
+                                    id={id}
+                                    key={`${id}_resize`}
                                     sides={['e','w']}
                                     onResizeStart={this.pageResizeStart}
                                     onResize={this.pageResize}
                                     onResizeStop={this.pageResizeStop}
-                                    data={this.state.runtimeStyle || size}
-                                    top={(this.resizeData && this.resizeData.top) || (size && size.top)}
-                                    left={(this.resizeData && this.resizeData.left) || (size && size.left)}
-                                    width={(this.state.runtimeStyle && this.state.runtimeStyle.width) || (size && size.width)}
-                                    height={(this.state.runtimeStyle && this.state.runtimeStyle.height) || (size && size.height)}
-                                    draggingStart={this.state.draggingStart}
-                                    itemId={this.props.id}
-                                    document={this.props.document}
+                                    data={runtimeStyle || size}
+                                    top={(resizeData && resizeData.top) || (size && size.top)}
+                                    left={(resizeData && resizeData.left) || (size && size.left)}
+                                    width={(runtimeStyle && runtimeStyle.width) || (size && size.width)}
+                                    height={(runtimeStyle && runtimeStyle.height) || (size && size.height)}
+                                    draggingStart={draggingStart}
+                                    itemId={id}
                                 />
                             }
 
                             {
-                                !this.state.showAnimation &&
-                                <AdjustmentHelpLines
-                                    show={!this.props.helplineOff && this.state.selected &&
-                                    this.state.helpLinesParent && !this.getFromTempData("pageResize") &&
-                                    !isGroupSelected(this)}
-                                    helpLinesParent={this.state.helpLinesParent}
-                                    item={this}
-                                    dragging={this.state.dragging}
-                                    itemRect={this.state.dragging? this.getSize(false, true): size}
-                                    width={this.state.runtimeStyle? this.state.runtimeStyle.width : undefined}
-                                    height={this.state.runtimeStyle? this.state.runtimeStyle.height : undefined}
-                                    document={this.props.document}
-                                />
-                            }
-
-                            {
-                                this.state.selected && this.state.resizeHelpData &&
+                                selected && resizeHelpData &&
                                 !this.getFromTempData("pageResize") &&
-                                !this.state.showAnimation &&
+                                !showAnimation &&
                                 !isGroupSelected(this) &&
                                 <AdjustmentHelpSize
-                                    resizeHelpData={this.state.resizeHelpData}
+                                    resizeHelpData={resizeHelpData}
                                 />
                             }
 
-                            <div
+                            <ChildHolder
                                 className={holderClasses}
-                                key={this.state.forceKey || `${this.props.id}_container`}
-                                id={`${this.props.id}_child_holder`}
-                                onAnimationEnd={this.onAnimationEnd}
+                                key={forceKey || `${id}_container`}
+                                id={`${id}_child_holder`}
+                                disabled={Object.keys(compositeTransform).length > 0}
+                                transformRef={this.transformRef}
                             >
-                            {
-                                this.props.getStaticChildren && this.props.getStaticChildren()
-                            }
-
                                 {
-                                    console.log("document", this.props.document, this.props.id)
+                                    getStaticChildren && getStaticChildren()
                                 }
-                            <GridChildContainer
-                                id={this.props.id}
-                                key={`${this.props.id}_container`}
-                                allChildren={this.children}
-                                grid={this.state.grid}
-                                overflowData={this.getCompositeFromData("overflowData")}
-                                showGridLines={this.state.showGridLines}
-                                aglStyle={this.getCompositeFromData("style")}
-                                overflowRef={this.overflowRef}
-                                containerRef={this.containerRef}
-                                show={this.props.griddata.isContainer}
-                                onScroll={this.onScroll}
-                                isPage={this.props.isPage}
-                                page={this.props.page}
-                                ref={this.backContainerRef}
-                                size={this.state.runtimeStyle || size}
-                                getChildrenOverride={this.props.getChildrenOverride}
-                                agl={this}
-                                modifyContainerStyleOverride={this.props.modifyContainerStyleOverride}
-                                document={this.props.document}
-                            />
-                            </div>
+
+                                <GridChildContainer
+                                    id={id}
+                                    key={`${id}_container`}
+                                    allChildren={children}
+                                    grid={grid}
+                                    overflowData={overflowData}
+                                    showGridLines={showGridLines}
+                                    aglStyle={compositeStyle}
+                                    overflowRef={this.overflowRef}
+                                    containerRef={this.containerRef}
+                                    show={isContainer}
+                                    onScroll={this.onScroll}
+                                    isPage={isPage}
+                                    page={page}
+                                    ref={this.backContainerRef}
+                                    size={runtimeStyle || size}
+                                    getChildrenOverride={getChildrenOverride}
+                                    agl={this}
+                                    padding={this.getCompositeFromData("padding")}
+                                    modifyContainerStyleOverride={modifyContainerStyleOverride}
+                                    selectAsParent={selectAsParent}
+                                    selected={selected}
+                                />
+                            </ChildHolder>
 
                             <AGLAnchor
-                                anchor={this.getFromTempData("anchor")}
+                                anchor={anchor}
                             />
 
                             {
                                 this.state.dragging && this.props.parent &&
-                                <Portal nodeId={this.state.portalNodeId || `${this.props.parent.props.id}_container`}
-                                        document={this.props.document}
+                                <Portal nodeId={this.state.portalNodeId ||
+                                    `${this.props.parent.props.id}_container`}
                                 >
                                     <div
+                                        className={this.state.fakeStyle}
                                         style={{
-                                            ...this.getCompositeFromData("gridItemStyle"),
-                                            ...this.getCompositeFromData("style"),
                                             opacity: 0,
-                                            pointerEvents: "none"
+                                            pointerEvents: "none",
+                                            ...this.state.fakeStyle
                                         }}
                                     />
                                 </Portal>
                             }
+
                         </TagAs>
-                </VisibilitySensor>
+                </VisibilitySensorWrapper>
             </Portal>
         )
     }

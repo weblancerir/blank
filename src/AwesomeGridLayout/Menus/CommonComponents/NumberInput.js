@@ -27,6 +27,7 @@ export default class NumberInput extends React.Component {
                 value={this.props.value || 0}
                 onChange={this.onChange}
                 type="text"
+                style={this.props.inputStyle}
             />
         )
     }

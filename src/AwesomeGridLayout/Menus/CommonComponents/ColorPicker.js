@@ -8,17 +8,7 @@ export default class ColorPicker extends React.Component {
     constructor (props) {
         super(props);
 
-        this.state = {
-            color: this.getRgbA(props.color) || {
-                r: 0,
-                g: 0,
-                b: 0,
-                a: 0
-            },
-            alpha: this.getRgbA(props.color) && this.getRgbA(props.color).a * 100
-        };
-
-        console.log(this.state.color, props.color)
+        this.state = {};
     }
 
     getRgbA = (value) => {
@@ -71,37 +61,47 @@ export default class ColorPicker extends React.Component {
     };
 
     handleChangeComplete = (color) => {
-        console.log("handleChangeComplete", color);
+        let alpha = this.getColorAndAlpha().alpha || 100;
         let value = {
             r: color.rgb.r,
             g: color.rgb.g,
             b: color.rgb.b,
-            a: (this.state.alpha || 100) / 100,
+            a: (alpha) / 100,
         };
 
-        this.setState({color: color.rgb, alpha: this.state.alpha || 100});
-
-        value = `rgba(${value.r}, ${value.g}, ${value.b}, ${value.a})`;
+        this.lastValue = value = `rgba(${value.r}, ${value.g}, ${value.b}, ${value.a})`;
 
         this.props.onDesignChange(this.props.designKey, value);
     };
 
+    getColorAndAlpha = () => {
+        return {
+            color: this.getRgbA(this.props.color) || {
+                r: 0,
+                g: 0,
+                b: 0,
+                a: 0
+            },
+            alpha: this.getRgbA(this.props.color) && this.getRgbA(this.props.color).a * 100
+        };
+    };
+
     handleAlphaChange = (alpha) => {
-        this.setState({alpha});
-        console.log("handleAlphaChange", this.state.color);
+        let color = this.getColorAndAlpha().color;
         let value = {
-            r: this.state.color.r,
-            g: this.state.color.g,
-            b: this.state.color.b,
+            r: color.r,
+            g: color.g,
+            b: color.b,
             a: alpha / 100,
         };
 
-        value = `rgba(${value.r}, ${value.g}, ${value.b}, ${value.a})`;
+        this.lastValue = value = `rgba(${value.r}, ${value.g}, ${value.b}, ${value.a})`;
 
         this.props.onDesignChange(this.props.designKey, value);
     };
 
     render () {
+        let {color, alpha} = this.getColorAndAlpha();
         return (
             <div className="CommonMenuRoot ColorPickerRoot">
                 <ButtonBase
@@ -113,7 +113,7 @@ export default class ColorPicker extends React.Component {
                 >
                     <div
                         style={{
-                            background: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.alpha / 100 })`,
+                            background: `rgba(${ color.r }, ${ color.g }, ${ color.b }, ${ alpha / 100 })`,
                         }}
                     />
                 </ButtonBase>
@@ -124,31 +124,37 @@ export default class ColorPicker extends React.Component {
                     <SliderInputControlled
                         min={0}
                         max={100}
-                        value={this.state.alpha || 0}
+                        value={alpha || 0}
                         onChange={this.handleAlphaChange}
                     />
                 </div>
                 {
                     this.state.displayColorPicker &&
-                    <div style={{
-                        position: 'absolute',
-                        zIndex: '2',
-                    }}>
-                        <div style={ {
-                            position: 'fixed',
-                            top: '0px',
-                            right: '0px',
-                            bottom: '0px',
-                            left: '0px',
-                            // backgroundColor: 'rgba(115, 115, 115, 0.4)'
-                        }} onClick={ this.handleClose }/>
-                        <SketchPicker
-                            color={this.state.color}
-                            onChangeComplete={ this.handleChangeComplete }
-                            disableAlpha
-                            width={224}
-                        />
-                    </div>
+                        <>
+                            <div style={ {
+                                position: 'fixed',
+                                top: '0px',
+                                right: '0px',
+                                bottom: '0px',
+                                left: '0px',
+                                backgroundColor: 'rgba(0, 0, 0, 0.2)'
+                            }} onClick={ this.handleClose }/>
+                            <div style={{
+                                position: 'absolute',
+                                left: "50%",
+                                top: "50%",
+                                transform: "translate(-50%, -50%)",
+                                zIndex: '2',
+                            }}>
+                                <SketchPicker
+                                    color={color}
+                                    onChangeComplete={ this.handleChangeComplete }
+                                    disableAlpha
+                                    width={224}
+                                />
+                            </div>
+                        </>
+
                 }
             </div>
         )

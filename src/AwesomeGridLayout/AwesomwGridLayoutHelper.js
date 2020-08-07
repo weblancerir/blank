@@ -6,8 +6,9 @@ import {v4 as uuidv4} from 'uuid';
 import Stack from "./Components/Stack/Stack";
 import DynamicComponents from "./Dynamic/DynamicComponents";
 import {getCompositeFromData, getFromData, setData} from "./BreakPointManager";
-import {css, StyleSheet} from "aphrodite";
-import Portal from "./Portal";
+import ContextMenu from "./Test/ContextMenu";
+
+let deepEqual = require('fast-deep-equal/es6');
 
 export function stretch(item, fromUndoRedo) {
     if (!fromUndoRedo) {
@@ -37,14 +38,16 @@ export function stretch(item, fromUndoRedo) {
     if (!isStretch(item))
         beStretch = true;
 
-    gridItemStyle.alignSelf = beStretch? "stretch": "start";
+    item.setDocks(beStretch, beStretch, false, beStretch, item.getFromTempData("autoDock"), undefined, true);
+
+    gridItemStyle.alignSelf = beStretch? "start": "start";
     gridItemStyle.justifySelf = beStretch? "stretch": "center";
     gridItemStyle.marginTop = "0px";
     gridItemStyle.marginLeft = "0px";
     gridItemStyle.marginRight = "0px";
     gridItemStyle.marginBottom = "0px";
     item.setStyleParam("width", "auto");
-    item.setStyleParam("height", "auto");
+    item.setStyleParam("height", "100%");
     item.setStyleParam("minHeight", "unset");
 
     if (!beStretch) {
@@ -70,7 +73,7 @@ export function isStretch(item, log) {
 
     let gridItemStyle = item.getFromData("gridItemStyle");
 
-    return !(gridItemStyle.alignSelf !== "stretch" || gridItemStyle.justifySelf !== "stretch" ||
+    return !(gridItemStyle.alignSelf !== "start" || gridItemStyle.justifySelf !== "stretch" ||
         gridItemStyle.marginTop !== "0px" || gridItemStyle.marginLeft !== "0px" ||
         gridItemStyle.marginRight !== "0px" || gridItemStyle.marginBottom !== "0px");
 }
@@ -140,21 +143,22 @@ export function setScrollBehaviour(item, behaviour, pageAgl, fromUndoRedo, {offs
     if (!item.props.parent)
         return;
 
-    let style = item.getFromData("style");
-    if (isFixed(item) && behaviour !== "fixed" && style.lastSectionId) {
-        item.props.parent.onChildLeave(item);
-        let sectionParent = pageAgl.current.allChildRefs[style.lastSectionId];
-        if (!sectionParent) {
-            sectionParent = Object.values(pageAgl.current.allChildRefs)[0];
-        }
+    let oldIsFixed = item.getFromTempData("isFixed");
 
-        sectionParent.current.onSelect(true);
-        let sectionRect = sectionParent.current.prepareRects(true);
-        sectionParent.current.onChildDrop(item, undefined, false, (newItem) => {
-            item.setState({portalNodeId: undefined});
-            setTimeout(() => {
+    let lastSectionId = item.getFromTempData("lastSectionId");
+    if (oldIsFixed && behaviour !== "fixed" && lastSectionId) {
+        item.props.parent.onChildLeave(item);
+        let itemRect = item.getSize(false);
+        let sectionParent = item.props.viewRef.current
+            .props.aglComponent.getSectionOfPoint(itemRect.left, itemRect.top);
+
+        sectionParent.onSelect(true, undefined, undefined, undefined, true);
+        sectionParent.prepareRects();
+        sectionParent.onChildDrop(item, undefined, false, (newItem) => {
+            newItem.setState({portalNodeId: undefined});
+            window.requestAnimationFrame(() => {
                 newItem.onSelect(true);
-            }, 400);
+            });
         });
     }
 
@@ -169,49 +173,52 @@ export function setScrollBehaviour(item, behaviour, pageAgl, fromUndoRedo, {offs
             item.setStyleParam("pointerEvents", undefined);
             break;
         case "sticky":
-            item.setStyleParam("position", "sticky !important");
+            item.setStyleParam("position", "sticky");
             item.setStyleParam("top", offsetTop || 0);
             item.setStyleParam("pointerEvents", undefined);
             break;
         case "fixed":
-            if (!isFixed(item))
+            if (!oldIsFixed) {
                 addFixedChildToRoot(item, pageAgl);
+            }
             break;
     }
 }
 
 function addFixedChildToRoot(item, pageAgl) {
+    let oldParentRect = item.props.parent.getSize(false);
     item.toggleHelpLines();
-    item.setStyleParam("lastSectionId", item.props.parent.props.id);
+    item.setTempData("lastSectionId", item.props.parent.props.id);
     item.props.parent.onChildLeave(item);
-    pageAgl.current.onSelect(true);
-    let pageRect = pageAgl.current.prepareRects(true);
+    pageAgl.onSelect(true, undefined, undefined, undefined, true);
+    let pageRect = pageAgl.prepareRects();
     let itemRect = item.getSize(false);
 
-    pageAgl.current.onChildDrop(item, undefined, true, (newItem) => {
-        setTimeout(() => {
+    pageAgl.onChildDrop(item, undefined, true, (newItem) => {
+        window.requestAnimationFrame(() => {
             newItem.onSelect(true);
-        }, 400);
+        });
     });
 
     let gridItemStyle = item.getFromData("gridItemStyle");
-    gridItemStyle.alignSelf = "start";
-    gridItemStyle.justifySelf = "start";
-    gridItemStyle.marginTop = `${itemRect.top - pageRect.top}px`;
-    gridItemStyle.marginLeft = `${itemRect.left - pageRect.left}px`;
     gridItemStyle.gridArea = "1/1/2/2";
 
     item.setGridItemStyle(gridItemStyle);
 
-    item.setStyleParam("width", `${itemRect.width}px`);
-    item.setStyleParam("height", `${itemRect.height}px`);
+    let style = item.getCompositeFromData("style");
+
+    let newWidth = itemRect.width *  oldParentRect.width / pageRect.width;
+    item.setStyleParam("width", getStyleValueFromPx(newWidth, oldParentRect.width,
+        getUnitFromStyleValue(style.width), item));
+    item.setStyleParam("height", getStyleValueFromPx(itemRect.height, oldParentRect.height,
+        getUnitFromStyleValue(style.height), item));
     item.setStyleParam("position", undefined);
     item.setStyleParam("top", undefined);
     item.setStyleParam("pointerEvents", "auto");
 }
 
 export function isFixed(item) {
-    return item.state.portalNodeId === "page_fixed_holder";
+    return item.getFromTempData("isFixed");
 }
 
 export function hideInBreakPoint(item, fromUndoRedo) {
@@ -224,6 +231,13 @@ export function hideInBreakPoint(item, fromUndoRedo) {
         });
     }
     item.setStyleParam("display", "none !important");
+    item.props.viewRef.current.props.aglComponent.updateTemplates();
+    item.props.select.onScrollItem();
+    item.props.editor.updateLayout();
+}
+
+export function isHideInBreakPoint(item, fromUndoRedo) {
+    return item.getCompositeFromData("style").display === "none !important";
 }
 
 export function showInBreakPoint(item, fromUndoRedo) {
@@ -236,6 +250,12 @@ export function showInBreakPoint(item, fromUndoRedo) {
         });
     }
     item.setStyleParam("display", undefined);
+    let newStyle = item.getFromData("style");
+    if (newStyle && Object.keys(newStyle).length === 0) {
+        item.setDataInBreakpoint("style", undefined);
+    }
+    item.props.viewRef.current.props.aglComponent.updateTemplates();
+    item.props.editor.updateLayout();
 }
 
 export function hasBreakpointDesign(fromName, item) {
@@ -244,7 +264,7 @@ export function hasBreakpointDesign(fromName, item) {
 }
 
 export function pasteFromBreakpointDesign(item, fromName, toName, fromUndoRedo) {
-    let fromData = item.props.griddata.bpData[fromName];
+    let fromData = item.props.griddata.bpData[fromName].design;
     if (fromData === undefined)
         return;
 
@@ -254,7 +274,7 @@ export function pasteFromBreakpointDesign(item, fromName, toName, fromUndoRedo) 
     if (!item.props.griddata.bpData[toName])
         item.props.griddata.bpData[toName] = {};
 
-    let currentData = item.props.griddata.bpData[toName];
+    let currentData = item.props.griddata.bpData[toName].design;
 
     if (!fromUndoRedo) {
         let itemId = item.props.id;
@@ -262,14 +282,17 @@ export function pasteFromBreakpointDesign(item, fromName, toName, fromUndoRedo) 
         item.props.undoredo.add((idMan) => {
             pasteFromBreakpointDesign(idMan.getItem(itemId), fromName, toName, true);
         }, (idMan) => {
-            idMan.getItem(itemId).props.griddata.bpData[toName] = oldData;
+            idMan.getItem(itemId).props.griddata.bpData[toName].design = oldData;
             idMan.getItem(itemId).onBreakpointChange(
                 idMan.getItem(itemId).props.breakpointmanager.getWindowWidth(),
                 idMan.getItem(itemId).props.breakpointmanager.current());
         });
     }
 
+    if (!currentData)
+        currentData = {};
     merge(currentData, fromData);
+    item.props.griddata.bpData[toName].design = currentData;
 
     item.onBreakpointChange(
         item.props.breakpointmanager.getWindowWidth(),
@@ -369,37 +392,70 @@ export function copyDesign(item, fromAll) {
 
     let designDatas = [];
     if (!fromAll && item.props.griddata.bpData[currentBpName])
-        designDatas[0] = item.props.griddata.bpData[currentBpName];
+        designDatas[0] = {
+            bpName: currentBpName,
+            design: item.props.griddata.bpData[currentBpName].design,
+            justOneBp: true
+        };
     else if (fromAll) {
         Object.keys(item.props.griddata.bpData).forEach((key, index) => {
-            designDatas[index] = item.props.griddata.bpData[key];
+            designDatas[index] = {
+                bpName: key,
+                design: item.props.griddata.bpData[key].design
+            };
         });
     }
 
+    console.log("copyDesign", designDatas);
     if (designDatas.length > 0)
-        item.props.breakpointmanager.copyDesign(designDatas);
+        item.props.breakpointmanager.copyDesign(designDatas, item);
 }
 
-export function pasetDesign(item, fromUndoRedo)     {
+export function pasteDesign(item, fromUndoRedo) {
     if (!fromUndoRedo) {
         let itemId = item.props.id;
-        let copyDesign = cloneObject(this.props.breakpointmanager.getCopyDesign());
-        let oldDesign = cloneObject(item.props.griddata.bpData);
+        let copyDesign = cloneObject(item.props.breakpointmanager.getCopyDesign().designDatas);
+        let allOldDesign = cloneObject(Object.keys(item.props.griddata.bpData).map(key => {
+            return {
+                bpName: key,
+                design: item.props.griddata.bpData[key].design
+            }
+        }));
         item.props.undoredo.add((idMan) => {
-            let temp = cloneObject(idMan.getItem(itemId).props.breakpointmanager.cloneDesignDatas);
-            idMan.getItem(itemId).props.breakpointmanager.cloneDesignDatas = copyDesign;
-            idMan.getItem(itemId).props.breakpointmanager.pasteDesign(idMan.getItem(itemId));
-            idMan.getItem(itemId).props.breakpointmanager.cloneDesignDatas = temp;
+            let item = idMan.getItem(itemId);
+            console.log(111);
+            let temp = cloneObject(item.props.breakpointmanager.getCopyDesign().designDatas);
+            let sourceItemTemp = item.props.breakpointmanager.getCopyDesign().sourceItem;
+            console.log(222);
+            item.props.breakpointmanager.cloneDesignDatas = {
+                designDatas: copyDesign,
+                sourceItem: item
+            };
+            item.props.breakpointmanager.pasteDesign(item);
+            console.log(333);
+            item.props.breakpointmanager.cloneDesignDatas = {
+                designDatas: temp,
+                sourceItem: sourceItemTemp
+            };
 
-            idMan.getItem(itemId).onBreakpointChange(
-                idMan.getItem(itemId).props.breakpointmanager.getWindowWidth(),
-                idMan.getItem(itemId).props.breakpointmanager.current());
+            item.onBreakpointChange(
+                item.props.breakpointmanager.getWindowWidth(),
+                item.props.breakpointmanager.current());
+
+            item.props.aglComponent.updateDesign &&
+                item.props.aglComponent.updateDesign(item.getCompositeFromData("design"));
+
+            item.updateLayout();
+            console.log(444);
         }, (idMan) => {
-            idMan.getItem(itemId).griddata.bpData = oldDesign;
+            let item = idMan.getItem(itemId);
+            allOldDesign.forEach(designData => {
+                item.props.griddata.bpData[designData.bpName].design = cloneObject(designData.design);
+            });
 
-            idMan.getItem(itemId).onBreakpointChange(
-                idMan.getItem(itemId).props.breakpointmanager.getWindowWidth(),
-                idMan.getItem(itemId).props.breakpointmanager.current());
+            item.onBreakpointChange(
+                item.props.breakpointmanager.getWindowWidth(),
+                item.props.breakpointmanager.current());
         });
     }
 
@@ -408,6 +464,11 @@ export function pasetDesign(item, fromUndoRedo)     {
     item.onBreakpointChange(
         item.props.breakpointmanager.getWindowWidth(),
         item.props.breakpointmanager.current());
+
+    item.props.aglComponent.updateDesign &&
+        item.props.aglComponent.updateDesign(item.getCompositeFromData("design"));
+
+    item.updateLayout();
 }
 
 export function isGroupSelected(item) {
@@ -495,7 +556,7 @@ export function createStack(items, fromUndoRedo) {
             document={items[0].props.document}
         />;
 
-    let parentRect = itemsParent.prepareRects(true);
+    let parentRect = itemsParent.prepareRects();
     itemsParent.addChild(stackNode, undefined, undefined, undefined, (agl) => {
         if (!fromUndoRedo) {
             let stackId = agl.props.id;
@@ -520,7 +581,8 @@ export function createStack(items, fromUndoRedo) {
             agl.calculateGridItem(left - parentRect.left, top - parentRect.top,
                 itemsParent, undefined, undefined, itemsParent.getSize(false));
         agl.setGridItemStyle(gridItemStyle);
-        agl.prepareRects(true);
+        agl.prepareRects();
+        // agl.prepareRects(true);
         setTimeout(() => {
             items = items.filter(item => {
                 return item.props.id !== agl.props.id;
@@ -591,7 +653,8 @@ export function removeStackFromAGL(stackAgl, childIds, fromUndoRedo) {
     });
 
     newParent.onSelect(true);
-    newParent.prepareRects(true);
+    newParent.prepareRects();
+    // newParent.prepareRects(true);
     let removeChilds = (sorted) => {
         let item = sorted.shift();
 
@@ -620,8 +683,10 @@ export function removeStackFromAGL(stackAgl, childIds, fromUndoRedo) {
     });*/
 }
 
-export function createItem(parent, childData, fromUndoRedo, gridItemStyle, style) {
+export function createItem(parent, childData, fromUndoRedo, gridItemStyle, style, onChildMounted) {
     childData.props = cloneObject(parent.getClearProps({...childData.props}, true));
+    childData.zIndex = parent.getNextIndexData(0).lastZIndex + 1;
+
     if (gridItemStyle) {
         parent.setDataInBreakpoint(
             "gridItemStyle", gridItemStyle, childData.props.griddata,
@@ -636,6 +701,8 @@ export function createItem(parent, childData, fromUndoRedo, gridItemStyle, style
     let child = parent.createChildByData(
         childData , DynamicComponents, undefined, (newItem) => {
         newItem.onSelect(true);
+
+        onChildMounted && onChildMounted(newItem);
 
         if (!fromUndoRedo) {
             let itemId = newItem.props.id;
@@ -660,19 +727,21 @@ export function createItem(parent, childData, fromUndoRedo, gridItemStyle, style
     parent.updateLayout();
 }
 
-export function setDataInBreakpoint(prop, value, item, addToUndo, breakpointName){
+export function setDataInBreakpoint(prop, value, item, addToUndo, breakpointName, updateLayout){
     if (addToUndo) {
         let oldValue = item.getFromData(prop, undefined, breakpointName);
         oldValue = cloneObject(oldValue);
         let saveValue = cloneObject(value);
         let itemId = item.props.id;
         item.props.undoredo.add((idMan) => {
-            setDataInBreakpoint(prop, saveValue, idMan.getItem(itemId), false, breakpointName);
+            setDataInBreakpoint(prop, saveValue, idMan.getItem(itemId), false, breakpointName, updateLayout);
         }, (idMan) => {
-            setDataInBreakpoint(prop, oldValue, idMan.getItem(itemId), false, breakpointName);
-        });
+            setDataInBreakpoint(prop, oldValue, idMan.getItem(itemId), false, breakpointName, updateLayout);
+        }, addToUndo);
     }
     item.setDataInBreakpoint(prop, value, undefined, breakpointName);
+
+    updateLayout && item.updateLayout();
 }
 
 export function setTempData(prop, value, item, addToUndo){
@@ -706,6 +775,25 @@ export function setStyle(newStyle, item, addToUndo, breakpointName, updateLayout
     updateLayout && item.updateLayout();
 }
 
+export function setStyleParam (param, value, item, addToUndo, breakpointName, dontAddToSnap) {
+    if (addToUndo) {
+        let oldStyle = item.getFromData("style", undefined, breakpointName);
+        oldStyle = cloneObject(oldStyle);
+        let itemId = item.props.id;
+        item.props.undoredo.add((idMan) => {
+            setStyleParam(param, value, idMan.getItem(itemId), false, breakpointName, dontAddToSnap);
+        }, (idMan) => {
+            setStyle(oldStyle, idMan.getItem(itemId));
+        }, addToUndo);
+    }
+
+    let style = item.hasDataInBreakPoint("style", undefined, breakpointName) || {};
+    style[param] = value;
+    if (value === undefined)
+        delete style[param];
+    item.setStyle(style, undefined, breakpointName, undefined, dontAddToSnap);
+}
+
 export function setNewSize(prop, value, item, addToUndo, breakpointName, updateLayout){
     if (addToUndo) {
         let oldValue = item.getFromData(`style.${prop}`, undefined, breakpointName);
@@ -721,21 +809,6 @@ export function setNewSize(prop, value, item, addToUndo, breakpointName, updateL
     updateLayout && item.updateLayout();
 }
 
-export function setDesignStyle(newDesignStyle, item, addToUndo, breakpointName){
-    if (addToUndo) {
-        let oldDesignStyle = item.getFromData("designStyle", undefined, breakpointName);
-        oldDesignStyle = cloneObject(oldDesignStyle);
-        let saveDesignStyle = cloneObject(newDesignStyle);
-        let itemId = item.props.id;
-        item.props.undoredo.add((idMan) => {
-            setStyle(saveDesignStyle, idMan.getItem(itemId));
-        }, (idMan) => {
-            setStyle(oldDesignStyle, idMan.getItem(itemId));
-        });
-    }
-    item.setDesignStyle(newDesignStyle);
-}
-
 export function setGridItemStyle(newGridItemStyle, item, addToUndo, breakpointName){
     if (addToUndo) {
         let oldGridItemStyle = item.getFromData("gridItemStyle", undefined, breakpointName);
@@ -749,6 +822,7 @@ export function setGridItemStyle(newGridItemStyle, item, addToUndo, breakpointNa
         });
     }
     item.setGridItemStyle(newGridItemStyle);
+    item.invalidateSize(true, true, true);
 }
 
 export function setGridArea(newGridArea, item, addToUndo){
@@ -863,19 +937,434 @@ export function rotate (item, degree, fromUndoRedo) {
 
     item.setDataInBreakpoint("transform.rotateDegree", degree);
     item.setTransformStyle(item.getFromData("transform"));
-    item.updateLayout();
+    item.updateLayout(item.props.select.onScrollItem);
 }
 
-export function getRotatedRectangle (x, y, degree) {
-    let rad = (degree || 0) * Math.PI/180;
+export function getViewRatioStyle (value) {
+    if (value.includes('vh'))
+        return`calc(${value} * var(--vh-ratio))`;
+    if (value.includes('vw'))
+        return`calc(${value} * var(--vw-ratio))`;
 
-    let c = (x * Math.tan(rad) - y) / (Math.tan(rad) * Math.tan(rad) - 1);
-    let b = (y * Math.tan(rad) - x) / (Math.tan(rad) * Math.tan(rad) - 1);
-    let a = c * Math.tan(rad);
-    let d = b * Math.tan(rad);
+    return value;
+}
 
-    let x2 = Math.sqrt(b * b + d * d);
-    let y2 = Math.sqrt(a * a + c * c);
+export function getValueFromCSSValue (value) {
+    if (!value)
+        return "";
 
-    return {x2, y2};
+    if (value.includes("%")) {
+        return Math.round(parseFloat(value.replace("%", "")) * 100) / 100;
+    }
+
+    if (value.includes("px")) {
+        return Math.round(parseFloat(value.replace("px", "")) * 100) / 100;
+    }
+
+    if (value.includes("vh")) {
+        return Math.round(parseFloat(
+            value.replace(/[^0-9\.]/g, '')
+        ) * 100) / 100;
+    }
+
+    if (value.includes("vw")) {
+        return Math.round(parseFloat(
+            value.replace(/[^0-9\.]/g, '')
+        ) * 100) / 100;
+    }
+
+    return value;
+}
+
+export function getPxValueFromCSSValue (value, parentValue, item) {
+    if (!value)
+        return;
+    if (!isNaN(value))
+        return value;
+
+    if (value.includes("%")) {
+        let percent = Math.round(parseFloat(value.replace("%", "")) * 100) / 100;
+        return percent * parentValue / 100;
+    }
+
+    if (value.includes("px")) {
+        return Math.round(parseFloat(value.replace("px", "")) * 100) / 100;
+    }
+
+    if (value.includes("vh")) {
+        let percent = Math.round(parseFloat(
+            value.replace(/[^0-9\.]/g, '')
+        ) * 100) / 100;
+
+        return percent * item.props.breakpointmanager.getWindowHeight() / 100;
+    }
+
+    if (value.includes("vw")) {
+        let percent =  Math.round(parseFloat(
+            value.replace(/[^0-9\.]/g, '')
+        ) * 100) / 100;
+
+        return percent * item.props.breakpointmanager.getWindowWidth() / 100;
+    }
+
+    return value;
+}
+
+export function getStyleValueFromPx (value, parentValue, unit, item) {
+    if (!unit)
+        unit = "px";
+
+    if (unit === "px") {
+        return `${value}${unit}`;
+    }
+    if (unit === "%") {
+        return `${value / parentValue * 100}${unit}`;
+    }
+    if (unit === "vh") {
+        value = `${value / item.props.breakpointmanager.getWindowHeight() * 100}vh`;
+        return `calc(${value} * var(--vh-ratio))`;
+    }
+    if (unit === "vw") {
+        value = `${value / item.props.breakpointmanager.getWindowWidth() * 100}vw`;
+        return `calc(${value} * var(--vw-ratio))`;
+    }
+
+    return unit;
+}
+
+export function getUnitFromStyleValue (value) {
+    if (!value)
+        return "none";
+
+    if (value.includes("%")) {
+        return "%";
+    }
+
+    if (value.includes("px")) {
+        return "px";
+    }
+
+    if (value.includes("vw")) {
+        return "vw";
+    }
+
+    if (value.includes("vh")) {
+        return "vh";
+    }
+
+    return value;
+}
+
+export function createContextMenu(e, item, onClose) {
+    if (item.props.isPage)
+        return;
+
+    let menu = [];
+
+    item.getContextMenu() && menu.push(item.getContextMenu());
+
+    // Copy section
+    let copySection = [
+        {
+            name: "Copy",
+            onClick: (e) => {
+                item.props.copyMan.copy(item);
+            },
+            shortcut: "Ctrl + C"
+        },
+        {
+            name: "Paste",
+            onClick: (e) => {
+                item.props.copyMan.paste(item);
+            },
+            shortcut: "Ctrl + V"
+        },
+        {
+            name: "Duplicate",
+            onClick: (e) => {
+                item.props.copyMan.duplicate(item);
+            },
+            shortcut: "Ctrl + D"
+        },
+        {
+            name: "Copy Element Design",
+            subMenu: [
+                {
+                    name: "From this breakpoint",
+                    onClick: (e) => {
+                        copyDesign(item);
+                    }
+                },
+                {
+                    name: "From all breakpoint",
+                    onClick: (e) => {
+                        copyDesign(item, true);
+                    }
+                },
+            ]
+        },
+    ];
+    let copyDesignItem = item.props.breakpointmanager.getCopyDesign();
+    if (copyDesignItem && isSameFamily(copyDesignItem.sourceItem, item))
+        copySection.push({
+            name: "Paste Design",
+            onClick: (e) => {
+                pasteDesign(item);
+            }
+        });
+    let overrideBps = [];
+    let currentBpName = item.props.breakpointmanager.current();
+    Object.keys(item.props.griddata.bpData).forEach(bpName => {
+        if (bpName === currentBpName ||
+            item.props.breakpointmanager.getHighestBpName() === bpName)
+            return;
+
+        if (item.props.griddata.bpData[bpName] && item.props.griddata.bpData[bpName].design) {
+            if (!item.props.griddata.bpData[currentBpName] ||
+                !deepEqual(item.props.griddata.bpData[bpName].design,
+                    item.props.griddata.bpData[currentBpName].design)) {
+                overrideBps.push(bpName);
+            }
+        }
+    });
+    if (overrideBps.length > 0) {
+        copySection.push({
+            name: "Paste From Breakpoint",
+            subMenu: overrideBps.map(bpName => {
+                return {
+                    name: bpName,
+                    onClick: (e) => {
+                        pasteFromBreakpointDesign(item, bpName, currentBpName);
+                    }
+                };
+            })
+        });
+    }
+    menu.push(copySection);
+
+    let deleteSection = [];
+    if (!isHideInBreakpoint(item)) {
+        deleteSection.push(
+            {
+                name: "Hide In Breakpoint",
+                onClick: (e) => {
+                    hideInBreakPoint(item);
+                }
+            });
+    }
+    deleteSection.push({
+        name: "Delete",
+        onClick: (e) => {
+            item.delete();
+        },
+        shortcut: "Delete"
+    });
+
+    if (currentBpName !== item.props.breakpointmanager.getHighestBpName()) {
+        if (item.props.griddata.bpData[currentBpName] &&
+            Object.keys(item.props.griddata.bpData[currentBpName]).length > 0)
+        {
+            deleteSection.unshift({
+                name: "Remove Breakpoint Overrides",
+                onClick: (e) => {
+                    // TODO add these lines to a function with undo support
+                    delete item.props.griddata.bpData[currentBpName];
+                    item.onBreakpointChange(
+                        item.props.breakpointmanager.getWindowWidth(),
+                        item.props.breakpointmanager.current());
+                    item.props.select.onScrollItem();
+                }
+            });
+        }
+    }
+    menu.push(deleteSection);
+
+    let shortcutSection = [];
+    if (!item.props.griddata.isSection) {
+        shortcutSection.push({
+            name: "Arrange",
+            subMenu: [
+                {
+                    name: "Move Forward",
+                    shortcut: "Ctrl + Alt + ↑",
+                    onClick: (e) => {
+                        arrangeIndex(item.props.parent, item, "forward", true);
+                    }
+                },
+                {
+                    name: "Move to Front",
+                    shortcut: "Ctrl + ↑",
+                    onClick: (e) => {
+                        arrangeIndex(item.props.parent, item, "front", true);
+                    }
+                },
+                {
+                    name: "Move Backward",
+                    shortcut: "Ctrl + Alt + ↓",
+                    onClick: (e) => {
+                        arrangeIndex(item.props.parent, item, "backward", true);
+                    }
+                },
+                {
+                    name: "Move to Back",
+                    shortcut: "Ctrl + ↓",
+                    onClick: (e) => {
+                        arrangeIndex(item.props.parent, item, "back", true);
+                    }
+                }
+            ]
+        });
+    }
+    menu.push(shortcutSection);
+
+    let sectionSection = [];
+    if (item.props.isSection) {
+        if (item.props.isVerticalSection) {
+            sectionSection.push({
+                name: "Move Left",
+                onClick: (e) => {
+                    item.props.parent.props.aglComponent.moveLeft(item.props.id);
+                },
+            });
+            sectionSection.push({
+                name: "Move Right",
+                onClick: (e) => {
+                    item.props.parent.props.aglComponent.moveRight(item.props.id);
+                },
+            });
+        } else {
+            sectionSection.push({
+                name: "Move Up",
+                onClick: (e) => {
+                    item.props.parent.props.aglComponent.moveUp(item.props.id);
+                },
+            });
+            sectionSection.push({
+                name: "Move Down",
+                onClick: (e) => {
+                    item.props.parent.props.aglComponent.moveDown(item.props.id);
+                },
+            });
+        }
+    }
+    menu.unshift(sectionSection);
+
+    let masterSection = [
+    ];
+
+    return <ContextMenu
+        menu={menu}
+        onClose={onClose}
+        clientX={e.clientX}
+        clientY={e.clientY}
+    />
+}
+
+export function isHideInBreakpoint(item) {
+    if (!item)
+        return false;
+
+    if (typeof item.getCompositeFromData("style").display === 'string')
+        return item.getCompositeFromData("style").display.includes("none");
+
+    return false;
+}
+
+export function isSameFamily(item1, item2) {
+    if (item1.props.tagName === item2.props.tagName)
+        return true;
+
+    if (item1.props.griddata.isSection && item2.props.griddata.isSection)
+        return true;
+}
+
+export function isLeftClick (e) {
+    if (e.button === 0)
+        return true;
+
+    return false;
+}
+
+export function isRightClick (e) {
+    if (e.button === 2)
+        return true;
+
+    return false;
+}
+
+export function getResizeDelta (degree, dir, delta) {
+    let rad = degree * Math.PI / 180;
+    let cx = delta.x, cy = delta.y;
+    let cxy = Math.sqrt(cx * cx + cy * cy);
+    let cxp = cy !== 0 ? cy / Math.tan(rad) : 0;
+    let cyp = cx !== 0 ? -cx / Math.tan(rad) : 0;
+
+    let thetaH = Math.atan(Math.abs(cy) / Math.abs(cx));
+    let thetaW = Math.atan(Math.abs(cy) / Math.abs(cx));
+
+    if (cx * cy > 0)
+        thetaW = -thetaW;
+    if (cx * cy > 0)
+        thetaH = -thetaH;
+
+    let Dh = Math.abs(Math.sin(rad + thetaH) * cxy);
+    let Dw = Math.abs(Math.cos(rad + thetaW) * cxy);
+
+    if (cxp < cx)
+        Dh = -Dh;
+    if (cyp > cy)
+        Dw = -Dw;
+
+    if (degree > 180) {
+        Dh = -Dh;
+        Dw = -Dw;
+    }
+
+    let dxH = Dh * Math.sin(rad);
+    let dyH = Dh * Math.cos(rad);
+    let dxW = Dw * Math.cos(rad);
+    let dyW = Dw * Math.sin(rad);
+
+    let finalDelta = {
+        top: 0, left: 0, width: 0, height: 0
+    };
+
+    if (dir.includes('n')) {
+        finalDelta.height -= Dh;
+        finalDelta.top += ((Dh + dyH) / 2);
+        finalDelta.left -= (dxH / 2);
+    }
+
+    if (dir.includes('s')) {
+        finalDelta.height += Dh;
+        finalDelta.top -= ((Dh - dyH) / 2);
+        finalDelta.left -= (dxH / 2);
+    }
+
+    if (dir.includes('w')) {
+        finalDelta.width -= Dw;
+        finalDelta.top += (dyW / 2);
+        finalDelta.left += ((Dw + dxW) / 2);
+    }
+
+    if (dir.includes('e')) {
+        finalDelta.width += Dw;
+        finalDelta.top += (dyW / 2);
+        finalDelta.left -= ((Dw - dxW) / 2);
+    }
+
+    console.log("finalDelta", finalDelta, Dw, dyW, dxW);
+    return finalDelta;
+}
+
+export function sortBy (array, param) {
+    array = array.sort((a, b) => {
+        if (a[param] < b[param]) {
+            return -1;
+        } else if (a[param] === b[param]) {
+            return 0;
+        }
+        return 1;
+    });
+    return array;
 }

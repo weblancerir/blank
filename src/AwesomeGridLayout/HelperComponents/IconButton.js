@@ -12,6 +12,7 @@ export default class IconButton extends React.Component {
                     borderRadius: 4
                 }, ...this.props.buttonBaseStyle}}
                 className={this.props.className}
+                disabled={this.props.disabled}
             >
                 <div style={{...{
                     display: "flex",

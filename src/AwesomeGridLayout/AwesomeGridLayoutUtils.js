@@ -2,6 +2,8 @@ import React from "react";
 import {Resizable} from "re-resizable";
 import css from 'dom-css';
 import {exist, getFromData, getSortedBreakPoints, setData} from "./BreakPointManager";
+import debounce from 'lodash.debounce';
+// import {css, StyleSheet} from 'aphrodite'
 
 let CalculateLayout = (griddatas, layoutType, parentSize, dir, compactType, scrollType, snap
                        , breakpointdata, hasOwnBreakPoints, parentGriddata) => {
@@ -711,7 +713,7 @@ let getDefaultChildgriddata = (breakpointdata) => {
         autoWidth: false,
         overflowData: {
             state: 'hide',
-            scroll: 'vertical'
+            overflowY: 'scroll'
         },
     };
     let griddata = {
@@ -782,20 +784,42 @@ function throttleDebounce(fn, ms) {
     let dontCall;
 
     return _ => {
+        let args = arguments;
+
         if (!dontCall) {
-            fn.apply(this, arguments);
             dontCall = true;
+            fn.apply(this, args);
             setTimeout(_ => {
                 dontCall = false;
-            }, ms)
+            }, ms);
         }
 
         clearTimeout(deTimer);
         deTimer = setTimeout(_ => {
-            deTimer = null;
-            fn.apply(this, arguments);
-        }, ms)
+            fn.apply(this, args);
+        }, ms);
     };
+}
+
+function throttleDebounce2(fn, threshold) {
+    threshold = threshold || 250;
+    let last, deferTimer;
+
+    let db = debounce(fn);
+    return function() {
+        let now = +new Date, args = arguments;
+        if(!last || (last && now < last + threshold)) {
+            clearTimeout(deferTimer);
+            db.apply(this, args);
+            deferTimer = setTimeout(function() {
+                last = now;
+                fn.apply(this, args);
+            }, threshold);
+        } else {
+            last = now;
+            fn.apply(this, args);
+        }
+    }
 }
 
 let getOverFlow = (griddata, parent, breakpointdata) => {
@@ -888,7 +912,7 @@ export function getOffsetTop( elem )
 export function JSToCSS(JS){
     let cssString = "";
     for (let objectKey in JS) {
-        cssString += objectKey.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`) + ": " + JS[objectKey] + ";\n";
+        cssString += objectKey.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`) + ": " + JS[objectKey] + "; ";
     }
     return cssString;
 };
@@ -899,6 +923,7 @@ export function updateStyle(styleNode, style, styleName){
         JSToCSS(style)
         }}
             `;
+
     styleNode.innerHTML = "";
     if (styleNode.styleSheet) { // IE
         styleNode.styleSheet.cssText = css;
@@ -915,6 +940,7 @@ export function appendStyle(style, styleId, styleName){
             `;
     let styleNode = document.createElement('style');
     styleNode.setAttribute("id", styleId);
+    // styleNode.setAttribute("title", styleId);
 
     styleNode.type = 'text/css';
 
@@ -926,6 +952,18 @@ export function appendStyle(style, styleId, styleName){
 
     document.getElementsByTagName('head')[0].appendChild(styleNode);
 };
+
+/*export function appendStyle(style, styleId, styleName){
+    return StyleSheet.create({
+        [styleId]: style
+    })[styleId];
+};
+
+export function updateStyle(styleNode, style, styleName){
+    return StyleSheet.create({
+        [styleName]: style
+    });
+};*/
 
 export function getScrollParent(node) {
     if (node == null) {

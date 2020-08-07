@@ -28,6 +28,7 @@ export default class AdjustmentStretch extends React.Component {
                 className="AdjustmentStretchRoot"
                 onPointerDown={this.onMouseDown}
                 onClick={this.onClick}
+                style={this.props.style}
             >
                 {
                     isStretch && <img draggable={false} width={16} height={16} src={require('./icons/minimize.svg')} />

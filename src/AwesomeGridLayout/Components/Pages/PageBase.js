@@ -5,14 +5,21 @@ import Footer from "../Containers/Footer";
 import Section from "../Containers/Section";
 import AGLComponent from "../Helpers/AGLComponent";
 import DynamicComponents from "../../Dynamic/DynamicComponents";
-import {swapArrayElements} from "../../AwesomeGridLayoutUtils";
+import {initGriddata, swapArrayElements} from "../../AwesomeGridLayoutUtils";
+import InspectorBreadcrumbs from "../../Test/Inspector/InspectorBreadcrumbs";
+import InspectorPadding from "../../Test/Inspector/InspectorPadding";
+import InspectorBackground from "../../Test/Inspector/InspectorBackground";
+import './PageBase.css';
+import {isHideInBreakpoint} from "../../AwesomwGridLayoutHelper";
+import {getFromData} from "../../BreakPointManager";
 
 const mainColTemplate = "minmax(0px,1fr)";
 
-export default class PageBase extends AGLComponent{
+export default class PageBase extends AGLComponent {
     constructor(props) {
         super(props);
         this.state = {
+
         };
 
         this.gridTemplateRows = "auto";
@@ -26,17 +33,38 @@ export default class PageBase extends AGLComponent{
         this.root = React.createRef();
 
         this.initKeyboard();
+
+        this.initDataFromPageData(props);
     }
 
+    initDataFromPageData = (props) => {
+        if (!props.griddata.initialized)
+            initGriddata(props.griddata, this.props.breakpointmanager);
+
+        if (!props.griddata.allSectionsH)
+            props.griddata.allSectionsH = [];
+        if (!props.griddata.allSectionsV)
+            props.griddata.allSectionsV = [null];
+
+        this.allSectionsH = props.griddata.allSectionsH;
+        this.allSectionsV = props.griddata.allSectionsV;
+        let grid = this.props.breakpointmanager.getFromData(props.griddata, "grid");
+        if (grid) {
+            this.gridX = grid.x;
+            this.gridY = grid.y;
+            this.gridTemplateRows = grid.gridTemplateRows;
+            this.gridTemplateColumns = grid.gridTemplateColumns;
+        }
+    };
+
     initKeyboard = () => {
-        window.addEventListener("keydown",(e) =>{
+        window.addEventListener("keydown", (e) => {
             e = e || window.event;
             let key = e.which || e.keyCode; // keyCode detection
             let ctrl = e.ctrlKey ? e.ctrlKey : (key === 17); // ctrl detection
 
-            if ( key === 38 && ctrl ) {
+            if (key === 38 && ctrl) {
                 e.preventDefault();
-                console.log("ctrl + Up");
                 let selectedItem = this.props.select.getSelected();
                 if (this.getHorizontalSection(selectedItem.props.id))
                     this.moveUp(selectedItem.props.id);
@@ -44,7 +72,7 @@ export default class PageBase extends AGLComponent{
                 this.props.select.onScrollItem(e, this);
             }
 
-            if ( key === 40 && ctrl ) {
+            if (key === 40 && ctrl) {
                 e.preventDefault();
                 console.log("ctrl + Down");
                 let selectedItem = this.props.select.getSelected();
@@ -54,9 +82,8 @@ export default class PageBase extends AGLComponent{
                 this.props.select.onScrollItem(e, this);
             }
 
-            if ( key === 37 && ctrl ) {
+            if (key === 37 && ctrl) {
                 e.preventDefault();
-                console.log("ctrl + Left");
                 let selectedItem = this.props.select.getSelected();
                 if (this.getVerticalSection(selectedItem.props.id))
                     this.moveLeft(selectedItem.props.id);
@@ -64,7 +91,7 @@ export default class PageBase extends AGLComponent{
                 this.props.select.onScrollItem(e, this);
             }
 
-            if ( key === 39 && ctrl ) {
+            if (key === 39 && ctrl) {
                 e.preventDefault();
                 console.log("ctrl + Right");
                 let selectedItem = this.props.select.getSelected();
@@ -76,22 +103,23 @@ export default class PageBase extends AGLComponent{
         });
     };
 
-    componentDidMount(){
-        this.addSectionQueue(0, "Header", DynamicComponents, undefined, false);
-        this.addSectionQueue(1, "Section", DynamicComponents, undefined, false);
-        this.addSectionQueue(2, "Footer", DynamicComponents, undefined, false);
+    componentDidMount() {
+        // TODO remove tests
+        // this.addSectionQueue(0, "Header", DynamicComponents, undefined, false);
+        // this.addSectionQueue(1, "Section", DynamicComponents, undefined, false);
+        // this.addSectionQueue(2, "Footer", DynamicComponents, undefined, false);
     }
 
     getDefaultData = () => {
         return {
             isContainer: true,
             draggable: false,
-            resizable: false,
+            resizable: true,
             pageResize: true,
             bpData: {
                 overflowData: {
                     state: "scroll",
-                    scroll: "vertical",
+                    overflowY: "scroll",
                     auto: true
                 },
                 grid: {
@@ -106,14 +134,14 @@ export default class PageBase extends AGLComponent{
     };
 
     getHorizontalSection = (id) => {
-        return this.allSectionsH.find(h => {
-            return h.props.id === id;
-        })
+        return this.props.idMan.getItem(this.allSectionsH.find(h => {
+            return h === id;
+        }));
     };
 
     deleteHorizontalSection = (id) => {
         let index = this.allSectionsH.findIndex(h => {
-            return h.props.id === id;
+            return h === id;
         });
         if (index < 0)
             return false;
@@ -124,6 +152,7 @@ export default class PageBase extends AGLComponent{
         this.gridX--;
 
         let currentSection = this.allSectionsH[index];
+        currentSection = this.props.idMan.getItem(currentSection);
         let gridArea = currentSection.getGridArea();
         let areas = gridArea.split('/');
         let x1 = parseInt(areas[0]);
@@ -137,6 +166,8 @@ export default class PageBase extends AGLComponent{
         this.allSectionsV.forEach(verticalSection => {
             if (verticalSection === null)
                 return;
+
+            verticalSection = this.props.idMan.getItem(verticalSection);
 
             let gridArea = verticalSection.getGridArea();
             let areas = gridArea.split('/');
@@ -156,6 +187,7 @@ export default class PageBase extends AGLComponent{
             verticalSection.setGridArea(gridArea, this.props.breakpointmanager.getHighestBpName());
         });
         this.allSectionsH.forEach(horizontalSection => {
+            horizontalSection = this.props.idMan.getItem(horizontalSection);
             let gridArea = horizontalSection.getGridArea();
             let areas = gridArea.split('/');
             let x13 = parseInt(areas[0]);
@@ -185,22 +217,25 @@ export default class PageBase extends AGLComponent{
             gridTemplateColumns: this.gridTemplateColumns
         }, undefined, this.props.breakpointmanager.getHighestBpName());
 
+        this.getAgl().invalidateSize();
+        this.props.select.onScrollItem();
         return true;
     };
 
     getVerticalSection = (id) => {
-        return this.allSectionsV.find(h => {
+        return this.props.idMan.getItem(this.allSectionsV.find(h => {
             if (h === null)
                 return false;
-            return h.props.id === id;
-        })
+
+            return h === id;
+        })) || null;
     };
 
     deleteVerticalSection = (id) => {
         let index = this.allSectionsV.findIndex(h => {
             if (h === null)
                 return false;
-            return h.props.id === id;
+            return h === id;
         });
         if (index < 0)
             return false;
@@ -208,6 +243,7 @@ export default class PageBase extends AGLComponent{
         this.gridY--;
 
         let currentSection = this.allSectionsV[index];
+        currentSection = this.props.idMan.getItem(currentSection);
         let gridArea = currentSection.getGridArea();
         let areas = gridArea.split('/');
         let x1 = parseInt(areas[0]);
@@ -223,6 +259,8 @@ export default class PageBase extends AGLComponent{
         this.allSectionsV.forEach(verticalSection => {
             if (verticalSection === null)
                 return;
+
+            verticalSection = this.props.idMan.getItem(verticalSection);
 
             let gridArea = verticalSection.getGridArea();
             let areas = gridArea.split('/');
@@ -240,6 +278,7 @@ export default class PageBase extends AGLComponent{
             verticalSection.setGridArea(gridArea, this.props.breakpointmanager.getHighestBpName());
         });
         this.allSectionsH.forEach(horizontalSection => {
+            horizontalSection = this.props.idMan.getItem(horizontalSection);
             let gridArea = horizontalSection.getGridArea();
             let areas = gridArea.split('/');
             let x13 = parseInt(areas[0]);
@@ -276,6 +315,8 @@ export default class PageBase extends AGLComponent{
             gridTemplateColumns: this.gridTemplateColumns
         }, undefined, this.props.breakpointmanager.getHighestBpName());
 
+        this.getAgl().invalidateSize();
+        this.props.select.onScrollItem();
         return true;
     };
 
@@ -330,6 +371,7 @@ export default class PageBase extends AGLComponent{
 
     // Just for vertical items
     onItemPreResizeStop = (item, e, dir, delta, runtimeStyle) => {
+        console.log("small from top0", this.allSectionsH, this.allSectionsV)
         if (dir === 'e' || dir === 'w')
             return;
 
@@ -340,17 +382,19 @@ export default class PageBase extends AGLComponent{
         let x2 = parseInt(areas[2]);
         let y2 = parseInt(areas[3]);
 
-        this.root.current.prepareRects();
+        this.root.current.prepareRects(false, true);
         let yLineRefs = this.props.gridLine.getYlineRef(this.root.current.props.id);
-        let firstLineTop = yLineRefs[0].current.rect.top;
+        let firstLineTop =
+            this.root.current.getGridLineRect(yLineRefs[0], 0, 'y', this.root.current).top;
 
+        console.log("small from top1", this.allSectionsH, this.allSectionsV)
         if (dir === 'n') {
-            if (delta.y > 0)
-            { // small from top
+            if (delta.y > 0) { // small from top
                 let targetTop = runtimeStyle.top - firstLineTop;
                 let selectedX1 = 1;
                 for (let i = yLineRefs.length - 1; i >= 0; i--) {
-                    let lineTop = yLineRefs[i].current.rect.top - firstLineTop;
+                    let lineTop =
+                        this.root.current.getGridLineRect(yLineRefs[i], i, 'y', this.root.current).top - firstLineTop;
                     if (i === yLineRefs.length - 1) // last line
                         lineTop++;
 
@@ -360,7 +404,10 @@ export default class PageBase extends AGLComponent{
                     }
                 }
 
+                console.log("small from top", this.allSectionsH, this.allSectionsV)
+
                 this.allSectionsH.forEach(horizontalSection => {
+                    horizontalSection = this.props.idMan.getItem(horizontalSection);
                     let gridArea = horizontalSection.getGridArea();
                     let areas = gridArea.split('/');
                     let x12 = parseInt(areas[0]);
@@ -374,10 +421,11 @@ export default class PageBase extends AGLComponent{
                             let checkIndex = this.allSectionsV.findIndex(h => {
                                 if (h === null)
                                     return false;
-                                return h.props.id === item.props.id;
+                                return h === item.props.id;
                             }) - 1;
                             while (checkIndex >= 0) {
                                 let nextSectionV = this.allSectionsV[checkIndex];
+                                nextSectionV = this.props.idMan.getItem(nextSectionV);
                                 if (nextSectionV) {
                                     let gridArea = nextSectionV.getGridArea();
                                     let areas = gridArea.split('/');
@@ -399,10 +447,11 @@ export default class PageBase extends AGLComponent{
                             let checkIndex = this.allSectionsV.findIndex(h => {
                                 if (h === null)
                                     return false;
-                                return h.props.id === item.props.id;
+                                return h === item.props.id;
                             }) + 1;
                             while (checkIndex < this.allSectionsV.length) {
                                 let nextSectionV = this.allSectionsV[checkIndex];
+                                nextSectionV = this.props.idMan.getItem(nextSectionV);
                                 if (nextSectionV) {
                                     let gridArea = nextSectionV.getGridArea();
                                     let areas = gridArea.split('/');
@@ -430,24 +479,23 @@ export default class PageBase extends AGLComponent{
 
                 x1 = Math.min(selectedX1, x2 - 1);
             }
-            else
-            { // big from top
+            else { // big from top
                 let targetTop = runtimeStyle.top - firstLineTop;
                 let selectedX1 = 1;
                 for (let i = yLineRefs.length - 1; i >= 0; i--) {
-                    let lineTop = yLineRefs[i].current.rect.top - firstLineTop;
+                    let lineTop =
+                        this.root.current.getGridLineRect(yLineRefs[i], i, 'y', this.root.current).top - firstLineTop;
                     if (i === yLineRefs.length - 1) // last line
                         lineTop++;
 
-                    console.log("targetTop", targetTop, lineTop);
                     if (targetTop >= lineTop) {
                         selectedX1 = i + 1;
                         break;
                     }
                 }
-                console.log("selectedX1", selectedX1);
 
                 this.allSectionsH.forEach(horizontalSection => {
+                    horizontalSection = this.props.idMan.getItem(horizontalSection);
                     let gridArea = horizontalSection.getGridArea();
                     let areas = gridArea.split('/');
                     let x12 = parseInt(areas[0]);
@@ -461,7 +509,7 @@ export default class PageBase extends AGLComponent{
                             let currentIndex = this.allSectionsV.findIndex(h => {
                                 if (h === null)
                                     return false;
-                                return h.props.id === item.props.id;
+                                return h === item.props.id;
                             });
                             if (mainColIndex > currentIndex) { // move right
                                 y12 = y2;
@@ -478,14 +526,13 @@ export default class PageBase extends AGLComponent{
                 x1 = Math.min(selectedX1, x2 - 1);
             }
         }
-        else
-        { // dir === 's'
-            if (delta.y > 0)
-            { // big from bottom
+        else { // dir === 's'
+            if (delta.y > 0) { // big from bottom
                 let targetBottom = runtimeStyle.height + (runtimeStyle.top - firstLineTop);
                 let selectedX2 = yLineRefs.length;
                 for (let i = 1; i < yLineRefs.length; i++) {
-                    let lineBottom = yLineRefs[i].current.rect.top - firstLineTop;
+                    let lineBottom =
+                        this.root.current.getGridLineRect(yLineRefs[i], i, 'y', this.root.current).top - firstLineTop;
                     if (i === yLineRefs.length - 1) // last line
                         lineBottom++;
 
@@ -496,6 +543,7 @@ export default class PageBase extends AGLComponent{
                 }
 
                 this.allSectionsH.forEach(horizontalSection => {
+                    horizontalSection = this.props.idMan.getItem(horizontalSection);
                     let gridArea = horizontalSection.getGridArea();
                     let areas = gridArea.split('/');
                     let x12 = parseInt(areas[0]);
@@ -509,7 +557,7 @@ export default class PageBase extends AGLComponent{
                             let currentIndex = this.allSectionsV.findIndex(h => {
                                 if (h === null)
                                     return false;
-                                return h.props.id === item.props.id;
+                                return h === item.props.id;
                             });
                             if (mainColIndex > currentIndex) { // move right
                                 y12 = y2;
@@ -525,12 +573,12 @@ export default class PageBase extends AGLComponent{
 
                 x2 = Math.max(selectedX2, x1 + 1);
             }
-            else
-            { // small from bottom
+            else { // small from bottom
                 let targetBottom = runtimeStyle.height + (runtimeStyle.top - firstLineTop);
                 let selectedX2 = yLineRefs.length;
                 for (let i = 1; i < yLineRefs.length; i++) {
-                    let lineBottom = yLineRefs[i].current.rect.top - firstLineTop;
+                    let lineBottom =
+                        this.root.current.getGridLineRect(yLineRefs[i], i, 'y', this.root.current).top - firstLineTop;
                     if (i === yLineRefs.length - 1) // last line
                         lineBottom++;
 
@@ -541,6 +589,7 @@ export default class PageBase extends AGLComponent{
                 }
 
                 this.allSectionsH.forEach(horizontalSection => {
+                    horizontalSection = this.props.idMan.getItem(horizontalSection);
                     let gridArea = horizontalSection.getGridArea();
                     let areas = gridArea.split('/');
                     let x12 = parseInt(areas[0]);
@@ -554,10 +603,11 @@ export default class PageBase extends AGLComponent{
                             let checkIndex = this.allSectionsV.findIndex(h => {
                                 if (h === null)
                                     return false;
-                                return h.props.id === item.props.id;
+                                return h === item.props.id;
                             }) - 1;
                             while (checkIndex >= 0) {
                                 let nextSectionV = this.allSectionsV[checkIndex];
+                                nextSectionV = this.props.idMan.getItem(nextSectionV);
                                 if (nextSectionV) {
                                     let gridArea = nextSectionV.getGridArea();
                                     let areas = gridArea.split('/');
@@ -581,10 +631,11 @@ export default class PageBase extends AGLComponent{
                             let checkIndex = this.allSectionsV.findIndex(h => {
                                 if (h === null)
                                     return false;
-                                return h.props.id === item.props.id;
+                                return h === item.props.id;
                             }) + 1;
                             while (checkIndex < this.allSectionsV.length) {
                                 let nextSectionV = this.allSectionsV[checkIndex];
+                                nextSectionV = this.props.idMan.getItem(nextSectionV);
                                 if (nextSectionV) {
                                     let gridArea = nextSectionV.getGridArea();
                                     let areas = gridArea.split('/');
@@ -625,16 +676,17 @@ export default class PageBase extends AGLComponent{
             return "auto";
         }).join(' ');
 
-        let currentSectionIndex = index !== 0? index - 1: 0;
+        let currentSectionIndex = index !== 0 ? index - 1 : 0;
 
         let currentSection = this.allSectionsH[currentSectionIndex];
+        currentSection = this.props.idMan.getItem(currentSection);
 
         let currentSectionGridArea = currentSection && currentSection.getGridArea();
-        let gridArea = currentSectionGridArea? `${index + 1}/${
-            currentSectionGridArea.split('/')[1]
-            }/${index + 2}/${
-            currentSectionGridArea.split('/')[3]
-            }` :
+        let gridArea = currentSectionGridArea ? `${index + 1}/${
+                currentSectionGridArea.split('/')[1]
+                }/${index + 2}/${
+                currentSectionGridArea.split('/')[3]
+                }` :
             "1/1/2/2"
         ;
 
@@ -645,7 +697,7 @@ export default class PageBase extends AGLComponent{
 
         let section = <Tag
             as={as}
-            portalNodeId={tagName === "Section"? "page-main-sections": undefined}
+            portalNodeId={tagName === "Section" ? "page-main-sections" : undefined}
             isSection
             data={{
                 bpData: {
@@ -667,6 +719,8 @@ export default class PageBase extends AGLComponent{
             if (verticalSection === null)
                 return;
 
+            verticalSection = this.props.idMan.getItem(verticalSection);
+
             let gridArea = verticalSection.getGridArea();
             let areas = gridArea.split('/');
             let x1 = parseInt(areas[0]);
@@ -685,6 +739,7 @@ export default class PageBase extends AGLComponent{
             verticalSection.setGridArea(gridArea, this.props.breakpointmanager.getHighestBpName());
         });
         this.allSectionsH.forEach(horizontalSection => {
+            horizontalSection = this.props.idMan.getItem(horizontalSection);
             let gridArea = horizontalSection.getGridArea();
             let areas = gridArea.split('/');
             let x1 = parseInt(areas[0]);
@@ -708,9 +763,9 @@ export default class PageBase extends AGLComponent{
             y: this.gridY,
             gridTemplateRows: this.gridTemplateRows,
             gridTemplateColumns: this.gridTemplateColumns
-        }, undefined,  this.props.breakpointmanager.getHighestBpName());
+        }, undefined, this.props.breakpointmanager.getHighestBpName());
         this.root.current.addChild(section, undefined, undefined, undefined, (agl) => {
-            this.allSectionsH.splice(index, 0, agl);
+            this.allSectionsH.splice(index, 0, agl.props.id);
             if (callback)
                 callback(agl);
         }, undefined, true);
@@ -730,30 +785,33 @@ export default class PageBase extends AGLComponent{
     addVerticalSection = (index, tagName, dynamicComponents, as, callback) => {
         this.gridY++;
 
-        let currentSectionIndex = index !== 0? index - 1: 0;
+        let currentSectionIndex = index !== 0 ? index - 1 : 0;
 
-        let currentSection = this.allSectionsV[currentSectionIndex];
+        let currentSection = this.allSectionsV[currentSectionIndex] || null;
         if (currentSection === null)
             currentSection = this.allSectionsV[currentSectionIndex + 1];
 
+        currentSection = this.props.idMan.getItem(currentSection);
+
         let currentSectionGridArea = currentSection && currentSection.getGridArea();
-        let gridArea = currentSectionGridArea? `${
+        let gridArea = currentSectionGridArea ? `${
                 currentSectionGridArea.split('/')[0]
-            }/${index + 1}/${
+                }/${index + 1}/${
                 currentSectionGridArea.split('/')[2]
-            }/${index + 2}` :
+                }/${index + 2}` :
             `${1}/${index + 1}/${this.gridX + 1}/${index + 2}`
         ;
 
         if (!tagName)
-            tagName= "Section";
+            tagName = "Section";
 
         let Tag = dynamicComponents[tagName];
 
         let section = <Tag
             as={as}
-            portalNodeId={tagName === "Section"? "page-main-sections": undefined}
+            portalNodeId={tagName === "Section" ? "page-main-sections" : undefined}
             isSection
+            isVerticalSection
             data={{
                 bpData: {
                     gridItemStyle: {
@@ -772,12 +830,13 @@ export default class PageBase extends AGLComponent{
                 height: "auto",
                 minHeight: "auto",
             }}
-            resizeSides={['e','w', 'n', 's']}
+            resizeSides={['e', 'w', 'n', 's']}
             onItemPreDelete={this.onItemPreDelete}
             onItemPreResizeStop={this.onItemPreResizeStop}
         />;
 
         this.allSectionsH.forEach(horizontalSection => {
+            horizontalSection = this.props.idMan.getItem(horizontalSection);
             let gridArea = horizontalSection.getGridArea();
             let areas = gridArea.split('/');
             let x1 = parseInt(areas[0]);
@@ -798,6 +857,7 @@ export default class PageBase extends AGLComponent{
         this.allSectionsV.forEach(verticalSection => {
             if (verticalSection === null)
                 return;
+            verticalSection = this.props.idMan.getItem(verticalSection);
 
             let gridArea = verticalSection.getGridArea();
             let areas = gridArea.split('/');
@@ -818,7 +878,6 @@ export default class PageBase extends AGLComponent{
         });
 
         let mainColIndex = this.getMainColIndex(index);
-        console.log("mainColIndex", mainColIndex);
         this.gridTemplateColumns = new Array(this.allSectionsV.length + 1).fill(0).map((a, i) => {
             if (i === mainColIndex)
                 return mainColTemplate;
@@ -830,9 +889,9 @@ export default class PageBase extends AGLComponent{
             y: this.gridY,
             gridTemplateRows: this.gridTemplateRows,
             gridTemplateColumns: this.gridTemplateColumns
-        }, undefined,  this.props.breakpointmanager.getHighestBpName());
+        }, undefined, this.props.breakpointmanager.getHighestBpName());
         this.root.current.addChild(section, undefined, undefined, undefined, (agl) => {
-            this.allSectionsV.splice(index, 0, agl);
+            this.allSectionsV.splice(index, 0, agl.props.id);
             this.props.select.onScrollItem();
             if (callback)
                 callback(agl);
@@ -854,6 +913,7 @@ export default class PageBase extends AGLComponent{
 
         let currentIndex = x1 - 1;
         let sideSection = this.allSectionsH[currentIndex - 1];
+        sideSection = this.props.idMan.getItem(sideSection);
         if (sideSection) {
             gridArea2 = sideSection.getGridArea();
             areas2 = gridArea2.split('/');
@@ -872,6 +932,9 @@ export default class PageBase extends AGLComponent{
 
             swapArrayElements(this.allSectionsH, currentIndex, currentIndex - 1);
         }
+
+        this.getAgl().invalidateSize();
+        this.props.select.onScrollItem();
     };
 
     moveDown = (id) => {
@@ -889,6 +952,7 @@ export default class PageBase extends AGLComponent{
 
         let currentIndex = x1 - 1;
         let sideSection = this.allSectionsH[currentIndex + 1];
+        sideSection = this.props.idMan.getItem(sideSection);
         if (sideSection) {
             gridArea2 = sideSection.getGridArea();
             areas2 = gridArea2.split('/');
@@ -907,6 +971,9 @@ export default class PageBase extends AGLComponent{
 
             swapArrayElements(this.allSectionsH, currentIndex, currentIndex + 1);
         }
+
+        this.getAgl().invalidateSize();
+        this.props.select.onScrollItem();
     };
 
     moveRight = (id) => {
@@ -924,6 +991,7 @@ export default class PageBase extends AGLComponent{
 
         let currentIndex = y1 - 1;
         let sideSection = this.allSectionsV[currentIndex + 1];
+        sideSection = this.props.idMan.getItem(sideSection) || null;
         if (sideSection) {
             gridArea2 = sideSection.getGridArea();
             areas2 = gridArea2.split('/');
@@ -941,6 +1009,9 @@ export default class PageBase extends AGLComponent{
                 , this.props.breakpointmanager.getHighestBpName());
 
             swapArrayElements(this.allSectionsV, currentIndex, currentIndex + 1);
+
+            this.getAgl().invalidateSize();
+            this.props.select.onScrollItem();
             return;
         }
 
@@ -950,6 +1021,7 @@ export default class PageBase extends AGLComponent{
                 `${x1}/${y1 + 1}/${x2}/${y2 + 1}`
                 , this.props.breakpointmanager.getHighestBpName());
             this.allSectionsH.forEach(horizontalSection => {
+                horizontalSection = this.props.idMan.getItem(horizontalSection);
                 let gridArea = horizontalSection.getGridArea();
                 let areas = gridArea.split('/');
                 let x13 = parseInt(areas[0]);
@@ -984,6 +1056,9 @@ export default class PageBase extends AGLComponent{
             gridTemplateRows: this.gridTemplateRows,
             gridTemplateColumns: this.gridTemplateColumns
         }, undefined, this.props.breakpointmanager.getHighestBpName());
+
+        this.getAgl().invalidateSize();
+        this.props.select.onScrollItem();
     };
 
     moveLeft = (id) => {
@@ -1001,6 +1076,7 @@ export default class PageBase extends AGLComponent{
 
         let currentIndex = y1 - 1;
         let sideSection = this.allSectionsV[currentIndex - 1];
+        sideSection = this.props.idMan.getItem(sideSection) || null;
         if (sideSection) {
             gridArea2 = sideSection.getGridArea();
             areas2 = gridArea2.split('/');
@@ -1018,6 +1094,9 @@ export default class PageBase extends AGLComponent{
                 , this.props.breakpointmanager.getHighestBpName());
 
             swapArrayElements(this.allSectionsV, currentIndex, currentIndex - 1);
+
+            this.getAgl().invalidateSize();
+            this.props.select.onScrollItem();
             return;
         }
 
@@ -1027,6 +1106,7 @@ export default class PageBase extends AGLComponent{
                 `${x1}/${y1 - 1}/${x2}/${y2 - 1}`
                 , this.props.breakpointmanager.getHighestBpName());
             this.allSectionsH.forEach(horizontalSection => {
+                horizontalSection = this.props.idMan.getItem(horizontalSection);
                 let gridArea = horizontalSection.getGridArea();
                 let areas = gridArea.split('/');
                 let x13 = parseInt(areas[0]);
@@ -1061,36 +1141,136 @@ export default class PageBase extends AGLComponent{
             gridTemplateRows: this.gridTemplateRows,
             gridTemplateColumns: this.gridTemplateColumns
         }, undefined, this.props.breakpointmanager.getHighestBpName());
+
+        this.getAgl().invalidateSize();
+        this.props.select.onScrollItem();
+    };
+
+    updateTemplates = () => {
+        let mainColIndex = this.getMainColIndex();
+        this.gridTemplateColumns = new Array(this.allSectionsV.length).fill(0).map((a, i) => {
+            if (i === mainColIndex)
+                return mainColTemplate;
+            if (isHideInBreakpoint(this.props.idMan.getItem(this.allSectionsV[i])))
+                return "0px";
+            return "auto";
+        }).join(' ');
+        this.gridTemplateRows = new Array(this.allSectionsH.length).fill(0).map((a, i) => {
+            if (isHideInBreakpoint(this.props.idMan.getItem(this.allSectionsH[i])))
+                return "0px";
+            return "auto";
+        }).join(' ');
+        this.root.current.setGrid({
+            x: this.gridX,
+            y: this.gridY,
+            gridTemplateRows: this.gridTemplateRows,
+            gridTemplateColumns: this.gridTemplateColumns
+        }, undefined, this.props.breakpointmanager.getHighestBpName());
     };
 
     hasMiniMenuOverride = () => {
         return false;
     };
 
+    invalidateSizeOverride = (agl, self, updateParent, updateChildren, sourceId) => {
+        if (self)
+            delete this.tempSize;
+
+        Object.values(agl.allChildRefs).forEach(childRef => {
+            if (childRef && childRef.current && sourceId !== childRef.current.props.id) {
+                childRef.current.invalidateSize(true, false, true);
+            }
+        });
+    };
+
+    getInspectorOverride = () => {
+        return (
+            <>
+                <InspectorBreadcrumbs
+                    item={this.getAgl()}
+                />
+                <InspectorBackground
+                    item={this.getAgl()}
+                />
+                <InspectorPadding
+                    item={this.getAgl()}
+                />
+            </>
+        )
+    };
+
+    getSectionOfPoint = (left, top, width, height) => {
+        let childRef = Object.values(this.getAgl().allChildRefs).find(childRef => {
+            if (childRef && childRef.current) {
+                if (childRef.current.isPointInclude(left, top))
+                    return true;
+            }
+        });
+
+        if (!childRef)
+            childRef = Object.values(this.getAgl().allChildRefs).find(childRef => {
+                if (childRef && childRef.current) {
+                    if (childRef.current.isPointInclude(left + width, top + height))
+                        return true;
+                }
+            });
+
+        if (!childRef)
+            childRef = Object.values(this.getAgl().allChildRefs).find(childRef => {
+                return (childRef && childRef.current);
+            });
+
+        return childRef.current;
+    };
+
+    updateDesign = (compositeDesign) => {
+    };
+    // White Background
+    getStaticChildren = () => {
+
+        return <div
+            className="PageBaseWhiteBackground"
+            style={{
+
+            }}
+        />
+    };
+
     render() {
         let fullWidth = (this.getAgl() && this.getAgl().getSize(false)) ||
-            (1001/*0.735 * this.props.editorData.innerWidth*/);
+            (1002/*0.735 * this.props.editorData.innerWidth*/);
         return (
             <AGLWrapper tagName="PageBase"
-                        aglRef={!this.props.aglRef? this.root: this.root = this.props.aglRef}
+                        aglRef={!this.props.aglRef ? this.root : this.root = this.props.aglRef}
+                        aglComponent={this}
                         {...this.props}
                         className="Page1Root"
                         style={{
                             width: `${fullWidth}px`,
-                            height: "80%",
-                            boxShadow: "0 2px 12px 0 rgba(134,138,165,.41)"
+                            height: "100%",
+                            boxShadow: "0 2px 12px 6px rgba(134,138,165,.41)",
+                            // marginTop: "10vh !important",
+                            display: "inline-block",
                         }}
                         data={this.getData()}
                         isPage
+                        resizeSides={[]}
                         page={this}
                         hasMiniMenuOverride={this.hasMiniMenuOverride}
                         getInspector={this.getInspector}
+                        invalidateSizeOverride={this.invalidateSizeOverride}
+                        // getStaticChildren={this.getStaticChildren}
+
             >
                 <main
-                    style={{ display: "contents" }}
+                    style={{display: "contents"}}
                     id={"page-main-sections"}
                 />
             </AGLWrapper>
         )
     }
 }
+
+PageBase.defaultProps = {
+    tagName: "PageBase",
+};

@@ -11,7 +11,15 @@ export default class AdjustmentPageControllers extends React.Component {
 
         this.state = {
             anchorEl: undefined
-        }
+        };
+    }
+
+    componentDidMount(){
+        this.mounted = true;
+    }
+
+    componentWillUnmount(){
+        this.mounted = false;
     }
 
     addSection = (index, isVertical) => {
@@ -26,6 +34,10 @@ export default class AdjustmentPageControllers extends React.Component {
     needUpdate = () => {
         clearTimeout(this.updateTimeout);
         this.updateTimeout = setTimeout(() => {
+            if (!this.mounted) {
+                clearTimeout(this.updateTimeout);
+                return;
+            }
             this.forceUpdate();
         }, 500);
     };
@@ -78,7 +90,6 @@ export default class AdjustmentPageControllers extends React.Component {
                             key={index}
                             id={`page_add_horizontal_${index}`}
                             onClick={(e) => {
-                                console.log("onClick");
                                 this.setState({anchorEl: e.currentTarget})
                             }}
                         >

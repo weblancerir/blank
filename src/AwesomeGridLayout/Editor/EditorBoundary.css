@@ -7,9 +7,31 @@
 
 .EditorBoundaryPageHolder {
     text-align: center;
-    display: grid;
     flex: 1;
     height: 100%;
     overflow-y: hidden;
     overflow-x: overlay;
+    background-color: #f4f4f4;
+}
+
+.EditorBoundaryPageHolderHover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.PageBaseWhiteBackground{
+    /* display: block; */
+    margin-top: 10vh !important;
+    /* margin-bottom: 50vh !important; */
+    width: inherit;
+    height: 80vh;
+    display: inline-block;
+    background-color: white;
+}
+
+:root {
+    --vw-ratio: 0.7335285505124451;
+    --vh-ratio: 0.8;
 }

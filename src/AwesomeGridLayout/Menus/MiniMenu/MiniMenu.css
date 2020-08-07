@@ -1,14 +1,16 @@
 .MiniMenuRoot {
-    padding: 10px;
+    padding: 10px 10px 10px 0;
 }
 
 .MiniMenuContainer {
     display: flex;
     flex-direction: row;
     align-items: stretch;
-    background-color: #ffa646;
+    background-color: #afafaf;
+    border: 1px solid #868686;
     border-radius: 4px;
     padding: 4px 4px 4px 0;
+    box-sizing: border-box;
 }
 
 .MiniMenuVerticalDivider {

@@ -3,15 +3,17 @@
     z-index: 9999999999;
     top: 0;
     bottom: 0;
-    width: 300px;
+    width: 270px;
     background-color: white;
     display: flex;
     flex-direction: column;
     border-left: 1px solid #e5e5e5;
+    height: 100%;
+    overflow-y: auto;
 }
 .InspectorPinRoot {
     position: relative;
-    width: 300px;
+    width: 270px;
     height: 100%;
 }
 .InspectorDefaultMenuRoot {
@@ -38,9 +40,27 @@
 }
 
 .InspectorOptionTitle {
-    color: #707070;
+    color: #626262 !important;
+    font-size: 14px !important;
+    padding: 12px 20px 12px 20px !important;
+    background-color: #ededed !important;
+    position: relative !important;
+    text-align: left !important;
+    display: block !important;
+    border-bottom: 1px solid #cbcbcb !important;
+}
+
+.InspectorOptionTextTitle {
+    color: #626262;
     font-size: 14px;
     margin-bottom: 12px;
+}
+
+.InspectorOptionTitleExpandIcon{
+    position: absolute;
+    right: 20px;
+    top:50%;
+    transform: translateY(-50%);
 }
 
 .InspectorBreadcrumbsParentsRoot {
@@ -87,4 +107,150 @@
 
 .InspectorSizeItemInput {
     flex: 1;
+}
+
+.InspectorOverflowType {
+    margin-bottom: 12px;
+}
+
+.InspectorOverflowTypeButton {
+    flex: 1;
+    text-transform: none !important;
+}
+
+.InspectorOverflowDir {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.InspectorAdjustRotate{
+    display: flex;
+    align-items: center;
+}
+
+.InspectorOverflowDirTitle {
+    color: #707070;
+    font-size: 12px;
+    width: 35%;
+    margin-right: 4px;
+    flex: 1;
+}
+
+.InspectorOverflowDirSwitch{
+    margin-right: -9px;
+}
+.InspectorOverflowAuto{
+    margin-top: 6px;
+    margin-bottom: 12px;
+}
+
+.InspectorOverflowAutoToggles {
+}
+
+.InspectorDockingRoot{
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.InspectorDockingRootTitle{
+    color: #707070;
+    font-size: 12px;
+    width: 35%;
+    margin-right: 4px;
+    flex: 1;
+}
+
+.InspectorDockingDocks{
+    position: relative;
+    width: 104px;
+    height: 104px;
+    border: 1px solid #cfd1dc;
+    border-radius: 6px;
+    background-color: #f8faff;
+}
+
+.InspectorDockingLeft{
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) scale(-1);
+}
+
+.InspectorDockingRight{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.InspectorDockingTop{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(14px) scale(-1);
+}
+
+.InspectorDockingBottom{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(-14px);
+}
+
+.InspectorDockingAuto {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.InspectorDockSwitch90 {
+    transform: rotate(90deg);
+}
+
+.InspectorDockingDisable {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 6px;
+    background-color: #dedede;
+    opacity: 0.5;
+}
+
+.InspectorOverflowMarginRoot {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-column-gap: 4px;
+    margin-bottom: 12px;
+}
+
+.InspectorOverflowMargin {
+}
+
+.InspectorScrollEffect{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+}
+.InspectorScrollTitle{
+    color: #707070;
+    font-size: 12px;
+    margin-right: 4px;
+}
+.InspectorAnchorName {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+.InspectorAnchorNameTitle {
+    color: #707070;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+.InspectorBackgroundColorTitle {
+    color: #707070;
+    font-size: 12px;
+    margin-bottom: 12px;
 }

@@ -1,4 +1,5 @@
 import throttle from 'lodash.throttle';
+import debounce from 'lodash.debounce';
 
 export default class UndoRedo {
     constructor(max, document, idMan) {
@@ -24,7 +25,7 @@ export default class UndoRedo {
         return {
             redo: func,
             undo: undo,
-            power: power
+            power: (typeof power === 'number') ? power : undefined
         }
     };
 
@@ -46,7 +47,6 @@ export default class UndoRedo {
         let object = this.undoQueue.shift();
         let power = object.power || 1;
 
-        console.log("undoFunc", power);
         power--;
         object.undo(this.idMan);
         this.redoQueue.unshift(object);

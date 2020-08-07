@@ -4,12 +4,13 @@ import Draggable from 'react-draggable';
 import IconButton from "../../HelperComponents/IconButton";
 import '../../HelperStyle.css';
 import MenuBaseIndexTitle from "./MenuBaseIndexTitle";
+import LightTooltip from "../../Components/Containers/Menus/Components/LightTooltip";
 
 export default class MenuBase extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            selectedIndexNo: props.defaultIndexNo
         }
     }
 
@@ -28,7 +29,7 @@ export default class MenuBase extends React.Component {
         }
     };
 
-    render () {
+    render() {
         return (
             <Draggable
                 handle=".MenuBaseHeaderTitle"
@@ -67,25 +68,36 @@ export default class MenuBase extends React.Component {
                             {
                                 this.props.index.map((indexData, i) => {
                                     return (
-                                        <div
+                                        <LightTooltip
                                             key={i}
-                                            style={{
-                                                backgroundColor: this.state.selectedIndexNo === i &&
-                                                    'rgba(115, 115, 115, 0.36)'
+                                            title={indexData.key}
+                                            PopperProps={{
+                                                style: {
+                                                    zIndex: 999999999999999
+                                                }
                                             }}
+                                            placement="right"
                                         >
-                                            <IconButton
-                                                key={indexData.key}
-                                                onClick={(e) => {
-                                                    this.onIndexClick(e, indexData.key, i);
-                                                }}
-                                                buttonBaseStyle={{
-                                                    marginLeft: 0
+                                            <div
+                                                key={i}
+                                                style={{
+                                                    backgroundColor: this.state.selectedIndexNo === i &&
+                                                        'rgba(115, 115, 115, 0.36)'
                                                 }}
                                             >
-                                                {indexData.icon}
-                                            </IconButton>
-                                        </div>
+                                                <IconButton
+                                                    key={indexData.key}
+                                                    onClick={(e) => {
+                                                        this.onIndexClick(e, indexData.key, i);
+                                                    }}
+                                                    buttonBaseStyle={{
+                                                        marginLeft: 0
+                                                    }}
+                                                >
+                                                    {indexData.icon}
+                                                </IconButton>
+                                            </div>
+                                        </LightTooltip>
                                     )
                                 })
                             }

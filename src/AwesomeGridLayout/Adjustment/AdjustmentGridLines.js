@@ -5,6 +5,8 @@ import GridChildContainerChildren from "../GridChildContainerChildren";
 import GridChildContainerGridLine from "../GridChildContainerGridLine";
 import AdjustmentGridLinesWrapper from "./AdjustmentGridLinesWrapper";
 import Portal from "../Portal";
+import {getCachedBoundingRect} from "../Test/WindowCache";
+import AdjustmentGridLinesWrapper2 from "./AdjustmentGridLinesWrapper2";
 
 export default class AdjustmentGridLines extends React.Component {
     constructor(props) {
@@ -14,12 +16,16 @@ export default class AdjustmentGridLines extends React.Component {
             yNoA: -1,
             xNoB: -1,
             yNoB: -1,
+            xNoT: -1,
+            yNoT: -1,
         };
 
         this.xLineRefA = new Array(100);
         this.yLineRefA = new Array(100);
         this.xLineRefB = new Array(100);
         this.yLineRefB = new Array(100);
+        this.xLineRefT = new Array(100);
+        this.yLineRefT = new Array(100);
 
         this.idCache = {};
     }
@@ -47,6 +53,11 @@ export default class AdjustmentGridLines extends React.Component {
                 gridTemplateRows, gridTemplateColumns, positions, x, y
             }, callback)
         }
+        else if (this.idCache["T"] && this.idCache["T"].id === id && gridType === "T") {
+            this.updateGridLine(id, "T", {
+                gridTemplateRows, gridTemplateColumns, positions, x, y
+            }, callback)
+        }
         else {
             this.idCache[gridType] = {id, gridTemplateRows, gridTemplateColumns, positions, x, y};
 
@@ -54,7 +65,7 @@ export default class AdjustmentGridLines extends React.Component {
                 [`xNo${gridType}`]: x,
                 [`yNo${gridType}`]: y
             }, () => {
-                this.prepareRects(id);
+                // this.prepareRects(id);
                 if (callback)
                     callback();
             })
@@ -67,6 +78,8 @@ export default class AdjustmentGridLines extends React.Component {
                 gridType = "A";
             else if (this.idCache["B"] && this.idCache["B"].id === id)
                 gridType = "B";
+            else if (this.idCache["T"] && this.idCache["T"].id === id)
+                gridType = "T";
             else return;
         }
 
@@ -98,6 +111,8 @@ export default class AdjustmentGridLines extends React.Component {
                 gridType = "A";
             else if (this.idCache["B"] && this.idCache["B"].id === id)
                 gridType = "B";
+            else if (this.idCache["T"] && this.idCache["T"].id === id)
+                gridType = "T";
             else return;
         }
 
@@ -110,6 +125,8 @@ export default class AdjustmentGridLines extends React.Component {
                 gridType = "A";
             else if (this.idCache["B"] && this.idCache["B"].id === id)
                 gridType = "B";
+            else if (this.idCache["T"] && this.idCache["T"].id === id)
+                gridType = "T";
             else return;
         }
 
@@ -122,6 +139,8 @@ export default class AdjustmentGridLines extends React.Component {
                 gridType = "A";
             else if (this.idCache["B"] && this.idCache["B"].id === id)
                 gridType = "B";
+            else if (this.idCache["T"] && this.idCache["T"].id === id)
+                gridType = "T";
             else return;
         }
 
@@ -140,6 +159,9 @@ export default class AdjustmentGridLines extends React.Component {
 
             if (this.idCache["B"] && this.idCache["B"].id === id)
                 return "B";
+
+            if (this.idCache["T"] && this.idCache["T"].id === id)
+                return "T";
         } else {
             if (this.idCache[gridType] && this.idCache[gridType].id === id)
                 return gridType;
@@ -149,9 +171,10 @@ export default class AdjustmentGridLines extends React.Component {
     isPrepared = (id) => {
         if (this.idCache["A"] && this.idCache["A"].prepared)
             return true;
-        else if (this.idCache["B"] && this.idCache["B"].prepared) {
+        else if (this.idCache["B"] && this.idCache["B"].prepared)
             return true;
-        }
+        else if (this.idCache["T"] && this.idCache["T"].prepared)
+            return true;
     };
 
     prepareRects = (id) => {
@@ -162,7 +185,7 @@ export default class AdjustmentGridLines extends React.Component {
                 if (!current)
                     continue;
 
-                current.rect = current.getBoundingClientRect();
+                current.rect = getCachedBoundingRect(`xLineRef_${i}_${id}`, current);
             }
         let yLineRef = this.getYlineRef(id);
         if (yLineRef)
@@ -171,13 +194,15 @@ export default class AdjustmentGridLines extends React.Component {
                 if (!current)
                     continue;
 
-                current.rect = current.getBoundingClientRect();
+                current.rect = getCachedBoundingRect(`yLineRef_${i}_${id}`, current);
             }
 
         if (this.idCache["A"] && this.idCache["A"].id === id)
             this.idCache["A"].prepared = true;
         else if (this.idCache["B"] && this.idCache["B"].id === id)
             this.idCache["B"].prepared = true;
+        else if (this.idCache["T"] && this.idCache["T"].id === id)
+            this.idCache["T"].prepared = true;
     };
 
     removeGridLineByType = (gridType) => {
@@ -195,7 +220,7 @@ export default class AdjustmentGridLines extends React.Component {
                 id="AdjustmentGridLinesRoot"
                 className="AdjustmentGridLinesRoot"
             >
-                <AdjustmentGridLinesWrapper
+                <AdjustmentGridLinesWrapper2
                     id={"GridLinesContainer_A"}
                     refId={this.idCache["A"] && this.idCache["A"].id}
                     xNo={this.state.xNoA}
@@ -208,10 +233,9 @@ export default class AdjustmentGridLines extends React.Component {
                     bottom={this.idCache["A"] && this.idCache["A"].positions.bottom}
                     left={this.idCache["A"] && this.idCache["A"].positions.left}
                     right={this.idCache["A"] && this.idCache["A"].positions.right}
-                    document={this.props.document}
                 />
 
-                <AdjustmentGridLinesWrapper
+                <AdjustmentGridLinesWrapper2
                     id={"GridLinesContainer_B"}
                     refId={this.idCache["B"] && this.idCache["B"].id}
                     xNo={this.state.xNoB}
@@ -224,7 +248,21 @@ export default class AdjustmentGridLines extends React.Component {
                     bottom={this.idCache["B"] && this.idCache["B"].positions.bottom}
                     left={this.idCache["B"] && this.idCache["B"].positions.left}
                     right={this.idCache["B"] && this.idCache["B"].positions.right}
-                    document={this.props.document}
+                />
+
+                <AdjustmentGridLinesWrapper2
+                    id={"GridLinesContainer_T"}
+                    refId={this.idCache["T"] && this.idCache["T"].id}
+                    xNo={this.state.xNoT}
+                    yNo={this.state.yNoT}
+                    xLineRef={this.xLineRefT}
+                    yLineRef={this.yLineRefT}
+                    gridTemplateRows={this.idCache["T"] && this.idCache["T"].gridTemplateRows}
+                    gridTemplateColumns={this.idCache["T"] && this.idCache["T"].gridTemplateColumns}
+                    top={this.idCache["T"] && this.idCache["T"].positions.top}
+                    bottom={this.idCache["T"] && this.idCache["T"].positions.bottom}
+                    left={this.idCache["T"] && this.idCache["T"].positions.left}
+                    right={this.idCache["T"] && this.idCache["T"].positions.right}
                 />
             </div>
         )

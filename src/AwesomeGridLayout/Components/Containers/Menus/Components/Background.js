@@ -1,6 +1,6 @@
 import React from "react";
-import '../../../Menus/Menu.css';
-import ColorPicker from "../../../Menus/CommonComponents/ColorPicker";
+import '../../../../Menus/Menu.css';
+import ColorPicker from "../../../../Menus/CommonComponents/ColorPicker";
 
 export default class Background extends React.Component {
     render () {

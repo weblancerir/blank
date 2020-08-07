@@ -1,6 +1,7 @@
 import React from "react";
 import './Menu.css';
-import {createMiniMenu} from "./MenuHelper";
+import MiniMenu from "./MiniMenu/MiniMenu";
+import {createContextMenu, isHideInBreakpoint} from "../AwesomwGridLayoutHelper";
 
 const miniMenuHolderId = "wl_menu_holder";
 export default class MenuHolder extends React.Component {
@@ -8,46 +9,72 @@ export default class MenuHolder extends React.Component {
         super(props);
 
         this.state = {
+            active: true
         };
+
+        this.miniMenuRef = React.createRef();
     }
 
-    clear = () => {
-        this.setState({miniMenu: undefined});
+    clearMiniMenu = () => {
+        this.state.active && this.miniMenuRef.current.clear();
     };
 
     addMiniMenu = (item) => {
-        if (item && this.state.miniMenuItem && item.props.id !== this.state.miniMenuItem.props.id)
-            this.clear();
-
-        this.setState({
-            miniMenu: createMiniMenu(item),
-            miniMenuItem: item
-        });
+        if (item && this.state.active)
+            this.miniMenuRef.current.update(
+                item.props.id,
+                item.getShortcutOptions() || [],
+                item.getPrimaryOptions() || [],
+                item
+        );
     };
 
     addMenu = (menu) => {
         this.setState({
             menu: undefined,
         });
-        setTimeout(() => {
-            this.setState({
-                menu,
-            });
-        }, 0);
+        if (menu) {
+            setTimeout(() => {
+                this.setState({
+                    menu,
+                });
+            }, 0);
+        }
+    };
+
+    onContextMenu = (e, item) => {
+        this.setState({
+            contextMenu: createContextMenu(e, item, () => {
+                this.setState({contextMenu: undefined})
+            })
+        });
+    };
+
+    activate = (active) => {
+        this.setState({active});
     };
 
     render () {
+        if (!this.state.active)
+            return null;
+
         return (
             <div
                 id={miniMenuHolderId}
                 key={miniMenuHolderId}
                 className="MenuHolderRoot"
             >
+                <MiniMenu
+                    itemId={this.state.miniMenuItem && this.state.miniMenuItem.props.id}
+                    key={"miniMenu"}
+                    ref={this.miniMenuRef}
+                />
                 {
-                    this.state.miniMenu
+                    !this.state.contextMenu &&
+                    this.state.menu
                 }
                 {
-                    this.state.menu
+                    this.state.contextMenu
                 }
             </div>
         )

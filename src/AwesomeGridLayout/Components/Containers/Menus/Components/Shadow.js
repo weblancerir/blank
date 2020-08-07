@@ -1,11 +1,10 @@
 import React from "react";
-import '../../../Menus/Menu.css';
-import './style.css';
-import NumberInput from "../../../Menus/CommonComponents/NumberInput";
-import Angle from "../../../Menus/CommonComponents/Angle";
-import Divider from "../../../Menus/CommonComponents/Divider";
-import SliderInput from "../../../Menus/CommonComponents/SliderInput";
-import ColorPicker from "../../../Menus/CommonComponents/ColorPicker";
+import '../../../../Menus/Menu.css';
+import '../style.css';
+import Angle from "../../../../Menus/CommonComponents/Angle";
+import Divider from "../../../../Menus/CommonComponents/Divider";
+import SliderInput from "../../../../Menus/CommonComponents/SliderInput";
+import ColorPicker from "../../../../Menus/CommonComponents/ColorPicker";
 
 const deg2rad = Math.PI/180;
 const rad2deg = 180/Math.PI;
@@ -14,12 +13,11 @@ export default class Shadow extends React.Component {
         super(props);
 
         this.state = {
-            shadow: props.shadow
         }
     }
 
     onChange = (key, value) => {
-        let shadow = this.state.shadow;
+        let shadow = this.props.shadow;
         shadow[key] = value;
         this.setState({shadow});
         this.props.onDesignChange(`${this.props.designKey}.${key}`, value);
@@ -78,7 +76,7 @@ export default class Shadow extends React.Component {
                     <div className="ShadowRoot">
                         <Angle
                             className="ShadowAngle"
-                            angle={this.getDegree(this.state.shadow.xOffset , this.state.shadow.yOffset)}
+                            angle={this.getDegree(this.props.shadow.xOffset , this.props.shadow.yOffset)}
                             onChange={this.calcDegree}
                         />
                     </div>
@@ -96,7 +94,7 @@ export default class Shadow extends React.Component {
                             className="BorderWidthSlider"
                             min={0}
                             max={50}
-                            value={this.state.shadow.distance}
+                            value={this.props.shadow.distance}
                             designKey={`${this.props.designKey}.distance`}
                             onDesignChange={this.props.onDesignChange}
                         />
@@ -115,7 +113,7 @@ export default class Shadow extends React.Component {
                             className="BorderWidthSlider"
                             min={0}
                             max={50}
-                            value={this.state.shadow.size}
+                            value={this.props.shadow.size}
                             designKey={`${this.props.designKey}.size`}
                             onDesignChange={this.props.onDesignChange}
                         />
@@ -134,7 +132,7 @@ export default class Shadow extends React.Component {
                             className="BorderWidthSlider"
                             min={0}
                             max={50}
-                            value={this.state.shadow.blur}
+                            value={this.props.shadow.blur}
                             designKey={`${this.props.designKey}.blur`}
                             onDesignChange={this.props.onDesignChange}
                         />
@@ -147,7 +145,7 @@ export default class Shadow extends React.Component {
                     <p className="MenuOptionSectionTitle">Opacity & Color</p>
 
                     <ColorPicker
-                        color={this.state.shadow.color}
+                        color={this.props.shadow.color}
                         designKey={`${this.props.designKey}.color`}
                         onDesignChange={this.props.onDesignChange}
                     />

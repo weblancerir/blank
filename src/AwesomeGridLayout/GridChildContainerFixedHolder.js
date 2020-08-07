@@ -10,7 +10,7 @@ export default class GridChildContainerFixedHolder extends React.Component {
                 style={{
                     top: size? size.top: 0,
                     left: size? size.left: 0,
-                    width: size? size.clientWidth || size.width: 0,
+                    width: size? size.width: 0,
                     height: size? size.clientHeight || size.height: 0,
                 }}
                 id={`${id}_fixed_holder`}

@@ -4,7 +4,6 @@ import '../../../HelperStyle.css';
 
 export default class Help extends React.Component {
     onClick = (e) => {
-        console.log("Help Clicked !!!");
     };
 
     render () {

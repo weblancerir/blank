@@ -1,0 +1,233 @@
+{
+  "builtin": {
+    "Quick Add": {
+      "name": "Quick Add",
+      "order": 1,
+      "allItems":[
+        {
+          "tagName": "Text",
+          "label": "Title",
+          "widthRatio": 3,
+          "aspectRatio": 1,
+          "presetProps": {
+
+          }
+        },
+        {
+          "tagName": "Text",
+          "label": "Paragraph",
+          "widthRatio": 3,
+          "aspectRatio": 1,
+          "presetProps": {
+
+          }
+        },
+        {
+          "tagName": "Button",
+          "label": "Button",
+          "widthRatio": 3,
+          "aspectRatio": 1,
+          "presetProps": {
+
+          }
+        },
+        {
+          "tagName": "Image",
+          "label": "Image",
+          "widthRatio": 3,
+          "aspectRatio": 1,
+          "presetProps": {
+
+          }
+        },
+        {
+          "tagName": "Video",
+          "label": "Video",
+          "widthRatio": 3,
+          "aspectRatio": 1,
+          "presetProps": {
+
+          }
+        },
+        {
+          "tagName": "ContainerBase",
+          "label": "Container",
+          "widthRatio": 3,
+          "aspectRatio": 1,
+          "presetProps": {
+
+          }
+        },
+        {
+          "tagName": "Section",
+          "label": "Section",
+          "widthRatio": 3,
+          "aspectRatio": 1,
+          "presetProps": {
+
+          }
+        },
+        {
+          "tagName": "VerticalSection",
+          "label": "Vertical Section",
+          "widthRatio": 3,
+          "aspectRatio": 1,
+          "presetProps": {
+
+          }
+        },
+        {
+          "tagName": "Layouter",
+          "label": "Layouter",
+          "widthRatio": 3,
+          "aspectRatio": 1,
+          "presetProps": {
+
+          }
+        },
+        {
+          "tagName": "Repeater",
+          "label": "Repeater",
+          "widthRatio": 3,
+          "aspectRatio": 1,
+          "presetProps": {
+
+          }
+        },
+        {
+          "tagName": "HtmlIFrame",
+          "label": "HTML iFrame",
+          "widthRatio": 3,
+          "aspectRatio": 1,
+          "presetProps": {
+
+          }
+        },
+        {
+          "tagName": "Menu",
+          "label": "Menu",
+          "widthRatio": 3,
+          "aspectRatio": 1,
+          "presetProps": {
+
+          }
+        },
+        {
+          "tagName": "Shape",
+          "label": "Shape",
+          "widthRatio": 3,
+          "aspectRatio": 1,
+          "presetProps": {
+
+          }
+        },
+        {
+          "tagName": "Line",
+          "label": "Line",
+          "widthRatio": 3,
+          "aspectRatio": 1,
+          "presetProps": {
+
+          }
+        },
+        {
+          "tagName": "SocialBar",
+          "label": "Social Bar",
+          "widthRatio": 3,
+          "aspectRatio": 1,
+          "presetProps": {
+
+          }
+        }
+      ]
+    },
+    "My Designs": {
+      "name": "My Designs",
+      "order": 2,
+      "allItems": []
+    },
+    "Sections": {
+      "name": "Sections",
+      "order": 3,
+      "allItems": []
+    },
+    "Layout Tools": {
+      "name": "Layout Tools",
+      "order": 4,
+      "subList": {
+        "Containers": [
+          {
+            "name": "Container Boxes",
+            "listName": "Layout Tools",
+            "allItems": [
+              {
+                "tagName": "ContainerBase",
+                "widthRatio": 2,
+                "aspectRatio": 2,
+                "imageUrl": "",
+                "presetProps": {
+                  "griddata": {
+                    "bpData": {
+                      "design": {
+                        "border": {
+                          "width": 2
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "tagName": "ContainerBase",
+                "widthRatio": 2,
+                "aspectRatio": 2,
+                "imageUrl": "",
+                "presetProps": {
+
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Text": {
+      "name": "Text",
+      "order": 5,
+      "allItems": []
+    },
+    "Button": {
+      "name": "Button",
+      "order": 6,
+      "allItems": []
+    },
+    "Menu": {
+      "name": "Menu",
+      "order": 7,
+      "allItems": []
+    },
+    "Medias": {
+      "name": "Medias",
+      "order": 8,
+      "allItems": []
+    },
+    "Decorative": {
+      "name": "Decorative",
+      "order": 9,
+      "allItems": []
+    },
+    "Contact & Forms": {
+      "name": "Contact & Forms",
+      "order": 10,
+      "allItems": []
+    },
+    "Social & Embed": {
+      "name": "Social & Embed",
+      "order": 11,
+      "allItems": []
+    }
+  },
+  "apps": {
+
+  }
+}

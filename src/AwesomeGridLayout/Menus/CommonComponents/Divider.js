@@ -7,7 +7,7 @@ import {cloneObject} from "../../AwesomeGridLayoutUtils";
 export default class Divider extends React.Component {
     render () {
         return (
-            <div className="Divider">
+            <div className="Divider" style={this.props.style}>
             </div>
         )
     }

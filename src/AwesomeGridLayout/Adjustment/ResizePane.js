@@ -84,8 +84,11 @@ export default class ResizePane extends React.Component {
     render () {
         let classes = classNames(
             `Adjustment-${this.props.side}-pane`,
-            {"Adjustment-CornerCircle": this.isCorner()},
-            "Adjustment-Pane"
+            this.props.enabled && `Adjustment-${this.props.side}-pane-circle`,
+            `Adjustment-${this.props.side}-pane-line`,
+            {"Adjustment-CornerCircle": this.props.enabled && this.isCorner()},
+            "Adjustment-Pane",
+            !this.props.enabled && "ResizePanePointerNone"
         );
         let style = {};
         if (this.props.draggingStart)
@@ -94,9 +97,9 @@ export default class ResizePane extends React.Component {
         return (
             <div
                 id={this.props.id}
-                onPointerDown={this.onMouseDown}
+                onPointerDown={this.props.enabled ? this.onMouseDown : undefined}
                 className={classes}
-                style={style}
+                style={{...style, ...this.props.style}}
             >
             </div>
         )

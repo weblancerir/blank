@@ -65,7 +65,7 @@ class App2 extends Component {
                             resizable: false,
                             overflowData: {
                                 state: 'scroll',
-                                scroll: 'vertical'
+                                overflowY: "scroll"
                             }
                         }}
                         style={{

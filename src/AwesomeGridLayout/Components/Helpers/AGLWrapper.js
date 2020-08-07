@@ -7,19 +7,21 @@ export default class AGLWrapper extends React.Component{
         let griddata = this.props.aglRef.current && this.props.aglRef.current.props.griddata;
         if (!griddata) griddata = this.props.griddata;
         if (griddata && griddata.initialized) {
-            console.log("AGLWrapper", 1, griddata);
-            let bpData = this.props.data.bpData;
-            Object.keys(this.props.data).forEach(key => {
-                if (key !== "bpData") {
-                    griddata[key] = this.props.data[key];
-                }
-            });
-            assignData(griddata.bpData["laptop"], bpData);
+            if (!griddata.fillWithData) {
+                griddata.fillWithData = true;
+                let bpData = this.props.data.bpData;
+                Object.keys(this.props.data).forEach(key => {
+                    if (key !== "bpData") {
+                        griddata[key] = this.props.data[key];
+                    }
+                });
+                assignData(griddata.bpData["laptop"], bpData);
+            }
         } else {
-            console.log("AGLWrapper", 2);
             griddata = assignData(this.props.griddata, this.props.data);
             initGriddata(griddata, this.props.breakpointmanager);
         }
+
         return (
             <AwesomeGridLayout2
                 className={this.props.className}

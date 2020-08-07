@@ -15,7 +15,7 @@ export default class SnapManager {
         delete this.snaps[id];
     };
 
-    checkSnap = (top, left, ignoreId, additionalSnaps) => {
+    checkSnap = (top, left, ignoreId, additionalSnaps = []) => {
         let snapH, snapV;
         let topUp = top + this.snapThreshold;
         let topDown = top - this.snapThreshold;

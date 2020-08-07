@@ -32,10 +32,12 @@ export default class GridLineManager {
     };
 
     hasGridLine = (id, gridType) => {
-        return this.gridContainerRef.current.hasGridLine(id, gridType);
+        if (this.gridContainerRef.current)
+            return this.gridContainerRef.current.hasGridLine(id, gridType);
     };
 
     isPrepared = (id) => {
-        return this.gridContainerRef.current.isPrepared(id);
+        if (this.gridContainerRef.current)
+            return this.gridContainerRef.current.isPrepared(id);
     };
 }

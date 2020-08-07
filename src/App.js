@@ -52,7 +52,6 @@ class App extends Component {
     }
 
     onBreakpointChange = (width, newBreakpointName) => {
-        console.log("onBreakpointChange", width, newBreakpointName);
         this.rootLayoutRef.current.onBreakpointChange(width, newBreakpointName);
     };
 

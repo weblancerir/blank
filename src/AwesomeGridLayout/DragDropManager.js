@@ -1,3 +1,5 @@
+import {cloneObject} from "./AwesomeGridLayoutUtils";
+
 export default class DragDropManager {
     setDragging = (item) => {
         this.draggingItem = item;
@@ -34,48 +36,63 @@ export default class DragDropManager {
     dropItem = (item, parent, newParent, callback, fromUndoRedo, undoPower) => {
         item.toggleHelpLines();
         parent.onChildLeave(item);
-        newParent.onChildDrop(item, undefined, undefined, (newItem) => {
-            if (callback)
-                callback(newItem);
 
-            if (!fromUndoRedo) {
-                let itemId = item.props.id;
-                let firstRelativeX =
-                    (item.dragData? item.dragData.firstPos.left : newItem.getSize(false).left)
-                    - parent.getSize(false).left;
-                let firstRelativeY =
-                    (item.dragData? item.dragData.firstPos.top : newItem.getSize(false).top)
-                    - parent.getSize(false).top;
-                let lastRelativeX = newItem.getSize(false).left - newParent.getSize(false).left;
-                let lastRelativeY = newItem.getSize(false).top - newParent.getSize(false).top;
-                let width = newItem.getSize(false).width;
-                let height = newItem.getSize(false).height;
+        let drop = () => {
+            newParent.onChildDrop(item, undefined, undefined, (newItem) => {
+                if (callback)
+                    callback(newItem);
 
-                let parentId = parent.props.id;
-                let newParentId = newParent.props.id;
-                item.props.undoredo.add((idMan) => {
-                    idMan.getItem(itemId).onSelect(true);
-                    this.setMouseOver(idMan.getItem(newParentId));
-                    this.dropItem(idMan.getItem(itemId), idMan.getItem(parentId), idMan.getItem(newParentId),
-                        (newItem) => {
-                        setTimeout(() => {
-                            idMan.getItem(itemId).setPosition(false, lastRelativeX, lastRelativeY, undefined, undefined,
-                                width, height, true);
-                        }, 0);
-                    }, true);
-                }, (idMan) => {
-                    idMan.getItem(itemId).onSelect(true);
-                    this.setMouseOver(idMan.getItem(parentId));
-                    this.dropItem(idMan.getItem(itemId), idMan.getItem(newParentId), idMan.getItem(parentId),
-                        (newItem) => {
-                        setTimeout(() => {
-                            idMan.getItem(itemId).setPosition(false, firstRelativeX, firstRelativeY, undefined, undefined,
-                                width, height, true);
-                        }, 0);
-                    }, true);
-                }, undoPower);
-            }
-        });
+                if (!fromUndoRedo) {
+                    let itemId = item.props.id;
+                    let firstRelativeX =
+                        (item.dragData? item.dragData.firstPos.left : newItem.getSize(false).left)
+                        - parent.getSize(false).left;
+                    let firstRelativeY =
+                        (item.dragData? item.dragData.firstPos.top : newItem.getSize(false).top)
+                        - parent.getSize(false).top;
+                    let parentRect = cloneObject(parent.getSize(false));
+                    let lastRelativeX = newItem.getSize(false).left - newParent.getSize(false).left;
+                    let lastRelativeY = newItem.getSize(false).top - newParent.getSize(false).top;
+                    let newParentRect = cloneObject(newParent.getSize(false));
+                    let width = newItem.getSize(false).width;
+                    let height = newItem.getSize(false).height;
+
+                    let parentId = parent.props.id;
+                    let newParentId = newParent.props.id;
+                    item.props.undoredo.add((idMan) => {
+                        idMan.getItem(itemId).onSelect(true);
+                        this.setMouseOver(idMan.getItem(newParentId));
+                        this.dropItem(idMan.getItem(itemId), idMan.getItem(parentId), idMan.getItem(newParentId),
+                            (newItem) => {
+                                setTimeout(() => {
+                                    idMan.getItem(itemId).setPosition(false, lastRelativeX, lastRelativeY, undefined, undefined,
+                                        width, height, newParentRect, true);
+                                }, 0);
+                            }, true);
+                    }, (idMan) => {
+                        idMan.getItem(itemId).onSelect(true);
+                        this.setMouseOver(idMan.getItem(parentId));
+                        this.dropItem(idMan.getItem(itemId), idMan.getItem(newParentId), idMan.getItem(parentId),
+                            (newItem) => {
+                                setTimeout(() => {
+                                    idMan.getItem(itemId).setPosition(false, firstRelativeX, firstRelativeY, undefined, undefined,
+                                        width, height, parentRect, true);
+                                }, 0);
+                            }, true);
+                    }, undoPower);
+                }
+            });
+        };
+        if (item.props.dragdrop.mouseOver === newParent &&
+            item.props.gridLine.hasGridLine(newParent.props.id)) {
+            drop();
+        } else {
+            item.props.dragdrop.setMouseOver(newParent, undefined, drop);
+        }
+    };
+
+    removeMouseOver = () => {
+        delete this.mouseOver;
     };
 
     setMouseOver = (item, positionData, callback) => {
@@ -93,6 +110,7 @@ export default class DragDropManager {
 
         if(this.draggingItem)
             this.draggingItem.toggleHelpLines();
+
         item.toggleGridLines(true, () => {
             if(this.draggingItem)
                 this.draggingItem.toggleHelpLines(item);

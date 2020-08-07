@@ -18,11 +18,14 @@ export default class SliderInputControlled extends React.Component {
             <>
                 <Slider
                     className="BorderWidthSlider"
-                    style={{ marginRight: 16 }}
+                    style={{ marginRight: 24 }}
                     min={this.props.min}
                     max={this.props.max}
                     value={this.props.value}
                     onChange={this.onChange}
+                    handleStyle={{
+                        marginLeft: 7
+                    }}
                 />
 
                 <NumberInput

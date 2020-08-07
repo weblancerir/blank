@@ -1,0 +1,1053 @@
+{
+  "allPages": {
+    "1": {
+      "tagName": "PageBase",
+      "props": {
+        "pageId": "1",
+        "pageSetting": {
+          "permissions":{
+            "type": "Everyone",
+            "password": "",
+            "memberType": "all",
+            "memberRoles": [],
+            "memberPlanData": []
+          },
+          "seoGoogle": {
+            "endUrl": "behrooz",
+            "pageTitle": "Behrooz | Arabzade",
+            "pageDescription": "Behrooz Arabzade is founder and Ceo of Weblancer Company.",
+            "showInSearch": true
+          }
+        },
+        "pageName": "Test",
+        "className": "Page1Root",
+        "tagName": "PageBase",
+        "id": "page",
+        "editorData": {
+          "innerWidth": 1366,
+          "innerHeight": 625,
+          "inspectorWidth": 270,
+          "inspectorPinned": false
+        },
+        "inspectorPinned": true,
+        "griddata": {
+          "initialized": true,
+          "resizable": true,
+          "draggable": false,
+          "hasOwnBreakPoints": false,
+          "isContainer": true,
+          "autoDock": true,
+          "bpData": {
+            "laptop": {
+              "x": "50%",
+              "y": "50%",
+              "w": "100%",
+              "h": "100%",
+              "constraints": {},
+              "margin": {},
+              "units": {
+                "x": "%",
+                "y": "%",
+                "w": "%",
+                "h": "%"
+              },
+              "scrollType": "vertical",
+              "absolute": true,
+              "fix": false,
+              "autoHeight": false,
+              "autoWidth": false,
+              "overflowData": {
+                "state": "scroll",
+                "overflowY": "scroll",
+                "auto": true
+              },
+              "grid": {
+                "x": 3,
+                "y": 1,
+                "gridTemplateRows": "auto auto auto",
+                "gridTemplateColumns": "minmax(0px,1fr)"
+              },
+              "containerHeight": "max-content",
+              "design": {},
+              "transform": {},
+              "gridItemStyle": {
+                "alignSelf": "center",
+                "justifySelf": "center",
+                "position": "relative",
+                "marginLeft": 0,
+                "marginRight": 0,
+                "marginTop": 0,
+                "marginBottom": 0,
+                "gridArea": "1/1/2/2"
+              },
+              "style": {
+                "width": "1002px",
+                "height": "100%",
+                "boxShadow": "0 2px 12px 6px rgba(134,138,165,.41)",
+                "display": "inline-block"
+              },
+              "docks": {
+                "top": false,
+                "left": false,
+                "bottom": false,
+                "right": false
+              }
+            }
+          },
+          "allSectionsH": [
+            "comp_Header",
+            "comp_Section",
+            "comp_Footer"
+          ],
+          "allSectionsV": [
+            null
+          ],
+          "fillWithData": true,
+          "pageResize": true,
+          "savedChildren": {
+            "page-main-sections": {
+              "tagName": "main",
+              "props": {
+                "style": {
+                  "display": "contents"
+                },
+                "id": "page-main-sections"
+              },
+              "zIndex": 1
+            },
+            "comp_Header": {
+              "tagName": "Header",
+              "props": {
+                "isSection": true,
+                "data": {
+                  "bpData": {
+                    "gridItemStyle": {
+                      "gridArea": "1/1/2/2",
+                      "marginTop": "0px",
+                      "marginLeft": "0px",
+                      "marginBottom": "0px",
+                      "marginRight": "0px"
+                    }
+                  },
+                  "isSection": true
+                },
+                "resizeSides": [
+                  "s",
+                  "n"
+                ],
+                "tagName": "Header",
+                "id": "comp_Header",
+                "griddata": {
+                  "initialized": true,
+                  "resizable": true,
+                  "draggable": false,
+                  "hasOwnBreakPoints": false,
+                  "isContainer": true,
+                  "autoDock": true,
+                  "bpData": {
+                    "laptop": {
+                      "x": "50%",
+                      "y": "50%",
+                      "w": "100%",
+                      "h": "100%",
+                      "constraints": {},
+                      "margin": {},
+                      "units": {
+                        "x": "%",
+                        "y": "%",
+                        "w": "%",
+                        "h": "%"
+                      },
+                      "scrollType": "vertical",
+                      "absolute": true,
+                      "fix": false,
+                      "autoHeight": false,
+                      "autoWidth": false,
+                      "overflowData": {
+                        "state": "show"
+                      },
+                      "gridItemStyle": {
+                        "gridArea": "1/1/2/2",
+                        "marginTop": "0px",
+                        "marginLeft": "0px",
+                        "marginBottom": "0px",
+                        "marginRight": "0px"
+                      },
+                      "design": {},
+                      "transform": {},
+                      "style": {
+                        "width": "auto",
+                        "height": "auto",
+                        "minHeight": "150px",
+                        "zIndex": "50"
+                      },
+                      "grid": {
+                        "x": 1,
+                        "y": 1,
+                        "gridTemplateRows": "1fr",
+                        "gridTemplateColumns": "1fr"
+                      },
+                      "docks": {
+                        "top": false,
+                        "left": false,
+                        "bottom": false,
+                        "right": false
+                      }
+                    }
+                  },
+                  "id": "comp_Header",
+                  "fillWithData": true,
+                  "isSection": true,
+                  "savedChildren": {
+                    "comp_ContainerBase": {
+                      "tagName": "ContainerBase",
+                      "props": {
+                        "tagName": "ContainerBase",
+                        "style": {
+                          "width": "50%",
+                          "height": "auto",
+                          "minHeight": "75px"
+                        },
+                        "data": {
+                          "isContainer": true,
+                          "bpData": {
+                            "overflowData": {
+                              "state": "show"
+                            },
+                            "design": {
+                              "fillColor": "#5cff54",
+                              "border": {
+                                "shadow": {
+                                  "xOffset": -1,
+                                  "yOffset": 1,
+                                  "distance": 1,
+                                  "size": 0,
+                                  "blur": 4
+                                },
+                                "radius": {}
+                              }
+                            }
+                          }
+                        },
+                        "id": "comp_ContainerBase",
+                        "griddata": {
+                          "initialized": true,
+                          "resizable": true,
+                          "draggable": true,
+                          "hasOwnBreakPoints": false,
+                          "isContainer": true,
+                          "autoDock": true,
+                          "bpData": {
+                            "laptop": {
+                              "x": "50%",
+                              "y": "50%",
+                              "w": "100%",
+                              "h": "100%",
+                              "constraints": {},
+                              "margin": {},
+                              "units": {
+                                "x": "%",
+                                "y": "%",
+                                "w": "%",
+                                "h": "%"
+                              },
+                              "scrollType": "vertical",
+                              "absolute": true,
+                              "fix": false,
+                              "autoHeight": false,
+                              "autoWidth": false,
+                              "overflowData": {
+                                "state": "show"
+                              },
+                              "design": {
+                                "fillColor": "#5cff54",
+                                "border": {
+                                  "shadow": {
+                                    "xOffset": -1,
+                                    "yOffset": 1,
+                                    "distance": 1,
+                                    "size": 0,
+                                    "blur": 4
+                                  },
+                                  "radius": {}
+                                }
+                              },
+                              "transform": {},
+                              "gridItemStyle": {
+                                "alignSelf": "start",
+                                "justifySelf": "end",
+                                "position": "relative",
+                                "marginLeft": "0%",
+                                "marginRight": "7.926713197969542%",
+                                "marginTop": "43.5px",
+                                "marginBottom": "0px",
+                                "gridArea": "1/1/2/2",
+                                "widthForPercent": 985,
+                                "heightForPercent": 150
+                              },
+                              "style": {
+                                "width": "50%",
+                                "height": "auto",
+                                "minHeight": "75px"
+                              },
+                              "grid": {
+                                "x": 1,
+                                "y": 1,
+                                "gridTemplateRows": "1fr",
+                                "gridTemplateColumns": "1fr"
+                              },
+                              "docks": {
+                                "top": true,
+                                "right": true
+                              }
+                            },
+                            "tablet": {},
+                            "mobile": {}
+                          },
+                          "id": "comp_ContainerBase",
+                          "fillWithData": true,
+                          "savedChildren": {},
+                          "selected": false
+                        },
+                        "editorData": {
+                          "innerWidth": 1366,
+                          "innerHeight": 625,
+                          "inspectorWidth": 270,
+                          "inspectorPinned": false
+                        },
+                        "width": "100%",
+                        "height": "100%",
+                        "childSize": {
+                          "w": "100%",
+                          "h": "100%"
+                        },
+                        "showSideResize": false,
+                        "isSelectable": true,
+                        "layoutType": "free",
+                        "dir": "rtl",
+                        "compactType": "vertical",
+                        "defaultGrid": {
+                          "x": 1,
+                          "y": 1,
+                          "gridTemplateRows": "1fr",
+                          "gridTemplateColumns": "1fr"
+                        },
+                        "defaultStyle": {
+                          "width": "50%",
+                          "height": "50%"
+                        },
+                        "defaultGridItemStyle": {
+                          "alignSelf": "center",
+                          "justifySelf": "center",
+                          "position": "relative",
+                          "marginLeft": 0,
+                          "marginRight": 0,
+                          "marginTop": 0,
+                          "marginBottom": 0,
+                          "gridArea": "1/1/2/2"
+                        }
+                      },
+                      "zIndex": 1
+                    }
+                  },
+                  "selected": false
+                }
+              },
+              "zIndex": 2
+            },
+            "comp_Section": {
+              "tagName": "Section",
+              "props": {
+                "portalNodeId": "page-main-sections",
+                "isSection": true,
+                "data": {
+                  "bpData": {
+                    "gridItemStyle": {
+                      "gridArea": "2/1/3/2",
+                      "marginTop": "0px",
+                      "marginLeft": "0px",
+                      "marginBottom": "0px",
+                      "marginRight": "0px"
+                    }
+                  },
+                  "isSection": true
+                },
+                "resizeSides": [
+                  "s",
+                  "n"
+                ],
+                "tagName": "Section",
+                "id": "comp_Section",
+                "griddata": {
+                  "initialized": true,
+                  "resizable": true,
+                  "draggable": false,
+                  "hasOwnBreakPoints": false,
+                  "isContainer": true,
+                  "autoDock": true,
+                  "bpData": {
+                    "laptop": {
+                      "x": "50%",
+                      "y": "50%",
+                      "w": "100%",
+                      "h": "100%",
+                      "constraints": {},
+                      "margin": {},
+                      "units": {
+                        "x": "%",
+                        "y": "%",
+                        "w": "%",
+                        "h": "%"
+                      },
+                      "scrollType": "vertical",
+                      "absolute": true,
+                      "fix": false,
+                      "autoHeight": false,
+                      "autoWidth": false,
+                      "overflowData": {
+                        "state": "show"
+                      },
+                      "gridItemStyle": {
+                        "gridArea": "2/1/3/2",
+                        "marginTop": "0px",
+                        "marginLeft": "0px",
+                        "marginBottom": "0px",
+                        "marginRight": "0px"
+                      },
+                      "design": {},
+                      "transform": {},
+                      "style": {
+                        "width": "auto",
+                        "height": "auto",
+                        "minHeight": "500px"
+                      },
+                      "grid": {
+                        "x": 1,
+                        "y": 1,
+                        "gridTemplateRows": "1fr",
+                        "gridTemplateColumns": "1fr"
+                      },
+                      "docks": {
+                        "top": false,
+                        "left": false,
+                        "bottom": false,
+                        "right": false
+                      }
+                    }
+                  },
+                  "id": "comp_Section",
+                  "fillWithData": true,
+                  "isSection": true,
+                  "savedChildren": {}
+                }
+              },
+              "zIndex": 3
+            },
+            "comp_Footer": {
+              "tagName": "Footer",
+              "props": {
+                "isSection": true,
+                "data": {
+                  "bpData": {
+                    "gridItemStyle": {
+                      "gridArea": "3/1/4/2",
+                      "marginTop": "0px",
+                      "marginLeft": "0px",
+                      "marginBottom": "0px",
+                      "marginRight": "0px"
+                    }
+                  },
+                  "isSection": true
+                },
+                "resizeSides": [
+                  "s",
+                  "n"
+                ],
+                "tagName": "Footer",
+                "id": "comp_Footer",
+                "griddata": {
+                  "initialized": true,
+                  "resizable": true,
+                  "draggable": false,
+                  "hasOwnBreakPoints": false,
+                  "isContainer": true,
+                  "autoDock": true,
+                  "bpData": {
+                    "laptop": {
+                      "x": "50%",
+                      "y": "50%",
+                      "w": "100%",
+                      "h": "100%",
+                      "constraints": {},
+                      "margin": {},
+                      "units": {
+                        "x": "%",
+                        "y": "%",
+                        "w": "%",
+                        "h": "%"
+                      },
+                      "scrollType": "vertical",
+                      "absolute": true,
+                      "fix": false,
+                      "autoHeight": false,
+                      "autoWidth": false,
+                      "overflowData": {
+                        "state": "show"
+                      },
+                      "gridItemStyle": {
+                        "gridArea": "3/1/4/2",
+                        "marginTop": "0px",
+                        "marginLeft": "0px",
+                        "marginBottom": "0px",
+                        "marginRight": "0px"
+                      },
+                      "design": {},
+                      "transform": {},
+                      "style": {
+                        "width": "auto",
+                        "height": "auto",
+                        "minHeight": "100px",
+                        "zIndex": "51"
+                      },
+                      "grid": {
+                        "x": 1,
+                        "y": 1,
+                        "gridTemplateRows": "1fr",
+                        "gridTemplateColumns": "1fr"
+                      },
+                      "docks": {
+                        "top": false,
+                        "left": false,
+                        "bottom": false,
+                        "right": false
+                      }
+                    }
+                  },
+                  "id": "comp_Footer",
+                  "fillWithData": true,
+                  "isSection": true,
+                  "savedChildren": {}
+                }
+              },
+              "zIndex": 4
+            }
+          },
+          "selected": true
+        },
+        "style": {
+          "width": "[object Object]px",
+          "height": "100%",
+          "boxShadow": "0 2px 12px 6px rgba(134,138,165,.41)",
+          "display": "inline-block"
+        },
+        "data": {
+          "isContainer": true,
+          "draggable": false,
+          "resizable": true,
+          "pageResize": true,
+          "bpData": {
+            "overflowData": {
+              "state": "scroll",
+              "overflowY": "scroll",
+              "auto": true
+            },
+            "grid": {
+              "x": 0,
+              "y": 1,
+              "gridTemplateRows": "auto",
+              "gridTemplateColumns": "minmax(0px,1fr)"
+            },
+            "containerHeight": "max-content"
+          }
+        },
+        "isPage": true,
+        "resizeSides": [],
+        "width": "100%",
+        "height": "100%",
+        "childSize": {
+          "w": "100%",
+          "h": "100%"
+        },
+        "showSideResize": false,
+        "isSelectable": true,
+        "layoutType": "free",
+        "dir": "rtl",
+        "compactType": "vertical",
+        "defaultGrid": {
+          "x": 1,
+          "y": 1,
+          "gridTemplateRows": "1fr",
+          "gridTemplateColumns": "1fr"
+        },
+        "defaultStyle": {
+          "width": "50%",
+          "height": "50%"
+        },
+        "defaultGridItemStyle": {
+          "alignSelf": "center",
+          "justifySelf": "center",
+          "position": "relative",
+          "marginLeft": 0,
+          "marginRight": 0,
+          "marginTop": 0,
+          "marginBottom": 0,
+          "gridArea": "1/1/2/2"
+        }
+      }
+    },
+    "2": {
+      "tagName": "PageBase",
+      "props": {
+        "pageId": "2",
+        "pageSetting": {
+          "permissions":{
+            "type": "Everyone",
+            "password": "",
+            "memberType": "all",
+            "memberRoles": [],
+            "memberPlanData": []
+          },
+          "seoGoogle": {
+            "endUrl": "",
+            "pageTitle": "",
+            "pageDescription": "",
+            "showInSearch": true
+          }
+        },
+        "pageName": "Test2",
+        "className": "Page1Root",
+        "tagName": "PageBase",
+        "id": "page",
+        "editorData": {
+          "innerWidth": 1366,
+          "innerHeight": 625,
+          "inspectorWidth": 270,
+          "inspectorPinned": false
+        },
+        "inspectorPinned": true,
+        "griddata": {
+          "initialized": true,
+          "resizable": true,
+          "draggable": false,
+          "hasOwnBreakPoints": false,
+          "isContainer": true,
+          "autoDock": true,
+          "bpData": {
+            "laptop": {
+              "x": "50%",
+              "y": "50%",
+              "w": "100%",
+              "h": "100%",
+              "constraints": {},
+              "margin": {},
+              "units": {
+                "x": "%",
+                "y": "%",
+                "w": "%",
+                "h": "%"
+              },
+              "scrollType": "vertical",
+              "absolute": true,
+              "fix": false,
+              "autoHeight": false,
+              "autoWidth": false,
+              "overflowData": {
+                "state": "scroll",
+                "overflowY": "scroll",
+                "auto": true
+              },
+              "grid": {
+                "x": 3,
+                "y": 1,
+                "gridTemplateRows": "auto auto auto",
+                "gridTemplateColumns": "minmax(0px,1fr)"
+              },
+              "containerHeight": "max-content",
+              "design": {},
+              "transform": {},
+              "gridItemStyle": {
+                "alignSelf": "center",
+                "justifySelf": "center",
+                "position": "relative",
+                "marginLeft": 0,
+                "marginRight": 0,
+                "marginTop": 0,
+                "marginBottom": 0,
+                "gridArea": "1/1/2/2"
+              },
+              "style": {
+                "width": "1002px",
+                "height": "100%",
+                "boxShadow": "0 2px 12px 6px rgba(134,138,165,.41)",
+                "display": "inline-block"
+              },
+              "docks": {
+                "top": false,
+                "left": false,
+                "bottom": false,
+                "right": false
+              }
+            }
+          },
+          "allSectionsH": [
+            "comp_Header",
+            "comp_Section",
+            "comp_Footer"
+          ],
+          "allSectionsV": [
+            null
+          ],
+          "fillWithData": true,
+          "pageResize": true,
+          "savedChildren": {
+            "page-main-sections": {
+              "tagName": "main",
+              "props": {
+                "style": {
+                  "display": "contents"
+                },
+                "id": "page-main-sections"
+              },
+              "zIndex": 1
+            },
+            "comp_Header": {
+              "tagName": "Header",
+              "props": {
+                "isSection": true,
+                "data": {
+                  "bpData": {
+                    "gridItemStyle": {
+                      "gridArea": "1/1/2/2",
+                      "marginTop": "0px",
+                      "marginLeft": "0px",
+                      "marginBottom": "0px",
+                      "marginRight": "0px"
+                    }
+                  },
+                  "isSection": true
+                },
+                "resizeSides": [
+                  "s",
+                  "n"
+                ],
+                "tagName": "Header",
+                "id": "comp_Header",
+                "griddata": {
+                  "initialized": true,
+                  "resizable": true,
+                  "draggable": false,
+                  "hasOwnBreakPoints": false,
+                  "isContainer": true,
+                  "autoDock": true,
+                  "bpData": {
+                    "laptop": {
+                      "x": "50%",
+                      "y": "50%",
+                      "w": "100%",
+                      "h": "100%",
+                      "constraints": {},
+                      "margin": {},
+                      "units": {
+                        "x": "%",
+                        "y": "%",
+                        "w": "%",
+                        "h": "%"
+                      },
+                      "scrollType": "vertical",
+                      "absolute": true,
+                      "fix": false,
+                      "autoHeight": false,
+                      "autoWidth": false,
+                      "overflowData": {
+                        "state": "show"
+                      },
+                      "gridItemStyle": {
+                        "gridArea": "1/1/2/2",
+                        "marginTop": "0px",
+                        "marginLeft": "0px",
+                        "marginBottom": "0px",
+                        "marginRight": "0px"
+                      },
+                      "design": {},
+                      "transform": {},
+                      "style": {
+                        "width": "auto",
+                        "height": "auto",
+                        "minHeight": "150px",
+                        "zIndex": "50"
+                      },
+                      "grid": {
+                        "x": 1,
+                        "y": 1,
+                        "gridTemplateRows": "1fr",
+                        "gridTemplateColumns": "1fr"
+                      },
+                      "docks": {
+                        "top": false,
+                        "left": false,
+                        "bottom": false,
+                        "right": false
+                      }
+                    }
+                  },
+                  "id": "comp_Header",
+                  "fillWithData": true,
+                  "isSection": true,
+                  "savedChildren": {}
+                }
+              },
+              "zIndex": 2
+            },
+            "comp_Section": {
+              "tagName": "Section",
+              "props": {
+                "portalNodeId": "page-main-sections",
+                "isSection": true,
+                "data": {
+                  "bpData": {
+                    "gridItemStyle": {
+                      "gridArea": "2/1/3/2",
+                      "marginTop": "0px",
+                      "marginLeft": "0px",
+                      "marginBottom": "0px",
+                      "marginRight": "0px"
+                    }
+                  },
+                  "isSection": true
+                },
+                "resizeSides": [
+                  "s",
+                  "n"
+                ],
+                "tagName": "Section",
+                "id": "comp_Section",
+                "griddata": {
+                  "initialized": true,
+                  "resizable": true,
+                  "draggable": false,
+                  "hasOwnBreakPoints": false,
+                  "isContainer": true,
+                  "autoDock": true,
+                  "bpData": {
+                    "laptop": {
+                      "x": "50%",
+                      "y": "50%",
+                      "w": "100%",
+                      "h": "100%",
+                      "constraints": {},
+                      "margin": {},
+                      "units": {
+                        "x": "%",
+                        "y": "%",
+                        "w": "%",
+                        "h": "%"
+                      },
+                      "scrollType": "vertical",
+                      "absolute": true,
+                      "fix": false,
+                      "autoHeight": false,
+                      "autoWidth": false,
+                      "overflowData": {
+                        "state": "show"
+                      },
+                      "gridItemStyle": {
+                        "gridArea": "2/1/3/2",
+                        "marginTop": "0px",
+                        "marginLeft": "0px",
+                        "marginBottom": "0px",
+                        "marginRight": "0px"
+                      },
+                      "design": {},
+                      "transform": {},
+                      "style": {
+                        "width": "auto",
+                        "height": "auto",
+                        "minHeight": "500px"
+                      },
+                      "grid": {
+                        "x": 1,
+                        "y": 1,
+                        "gridTemplateRows": "1fr",
+                        "gridTemplateColumns": "1fr"
+                      },
+                      "docks": {
+                        "top": false,
+                        "left": false,
+                        "bottom": false,
+                        "right": false
+                      }
+                    }
+                  },
+                  "id": "comp_Section",
+                  "fillWithData": true,
+                  "isSection": true,
+                  "savedChildren": {}
+                }
+              },
+              "zIndex": 3
+            },
+            "comp_Footer": {
+              "tagName": "Footer",
+              "props": {
+                "isSection": true,
+                "data": {
+                  "bpData": {
+                    "gridItemStyle": {
+                      "gridArea": "3/1/4/2",
+                      "marginTop": "0px",
+                      "marginLeft": "0px",
+                      "marginBottom": "0px",
+                      "marginRight": "0px"
+                    }
+                  },
+                  "isSection": true
+                },
+                "resizeSides": [
+                  "s",
+                  "n"
+                ],
+                "tagName": "Footer",
+                "id": "comp_Footer",
+                "griddata": {
+                  "initialized": true,
+                  "resizable": true,
+                  "draggable": false,
+                  "hasOwnBreakPoints": false,
+                  "isContainer": true,
+                  "autoDock": true,
+                  "bpData": {
+                    "laptop": {
+                      "x": "50%",
+                      "y": "50%",
+                      "w": "100%",
+                      "h": "100%",
+                      "constraints": {},
+                      "margin": {},
+                      "units": {
+                        "x": "%",
+                        "y": "%",
+                        "w": "%",
+                        "h": "%"
+                      },
+                      "scrollType": "vertical",
+                      "absolute": true,
+                      "fix": false,
+                      "autoHeight": false,
+                      "autoWidth": false,
+                      "overflowData": {
+                        "state": "show"
+                      },
+                      "gridItemStyle": {
+                        "gridArea": "3/1/4/2",
+                        "marginTop": "0px",
+                        "marginLeft": "0px",
+                        "marginBottom": "0px",
+                        "marginRight": "0px"
+                      },
+                      "design": {},
+                      "transform": {},
+                      "style": {
+                        "width": "auto",
+                        "height": "auto",
+                        "minHeight": "100px",
+                        "zIndex": "51"
+                      },
+                      "grid": {
+                        "x": 1,
+                        "y": 1,
+                        "gridTemplateRows": "1fr",
+                        "gridTemplateColumns": "1fr"
+                      },
+                      "docks": {
+                        "top": false,
+                        "left": false,
+                        "bottom": false,
+                        "right": false
+                      }
+                    }
+                  },
+                  "id": "comp_Footer",
+                  "fillWithData": true,
+                  "isSection": true,
+                  "savedChildren": {}
+                }
+              },
+              "zIndex": 4
+            }
+          },
+          "selected": true
+        },
+        "style": {
+          "width": "1002px",
+          "height": "100%",
+          "boxShadow": "0 2px 12px 6px rgba(134,138,165,.41)",
+          "display": "inline-block"
+        },
+        "data": {
+          "isContainer": true,
+          "draggable": false,
+          "resizable": true,
+          "pageResize": true,
+          "bpData": {
+            "overflowData": {
+              "state": "scroll",
+              "overflowY": "scroll",
+              "auto": true
+            },
+            "grid": {
+              "x": 0,
+              "y": 1,
+              "gridTemplateRows": "auto",
+              "gridTemplateColumns": "minmax(0px,1fr)"
+            },
+            "containerHeight": "max-content"
+          }
+        },
+        "isPage": true,
+        "resizeSides": [],
+        "width": "100%",
+        "height": "100%",
+        "childSize": {
+          "w": "100%",
+          "h": "100%"
+        },
+        "showSideResize": false,
+        "isSelectable": true,
+        "layoutType": "free",
+        "dir": "rtl",
+        "compactType": "vertical",
+        "defaultGrid": {
+          "x": 1,
+          "y": 1,
+          "gridTemplateRows": "1fr",
+          "gridTemplateColumns": "1fr"
+        },
+        "defaultStyle": {
+          "width": "50%",
+          "height": "50%"
+        },
+        "defaultGridItemStyle": {
+          "alignSelf": "center",
+          "justifySelf": "center",
+          "position": "relative",
+          "marginLeft": 0,
+          "marginRight": 0,
+          "marginTop": 0,
+          "marginBottom": 0,
+          "gridArea": "1/1/2/2"
+        }
+      }
+    }
+  },
+  "allApps": {
+    "member": {
+      "name": "Web Lancer Member",
+      "setting": {
+        "roles": ["Admin"]
+      }
+    }
+  },
+  "setting": {
+    "baseUrl": "https://weblancer.ir/"
+  }
+}

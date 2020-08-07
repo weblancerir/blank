@@ -1,0 +1,17 @@
+.PageTypeTitle {
+    color: #626262 !important;
+    font-size: 14px !important;
+    padding: 12px 20px 12px 20px !important;
+    background-color: #f3f3f3 !important;
+    position: relative !important;
+    text-align: left !important;
+    display: block !important;
+    border-bottom: 1px solid #ebebeb !important;
+}
+
+.PageTypeTitleExpandIcon{
+    position: absolute;
+    right: 20px;
+    top:50%;
+    transform: translateY(-50%);
+}

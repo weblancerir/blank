@@ -1,0 +1,255 @@
+.PageSettingModal{
+    z-index: 9999999999999 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.PageSettingHeader {
+    width: 100%;
+    pointer-events: auto;
+    box-shadow: 0 0 2px 0 rgba(22,45,61,.27);
+    background-color: #fff;
+}
+
+.PageSettingRoot{
+    width: 600px;
+    height: 90%;
+    background-color: white;
+    border-radius: 4px;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.PageSettingTabBox{
+    min-height: 42px !important;
+    border-bottom: 1px solid #f5f5f5 !important;
+}
+
+.PageSettingTab{
+    font-size: 12px !important;
+    min-width: 120px !important;
+    text-transform: none !important;
+    min-height: 42px !important;
+    border-right: 1px solid #f5f5f5 !important;
+
+}
+
+.PageSettingTab:focus{
+    background-color: #efffe8 !important;
+}
+
+.PageSettingTabPanelRoot{
+    overflow-y: auto;
+    padding-bottom: 48px;
+}
+
+.PageInfoBox{
+    position: relative;
+    padding: 20px 20px;
+    border-bottom: 1px solid #dddddd !important;
+}
+
+.PageInfoBoxTitle{
+    font-size: 13px;
+    color: #767676;
+    display: flex;
+    align-items: center;
+}
+
+.PageInfoNameInput{
+    margin-top: 12px;
+    font-size: 14px;
+    height: 36px !important;
+}
+
+.PageInfoHomePageButton{
+    position: absolute !important;
+    right: 20px !important;
+    box-shadow: none !important;
+    background-color: blue !important;
+    color: white !important;
+    border-radius: 20px !important;
+    text-transform: none !important;
+    font-size: 12px !important;
+}
+
+.PermissionsItem{
+    margin-top: 12px;
+    border-radius: 8px;
+    border: 1px solid #b7b7b7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 42px 6px 12px;
+    cursor: pointer;
+}
+
+.PermissionsItem:hover{
+    background-color: #e6f1ff;
+    border: 1px solid #b4e2ff;
+}
+
+.PermissionsItemSelected{
+    background-color: #e8ffdf !important;
+    border: 1px solid #c2ffbd !important;
+}
+
+.PermissionsItemImage{
+    border-bottom: 1px solid #bebebe;
+    box-sizing: border-box;
+    padding-bottom: 48px;
+    margin-bottom: 8px;
+}
+
+.PermissionsItemDivider{
+    width: 100%;
+    padding: 16px 16px 0;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #bebebe;
+    box-sizing: border-box;
+}
+
+.PermissionsItemTitle{
+    font-size: 14px;
+}
+
+.PermissionsDescription{
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 13px;
+    color: #7f7f7f;
+}
+
+.PermissionsRadioGroup{
+    margin-left: 12px;
+    margin-top: 8px;
+}
+
+.PermissionsFormLabel{
+    font-size: 14px !important;
+    color: #7f7f7f;
+}
+
+.PermissionsRolesInput{
+    box-sizing: border-box;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+    font-size: 14px;
+    margin-right: 12px;
+}
+
+.PermissionsRolesInput:hover{
+    border: 1px solid #54c8ff !important;
+}
+
+.PermissionsRole{
+    font-size: 13px;
+    color: #767676;
+    display: flex;
+    align-items: center;
+    margin-right: 12px;
+}
+.PermissionsNewRole{
+    width: 100%;
+    font-size: 14px;
+    font-weight: bold;
+    color: #0a79e6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 8px 12px;
+}
+
+.PermissionsSelectRole{
+    width: 100%;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    margin: 8px 12px;
+}
+
+.SeoGooglePreviewRoot{
+    padding: 12px;
+    border: 1px solid #d9e1e8;
+    background-color: #fff;
+    margin-top: 12px;
+}
+
+.SeoGooglePreviewTitle{
+    display: block;
+    font-family: Arial,sans-serif;
+    font-size: 18px;
+    color: #1a0dab;
+    font-weight: 700;
+    line-height: 18px;
+    margin: 0;
+    user-select: none;
+    cursor: default;
+    max-width: 100%;
+}
+
+.SeoGooglePreviewUrl{
+    display: block;
+    font-family: Arial,sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #006621;
+    user-select: text;
+    margin: 0;
+    line-height: 18px;
+    cursor: default;
+    max-width: 100%;
+}
+
+.SeoGooglePreviewDesc{
+    display: block;
+    font-family: Arial,sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: #545454;
+    margin: 0;
+    line-height: 18px;
+    cursor: default;
+    max-width: 100%;
+}
+
+.PageSettingInput{
+    padding: 4px;
+    border: 1px solid rgb(152, 152, 152);
+    border-radius: 4px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: unset;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.PageSettingInput:hover {
+    border: 1px solid rgb(75, 75, 75);
+    border-radius: 4px;
+}
+
+.PageSettingInput:focus {
+    border: 1px solid rgb(24, 141, 255);
+    border-radius: 4px;
+    outline-width: 0;
+}
+
+.PageInfoNameInputError{
+    border: 1px solid #ff0400 !important;
+}
+
+.SeoGoogleShowInSearch{
+    position: absolute !important;
+    right: 12px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}

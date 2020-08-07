@@ -1,10 +1,16 @@
 import React from "react";
 import {assignData, cloneObject} from "../../AwesomeGridLayoutUtils";
-import {getCompositeDesignData} from "../../AwesomwGridLayoutHelper";
+import {getCompositeDesignData, setDataInBreakpoint} from "../../AwesomwGridLayoutHelper";
 import {setData} from "../../BreakPointManager";
 import InspectorBreadcrumbs from "../../Test/Inspector/InspectorBreadcrumbs";
 import InspectorAligns from "../../Test/Inspector/InspectorAligns";
 import InspectorSize from "../../Test/Inspector/InspectorSize";
+import InspectorPosition from "../../Test/Inspector/InspectorPosition";
+import InspectorScroll from "../../Test/Inspector/InspectorScroll";
+import InspectorPadding from "../../Test/Inspector/InspectorPadding";
+import InspectorOverflow from "../../Test/Inspector/InspectorOverflow";
+import InspectorAnchor from "../../Test/Inspector/InspectorAnchor";
+import InspectorAdjustment from "../../Test/Inspector/InspectorAdjustment";
 
 export default class AGLComponent extends React.Component{
     constructor (props) {
@@ -32,11 +38,13 @@ export default class AGLComponent extends React.Component{
     };
 
     onDesignChange = (designKey, value) => {
-        setData(this.props.griddata, designKey, value, this.props.breakpointmanager);
-        this.updateDesign(getCompositeDesignData(this));
+        setDataInBreakpoint(designKey, value, this.getAgl(), true, undefined, true);
+        this.updateDesign(getCompositeDesignData(this.getAgl()));
     };
 
     getInspector = () => {
+        if (this.getInspectorOverride)
+            return this.getInspectorOverride();
         return (
             <>
                 <InspectorBreadcrumbs
@@ -53,6 +61,24 @@ export default class AGLComponent extends React.Component{
                     minHeightUnits={["%", "px", "vh", "vw", "none"]}
                     maxWidthUnits={["%", "px", "vh", "vw", "none"]}
                     maxHeightUnits={["%", "px", "vh", "vw", "none"]}
+                />
+                <InspectorOverflow
+                    item={this.getAgl()}
+                />
+                <InspectorPosition
+                    item={this.getAgl()}
+                />
+                <InspectorScroll
+                    item={this.getAgl()}
+                />
+                <InspectorPadding
+                    item={this.getAgl()}
+                />
+                <InspectorAdjustment
+                    item={this.getAgl()}
+                />
+                <InspectorAnchor
+                    item={this.getAgl()}
                 />
             </>
         )

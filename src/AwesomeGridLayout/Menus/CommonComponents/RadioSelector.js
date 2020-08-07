@@ -1,8 +1,8 @@
 import React from "react";
 import './CommonMenu.css';
-import { SketchPicker } from 'react-color';
-import ButtonBase from "@material-ui/core/ButtonBase/ButtonBase";
-import {cloneObject} from "../../AwesomeGridLayoutUtils";
+import RadioGroup from "@material-ui/core/RadioGroup/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
+import Radio from "@material-ui/core/Radio/Radio";
 
 export default class RadioSelector extends React.Component {
     onChange = (e) => {
@@ -12,9 +12,13 @@ export default class RadioSelector extends React.Component {
 
     render () {
         return (
-            <div>
-                {/*TODO*/}
-            </div>
+                <RadioGroup className="RadioSelectorRoot"
+                            aria-label="gender" name="gender1" value={value} onChange={handleChange}>
+                    <FormControlLabel value="female" control={<Radio />} label="Female" />
+                    <FormControlLabel value="male" control={<Radio />} label="Male" />
+                    <FormControlLabel value="other" control={<Radio />} label="Other" />
+                    <FormControlLabel value="disabled" disabled control={<Radio />} label="(Disabled option)" />
+                </RadioGroup>
         )
     }
 }

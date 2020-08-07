@@ -1,10 +1,16 @@
 import {css, StyleSheet} from "aphrodite";
+import ArcInAnimation from "./ArcInAnimation";
+import DropDown from "../../Menus/CommonComponents/DropDown";
+import React from "react";
 
 let FadeInAnimation = {};
 
-FadeInAnimation.getAnimationCSS = (item, options = {}) => {
-    let compositeDesign = item.getCompositeFromData("design") || {};
+FadeInAnimation.getOptions = (props) => {
+    return null;
+};
 
+FadeInAnimation.getAnimationCSS = (item, options = {}) => {
+    let {duration, delay} = options;
     let animationStyles = StyleSheet.create({
         fadeIn: {
             animationName: {
@@ -12,10 +18,11 @@ FadeInAnimation.getAnimationCSS = (item, options = {}) => {
                     opacity: 0
                 },
                 "100%": {
-                    opacity: `${compositeDesign.opacity || "1"}`
+                    opacity: 1
                 }
             },
-            animationDuration: `${options.duration || "1s"}`,
+            animationDuration: `${duration || 1}s`,
+            animationDelay: `${delay || 0}s`,
             // TODO other options here
         }
     });

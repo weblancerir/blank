@@ -6,7 +6,18 @@ import Section from "../Components/Containers/Section";
 import Stack from "../Components/Stack/Stack";
 import VerticalSpacer from "../Components/Stack/VerticalSpacer";
 import FadeInAnimation from "../Test/Animations/FadeInAnimation";
-import RotateAnimation from "../Test/Animations/RotateAnimation";
+import BounceInAnimation from "../Test/Animations/BounceInAnimation";
+import GlideInAnimation from "../Test/Animations/GlideInAnimation";
+import FloatInAnimation from "../Test/Animations/FloatInAnimation";
+import ExpandInAnimation from "../Test/Animations/ExpandInAnimation";
+import SpinInAnimation from "../Test/Animations/SpinInAnimation";
+import FlyInAnimation from "../Test/Animations/FlyInAnimation";
+import TurnInAnimation from "../Test/Animations/TurnInAnimation";
+import ArcInAnimation from "../Test/Animations/ArcInAnimation";
+import PuffInAnimation from "../Test/Animations/PuffInAnimation";
+import FoldInAnimation from "../Test/Animations/FoldInAnimation";
+import FlipInAnimation from "../Test/Animations/FlipInAnimation";
+import RevealAnimation from "../Test/Animations/RevealAnimation";
 
 let DynamicComponents = {};
 
@@ -26,5 +37,16 @@ export let DynamicAnimations = {};
 
 export let initDynamicAnimations = () => {
     DynamicAnimations["fadeIn"] = FadeInAnimation;
-    DynamicAnimations["rotate"] = RotateAnimation;
+    DynamicAnimations["bounceIn"] = BounceInAnimation;
+    DynamicAnimations["glideIn"] = GlideInAnimation;
+    DynamicAnimations["floatIn"] = FloatInAnimation;
+    DynamicAnimations["expandIn"] = ExpandInAnimation;
+    DynamicAnimations["spinIn"] = SpinInAnimation;
+    DynamicAnimations["flyIn"] = FlyInAnimation;
+    DynamicAnimations["turnIn"] = TurnInAnimation;
+    DynamicAnimations["arcIn"] = ArcInAnimation;
+    DynamicAnimations["puffIn"] = PuffInAnimation;
+    DynamicAnimations["foldIn"] = FoldInAnimation;
+    DynamicAnimations["flipIn"] = FlipInAnimation;
+    DynamicAnimations["reveal"] = RevealAnimation;
 };

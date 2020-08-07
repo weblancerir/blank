@@ -9,6 +9,7 @@ export default class Slider extends React.Component {
                 {...this.props}
                 min={this.props.min}
                 max={this.props.max}
+                step={this.props.step}
                 value={this.props.value}
                 onChange={this.props.onChange}
             />

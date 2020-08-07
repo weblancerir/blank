@@ -4,6 +4,10 @@ export default class IdManager {
         this.allId = {};
     }
 
+    clear = () => {
+        this.allId = {};
+    };
+
     getId = (preferName, fixName) => {
         let result;
         let baseId = !fixName? this.prefix + preferName: fixName;

@@ -1,0 +1,28 @@
+.AddNewPageDialogItemRoot{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    padding-right: 52px;
+    width: 100%;
+}
+
+.AddNewPageDialogItemTitle{
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.AddNewPageDialogItemDesc{
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.AddNewPageDialogItemAdd{
+    position: absolute;
+    right:0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+    font-size: 14px;
+    color: #0a79e6;
+}

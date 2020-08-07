@@ -5,8 +5,13 @@ import './GridChildDraggable.css';
 export default class GridChildContainerChildren extends React.Component {
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         if (!shallowEqual(this.allChildId, Object.keys(nextProps.allChildren)) ||
-            !shallowEqual(this.allChildIndex.toString(),
-                Object.values(nextProps.allChildren).map(c => c.zIndex)).toString()
+            !shallowEqual(JSON.stringify(this.allChildIndex),
+                JSON.stringify(Object.values(nextProps.allChildren).map(c => {
+                    return {
+                        z: c.zIndex,
+                        i: c.child.props.id
+                    }
+                })))
         )
             return true;
         return false;
@@ -15,7 +20,12 @@ export default class GridChildContainerChildren extends React.Component {
     saveState = () => {
         let {allChildren} = this.props;
         this.allChildId = Object.keys(allChildren);
-        this.allChildIndex = Object.values(allChildren).map(c => c.zIndex);
+        this.allChildIndex = Object.values(allChildren).map(c => {
+            return {
+                z: c.zIndex,
+                i: c.child.props.id
+            }
+        });
     };
 
     getSorted = (children) => {

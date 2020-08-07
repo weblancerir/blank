@@ -1,11 +1,7 @@
 .AdjustmentResizeRoot {
-    position: absolute;
+    position: fixed;
     z-index: 9999999;
     pointer-events: none;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
 }
 
 .AdjustmentResizeRootPage {
@@ -44,13 +40,14 @@
     height: 100%;
 }
 .AdjustmentHelpLinesRoot {
-    position: absolute;
+    position: fixed;
     z-index: 9999999;
     pointer-events: none;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+}
+.AdjustmentHelpLinesRect {
+    position: absolute;
+    pointer-events: none;
+    border: 1px dashed #dadada;
 }
 .AdjustmentHelpSizeRoot {
     position: fixed;
@@ -99,10 +96,18 @@
     justify-items: center;
     width: 20px;
     height: 20px;
-    border-radius: 10px;
+    border-radius: 10px 10px 10px 0;
     background-color: #0007ff;
     margin-top: -30px;
     margin-left: 10px;
+    opacity: 0.1;
+    transform: rotate(-45deg);
+}
+.AdjustmentPageControllersAddSection:hover{
+    opacity: 1;
+}
+.AdjustmentPageControllersAddSection > img{
+    transform: rotate(45deg);
 }
 .AdjustmentPageControllersAddSectionFirst{
     margin-top: -30px;
@@ -124,9 +129,17 @@
     width: 20px;
     height: 20px;
     background-color: #0007ff;
-    border-radius: 10px;
+    border-radius: 10px 0 10px 10px;
     margin-top: -10px;
     margin-left: -40px;
+    opacity: 0.1;
+    transform: rotate(45deg);
+}
+.AdjustmentPageControllersAddHorizontalSection:hover{
+    opacity: 1;
+}
+.AdjustmentPageControllersAddHorizontalSection > img{
+    transform: rotate(-45deg);
 }
 .AdjustmentPageControllersAddHorizontalSectionFirst{
     margin-top: -30px;
@@ -182,7 +195,7 @@
     background-image: linear-gradient(90deg,rgba(89,93,112,.6) 37.5%,rgba(207,209,220,.6) 0,rgba(207,209,220,.6) 50%,transparent 0);
     background-size: 8px 6px;
     background-repeat: repeat-x;
-    pointerEvents: none;
+    pointer-events: none;
 }
 .AdjustmentGridLinesX{
     position: absolute;
@@ -191,7 +204,7 @@
     background-image: linear-gradient(rgba(89,93,112,.6) 37.5%,rgba(207,209,220,.6) 0,rgba(207,209,220,.6) 50%,transparent 0);
     background-size: 6px 8px;
     background-repeat: repeat-y;
-    pointerEvents: none;
+    pointer-events: none;
 }
 .AdjustmentHelpLinesSVG {
     position: absolute;
@@ -246,7 +259,7 @@
     top: -2px;
 }
 
-.Adjustment-n-pane::after {
+.Adjustment-n-pane-circle::after {
     z-index: 9999999;
     content: "";
     width: 8px;
@@ -263,7 +276,7 @@
     margin-top: -5px;
 }
 
-.Adjustment-n-pane::before {
+.Adjustment-n-pane-line::before {
     content: "";
     position: absolute;
     height: 1px;
@@ -281,7 +294,7 @@
     bottom: -2px;
 }
 
-.Adjustment-s-pane::after {
+.Adjustment-s-pane-circle::after {
     content: "";
     width: 8px;
     height: 8px;
@@ -297,7 +310,7 @@
     margin-bottom: -5px;
 }
 
-.Adjustment-s-pane::before {
+.Adjustment-s-pane-line::before {
     content: "";
     position: absolute;
     height: 1px;
@@ -315,7 +328,7 @@
     right: -2px;
 }
 
-.Adjustment-e-pane::after {
+.Adjustment-e-pane-circle::after {
     content: "";
     width: 8px;
     height: 8px;
@@ -331,7 +344,7 @@
     margin-right: -5px;
 }
 
-.Adjustment-e-pane::before {
+.Adjustment-e-pane-line::before {
     content: "";
     position: absolute;
     width: 1px;
@@ -349,7 +362,7 @@
     left: -2px;
 }
 
-.Adjustment-w-pane::after {
+.Adjustment-w-pane-circle::after {
     content: "";
     width: 8px;
     height: 8px;
@@ -365,7 +378,7 @@
     margin-left: -5px;
 }
 
-.Adjustment-w-pane::before {
+.Adjustment-w-pane-line::before {
     content: "";
     position: absolute;
     width: 1px;
@@ -409,7 +422,7 @@
     background-color: #545454;
     position: absolute;
     top: 50%;
-    right: -40px;
+    right: -35px;
     transform: translateY(-50%);
 }
 
@@ -423,9 +436,12 @@
     background-color: #545454;
     position: absolute;
     top: 50%;
-    left: -40px;
+    left: -35px;
     transform: translateY(-50%);
 }
 
+.ResizePanePointerNone {
+    pointer-events: none;
+}
 
 

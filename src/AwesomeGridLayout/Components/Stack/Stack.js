@@ -166,7 +166,6 @@ export default class Stack extends AGLComponent{
     };
 
     setOrder = (childId, child, childRelativeY, childHeight, fromState) => {
-        console.log("setOrder2");
         let childFound = false;
         let childOrderSet = false;
         let sorted = Object.values(this.aglRef.current.allChildRefs).sort((a,b) => {
@@ -315,9 +314,7 @@ export default class Stack extends AGLComponent{
         if (!this.allSpacerRef)
             this.allSpacerRef = [];
 
-        console.log("setPointerEventOfSpacers", pointerEvents, this.allSpacerRef);
         this.allSpacerRef.forEach((spacerRef) => {
-            console.log("setPointerEventOfSpacers", spacerRef);
             if (spacerRef && spacerRef.current)
                 spacerRef.current.setPointerEvents(pointerEvents);
         })
@@ -381,7 +378,6 @@ export default class Stack extends AGLComponent{
 
 
         if (!isStretch(item, true)) {
-            console.log("here");
             stretch = true;
         }
 
@@ -404,11 +400,6 @@ export default class Stack extends AGLComponent{
 
         let gridItemStyle = item.getFromData("gridItemStyle");
 
-        if (log) {
-            console.log(!(gridItemStyle.alignSelf !== "stretch" ||
-                gridItemStyle.marginLeft !== "0px" ||
-                gridItemStyle.marginRight !== "0px"), gridItemStyle)
-        }
         return !(gridItemStyle.alignSelf !== "stretch" ||
             gridItemStyle.marginLeft !== "0px" ||
             gridItemStyle.marginRight !== "0px");

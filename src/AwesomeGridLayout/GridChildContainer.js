@@ -5,6 +5,8 @@ import GridChildContainerChildren from "./GridChildContainerChildren";
 import classNames from "classnames";
 import AdjustmentPageControllers from "./Adjustment/AdjustmentPageControllers";
 import GridChildContainerFixedHolder from "./GridChildContainerFixedHolder";
+import PaddingInterface from "./Test/PaddingInterface";
+import ParentSelectInterface from "./Test/ParentSelectInterface";
 
 export default class GridChildContainer extends React.Component {
     constructor(props) {
@@ -15,52 +17,68 @@ export default class GridChildContainer extends React.Component {
 
     componentDidMount() {
         this.modifyOverflowStyle(this.props.overflowData, this.props.aglStyle);
-        this.modifyContainerStyle(this.props.grid, this.props.aglStyle);
+        this.modifyContainerStyle(this.props.grid, this.props.aglStyle, this.props.padding);
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         if (!shallowEqual(this.allChildId, Object.keys(nextProps.allChildren)) ||
             !shallowEqual(this.grid, nextProps.grid) ||
             !shallowEqual(this.size, nextProps.size) ||
-            !shallowEqual(this.allChildIndex.toString(),
-                Object.values(nextProps.allChildren).map(c => c.zIndex)).toString()
+            this.props.selectAsParent !== nextProps.selectAsParent ||
+            this.props.selected !== nextProps.selected ||
+            !shallowEqual(this.padding, nextProps.padding) ||
+            !shallowEqual(JSON.stringify(this.allChildIndex),
+                JSON.stringify(Object.values(nextProps.allChildren).map(c => {
+                    return {
+                        z: c.zIndex,
+                        i: c.child.props.id
+                    }
+                })))
         ) {
             if (!shallowEqual(this.overflowData, nextProps.overflowData))
                 this.modifyOverflowStyle(nextProps.overflowData, nextProps.aglStyle);
 
-            if (!shallowEqual(this.grid, nextProps.grid))
-                this.modifyContainerStyle(nextProps.grid, nextProps.aglStyle);
+            if (!shallowEqual(this.grid, nextProps.grid) || !shallowEqual(this.padding, nextProps.padding))
+                this.modifyContainerStyle(nextProps.grid, nextProps.aglStyle, nextProps.padding);
 
             if (!shallowEqual(this.aglStyle, nextProps.aglStyle)) {
                 this.modifyOverflowStyle(nextProps.overflowData, nextProps.aglStyle);
-                this.modifyContainerStyle(nextProps.grid, nextProps.aglStyle);
+                this.modifyContainerStyle(nextProps.grid, nextProps.aglStyle, nextProps.padding);
             }
 
             return true;
         }
 
         if (!shallowEqual(this.overflowData, nextProps.overflowData)) {
-            this.modifyOverflowStyle();
+            this.modifyOverflowStyle(nextProps.overflowData, nextProps.aglStyle);
+            return true;
         }
         if (!shallowEqual(this.aglStyle, nextProps.aglStyle)) {
             this.modifyOverflowStyle(nextProps.overflowData, nextProps.aglStyle);
-            this.modifyContainerStyle(nextProps.grid, nextProps.aglStyle);
+            this.modifyContainerStyle(nextProps.grid, nextProps.aglStyle, nextProps.padding);
+            return true;
         }
 
         return false;
     }
 
     saveState = () => {
-        let {allChildren, grid, overflowData, aglStyle, size} = this.props;
+        let {allChildren, grid, overflowData, aglStyle, size, padding} = this.props;
         this.allChildId = Object.keys(allChildren);
-        this.allChildIndex = Object.values(allChildren).map(c => c.zIndex);
+        this.allChildIndex = Object.values(allChildren).map(c => {
+            return {
+                z: c.zIndex,
+                i: c.child.props.id
+            }
+        });
         this.grid = cloneObject(grid);
         this.overflowData = cloneObject(overflowData);
         this.aglStyle = cloneObject(aglStyle);
         this.size = cloneObject(size);
+        this.padding = cloneObject(padding);
     };
 
-    modifyContainerStyle = (grid, aglStyle) => {
+    modifyContainerStyle = (grid, aglStyle, padding) => {
         if (!grid)
             grid = this.props.grid;
 
@@ -77,14 +95,37 @@ export default class GridChildContainer extends React.Component {
                 agl.getFromData("containerHeight") || "100%",
             display: "grid",
             position: "relative",
+            boxSizing: "border-box",
             gridTemplateRows: grid.gridTemplateRows,
             gridTemplateColumns: grid.gridTemplateColumns,
         };
 
+        if (padding) {
+            if (padding.top) style.paddingTop = padding.top;
+            if (padding.left) style.paddingLeft = padding.left;
+            if (padding.bottom) style.paddingBottom = padding.bottom;
+            if (padding.right) style.paddingRight = padding.right;
+
+            /*style.backgroundImage = "";
+            Object.keys(padding).forEach(key => {
+                if (key === "top")
+                    style.backgroundImage += `linear-gradient(to bottom, #00f3ffa8 ${padding.top}, transparent 10px),`
+                if (key === "bottom")
+                    style.backgroundImage += `linear-gradient(to top, #00f3ffa8 ${padding.bottom}, transparent 10px),`
+                if (key === "left")
+                    style.backgroundImage += `linear-gradient(to right, #00f3ffa8 ${padding.left}, transparent 10px),`
+                if (key === "right")
+                    style.backgroundImage += `linear-gradient(to left, #00f3ffa8 ${padding.right}, transparent 10px),`
+            });
+
+            if (style.backgroundImage)
+                style.backgroundImage = style.backgroundImage.slice(0, -1);*/
+        }
+
         let styleNode = document.getElementById(this.getContainerStyleId());
 
         if (!styleNode) {
-            appendStyle(style, this.getContainerStyleId(), this.getContainerStyleId(), this.props.agl);
+            appendStyle(style, this.getContainerStyleId(), this.getContainerStyleId());
         } else {
             updateStyle(styleNode, style, this.getContainerStyleId());
         }
@@ -95,14 +136,25 @@ export default class GridChildContainer extends React.Component {
 
         if (!styleNode) {
             appendStyle(this.getOverflowStyle(overflowData, aglStyle), this.getOverflowStyleId()
-                , this.getOverflowStyleId(), this.props.agl);
+                , this.getOverflowStyleId());
         } else {
             updateStyle(styleNode, this.getOverflowStyle(overflowData, aglStyle), this.getOverflowStyleId());
+        }
+
+        let webkitScrollbarStyle = {};
+        let webkitScrollbarStyleId = this.getOverflowStyleId() + '::-webkit-scrollbar';
+        if (overflowData.auto === 'hide') webkitScrollbarStyle.display = "none";
+
+        let scrollStyleNode = document.getElementById(webkitScrollbarStyleId);
+
+        if (!scrollStyleNode) {
+            appendStyle(webkitScrollbarStyle, webkitScrollbarStyleId, webkitScrollbarStyleId);
+        } else {
+            updateStyle(scrollStyleNode, webkitScrollbarStyle, webkitScrollbarStyleId);
         }
     };
 
     getOverflowStyle = (overflowData, aglStyle) => {
-        console.log("getOverflowStyle", overflowData.state, this.props.id);
         let style = {
             display: "grid",
             gridTemplateRows: "1fr",
@@ -116,17 +168,20 @@ export default class GridChildContainer extends React.Component {
 
         if (aglStyle && aglStyle.width === "auto") {
             style.position = "relative";
-            style.width = "auto";
             delete style.left;
             delete style.right;
+            delete style.top;
+            delete style.bottom;
         }
 
         if (aglStyle && aglStyle.height === "auto") {
             style.position = "relative";
-            style.height = "auto";
+            delete style.left;
+            delete style.right;
             delete style.top;
             delete style.bottom;
         }
+
 
         if (!overflowData)
             overflowData = this.props.overflowData;
@@ -145,24 +200,15 @@ export default class GridChildContainer extends React.Component {
         }
 
         if (overflowData.state === 'scroll') {
-            switch (overflowData.scroll) {
-                case 'vertical':
-                    style.overflowX = "hidden";
-                    style.overflowY = overflowData.auto || "scroll";
-                    break;
-                case 'horizontal':
-                    style.overflowX = overflowData.auto || "scroll";
-                    style.overflowY = "hidden";
-                    break;
-                case 'both':
-                    style.overflowX = overflowData.auto || "scroll";
-                    style.overflowY = overflowData.auto || "scroll";
-                    break;
-                default:
-                    break;
-            }
+            style.overflowX = overflowData.overflowX? overflowData.auto === 'auto'? "auto" : "scroll" : "hidden" ;
+            style.overflowY = overflowData.overflowY? overflowData.auto === 'auto'? "auto" : "scroll" : "hidden" ;
+        }
 
-            return style;
+        if (overflowData.auto === 'hide') {
+            // TODO hide scrollbar with webkit
+            style.scrollbarWidth = 'none';
+            style.overflow = '-moz-scrollbars-none';
+            style['-ms-overflow-style'] = 'none';
         }
 
         return style;
@@ -181,6 +227,20 @@ export default class GridChildContainer extends React.Component {
         this.fixedHolderRef.current.forceUpdate();
     };
 
+    needOverflow = () => {
+        let overflowData = this.props.overflowData;
+
+        if (overflowData.state !== 'scroll')
+            return false;
+
+        if (overflowData.overflowX === 'scroll')
+                return true;
+        if (overflowData.overflowY === 'scroll')
+                return true;
+
+        return false;
+    };
+
     render () {
         if (!this.props.show)
             return null;
@@ -194,44 +254,99 @@ export default class GridChildContainer extends React.Component {
             this.getContainerStyleId()
         );
 
-        return (
-            <div
-                id={`${id}_overflow`}
-                className={overflowClasses}
-                ref={this.props.overflowRef}
-                onScroll={this.props.onScroll}
-            >
-                <div
-                    id={`${id}_container`}
-                    className={containerClasses}
-                    ref={this.props.containerRef}
-                >
-                    <GridChildContainerChildren
-                        allChildren={allChildren}
-                        getChildrenOverride={getChildrenOverride}
-                        agl={agl}
-                    />
-
-                    {
-                        isPage &&
-                        <AdjustmentPageControllers
-                            grid={grid}
-                            page={page}
-                            ref={this.controllerRef}
-                            document={this.props.document}
+        if (!isPage) {
+            if (this.needOverflow()) {
+                return (
+                    <div
+                        id={`${id}_overflow`}
+                        className={overflowClasses}
+                        ref={this.props.overflowRef}
+                        onScroll={this.props.onScroll}
+                    >
+                        <div
+                            id={`${id}_container`}
+                            className={containerClasses}
+                            ref={this.props.containerRef}
+                        >
+                            {
+                                this.props.padding && (this.props.selectAsParent || this.props.selected) &&
+                                <PaddingInterface padding={this.props.padding} />
+                            }
+                            {
+                                this.props.selectAsParent &&
+                                <ParentSelectInterface />
+                            }
+                            <GridChildContainerChildren
+                                allChildren={allChildren}
+                                getChildrenOverride={getChildrenOverride}
+                                agl={agl}
+                            />
+                        </div>
+                    </div>
+                )
+            } else {
+                return (
+                    <div
+                        id={`${id}_container`}
+                        className={containerClasses}
+                        ref={this.props.containerRef}
+                    >
+                        {
+                            this.props.padding && (this.props.selectAsParent || this.props.selected) &&
+                            <PaddingInterface padding={this.props.padding} />
+                        }
+                        {
+                            this.props.selectAsParent &&
+                            <ParentSelectInterface />
+                        }
+                        <GridChildContainerChildren
+                            allChildren={allChildren}
+                            getChildrenOverride={getChildrenOverride}
+                            agl={agl}
                         />
-                    }
-
-                    {
-                        isPage &&
-                        <GridChildContainerFixedHolder
-                            ref={this.fixedHolderRef}
-                            size={size}
-                            id={id}
+                    </div>
+                )
+            }
+        } else {
+            return (
+                    <div
+                        id={`${id}_container`}
+                        className={containerClasses}
+                        ref={this.props.containerRef}
+                    >
+                        {
+                            this.props.padding && (this.props.selectAsParent || this.props.selected) &&
+                            <PaddingInterface padding={this.props.padding} />
+                        }
+                        {
+                            this.props.selectAsParent &&
+                            <ParentSelectInterface />
+                        }
+                        <GridChildContainerChildren
+                            allChildren={allChildren}
+                            getChildrenOverride={getChildrenOverride}
+                            agl={agl}
                         />
-                    }
-                </div>
-            </div>
-        )
+
+                        {
+                            isPage &&
+                            <AdjustmentPageControllers
+                                grid={grid}
+                                page={page}
+                                ref={this.controllerRef}
+                            />
+                        }
+
+                        {
+                            isPage &&
+                            <GridChildContainerFixedHolder
+                                ref={this.fixedHolderRef}
+                                size={size}
+                                id={id}
+                            />
+                        }
+                    </div>
+            )
+        }
     }
 }

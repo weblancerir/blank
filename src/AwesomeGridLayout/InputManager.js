@@ -1,5 +1,6 @@
 import React from "react";
 import './AwesomwGridLayoutHelper.css';
+import {isLeftClick} from "./AwesomwGridLayoutHelper";
 
 export default class SelectManager {
     constructor() {
@@ -19,5 +20,15 @@ export default class SelectManager {
         this.ctrl = false;
         this.shift = false;
         this.alt = false;
+
+        this.mouseDown = 0;
+        window.addEventListener("mousedown",(e) =>{
+            if (isLeftClick(e))
+                this.mouseDown = 1;
+        });
+        window.addEventListener("mouseup",(e) =>{
+            if (isLeftClick(e) && this.mouseDown > 0)
+                this.mouseDown = 0;
+        });
     }
 }

@@ -1,10 +1,10 @@
 import React from "react";
-import '../../../Menus/Menu.css';
-import ColorPicker from "../../../Menus/CommonComponents/ColorPicker";
+import '../../../../Menus/Menu.css';
+import ColorPicker from "../../../../Menus/CommonComponents/ColorPicker";
 import 'rc-slider/assets/index.css';
-import './style.css';
-import Divider from "../../../Menus/CommonComponents/Divider";
-import SliderInput from "../../../Menus/CommonComponents/SliderInput";
+import '../style.css';
+import Divider from "../../../../Menus/CommonComponents/Divider";
+import SliderInput from "../../../../Menus/CommonComponents/SliderInput";
 
 export default class Border extends React.Component {
     render () {

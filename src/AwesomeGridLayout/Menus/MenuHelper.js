@@ -6,9 +6,9 @@ export function createMiniMenu(item) {
         return;
 
     return <MiniMenu
+        key={`miniMenu_${item.props.id}`}
         primary={item.getPrimaryOptions() || []}
         shortcut={item.getShortcutOptions() || []}
         itemId={item.props.id}
-        document={item.props.document}
     />
 }

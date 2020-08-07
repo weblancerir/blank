@@ -1,0 +1,118 @@
+.PageManagerRoot {
+    position: fixed;
+    z-index: 9999999999;
+    top: 0;
+    bottom: 0;
+    width: 300px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #e5e5e5;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.PageManagerHeader {
+    width: 100%;
+    pointer-events: auto;
+    box-shadow: 0 0 2px 0 rgba(22,45,61,.27);
+    background-color: #fff;
+    margin-bottom: 12px;
+}
+
+.PageManagerHeaderContainer {
+    width: auto;
+    height: 48px;
+    padding-left: 16px;
+    padding-right: 16px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.PageManagerHeaderTitle{
+    flex: 1;
+    font-weight: bold;
+}
+
+.PageManagerSearchBox{
+    padding: 0 20px;
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.PageManagerSearchInput{
+    width: 100%;
+    text-align: left;
+    padding-left: 32px;
+}
+.PageManagerRenameInput{
+    width: 100%;
+    text-align: left;
+    z-index: 1;
+}
+.PageManagerSearchImage{
+    position: absolute;
+    top: 8px;
+    left: 28px;
+    width: 16px;
+    height: 16px;
+}
+
+.PageManagerNormalPageList{
+    flex: 1;
+    overflow-y: auto;
+}
+
+.PageManagerNormalPageBox{
+    position: relative;
+    height: auto;
+    padding: 6px 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    border-bottom: 1px solid #ededed;
+    cursor: pointer !important;
+}
+
+.PageManagerNormalPageBox:hover{
+    background-color: #f1fff8;
+}
+
+.PageManagerNormalPageBoxSelected{
+    background-color: #e8ffdf;
+}
+
+.PageManagerNormalPageBoxSelected:hover{
+    background-color: #e8ffdf;
+}
+
+.PageManagerNormalPageTitle{
+    flex: 1;
+    text-align: left;
+}
+
+.PageManagerNormalSiteButton{
+
+}
+
+.PageManagerNormalPageClick{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    pointer-events: auto;
+}
+
+.PageManagerAddPageButton{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 12px !important;
+    color: #116dff !important;
+    border-top: 1px solid #bebebe !important;
+    font-weight: bold;
+}
+.PageManagerAddPageButton:hover{
+    background-color: rgba(0, 191, 230, 0.1) !important;
+}

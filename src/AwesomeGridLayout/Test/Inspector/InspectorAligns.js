@@ -87,7 +87,7 @@ export default class InspectorAligns extends React.Component {
         let {item} = this.props;
         return (
             <div className="InspectorOptionRoot">
-                <span className="InspectorOptionTitle">
+                <span className="InspectorOptionTextTitle">
                     Alignment
                 </span>
                 <div

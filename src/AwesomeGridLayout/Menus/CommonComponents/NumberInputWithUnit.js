@@ -20,13 +20,14 @@ export default class NumberInputWithUnit extends React.Component {
         let okay = false;
         try {
             value = parseFloat(value);
-            okay = true;
+            if (!isNaN(value))
+                okay = true;
         } catch {}
         if (okay) {
             value = Math.min(this.props.max, value);
             value = Math.max(this.props.min, value);
             return value;
-        } else if (value === "") {
+        } else if (value === "" || isNaN(value)) {
             return "0";
         }
 
@@ -42,28 +43,34 @@ export default class NumberInputWithUnit extends React.Component {
     };
 
     onShowUnits = (e) => {
-        console.log("onShowUnits", e.currentTarget);
         this.setState({anchorEl: e.currentTarget});
     };
 
     getValue = (value) => {
         if (!value)
-            return "value";
+            return "";
+
+        if (typeof value !== 'string')
+            return value;
 
         if (value.includes("%")) {
-            return Math.round(parseFloat(value.replace("%", "")) * 100) / 100;
+            return Math.round(parseFloat(value.replace("%", "")) * 10) / 10;
         }
 
         if (value.includes("px")) {
-            return Math.round(parseFloat(value.replace("px", "")) * 100) / 100;
+            return Math.round(parseFloat(value.replace("px", "")) * 10) / 10;
         }
 
         if (value.includes("vh")) {
-            return Math.round(parseFloat(value.replace("vh", "")) * 100) / 100;
+            return Math.round(parseFloat(
+                value.replace(/[^0-9\.]/g, '')
+            ) * 10) / 10;
         }
 
         if (value.includes("vw")) {
-            return Math.round(parseFloat(value.replace("vw", "")) * 100) / 100;
+            return Math.round(parseFloat(
+                value.replace(/[^0-9\.]/g, '')
+            ) * 10) / 10;
         }
 
         return value;
@@ -74,20 +81,20 @@ export default class NumberInputWithUnit extends React.Component {
             "NumberInputWithUnit",
             this.props.className
         );
+
         return (
             <div className={classes}>
                 <input
-                    style={{
+                    style={{...{
                         textAlign: "left",
-                        width: 64,
-                        height: 20
-                    }}
+                        width: 64
+                    }, ...this.props.inputStyle}}
                     className="NumberInput"
-                    value={!["%", "px", "vw", "vh"].includes(this.props.unit) ? "" :
+                    value={!["%", "px", "vw", "vh", "°"].includes(this.props.unit) ? "" :
                         (this.getValue(this.props.value) || 0)}
                     onChange={this.onChange}
                     type="text"
-                    disabled={!["%", "px", "vw", "vh"].includes(this.props.unit)}
+                    disabled={!["%", "px", "vw", "vh", "°"].includes(this.props.unit) || this.props.disabled}
                 >
                 </input>
 
@@ -100,19 +107,21 @@ export default class NumberInputWithUnit extends React.Component {
                     imageContainerStyle={{
                         padding: 6
                     }}
-                    onClick={this.onShowUnits}
+                    onClick={!this.props.disabled ? this.onShowUnits : undefined}
+                    style={this.props.unitButtonStyle}
+                    disabled={this.props.disableUnit}
                 >
                     <span style={{
                         color: "#0a108b"
                     }}>
-                        {this.props.unit}
+                        {this.props.unit || "none"}
                     </span>
                 </IconButton>
 
                 <Menu
-                    style={{
-                        zIndex: 99999999999
-                    }}
+                    style={{...{
+                            zIndex: 99999999999
+                        }, ...this.props.unitMenuStyle}}
                     anchorEl={this.state.anchorEl}
                     open={this.state.anchorEl !== undefined}
                     onClose={(e) => {
@@ -147,6 +156,19 @@ export default class NumberInputWithUnit extends React.Component {
                         })
                     }
                 </Menu>
+
+                {
+                    this.props.disabled &&
+                    <div
+                        className="NumberInputWithUnitDisabled"
+                        style={{...{
+                                textAlign: "left",
+                                width: 64
+                            }, ...this.props.inputStyle}}
+                    >
+
+                    </div>
+                }
             </div>
         )
     }

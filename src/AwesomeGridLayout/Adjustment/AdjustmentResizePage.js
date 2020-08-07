@@ -6,44 +6,20 @@ import ResizePanePage from "./ResizePanePage";
 import Popper from "@material-ui/core/Popper/Popper";
 
 export default class AdjustmentResizePage extends React.Component {
+    constructor(props) {
+        super(props);
+    }
     render () {
-        let {top, left, width, height, itemId} = this.props;
+        let {top, left, width, height} = this.props;
         if (top === undefined || left === undefined || width === undefined || height === undefined)
             return null;
 
         return (
-            <Popper open
-                    anchorEl={
-                        () => {
-                            return document.getElementById(itemId);
-                        }
-                    }
-                    placement="top-start"
-                    style={{
-                        zIndex: 9999999,
-                        pointerEvents: "none"
-                    }}
-                    modifiers={{
-                        flip: {
-                            enabled: false,
-                        },
-                        preventOverflow: {
-                            enabled: false,
-                            boundariesElement: 'scrollParent',
-                        },
-                        arrow: {
-                            enabled: false,
-                        },
-                        hide: {
-                            enabled: false,
-                        },
-                    }}
-            >
                 <div
-                    id="AdjustmentResize"
+                    id="AdjustmentResizePage"
                     style={{
                         width: width,
-                        height: height,
+                        height: "80vh",
                         // left: left? left: 0,
                         // top: top? top : 0,
                         // bottom: top? window.innerHeight - top - height: 0,
@@ -65,7 +41,6 @@ export default class AdjustmentResizePage extends React.Component {
                         })
                     }
                 </div>
-            </Popper>
         )
     }
 }

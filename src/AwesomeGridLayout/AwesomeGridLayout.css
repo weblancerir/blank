@@ -4,6 +4,11 @@
 }
 .AwesomeGridLayoutGrid {
     display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    box-sizing: border-box;
+}
+.AwesomeGridLayoutFake{
 }
 .AwesomeGridLayoutHolder {
     display: grid;
@@ -15,19 +20,24 @@
     cursor: move;
 }
 .AwesomeGridLayoutRootHover {
-    pointer-events: auto;
-    position: relative;
-    -ms-overflow-style: none;
-    outline: 1px red solid;
-    outline-offset: -1px;
+    pointer-events: none;
+    box-shadow: rgba(4, 80, 214, 0.81) 0 0 0 1px;
+    transform: translateY(100%);
 }
-.AwesomeGridLayoutRootHover::-webkit-scrollbar {
+/*.AwesomeGridLayoutRoot::-webkit-scrollbar {
     display: none;
-}
-.AwesomeGridLayoutRoot::-webkit-scrollbar {
-    display: none;
-}
+}*/
 /*TODO add firefox support*/
+
+.AGLHoverCompName {
+    position: absolute;
+    color: rgba(9, 13, 213, 0.81);
+    font-size: 12px;
+    transform: translateY(-100%);
+    left: 2px;
+    top: -2px;
+    font-weight: bold;
+}
 
 .AwesomeGridLayoutChild {
     position: absolute;

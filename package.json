@@ -10,6 +10,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "aphrodite": "^2.4.0",
+    "chroma-js": "^2.1.0",
     "classnames": "^2.2.6",
     "deep-equal": "^2.0.3",
     "dom-css": "^2.1.0",

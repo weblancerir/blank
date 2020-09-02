@@ -5,8 +5,14 @@ let EditorController = {};
 let AllowFunctions = {};
 
 EditorController.onMessage = (data, res, editor) => {
-    if (AllowFunctions[data.func]) {
+    if (data.event === 'Controller' && AllowFunctions[data.func]) {
         res(AllowFunctions[data.func](...data.inputs, editor));
+        return;
+    }
+
+    if (data.event === 'Editor') {
+        editor[data.func](...data.inputs, res);
+        // return;
     }
 };
 
@@ -36,6 +42,9 @@ AllowFunctions.getLayout = (editor) => {
     fillData(editor.rootLayoutRef.current, layout.children);
 
     return layout;
+};
+AllowFunctions.getSiteData = (editor) => {
+    return editor.state.siteData;
 };
 AllowFunctions.getBreakpointsData = (itemId, editor) => {
     let item = editor.idMan.getItem(itemId);

@@ -5,7 +5,7 @@ import MenuButton from "../../Menus/MenuBase/MenuButton";
 import BorderDesign from "./Menus/BorderDesign";
 import '../../HelperStyle.css';
 import './ContainerBase.css';
-import {getCompositeDesignData, resolveDesignData} from "../../AwesomwGridLayoutHelper";
+import {getCompositeDesignData, parseColor, resolveDesignData} from "../../AwesomwGridLayoutHelper";
 import AnimationDesign from "./Menus/AnimationDesign";
 
 export default class ContainerBase extends AGLComponent{
@@ -78,19 +78,28 @@ export default class ContainerBase extends AGLComponent{
 
         let border = getCompositeDesignData(this).border;
         let fillColor = getCompositeDesignData(this).fillColor;
+        if (fillColor)
+            fillColor = parseColor(fillColor, fillColor.alpha, this.props.editor);
 
         border.radius = border.radius || {};
         border.shadow = border.shadow || {};
+
+        let shadowColor = border.shadow.color;
+        if (shadowColor)
+            shadowColor = parseColor(shadowColor, shadowColor.alpha, this.props.editor);
+        let borderColor = border.color;
+        if (borderColor)
+            borderColor = parseColor(borderColor, borderColor.alpha, this.props.editor);
 
         return <div
             className="ContainerBaseBorderRoot"
             style={{
                 border:
-                    `${border.width || 0}px solid ${border.color || 'rgba(186,218,85,0.63)'}`,
+                    `${border.width || 0}px solid ${borderColor || 'rgba(186,218,85,0.63)'}`,
                 backgroundColor: fillColor,
                 borderRadius:
                     `${border.radius.topLeft || 0}px ${border.radius.topRight || 0}px ${border.radius.bottomRight || 0}px ${border.radius.bottomLeft || 0}px`,
-                boxShadow: `${(border.shadow.xOffset) * (border.shadow.distance)}px ${(border.shadow.yOffset) * (border.shadow.distance)}px ${border.shadow.blur}px ${border.shadow.size}px ${border.shadow.color || 'rgba(186,218,85,0.63)'}`
+                boxShadow: `${(border.shadow.xOffset) * (border.shadow.distance)}px ${(border.shadow.yOffset) * (border.shadow.distance)}px ${border.shadow.blur}px ${border.shadow.size}px ${shadowColor || 'rgba(186,218,85,0.63)'}`
             }}
         >
 

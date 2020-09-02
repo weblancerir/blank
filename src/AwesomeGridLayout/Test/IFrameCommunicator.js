@@ -8,7 +8,7 @@ export default class IFrameCommunicator {
         this.responses = {};
 
         window.addEventListener("message", (event) => {
-            if (event.origin !== this.origin) {
+            if (this.origin && event.origin !== this.origin) {
                 return;
             }
 

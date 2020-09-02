@@ -83,9 +83,9 @@ export default class PageManager extends React.Component {
             if (!this.state.searchValue)
                 return true;
 
-            let pageData = siteData[siteId];
+            let pageData = siteData.allPages[siteId];
 
-            return pageData.props.siteName.includes(this.state.searchValue);
+            return pageData.props.pageName.toLowerCase().includes(this.state.searchValue.toLowerCase());
         }).map(siteId => {
             return siteData.allPages[siteId];
         });

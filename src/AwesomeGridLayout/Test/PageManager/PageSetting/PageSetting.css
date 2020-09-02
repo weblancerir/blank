@@ -253,3 +253,94 @@
     top: 50% !important;
     transform: translateY(-50%) !important;
 }
+
+.SocialShareTitle{
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.SocialPreviewBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.SocialPreviewRoot {
+    width: 100%;
+    border: solid 1px #d9e1e8;
+    margin-top: 12px;
+}
+
+.SocialPreviewImage {
+
+}
+
+.SocialPreviewImageNoImage {
+    height: 226px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #eaf7ff;
+}
+
+.SocialPreviewImageSelect {
+    text-transform: none !important;
+    background-color: rgba(255, 255, 255, 1) !important;
+    border-radius: 200px !important;
+    padding: 8px 24px !important;
+    color: blue !important;
+    box-shadow: 0 0 12px 0 rgba(22,45,61,0.18) !important;
+}
+
+.SocialPreviewDetailBox {
+    min-height: 37px;
+    max-height: 53px;
+    padding: 9px;
+    background-color: rgba(240,243,245,0.5);
+    border-top: solid 1px #d9e1e8;
+    display: flex;
+    flex-direction: column;
+}
+
+.SocialPreviewUrl {
+    font-size: 11px;
+    font-weight: 500;
+    font-family: HelveticaNeueW01-65Medi, HelveticaNeueW02-65Medi, HelveticaNeueW10-65Medi, Helvetica Neue, Helvetica, Arial, メイリオ, meiryo, ヒラギノ角ゴ pro w3, hiragino kaku gothic pro, sans-serif;
+    color: #7a92a5;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-transform: uppercase;
+}
+
+.SocialPreviewTitle {
+    font-size: 14px;
+    font-family: HelveticaNeueW01-75Bold, HelveticaNeueW02-75Bold, HelveticaNeueW10-75Bold, Helvetica Neue, Helvetica, Arial, メイリオ, meiryo, ヒラギノ角ゴ pro w3, hiragino kaku gothic pro, sans-serif;
+    color: #272930;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.72;
+    letter-spacing: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: bold;
+}
+
+.SocialPreviewDescription {
+    font-size: 12px;
+    font-family: HelveticaNeueW01-55Roma, HelveticaNeueW02-55Roma, HelveticaNeueW10-55Roma, Helvetica Neue, Helvetica, Arial, メイリオ, meiryo, ヒラギノ角ゴ pro w3, hiragino kaku gothic pro, sans-serif;
+    color: #545454;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

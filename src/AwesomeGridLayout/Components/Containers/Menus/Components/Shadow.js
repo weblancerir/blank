@@ -5,6 +5,7 @@ import Angle from "../../../../Menus/CommonComponents/Angle";
 import Divider from "../../../../Menus/CommonComponents/Divider";
 import SliderInput from "../../../../Menus/CommonComponents/SliderInput";
 import ColorPicker from "../../../../Menus/CommonComponents/ColorPicker";
+import ThemeColorPicker from "../../../../Test/Theme/ThemeColorPicker";
 
 const deg2rad = Math.PI/180;
 const rad2deg = 180/Math.PI;
@@ -148,6 +149,7 @@ export default class Shadow extends React.Component {
                         color={this.props.shadow.color}
                         designKey={`${this.props.designKey}.color`}
                         onDesignChange={this.props.onDesignChange}
+                        editor={this.props.editor}
                     />
                 </div>
             </>

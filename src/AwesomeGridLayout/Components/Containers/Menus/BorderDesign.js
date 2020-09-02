@@ -5,6 +5,7 @@ import Border from "./Components/Border";
 import Corners from "./Components/Corners";
 import Shadow from "./Components/Shadow";
 import {getCompositeDesignData} from "../../../AwesomwGridLayoutHelper";
+import ThemeColorPicker from "../../../Test/Theme/ThemeColorPicker";
 
 export default class BorderDesign extends React.Component {
     componentDidMount () {
@@ -64,6 +65,7 @@ export default class BorderDesign extends React.Component {
                     color={design.fillColor}
                     designKey={"design.fillColor"}
                     onDesignChange={this.props.onDesignChange}
+                    editor={this.props.item.props.editor}
                 />
             },
             {
@@ -72,6 +74,7 @@ export default class BorderDesign extends React.Component {
                     border={design.border}
                     designKey={"design.border"}
                     onDesignChange={this.props.onDesignChange}
+                    editor={this.props.item.props.editor}
                 />
             },
             {
@@ -88,6 +91,7 @@ export default class BorderDesign extends React.Component {
                     shadow={design.border.shadow}
                     designKey={"design.border.shadow"}
                     onDesignChange={this.props.onDesignChange}
+                    editor={this.props.item.props.editor}
                 />
             }
         ]

@@ -8,6 +8,7 @@ import Tab from "@material-ui/core/Tab/Tab";
 import PageInfo from "./PageInfo";
 import Permissions from "./Permissions";
 import SeoGoogle from "./SeoGoogle";
+import SocialShare from "./SocialShare";
 
 export default class PageSetting extends React.Component {
     constructor(props) {
@@ -94,6 +95,28 @@ export default class PageSetting extends React.Component {
                             pageData={pageData}
                             editor={editor}
                         />
+                    }
+
+                    {
+                        this.state.tabValue === "Social Share" &&
+                        <SocialShare
+                            pageData={pageData}
+                            editor={editor}
+                        />
+                    }
+
+                    {
+                        this.state.tabValue === "Advanced SEO" &&
+                        <div style={{
+                            height: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: 12,
+                            fontWeight: "bold"
+                        }}>
+                            Coming Soon
+                        </div>
                     }
                 </div>
             </Modal>

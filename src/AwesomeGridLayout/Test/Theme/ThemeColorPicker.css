@@ -1,0 +1,138 @@
+.ThemeColorPickerRoot{
+    width: 210px;
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+    box-shadow: rgba(207, 207, 207, 0.63) -1px 9px 11px 2px;
+}
+
+.ThemeColorPickerHeaderRoot{
+    width: auto;
+    height: 48px;
+    padding-left: 16px;
+    padding-right: 16px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.ThemeColorPickerHeaderTitle{
+    cursor: move;
+    font-weight: bold;
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.ThemeColorPickerHeaderClose{
+}
+
+.ThemeColorPickerSiteColorTitle{
+    font-size: 14px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.ThemeColorPickerSiteColorHexAddColor{
+    color: blue;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.ThemeColorPickerSiteColorHexAddColor:hover{
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+.ThemeColorPickerSiteColorHexTitle{
+    flex: 1;
+}
+
+.ThemeColorPickerSiteColorHex{
+    color: blue;
+    text-transform: uppercase;
+}
+
+.ThemeColorPickerSiteColorEdit{
+    position: absolute !important;
+    right: 12px !important;
+    color: blue;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.ThemeColorPickerSiteColorEdit:hover{
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+.ThemeColorPickerSiteColorGrid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.ThemeColorPickerSiteColorItem{
+    width: auto;
+    height: 24px;
+    cursor: pointer;
+}
+
+.ThemeColorPickerSiteColorItemSelected{
+    outline: 1px solid #b0ff91;
+    z-index: 2;
+    box-shadow: rgba(134, 207, 126, 0.63) 0px 0px 0px 2px;
+}
+
+.ThemeColorPickerSiteColorItem:hover{
+    outline: 1px solid white;
+    z-index: 2;
+    box-shadow: rgba(207, 207, 207, 0.63) 0px 0px 4px 1px;
+}
+
+.ThemeColorPickerMyColorGrid{
+    padding: 0 8px 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    grid-row-gap: 6px;
+}
+
+.ThemeColorPickerMyColorItemAdd{
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    border-radius: 200px;
+    border: 1px solid #e5e5e5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ThemeColorPickerMyColorItemAdd:hover{
+    outline: 1px solid white;
+    z-index: 2;
+    box-shadow: rgba(207, 207, 207, 0.63) 0px 0px 4px 1px;
+}
+
+.ThemeColorPickerMyColorItem{
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    border-radius: 200px;
+    border: 1px solid #e5e5e5;
+    box-sizing: border-box;
+}
+
+.ThemeColorPickerMyColorItemSelected{
+    border: 1px solid #b0ff91;
+    z-index: 2;
+    box-shadow: rgba(134, 207, 126, 0.63) 0px 0px 0px 2px;
+}
+
+.ThemeColorPickerMyColorItem:hover{
+    outline: 1px solid white;
+    z-index: 2;
+    box-shadow: rgba(207, 207, 207, 0.63) 0px 0px 4px 1px;
+}

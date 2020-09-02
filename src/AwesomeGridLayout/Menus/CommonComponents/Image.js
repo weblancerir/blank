@@ -15,7 +15,6 @@ export default class Image extends React.Component {
     }
 
     onError = (e) => {
-        console.log("onError");
         if (!this.state.hasError) {
             let {errorsrc} = this.props;
             this.setState({

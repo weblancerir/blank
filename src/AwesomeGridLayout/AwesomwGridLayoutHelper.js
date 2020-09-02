@@ -7,6 +7,7 @@ import Stack from "./Components/Stack/Stack";
 import DynamicComponents from "./Dynamic/DynamicComponents";
 import {getCompositeFromData, getFromData, setData} from "./BreakPointManager";
 import ContextMenu from "./Test/ContextMenu";
+import chroma from "chroma-js";
 
 let deepEqual = require('fast-deep-equal/es6');
 
@@ -1367,4 +1368,29 @@ export function sortBy (array, param) {
         return 1;
     });
     return array;
+}
+
+export function getColorScheme (baseColor) {
+    return {
+        "1": chroma(baseColor).luminance(0.025).css(),
+        "2": chroma(baseColor).luminance(0.06).css(),
+        "3": chroma(baseColor).luminance(0.15).css(),
+        "4": chroma(baseColor).luminance(0.35).css(),
+        "5": chroma(baseColor).luminance(0.55).css(),
+    }
+}
+
+export function parseColor (color, alpha, editor) {
+    if (!color)
+        return;
+
+    if (color instanceof Object) {
+        let chromaColor = chroma(editor.themeManagerRef.current.getColor(color.paletteName, color.key));
+        chromaColor = chromaColor.alpha(alpha || 1);
+        return chromaColor.css();
+    } else {
+        let chromaColor = chroma(color);
+        chromaColor = chromaColor.alpha(alpha || 1);
+        return chromaColor.css();
+    }
 }

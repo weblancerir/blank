@@ -23,13 +23,16 @@ import Inspector from "../Test/Inspector/Inspector";
 import AdjustmentResizeWrapper from "../Adjustment/AdjustmentResizeWrapper";
 import AdjustmentHelpLinesWrapper from "../Adjustment/AdjustmentHelpLinesWrapper";
 import AdjustmentHover from "../Adjustment/AdjustmentHover";
-import {getScrollbarWidth} from "../AwesomeGridLayoutUtils";
+import {cloneObject, getScrollbarWidth} from "../AwesomeGridLayoutUtils";
 import debounce from 'lodash.debounce';
 import throttle from "lodash.throttle";
 import Layout from "../Test/Layout/Layout";
 import AddComponent from "../Test/AddComponent/AddComponent";
 import PageManager from "../Test/PageManager/PageManager";
 import {v4 as uuidv4} from "uuid";
+import ThemeManager from "../Test/Theme/ThemeManager";
+import defaultSiteData from "../../data/defaultSiteData.json";
+import defaultAllComponentData from "../../data/allComponentData.json";
 
 export default class EditorBoundary extends React.Component{
     constructor(props) {
@@ -57,7 +60,8 @@ export default class EditorBoundary extends React.Component{
         this.hoverRef = React.createRef();
         this.layoutRef = React.createRef();
         this.addComponentRef = React.createRef();
-        this.pageManager = React.createRef();
+        this.pageManagerRef = React.createRef();
+        this.themeManagerRef = React.createRef();
 
         this.editorData = {
             innerWidth: window.innerWidth,
@@ -83,7 +87,7 @@ export default class EditorBoundary extends React.Component{
         initDynamicComponents();
         initDynamicAnimations();
 
-        this.iFrameCommunicator = new IFrameCommunicator("test", window.parent, this.onMessage);
+        this.iFrameCommunicator = new IFrameCommunicator(undefined, window.parent, this.onMessage);
 
         // TODO test, clean them after test finished
         window.addEventListener("keydown",(e) =>{
@@ -99,12 +103,12 @@ export default class EditorBoundary extends React.Component{
             if ( key === 76 && ctrl ) {
                 e.preventDefault();
                 console.log("ctrl + L");
-                this.openPageManager();
+                this.toggleThemeManager(true);
             }
             if ( key === 79 && ctrl ) {
                 e.preventDefault();
                 console.log("ctrl + O");
-                this.closePageManager();
+                this.toggleThemeManager(false);
             }
             if ( key === 69 && ctrl ) {
                 e.preventDefault();
@@ -114,6 +118,12 @@ export default class EditorBoundary extends React.Component{
         });
     };
 
+    componentDidMount(){
+        this.postMessage({event: "Editor Mounted"});
+
+        this.testWebsite();
+    }
+
     onMessage = (data, res) => {
         EditorController.onMessage(data, res, this);
     };
@@ -122,8 +132,23 @@ export default class EditorBoundary extends React.Component{
         this.iFrameCommunicator.post(data, callback);
     };
 
+    testWebsite = () => {
+        let siteData = cloneObject(defaultSiteData);
+        let allComponentData = cloneObject(defaultAllComponentData);
+
+        this.onComponentDataUpdated(allComponentData);
+        this.onSiteDataUpdated(siteData);
+    };
+
     onSiteDataUpdated = (siteData) => {
-        this.setState({siteData});
+        this.setState({siteData}, () => {
+            let pageData = siteData.allPages[Object.keys(siteData.allPages)[0]];
+            this.setState({pageData}, this.onHeightChange);
+        });
+    };
+
+    onComponentDataUpdated = (allComponentData) => {
+        this.setState({allComponentData});
     };
 
     onPageChange = (pageId, force) => {
@@ -148,19 +173,6 @@ export default class EditorBoundary extends React.Component{
     setZoomLevel = (zoomLevel) => {
         this.setState({zoomLevel: zoomLevel || 100});
     };
-
-    componentDidMount(){
-        setTimeout(() => {
-            this.onHeightChange();
-        }, 2000);
-
-        setTimeout(() => {
-            this.fetchSiteData(undefined, (siteData) => {
-                let pageData = siteData.allPages[Object.keys(siteData.allPages)[0]];
-                this.setState({pageData}, this.fetchComponents);
-            });
-        }, 1000);
-    }
 
     componentWillUnmount(){
         this.breakpointmanager.dispose();
@@ -313,21 +325,6 @@ export default class EditorBoundary extends React.Component{
         this.layoutRef.current.close();
     };
 
-    fetchComponents = (url, callback) => {
-        if (!url){
-            fetch('/static/json/allComponentData.json')
-                .then((r) => r.json())
-                .then((allComponentData) =>{
-                    this.setState({allComponentData});
-
-                    callback && window.requestAnimationFrame(callback);
-                });
-            // return;
-        }
-
-        // TODO fetch componentData from server
-    };
-
     openAddComponent = () => {
         this.addComponentRef.current.open();
     };
@@ -336,27 +333,19 @@ export default class EditorBoundary extends React.Component{
         this.addComponentRef.current.close();
     };
 
-    fetchSiteData = (url, callback) => {
-        if (!url){
-            fetch('/static/json/siteData.json')
-                .then((r) => r.json())
-                .then((siteData) =>{
-                    this.setState({siteData}, () => {
-                        callback && callback(siteData);
-                    });
-                });
-            // return;
-        }
-
-        // TODO fetch componentData from server
-    };
-
     openPageManager = () => {
-        this.pageManager.current.open();
+        this.pageManagerRef.current.open();
     };
 
     closePageManager = () => {
-        this.pageManager.current.close();
+        this.pageManagerRef.current.close();
+    };
+
+    toggleThemeManager = (open) => {
+        if (open)
+            this.themeManagerRef.current.open();
+        else
+            this.themeManagerRef.current.close();
     };
 
     // pageData is a childData that is for PageBase component
@@ -411,7 +400,7 @@ export default class EditorBoundary extends React.Component{
                 />
 
                 <PageManager
-                    ref={this.pageManager}
+                    ref={this.pageManagerRef}
                     siteData={this.state.siteData}
                     editor={this}
                     onPageChange={this.onPageChange}
@@ -495,6 +484,17 @@ export default class EditorBoundary extends React.Component{
                     <Layout
                         ref={this.layoutRef}
                         idMan={this.idMan}
+                    />
+                }
+
+                {
+                    this.state.siteData &&
+                    this.state.pageData &&
+                    <ThemeManager
+                        ref={this.themeManagerRef}
+                        siteData={this.state.siteData}
+                        pageData={this.state.pageData}
+                        editor={this}
                     />
                 }
 

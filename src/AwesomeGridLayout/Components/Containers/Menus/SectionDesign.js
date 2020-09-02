@@ -47,6 +47,7 @@ export default class SectionDesign extends React.Component {
                     color={design.fillColor}
                     designKey={"design.fillColor"}
                     onDesignChange={this.props.onDesignChange}
+                    editor={this.props.item.props.editor}
                 />
             }
         ]

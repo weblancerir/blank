@@ -14,6 +14,11 @@
         "pageTitle": "",
         "pageDescription": "",
         "showInSearch": true
+      },
+      "socialShare": {
+        "imageUrl": "",
+        "title": "",
+        "description": ""
       }
     },
     "pageName": "Test2",

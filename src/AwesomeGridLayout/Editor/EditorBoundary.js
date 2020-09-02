@@ -87,7 +87,8 @@ export default class EditorBoundary extends React.Component{
         initDynamicComponents();
         initDynamicAnimations();
 
-        this.iFrameCommunicator = new IFrameCommunicator(undefined, window.parent, this.onMessage);
+        this.iFrameCommunicator = new IFrameCommunicator(undefined, "WeblancerIFrameCommunicator",
+            window.parent, this.onMessage);
 
         // TODO test, clean them after test finished
         window.addEventListener("keydown",(e) =>{
@@ -120,8 +121,7 @@ export default class EditorBoundary extends React.Component{
 
     componentDidMount(){
         this.postMessage({event: "Editor Mounted"});
-
-        this.testWebsite();
+        // this.testWebsite();
     }
 
     onMessage = (data, res) => {

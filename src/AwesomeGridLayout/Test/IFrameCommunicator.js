@@ -1,9 +1,10 @@
 export default class IFrameCommunicator {
-    constructor(origin, otherWindow, onMessage) {
+    constructor(origin, authKey, otherWindow, onMessage) {
         this.onMessage = onMessage;
         this.origin = origin;
         this.otherWindow = otherWindow;
         this.counter = 0;
+        this.authKey = authKey;
         this.callbacks = {};
         this.responses = {};
 
@@ -17,13 +18,10 @@ export default class IFrameCommunicator {
     }
 
     processIncomingMessage = (event) => {
-        let data;
-        try {
-            data = JSON.parse(event.data);
-        } catch (e) {
-            console.error("IFrameCommunicator: must receive json data");
+        let data = event.data;
+
+        if (!data || data.authKey !== this.authKey)
             return;
-        }
 
         if (data && data.r) {
             let r = data.r;
@@ -52,6 +50,7 @@ export default class IFrameCommunicator {
             this.callbacks[data.c] = callback;
         }
 
-        this.otherWindow.postMessage(JSON.stringify(data), this.origin || "*");
+        data.authKey = this.authKey;
+        this.otherWindow.postMessage(data, this.origin || "*");
     };
 }

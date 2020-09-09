@@ -29,7 +29,6 @@
     "react-scrollable-anchor": "^0.6.1",
     "react-sortable-tree": "^2.7.1",
     "react-visibility-sensor": "^5.1.1",
-    "source-map-explorer": "^2.5.0",
     "styled-components": "^5.1.1",
     "uuid": "^8.1.0"
   },

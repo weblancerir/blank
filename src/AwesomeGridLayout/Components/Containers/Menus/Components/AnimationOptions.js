@@ -1,8 +1,5 @@
 import React from "react";
 import '../../../../Menus/Menu.css';
-import GridViewer from "../../../../Menus/CommonComponents/GridViewer";
-import classNames from "classnames";
-import ButtonBase from "@material-ui/core/ButtonBase/ButtonBase";
 import SliderInput from "../../../../Menus/CommonComponents/SliderInput";
 import Switch from "@material-ui/core/Switch/Switch";
 import {DynamicAnimations} from "../../../../Dynamic/DynamicComponents";

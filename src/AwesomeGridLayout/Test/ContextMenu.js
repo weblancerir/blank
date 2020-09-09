@@ -1,9 +1,7 @@
 import React from "react";
-import Menu from "@material-ui/core/Menu/Menu";
 import Divider from "../Menus/CommonComponents/Divider";
-import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import MenuItem from "@material-ui/core/MenuItem/MenuItem";
-import LightTooltip, {LightMenuTooltip} from "../Components/Containers/Menus/Components/LightTooltip";
+import {LightMenuTooltip} from "../Components/Containers/Menus/Components/LightTooltip";
 import {isLeftClick} from "../AwesomwGridLayoutHelper";
 import Popper from "@material-ui/core/Popper/Popper";
 import Paper from "@material-ui/core/Paper/Paper";

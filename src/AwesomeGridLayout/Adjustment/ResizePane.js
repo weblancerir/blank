@@ -1,7 +1,6 @@
 import React from "react";
 import './Adjustment.css';
 import classNames from 'classnames';
-let throttle = require('lodash.throttle');
 
 export default class ResizePane extends React.Component {
     onMouseDown = (e) => {

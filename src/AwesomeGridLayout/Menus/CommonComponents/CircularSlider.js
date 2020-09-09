@@ -1,6 +1,5 @@
 import React from "react";
 import './CommonMenu.css';
-import RCSlider from 'rc-slider';
 
 export default class CircularSlider extends React.Component {
     constructor(props) {

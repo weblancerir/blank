@@ -1,9 +1,5 @@
 import React from "react";
 import './Inspector.css';
-import DropDown from "../../Menus/CommonComponents/DropDown";
-import {getValueFromCSSValue, setScrollBehaviour} from "../../AwesomwGridLayoutHelper";
-import CircularSlider from "../../Menus/CommonComponents/CircularSlider";
-import NumberInput from "../../Menus/CommonComponents/NumberInput";
 import Switch from "@material-ui/core/Switch/Switch";
 import TextInput from "../../Menus/CommonComponents/TextInput";
 import InspectorTitle from "./InspectorTitle";

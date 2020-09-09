@@ -1,4 +1,4 @@
-import {cloneObject, JSToCSS} from "../AwesomeGridLayoutUtils";
+import {JSToCSS} from "../AwesomeGridLayoutUtils";
 
 let CSSManager = {
     pendingUpdates: {},

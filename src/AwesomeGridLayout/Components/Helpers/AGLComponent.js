@@ -1,7 +1,6 @@
 import React from "react";
 import {assignData, cloneObject} from "../../AwesomeGridLayoutUtils";
 import {getCompositeDesignData, setDataInBreakpoint} from "../../AwesomwGridLayoutHelper";
-import {setData} from "../../BreakPointManager";
 import InspectorBreadcrumbs from "../../Test/Inspector/InspectorBreadcrumbs";
 import InspectorAligns from "../../Test/Inspector/InspectorAligns";
 import InspectorSize from "../../Test/Inspector/InspectorSize";

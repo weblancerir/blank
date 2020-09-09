@@ -1,15 +1,8 @@
 import React from "react";
 import './Inspector.css';
-import DropDown from "../../Menus/CommonComponents/DropDown";
-import {getValueFromCSSValue, setScrollBehaviour, setStyle, setStyleParam} from "../../AwesomwGridLayoutHelper";
-import CircularSlider from "../../Menus/CommonComponents/CircularSlider";
-import NumberInput from "../../Menus/CommonComponents/NumberInput";
-import Switch from "@material-ui/core/Switch/Switch";
-import TextInput from "../../Menus/CommonComponents/TextInput";
+import {setStyleParam} from "../../AwesomwGridLayoutHelper";
 import ColorPicker from "../../Menus/CommonComponents/ColorPicker";
 import InspectorTitle from "./InspectorTitle";
-import ThemeColorPicker from "../Theme/ThemeColorPicker";
-import Background from "../../Components/Containers/Menus/Components/Background";
 
 export default class InspectorBackground extends React.Component {
     constructor(props) {

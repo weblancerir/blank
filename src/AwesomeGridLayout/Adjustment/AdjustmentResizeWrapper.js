@@ -1,11 +1,5 @@
 import React from "react";
 import './Adjustment.css'
-import ResizePane from "./ResizePane";
-import AdjustmentStretch from "./AdjustmentStretch";
-import {cloneObject, shallowEqual} from "../AwesomeGridLayoutUtils";
-import Popper from "@material-ui/core/Popper/Popper";
-import Portal from "../Portal";
-import AdjustmentResizePage from "./AdjustmentResizePage";
 import {allowStretch, isGroupSelected, isHideInBreakpoint, isStretch} from "../AwesomwGridLayoutHelper";
 import AdjustmentResize from "./AdjustmentResize";
 

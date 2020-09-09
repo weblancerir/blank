@@ -1,18 +1,13 @@
 import React from "react";
 import './Inspector.css';
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import {
     getPxValueFromCSSValue, getStyleValueFromPx,
     getUnitFromStyleValue,
     setDataInBreakpoint,
-    setGridItemStyle,
     setTempData
 } from "../../AwesomwGridLayoutHelper";
 import {cloneObject} from "../../AwesomeGridLayoutUtils";
 import Switch from "@material-ui/core/Switch/Switch";
-import IconButton from "../../HelperComponents/IconButton";
-import DockSwitch from "./DockSwitch";
 import NumberInputWithUnit from "../../Menus/CommonComponents/NumberInputWithUnit";
 import InspectorTitle from "./InspectorTitle";
 

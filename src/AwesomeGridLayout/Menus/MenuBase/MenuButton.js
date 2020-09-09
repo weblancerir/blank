@@ -1,6 +1,5 @@
 import React from "react";
 import './MenuBase.css';
-import Draggable from 'react-draggable';
 import IconButton from "../../HelperComponents/IconButton";
 
 export default class MenuButton extends React.Component {

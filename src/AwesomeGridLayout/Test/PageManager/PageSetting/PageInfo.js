@@ -2,7 +2,6 @@ import React from "react";
 import './PageSetting.css';
 import '../PageManager.css';
 import Image from "../../../Menus/CommonComponents/Image";
-import Switch from "@material-ui/core/Switch/Switch";
 import Button from "@material-ui/core/Button/Button";
 
 export default class PageInfo extends React.Component {

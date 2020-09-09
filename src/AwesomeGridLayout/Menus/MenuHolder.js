@@ -1,7 +1,7 @@
 import React from "react";
 import './Menu.css';
 import MiniMenu from "./MiniMenu/MiniMenu";
-import {createContextMenu, isHideInBreakpoint} from "../AwesomwGridLayoutHelper";
+import {createContextMenu} from "../AwesomwGridLayoutHelper";
 
 const miniMenuHolderId = "wl_menu_holder";
 export default class MenuHolder extends React.Component {

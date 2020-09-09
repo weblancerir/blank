@@ -1,17 +1,13 @@
 import React from "react";
 import AGLWrapper from "../Helpers/AGLWrapper";
-import Header from "../Containers/Header";
-import Footer from "../Containers/Footer";
 import Section from "../Containers/Section";
 import AGLComponent from "../Helpers/AGLComponent";
-import DynamicComponents from "../../Dynamic/DynamicComponents";
 import {initGriddata, swapArrayElements} from "../../AwesomeGridLayoutUtils";
 import InspectorBreadcrumbs from "../../Test/Inspector/InspectorBreadcrumbs";
 import InspectorPadding from "../../Test/Inspector/InspectorPadding";
 import InspectorBackground from "../../Test/Inspector/InspectorBackground";
 import './PageBase.css';
 import {isHideInBreakpoint} from "../../AwesomwGridLayoutHelper";
-import {getFromData} from "../../BreakPointManager";
 
 const mainColTemplate = "minmax(0px,1fr)";
 

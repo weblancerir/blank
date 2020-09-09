@@ -1,7 +1,6 @@
 import React from "react";
 import './Adjustment.css'
 import {cloneObject, shallowEqual} from "../AwesomeGridLayoutUtils";
-import Popper from "@material-ui/core/Popper/Popper";
 
 export default class AdjustmentHelpLines extends React.Component {
     constructor(props) {

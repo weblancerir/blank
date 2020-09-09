@@ -1,17 +1,9 @@
 import React from "react";
 import './ThemeManager.css';
 import './ThemeColorPicker.css';
-import Image from "../../Menus/CommonComponents/Image";
-import {SketchPicker} from "react-color";
-import Draggable from "react-draggable";
+// import {SketchPicker} from "react-color";
+import SketchPicker from "react-color/lib/components/sketch/Sketch";
 import Portal from "../../Portal";
-import IconButton from "../../HelperComponents/IconButton";
-import Button from "@material-ui/core/Button/Button";
-import chroma from "chroma-js";
-
-const colorKeys = [
-    "1","2","3","4","5",
-];
 
 export default class HexColorPicker extends React.Component {
     onChangeComplete = (color) => {

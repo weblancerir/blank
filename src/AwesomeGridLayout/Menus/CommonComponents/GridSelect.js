@@ -1,8 +1,5 @@
 import React from "react";
 import './CommonMenu.css';
-import { SketchPicker } from 'react-color';
-import ButtonBase from "@material-ui/core/ButtonBase/ButtonBase";
-import {cloneObject} from "../../AwesomeGridLayoutUtils";
 
 export default class GridSelect extends React.Component {
     onChange = (e) => {

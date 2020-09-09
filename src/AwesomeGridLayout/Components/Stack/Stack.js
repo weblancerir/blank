@@ -5,7 +5,6 @@ import {isFixed, isStretch} from "../../AwesomwGridLayoutHelper";
 import {appendStyle, cloneObject, updateStyle} from "../../AwesomeGridLayoutUtils";
 import StackSpacerContainer from "./StackSpacerContainer";
 import StackSpacer from "./StackSpacer";
-import Portal from "../../Portal";
 
 export default class Stack extends AGLComponent{
     constructor(props) {

@@ -1,6 +1,5 @@
 import React from "react";
 import './Adjustment.css'
-// import Portal from "../Portal";
 import {throttleDebounce} from "../AwesomeGridLayoutUtils";
 import Portal from "@material-ui/core/Portal/Portal";
 import GridLine from "./GridLine";

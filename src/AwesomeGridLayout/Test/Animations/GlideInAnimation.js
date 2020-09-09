@@ -1,6 +1,4 @@
 import {css, StyleSheet} from "aphrodite";
-import ArcInAnimation from "./ArcInAnimation";
-import DropDown from "../../Menus/CommonComponents/DropDown";
 import React from "react";
 import SliderInput from "../../Menus/CommonComponents/SliderInput";
 import Angle from "../../Menus/CommonComponents/Angle";

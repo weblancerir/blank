@@ -9,7 +9,7 @@ import InspectorScroll from "../../Test/Inspector/InspectorScroll";
 import InspectorPadding from "../../Test/Inspector/InspectorPadding";
 import InspectorAnchor from "../../Test/Inspector/InspectorAnchor";
 import MenuButton from "../../Menus/MenuBase/MenuButton";
-import {getCompositeDesignData, setStyleParam} from "../../AwesomwGridLayoutHelper";
+import {setStyleParam} from "../../AwesomwGridLayoutHelper";
 import SectionDesign from "./Menus/SectionDesign";
 
 export default class Section extends AGLComponent{

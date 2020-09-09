@@ -6,7 +6,6 @@ import ButtonBase from "@material-ui/core/ButtonBase/ButtonBase";
 import PageTypeTitle from "./PageTypeTitle";
 import PageItem from "./PageItem";
 import AddNewPageDialog from "./AddNewPageDialog";
-import Menu from "@material-ui/core/Menu/Menu";
 import {v4 as uuidv4} from "uuid";
 
 export default class PageManager extends React.Component {

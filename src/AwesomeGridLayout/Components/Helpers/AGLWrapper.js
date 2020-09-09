@@ -1,6 +1,6 @@
 import AwesomeGridLayout2 from "../../AwesomeGridLayout2";
 import React from "react";
-import {assignData, cloneObject, initGriddata} from "../../AwesomeGridLayoutUtils";
+import {assignData, initGriddata} from "../../AwesomeGridLayoutUtils";
 
 export default class AGLWrapper extends React.Component{
     render() {

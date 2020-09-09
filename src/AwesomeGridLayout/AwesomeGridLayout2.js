@@ -1,6 +1,6 @@
 import React from "react";
 import debounce from 'lodash.debounce';
-import {appendStyle, cloneObject, initGriddata, shallowEqual, updateStyle} from "./AwesomeGridLayoutUtils";
+import {appendStyle, cloneObject, initGriddata, updateStyle} from "./AwesomeGridLayoutUtils";
 import './AwesomeGridLayout.css';
 import GridChildContainer from "./GridChildContainer";
 import DynamicComponents, {DynamicAnimations} from "./Dynamic/DynamicComponents";

@@ -1,5 +1,4 @@
 import throttle from 'lodash.throttle';
-import debounce from 'lodash.debounce';
 
 export default class UndoRedo {
     constructor(max, document, idMan) {

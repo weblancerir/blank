@@ -1,6 +1,5 @@
 import React from "react";
 import './CommonMenu.css';
-import RCSlider from 'rc-slider';
 import Slider from "./Slider";
 import NumberInput from "./NumberInput";
 

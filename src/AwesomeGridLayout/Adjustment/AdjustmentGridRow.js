@@ -1,10 +1,5 @@
 import React from "react";
 import './Adjustment.css'
-import AdjustmentSnapLines from "./AdjustmentSnapLines";
-import GridChildContainerChildren from "../GridChildContainerChildren";
-import GridChildContainerGridLine from "../GridChildContainerGridLine";
-import AdjustmentGridLinesWrapper from "./AdjustmentGridLinesWrapper";
-import AdjustmentGridRoot from "./AdjustmentGridRoot";
 import classNames from "classnames";
 
 export default class AdjustmentGridRow extends React.Component {

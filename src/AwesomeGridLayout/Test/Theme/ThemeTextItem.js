@@ -1,6 +1,5 @@
 import React from "react";
 import './ThemeManager.css';
-import {sortBy} from "../../AwesomwGridLayoutHelper";
 import IconButton from "../../HelperComponents/IconButton";
 import Image from "../../Menus/CommonComponents/Image";
 

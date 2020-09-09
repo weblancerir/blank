@@ -1,4 +1,3 @@
-import debounce from 'lodash.debounce';
 import {throttleDebounce} from "../AwesomeGridLayoutUtils";
 
 export default class EventTrigger {

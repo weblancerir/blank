@@ -1,7 +1,6 @@
 import {css, StyleSheet} from "aphrodite";
 import DropDown from "../../Menus/CommonComponents/DropDown";
 import React from "react";
-import FoldInAnimation from "./FoldInAnimation";
 
 let PuffInAnimation = {};
 

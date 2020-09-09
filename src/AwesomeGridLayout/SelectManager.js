@@ -1,13 +1,11 @@
 import {throttleDebounce} from "./AwesomeGridLayoutUtils";
 import {
     createStack,
-    getSectionId, rotate,
+    getSectionId,
 } from "./AwesomwGridLayoutHelper";
 import ContainerBase from "./Components/Containers/ContainerBase";
 import React from "react";
 import './AwesomwGridLayoutHelper.css';
-import {StyleSheet, css} from "aphrodite";
-import { bounce } from 'react-animations';
 import throttle from "lodash.throttle";
 
 export default class SelectManager {
@@ -331,13 +329,6 @@ export default class SelectManager {
         if (!item)
             return;
 
-        const animationStyles = StyleSheet.create({
-            bounce: {
-                animationName: bounce,
-                animationDuration: '1s',
-            }
-        });
-
         let child =
             <ContainerBase
                 style={{
@@ -349,9 +340,6 @@ export default class SelectManager {
                     bpData: {
                         design:{
                             fillColor: `#5cff${Math.floor(Math.random() * 89) + 10  }`,
-                            // animation: {
-                            //     name: "foldIn"
-                            // }
                         },
                     }
                 }}

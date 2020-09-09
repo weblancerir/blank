@@ -1,9 +1,6 @@
 import React from "react";
 import MenuBase from "../../../Menus/MenuBase/MenuBase";
 import Background from "./Components/Background";
-import Border from "./Components/Border";
-import Corners from "./Components/Corners";
-import Shadow from "./Components/Shadow";
 import {getCompositeDesignData} from "../../../AwesomwGridLayoutHelper";
 
 export default class SectionDesign extends React.Component {

@@ -1,7 +1,6 @@
 import React from "react";
 import './ThemeManager.css';
 import Image from "../../Menus/CommonComponents/Image";
-import chroma from 'chroma-js';
 import {getColorScheme} from "../../AwesomwGridLayoutHelper";
 import HexColorPicker from "./HexColorPicker";
 

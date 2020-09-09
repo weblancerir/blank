@@ -1,11 +1,7 @@
 import React from "react";
 import './PageManager.css';
-import IconButton from "../../HelperComponents/IconButton";
-import Image from "../../Menus/CommonComponents/Image";
 import Menu from "@material-ui/core/Menu/Menu";
 import MenuItem from "@material-ui/core/MenuItem/MenuItem";
-import classNames from "classnames";
-import {cloneObject} from "../../AwesomeGridLayoutUtils";
 import AddNewPageDialogItem from "./AddNewPageDialogItem";
 
 export default class AddNewPageDialog extends React.Component {

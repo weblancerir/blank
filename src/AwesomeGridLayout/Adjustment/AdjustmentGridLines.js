@@ -1,10 +1,5 @@
 import React from "react";
 import './Adjustment.css'
-import AdjustmentSnapLines from "./AdjustmentSnapLines";
-import GridChildContainerChildren from "../GridChildContainerChildren";
-import GridChildContainerGridLine from "../GridChildContainerGridLine";
-import AdjustmentGridLinesWrapper from "./AdjustmentGridLinesWrapper";
-import Portal from "../Portal";
 import {getCachedBoundingRect} from "../Test/WindowCache";
 import AdjustmentGridLinesWrapper2 from "./AdjustmentGridLinesWrapper2";
 

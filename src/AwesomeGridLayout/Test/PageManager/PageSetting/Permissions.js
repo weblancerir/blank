@@ -5,11 +5,9 @@ import Image from "../../../Menus/CommonComponents/Image";
 import GridViewer from "../../../Menus/CommonComponents/GridViewer";
 import RadioGroup from "@material-ui/core/RadioGroup/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabel";
-import Radio from "@material-ui/core/Radio/Radio";
 import AglRadio from "../../../Menus/CommonComponents/AglRadio";
 import Menu from "@material-ui/core/Menu/Menu";
 import MenuItem from "@material-ui/core/MenuItem/MenuItem";
-import AddNewPageDialogItem from "../AddNewPageDialogItem";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 
 export default class Permissions extends React.Component {

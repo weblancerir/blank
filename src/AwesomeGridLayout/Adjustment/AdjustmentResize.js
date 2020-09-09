@@ -3,8 +3,6 @@ import './Adjustment.css'
 import ResizePane from "./ResizePane";
 import AdjustmentStretch from "./AdjustmentStretch";
 import {cloneObject, shallowEqual} from "../AwesomeGridLayoutUtils";
-import Popper from "@material-ui/core/Popper/Popper";
-import Portal from "../Portal";
 import classNames from "classnames";
 
 export default class AdjustmentResize extends React.Component {

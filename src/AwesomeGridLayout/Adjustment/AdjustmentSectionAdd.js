@@ -1,6 +1,5 @@
 import React from "react";
 import './Adjustment.css'
-import AdjustmentSnapLines from "./AdjustmentSnapLines";
 
 export default class AdjustmentSectionAdd extends React.PureComponent {
     constructor() {

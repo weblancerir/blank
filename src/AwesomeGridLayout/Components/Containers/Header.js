@@ -10,7 +10,7 @@ import InspectorPadding from "../../Test/Inspector/InspectorPadding";
 import InspectorAnchor from "../../Test/Inspector/InspectorAnchor";
 import MenuButton from "../../Menus/MenuBase/MenuButton";
 import SectionDesign from "./Menus/SectionDesign";
-import {getCompositeDesignData, setStyleParam} from "../../AwesomwGridLayoutHelper";
+import {setStyleParam} from "../../AwesomwGridLayoutHelper";
 
 export default class Header extends AGLComponent{
     getDefaultData = () => {

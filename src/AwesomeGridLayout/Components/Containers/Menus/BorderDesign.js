@@ -5,7 +5,6 @@ import Border from "./Components/Border";
 import Corners from "./Components/Corners";
 import Shadow from "./Components/Shadow";
 import {getCompositeDesignData} from "../../../AwesomwGridLayoutHelper";
-import ThemeColorPicker from "../../../Test/Theme/ThemeColorPicker";
 
 export default class BorderDesign extends React.Component {
     componentDidMount () {

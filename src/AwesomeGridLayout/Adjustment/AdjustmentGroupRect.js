@@ -1,8 +1,6 @@
 import React from "react";
 import './Adjustment.css'
 import ResizePane from "./ResizePane";
-import AdjustmentStretch from "./AdjustmentStretch";
-import AdjustmentMove from "./AdjustmentMove";
 import {cloneObject} from "../AwesomeGridLayoutUtils";
 
 export default class AdjustmentGroupRect extends React.Component {

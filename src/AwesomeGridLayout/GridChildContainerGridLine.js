@@ -1,5 +1,4 @@
 import React from "react";
-import {cloneObject, shallowEqual} from "./AwesomeGridLayoutUtils";
 import './GridChildDraggable.css';
 
 export default class GridChildContainerGridLine extends React.PureComponent {

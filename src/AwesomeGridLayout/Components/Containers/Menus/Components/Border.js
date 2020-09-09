@@ -5,7 +5,6 @@ import 'rc-slider/assets/index.css';
 import '../style.css';
 import Divider from "../../../../Menus/CommonComponents/Divider";
 import SliderInput from "../../../../Menus/CommonComponents/SliderInput";
-import ThemeColorPicker from "../../../../Test/Theme/ThemeColorPicker";
 
 export default class Border extends React.Component {
     render () {

@@ -1,9 +1,6 @@
 import React from "react";
 import './Adjustment.css'
-import ResizePane from "./ResizePane";
-import AdjustmentStretch from "./AdjustmentStretch";
 import ResizePanePage from "./ResizePanePage";
-import Popper from "@material-ui/core/Popper/Popper";
 
 export default class AdjustmentResizePage extends React.Component {
     constructor(props) {

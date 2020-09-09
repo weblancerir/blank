@@ -1,7 +1,5 @@
 import React from "react";
 import './MenuBase.css';
-import Draggable from 'react-draggable';
-import IconButton from "../../HelperComponents/IconButton";
 import '../../HelperStyle.css';
 import ButtonBase from "@material-ui/core/ButtonBase/ButtonBase";
 

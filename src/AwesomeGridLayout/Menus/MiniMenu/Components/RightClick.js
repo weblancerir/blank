@@ -1,5 +1,4 @@
 import React from "react";
-import ButtonBase from "@material-ui/core/ButtonBase/ButtonBase";
 import IconButton from "../../../HelperComponents/IconButton";
 
 export default class RightClick extends React.Component {

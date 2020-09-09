@@ -27,7 +27,6 @@
     "react-beautiful-dnd": "^13.0.0",
     "react-circle-slider": "^1.6.2",
     "react-color": "^2.18.1",
-    "react-custom-scrollbars": "github:behroozkhan/react-custom-scrollbars",
     "react-dial-knob": "^1.1.5",
     "react-dnd": "9.5.1",
     "react-dnd-html5-backend": "^11.1.3",

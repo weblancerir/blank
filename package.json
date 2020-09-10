@@ -18,7 +18,7 @@
     "lodash.throttle": "^4.1.1",
     "prop-types": "^15.7.2",
     "rc-slider": "^9.3.1",
-    "re-resizable": "^6.3.2",
+    "re-resizable": "^6.5.5",
     "react": "^16.13.1",
     "react-color": "^2.18.1",
     "react-dnd": "9.5.1",
@@ -26,10 +26,10 @@
     "react-draggable": "^4.3.1",
     "react-scripts": "3.4.1",
     "react-scrollable-anchor": "^0.6.1",
-    "react-sortable-tree": "^2.7.1",
+    "react-sortable-tree": "^2.8.0",
     "react-visibility-sensor": "^5.1.1",
-    "styled-components": "^5.1.1",
-    "uuid": "^8.1.0"
+    "styled-components": "^5.2.0",
+    "uuid": "^8.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -16,7 +16,6 @@
     "lodash.debounce": "^4.0.8",
     "lodash.merge": "^4.6.2",
     "lodash.throttle": "^4.1.1",
-    "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "rc-slider": "^9.3.1",
     "re-resizable": "^6.3.2",

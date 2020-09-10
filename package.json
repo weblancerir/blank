@@ -1,6 +1,6 @@
 {
   "name": "awesomegridlayout",
-  "version": "0.1.0",
+  "version": "v0.0.1-alpha",
   "private": true,
   "homepage": "{homepage}",
   "dependencies": {

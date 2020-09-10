@@ -1,9 +1,9 @@
 import React from "react";
 import './Layout.css';
-import SortableTree from 'react-sortable-tree';
+// import SortableTree from 'react-sortable-tree';
 import IconButton from "../../HelperComponents/IconButton";
-import {isHideInBreakpoint, showInBreakPoint} from "../../AwesomwGridLayoutHelper";
-import Image from "../../Menus/CommonComponents/Image";
+// import {isHideInBreakpoint, showInBreakPoint} from "../../AwesomwGridLayoutHelper";
+// import Image from "../../Menus/CommonComponents/Image";
 
 export default class Layout extends React.Component {
     constructor(props) {
@@ -152,7 +152,8 @@ export default class Layout extends React.Component {
                     <div
                         className="LayoutTreeRoot"
                     >
-                        <SortableTree
+                        Coming soon ...
+                        {/*<SortableTree
                             className="LayoutSortableTree"
                             treeData={this.state.treeData}
                             onChange={treeData => this.setTree(treeData)}
@@ -235,7 +236,7 @@ export default class Layout extends React.Component {
                             canDrop={({ node, nextParent, prevPath, nextPath }) => {
                                 return !!(nextParent && node.parentItemId === nextParent.layoutItem.childData.props.id);
                             }}
-                        />
+                        />*/}
                     </div>
 
                 </div>

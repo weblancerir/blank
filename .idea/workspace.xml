@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ee3df027-738a-4634-bc4a-d7b9163847a2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/node-content-renderer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/node-content-renderer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/node-content-renderer.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/node-content-renderer.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/tree-node-renderer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/tree-node-renderer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/tree-node-renderer.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/tree-node-renderer.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -93,6 +89,7 @@
           <entry key="InspectorTitle" value="1" />
           <entry key="css" value="114" />
           <entry key="env" value="1" />
+          <entry key="gitignore" value="1" />
           <entry key="html" value="5" />
           <entry key="js" value="992" />
           <entry key="json" value="43" />
@@ -111,7 +108,7 @@
           <entry key="Image" value="1" />
           <entry key="JSON" value="43" />
           <entry key="JavaScript" value="992" />
-          <entry key="PLAIN_TEXT" value="3" />
+          <entry key="PLAIN_TEXT" value="4" />
           <entry key="SCSS" value="8" />
           <entry key="SVG" value="37" />
           <entry key="SourceMap" value="1" />
@@ -121,6 +118,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="css" value="5551" />
+          <entry key="gitignore" value="7" />
           <entry key="html" value="27" />
           <entry key="js" value="75285" />
           <entry key="json" value="1966" />
@@ -133,6 +131,7 @@
           <entry key="HTML" value="27" />
           <entry key="JSON" value="1966" />
           <entry key="JavaScript" value="75285" />
+          <entry key="PLAIN_TEXT" value="7" />
           <entry key="SCSS" value="141" />
         </counts>
       </usages-collector>
@@ -160,11 +159,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="17" column="32" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
+            <state relative-caret-position="352">
+              <caret line="25" column="32" lean-forward="true" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="260">
+              <caret line="37" column="6" selection-start-line="37" selection-start-column="6" selection-end-line="37" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -197,22 +205,9 @@
         <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/tree-node-renderer.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="160">
-              <caret line="8" column="16" lean-forward="true" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
+              <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
               <folding>
                 <element signature="e#0#65#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/HexColorPicker.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="7" column="61" selection-start-line="7" selection-start-column="61" selection-end-line="7" selection-end-column="61" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-                <element signature="e#134#202#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -349,7 +344,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/Boolean.js" />
         <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/ChooseFile.js" />
         <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/CircularSlider.js" />
         <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/Divider.js" />
@@ -400,6 +394,7 @@
         <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/HexColorPicker.js" />
         <option value="$PROJECT_DIR$/src/AwesomeGridLayout/SelectManager.js" />
         <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -593,12 +588,12 @@
       <workItem from="1599721887369" duration="168000" />
       <workItem from="1599722380089" duration="373000" />
       <workItem from="1599722786308" duration="3000" />
-      <workItem from="1599724259612" duration="85000" />
+      <workItem from="1599724259612" duration="281000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1428837000" />
+    <option name="totallyTimeSpent" value="1429033000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -641,9 +636,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/WindowCache.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/AGLAnchor.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -849,7 +841,7 @@
     <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/tree-node-renderer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
-          <caret line="8" column="16" lean-forward="true" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
+          <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
           <folding>
             <element signature="e#0#65#0" expanded="true" />
           </folding>
@@ -858,8 +850,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="17" column="32" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
+        <state relative-caret-position="352">
+          <caret line="25" column="32" lean-forward="true" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="37" column="6" selection-start-line="37" selection-start-column="6" selection-end-line="37" selection-end-column="6" />
         </state>
       </provider>
     </entry>

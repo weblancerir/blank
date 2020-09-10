@@ -2,11 +2,76 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ee3df027-738a-4634-bc4a-d7b9163847a2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/asset-manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/logo192.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/logo512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/precache-manifest.ab06904375831fe33adfaa6418d9b8a8.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/robots.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/service-worker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/css/2.8480f29f.chunk.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/css/main.7d9e0684.chunk.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/add.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/animation-black.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/animation.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/border.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/color-palette.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/corner.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/down-arrow.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/edit-white.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/edit.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/group.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/hide.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/home.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/more-black.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/password.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/play-button.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/rectangle.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/right-arrow.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/search.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/time.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/transparency.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/water.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/icon/world.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/image/box.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/2.5edf3fb1.chunk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/2.5edf3fb1.chunk.js.LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/main.d95e050e.chunk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/runtime-main.542406a4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/json/defaultTheme.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/json/newPageData.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/json/siteData.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/media/align-bottom.b15149df.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/media/align-center.c06baa72.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/media/align-left.0a5b083d.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/media/align-middle.18bded08.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/media/align-right.47dacf61.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/media/align-top.a4e81be5.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/media/chain.91ca2215.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/media/close.ebf2f3f4.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/media/maximize.c16a073e.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/media/minimize.d1b14794.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/media/more.7e1c1c4d.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/media/paint.b4611be4.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/media/plus.4ffb5b5d.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/media/question.910508a9.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/media/unlink.91af3919.svg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Layout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/demo/app.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/demo/app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/demo/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/demo/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/node-content-renderer.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/node-content-renderer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/placeholder-renderer.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/placeholder-renderer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/tree-node-renderer.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/tree-node-renderer.js" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -95,7 +160,7 @@
           <entry key="env" value="1" />
           <entry key="gitignore" value="1" />
           <entry key="html" value="5" />
-          <entry key="js" value="992" />
+          <entry key="js" value="993" />
           <entry key="json" value="43" />
           <entry key="map" value="1" />
           <entry key="md" value="1" />
@@ -111,7 +176,7 @@
           <entry key="HTML" value="5" />
           <entry key="Image" value="1" />
           <entry key="JSON" value="43" />
-          <entry key="JavaScript" value="992" />
+          <entry key="JavaScript" value="993" />
           <entry key="PLAIN_TEXT" value="4" />
           <entry key="SCSS" value="8" />
           <entry key="SVG" value="37" />
@@ -122,10 +187,10 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="css" value="5551" />
-          <entry key="gitignore" value="8" />
+          <entry key="gitignore" value="9" />
           <entry key="html" value="27" />
-          <entry key="js" value="75285" />
-          <entry key="json" value="1966" />
+          <entry key="js" value="75287" />
+          <entry key="json" value="1969" />
           <entry key="scss" value="141" />
         </counts>
       </usages-collector>
@@ -133,9 +198,9 @@
         <counts>
           <entry key="CSS" value="5551" />
           <entry key="HTML" value="27" />
-          <entry key="JSON" value="1966" />
-          <entry key="JavaScript" value="75285" />
-          <entry key="PLAIN_TEXT" value="8" />
+          <entry key="JSON" value="1969" />
+          <entry key="JavaScript" value="75287" />
+          <entry key="PLAIN_TEXT" value="9" />
           <entry key="SCSS" value="141" />
         </counts>
       </usages-collector>
@@ -166,71 +231,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="53" column="5" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
+            <state relative-caret-position="232">
+              <caret line="55" column="3" selection-start-line="55" selection-start-column="3" selection-end-line="55" selection-end-column="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="48" column="9" selection-start-line="48" selection-start-column="9" selection-end-line="48" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="47" column="7" selection-start-line="47" selection-start-column="7" selection-end-line="47" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/node-content-renderer.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3060" />
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/tree-node-renderer.css">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/node-content-renderer.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="5" column="10" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/tree-node-renderer.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
-              <folding>
-                <element signature="e#0#65#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Layout.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="40">
-              <caret line="2" column="32" selection-start-line="2" selection-start-column="32" selection-end-line="2" selection-end-column="32" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/GridChildDraggable.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="6" selection-start-line="6" selection-end-line="6" />
+            <state relative-caret-position="180">
+              <caret line="162" column="14" lean-forward="true" selection-start-line="162" selection-start-column="14" selection-end-line="162" selection-end-column="14" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -348,7 +368,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/ChooseFile.js" />
         <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/CircularSlider.js" />
         <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/Divider.js" />
         <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/GridSelect.js" />
@@ -397,8 +416,9 @@
         <option value="$PROJECT_DIR$/src/AwesomeGridLayout/UndoRedo.js" />
         <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/HexColorPicker.js" />
         <option value="$PROJECT_DIR$/src/AwesomeGridLayout/SelectManager.js" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Layout.js" />
       </list>
     </option>
   </component>
@@ -409,6 +429,9 @@
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths>
@@ -454,6 +477,32 @@
               <item name="test-project" type="b2602c69:ProjectViewProjectNode" />
               <item name="test-project" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="test-project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="test-project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="test-project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="test-project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="AwesomeGridLayout" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="test-project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="test-project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="AwesomeGridLayout" type="462c0819:PsiDirectoryNode" />
+              <item name="Test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="test-project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="test-project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="AwesomeGridLayout" type="462c0819:PsiDirectoryNode" />
+              <item name="Test" type="462c0819:PsiDirectoryNode" />
+              <item name="Layout" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -473,19 +522,19 @@
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2018.2.6\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\json" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\data" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Test\Theme" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\icon" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Test\PageManager\PageSetting" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\data" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Test\PageManager\PageSetting" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Components\Containers\Menus\Components" />
       <recent name="E:\BussinesProjects\AwesomeGridLayout\awesomegridlayout\src\AwesomeGridLayout\Test\Animations" />
       <recent name="E:\BussinesProjects\AwesomeGridLayout\awesomegridlayout\src\AwesomeGridLayout\Editor" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\json" />
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\data" />
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Test\Theme" />
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\icon" />
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Test\PageManager\PageSetting" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -554,12 +603,12 @@
       <workItem from="1599721887369" duration="168000" />
       <workItem from="1599722380089" duration="373000" />
       <workItem from="1599722786308" duration="3000" />
-      <workItem from="1599724259612" duration="2915000" />
+      <workItem from="1599724259612" duration="4774000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1431667000" />
+    <option name="totallyTimeSpent" value="1433526000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -597,6 +646,13 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/node_modules/wait-for-expect/lib/toBeInRangeMatcher.d.js" />
+        <option value="$PROJECT_DIR$/node_modules/wait-for-expect/lib/waitForExpect.spec.d.js" />
+        <option value="$PROJECT_DIR$/node_modules/wait-for-expect/lib/index.d.js" />
+      </list>
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -717,11 +773,6 @@
     <entry file="file://$PROJECT_DIR$/src/index.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-60" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/package.json" />
     <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/webpack.config.js" />
     <entry file="file://$PROJECT_DIR$/node_modules/react-color/lib/components/sketch/Sketch.js">
@@ -746,13 +797,6 @@
             <element signature="e#0#26#0" expanded="true" />
             <element signature="e#134#202#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Layout.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="2" column="32" selection-start-line="2" selection-start-column="32" selection-end-line="2" selection-end-column="32" />
         </state>
       </provider>
     </entry>
@@ -786,11 +830,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/node-content-renderer.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3060" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/tree-node-renderer.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -814,17 +853,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="53" column="5" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="5" />
+        <state relative-caret-position="300">
+          <caret line="48" column="9" selection-start-line="48" selection-start-column="9" selection-end-line="48" selection-end-column="9" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="47" column="7" selection-start-line="47" selection-start-column="7" selection-end-line="47" selection-end-column="7" />
+        <state relative-caret-position="232">
+          <caret line="55" column="3" selection-start-line="55" selection-start-column="3" selection-end-line="55" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/node-content-renderer.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="145" column="3" lean-forward="true" selection-start-line="145" selection-start-column="3" selection-end-line="145" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="16" column="15" selection-start-line="16" selection-start-column="15" selection-end-line="16" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Layout.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="162" column="14" lean-forward="true" selection-start-line="162" selection-start-column="14" selection-end-line="162" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

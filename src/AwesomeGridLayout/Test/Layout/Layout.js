@@ -1,7 +1,6 @@
 import React from "react";
 import './Layout.css';
 import SortableTree from 'react-sortable-tree';
-import FileExplorerTheme from "./Theme";
 import IconButton from "../../HelperComponents/IconButton";
 import {isHideInBreakpoint, showInBreakPoint} from "../../AwesomwGridLayoutHelper";
 import Image from "../../Menus/CommonComponents/Image";
@@ -155,7 +154,6 @@ export default class Layout extends React.Component {
                     >
                         <SortableTree
                             className="LayoutSortableTree"
-                            theme={FileExplorerTheme}
                             treeData={this.state.treeData}
                             onChange={treeData => this.setTree(treeData)}
                             innerStyle={{

@@ -121,7 +121,7 @@
           <entry key="gitignore" value="9" />
           <entry key="html" value="27" />
           <entry key="js" value="75287" />
-          <entry key="json" value="1969" />
+          <entry key="json" value="1974" />
           <entry key="scss" value="141" />
         </counts>
       </usages-collector>
@@ -129,7 +129,7 @@
         <counts>
           <entry key="CSS" value="5551" />
           <entry key="HTML" value="27" />
-          <entry key="JSON" value="1969" />
+          <entry key="JSON" value="1974" />
           <entry key="JavaScript" value="75287" />
           <entry key="PLAIN_TEXT" value="9" />
           <entry key="SCSS" value="141" />
@@ -162,8 +162,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="232">
-              <caret line="55" column="4" lean-forward="true" selection-start-line="55" selection-start-column="4" selection-end-line="58" selection-end-column="3" />
+            <state relative-caret-position="200">
+              <caret line="22" column="29" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -408,32 +408,6 @@
               <item name="test-project" type="b2602c69:ProjectViewProjectNode" />
               <item name="test-project" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="test-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="test-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="AwesomeGridLayout" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="test-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="AwesomeGridLayout" type="462c0819:PsiDirectoryNode" />
-              <item name="Test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="test-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="AwesomeGridLayout" type="462c0819:PsiDirectoryNode" />
-              <item name="Test" type="462c0819:PsiDirectoryNode" />
-              <item name="Layout" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -534,12 +508,12 @@
       <workItem from="1599721887369" duration="168000" />
       <workItem from="1599722380089" duration="373000" />
       <workItem from="1599722786308" duration="3000" />
-      <workItem from="1599724259612" duration="4941000" />
+      <workItem from="1599724259612" duration="5209000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1433693000" />
+    <option name="totallyTimeSpent" value="1433961000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -817,8 +791,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="55" column="4" lean-forward="true" selection-start-line="55" selection-start-column="4" selection-end-line="58" selection-end-column="3" />
+        <state relative-caret-position="200">
+          <caret line="22" column="29" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
         </state>
       </provider>
     </entry>

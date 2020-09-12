@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ee3df027-738a-4634-bc4a-d7b9163847a2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/static/json/config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/config.json" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -92,7 +95,7 @@
           <entry key="gitignore" value="1" />
           <entry key="html" value="5" />
           <entry key="js" value="995" />
-          <entry key="json" value="43" />
+          <entry key="json" value="46" />
           <entry key="map" value="1" />
           <entry key="md" value="1" />
           <entry key="png" value="1" />
@@ -106,7 +109,7 @@
           <entry key="CSS" value="114" />
           <entry key="HTML" value="5" />
           <entry key="Image" value="1" />
-          <entry key="JSON" value="43" />
+          <entry key="JSON" value="46" />
           <entry key="JavaScript" value="995" />
           <entry key="PLAIN_TEXT" value="4" />
           <entry key="SCSS" value="8" />
@@ -120,8 +123,8 @@
           <entry key="css" value="5551" />
           <entry key="gitignore" value="10" />
           <entry key="html" value="27" />
-          <entry key="js" value="75309" />
-          <entry key="json" value="1975" />
+          <entry key="js" value="75310" />
+          <entry key="json" value="1989" />
           <entry key="scss" value="141" />
         </counts>
       </usages-collector>
@@ -129,30 +132,30 @@
         <counts>
           <entry key="CSS" value="5551" />
           <entry key="HTML" value="27" />
-          <entry key="JSON" value="1975" />
-          <entry key="JavaScript" value="75309" />
+          <entry key="JSON" value="1989" />
+          <entry key="JavaScript" value="75310" />
           <entry key="PLAIN_TEXT" value="10" />
           <entry key="SCSS" value="141" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
         <counts>
-          <entry key="ESLintLanguageService" value="13" />
+          <entry key="ESLintLanguageService" value="14" />
           <entry key="TypeScriptServerServiceImpl" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="15" />
+          <entry key="project.closed" value="17" />
           <entry key="project.open.time.0" value="11" />
-          <entry key="project.open.time.1" value="1" />
+          <entry key="project.open.time.1" value="2" />
           <entry key="project.open.time.10" value="2" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.12" value="2" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.2" value="1" />
-          <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="20" />
+          <entry key="project.open.time.9" value="2" />
+          <entry key="project.opened" value="22" />
         </counts>
       </usages-collector>
     </session>
@@ -163,73 +166,100 @@
         <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="40">
-              <caret line="36" column="21" selection-start-line="36" selection-start-column="21" selection-end-line="36" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="26" column="40" selection-start-line="26" selection-start-column="40" selection-end-line="26" selection-end-column="40" />
+              <caret line="36" column="59" lean-forward="true" selection-start-line="36" selection-start-column="59" selection-end-line="36" selection-end-column="59" />
+              <folding>
+                <element signature="e#1973#2159#0" />
+                <element signature="e#2018#2125#0" />
+                <element signature="e#2218#5139#0" />
+                <element signature="e#2914#3081#0" />
+                <element signature="e#4245#5131#0" />
+                <element signature="e#4465#4594#0" />
+                <element signature="e#4633#4772#0" />
+                <element signature="e#4811#4951#0" />
+                <element signature="e#4990#5121#0" />
+                <element signature="e#5165#5256#0" />
+                <element signature="e#5289#5349#0" />
+                <element signature="e#5390#5451#0" />
+                <element signature="e#5478#5705#0" />
+                <element signature="e#5746#5948#0" />
+                <element signature="e#5788#5940#0" />
+                <element signature="e#6002#6052#0" />
+                <element signature="e#6093#6489#0" />
+                <element signature="e#6162#6193#0" />
+                <element signature="e#6251#6481#0" />
+                <element signature="e#6342#6469#0" />
+                <element signature="e#6525#6566#0" />
+                <element signature="e#6603#6664#0" />
+                <element signature="e#6693#6742#0" />
+                <element signature="e#6839#7018#0" />
+                <element signature="e#7098#7277#0" />
+                <element signature="e#7329#7559#0" />
+                <element signature="e#7589#7870#0" />
+                <element signature="e#7899#7948#0" />
+                <element signature="e#7976#8659#0" />
+                <element signature="e#8390#8566#0" />
+                <element signature="e#8461#8551#0" />
+                <element signature="e#8689#8739#0" />
+                <element signature="e#8788#9155#0" />
+                <element signature="e#8998#9149#0" />
+                <element signature="e#9187#9262#0" />
+                <element signature="e#9304#9499#0" />
+                <element signature="e#9547#9742#0" />
+                <element signature="e#9781#9943#0" />
+                <element signature="e#9975#10134#0" />
+                <element signature="e#10167#10336#0" />
+                <element signature="e#10364#11483#0" />
+                <element signature="e#10503#11118#0" />
+                <element signature="e#10589#11107#0" />
+                <element signature="e#10765#11027#0" />
+                <element signature="e#11042#11092#0" />
+                <element signature="e#11149#11345#0" />
+                <element signature="e#11509#11555#0" />
+                <element signature="e#11582#11629#0" />
+                <element signature="e#11661#11713#0" />
+                <element signature="e#11746#11799#0" />
+                <element signature="e#11830#11881#0" />
+                <element signature="e#11913#11965#0" />
+                <element signature="e#12003#12140#0" />
+                <element signature="e#12233#12400#0" />
+                <element signature="e#12250#12393#0" />
+                <element signature="e#12431#12589#0" />
+                <element signature="e#12619#13095#0" />
+                <element signature="e#13111#18231#0" />
+                <element signature="e#13216#18215#0" />
+                <element signature="e#13274#13362#0" />
+                <element signature="e#13381#13460#0" />
+                <element signature="e#13477#13553#0" />
+                <element signature="e#13570#13657#0" />
+                <element signature="e#13674#13759#0" />
+                <element signature="e#13777#13992#0" />
+                <element signature="e#14075#16609#0" />
+                <element signature="e#14172#14299#0" />
+                <element signature="e#14404#14528#0" />
+                <element signature="e#14576#14956#0" />
+                <element signature="e#14686#14777#0" />
+                <element signature="e#14822#14928#0" />
+                <element signature="e#14981#16582#0" />
+                <element signature="e#15051#16551#0" />
+                <element signature="e#16711#16778#0" />
+                <element signature="e#16814#16889#0" />
+                <element signature="e#16907#16997#0" />
+                <element signature="e#17015#17099#0" />
+                <element signature="e#17182#17300#0" />
+                <element signature="e#17444#17679#0" />
+                <element signature="e#17715#17944#0" />
+                <element signature="e#17962#18100#0" />
+                <element signature="e#18117#18196#0" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="740">
-              <caret line="37" selection-start-line="37" selection-end-line="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Layout.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3080">
-              <caret line="154" column="39" selection-start-line="154" selection-start-column="39" selection-end-line="154" selection-end-column="39" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/Slider.js">
+        <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="80">
-              <caret line="4" column="23" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/SelectManager.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="9" selection-start-line="9" selection-end-line="9" />
-              <folding>
-                <element signature="e#0#58#0" expanded="true" />
-              </folding>
+              <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -245,7 +275,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>addColor</find>
       <find>setState</find>
       <find>MenuBaseHeaderTitle</find>
       <find>box-shad</find>
@@ -275,6 +304,7 @@
       <find>@popperjs/core</find>
       <find>react-dnd</find>
       <find>scss</find>
+      <find>config.json</find>
     </findStrings>
     <replaceStrings>
       <replace>breakpointmanager</replace>
@@ -312,6 +342,7 @@
       <dir>H:\Weblancer\WeblancerEditor\test-project\public</dir>
       <dir>H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout</dir>
       <dir>H:\Weblancer\WeblancerEditor\test-project\src</dir>
+      <dir>H:\Weblancer\WeblancerEditor\test-project\src\data</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -320,8 +351,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/CircularSlider.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/Divider.js" />
         <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/GridSelect.js" />
         <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/Image.js" />
         <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/SelectInput.js" />
@@ -368,9 +397,11 @@
         <option value="$PROJECT_DIR$/src/AwesomeGridLayout/UndoRedo.js" />
         <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/HexColorPicker.js" />
         <option value="$PROJECT_DIR$/src/AwesomeGridLayout/SelectManager.js" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Layout.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/data/config.json" />
+        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -421,7 +452,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -434,10 +464,24 @@
               <item name="test-project" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="test-project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="test-project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="AwesomeGridLayout" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="test-project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="test-project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="AwesomeGridLayout" type="462c0819:PsiDirectoryNode" />
+              <item name="Editor" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -453,19 +497,19 @@
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2018.2.6\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\data" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Test\PageManager\PageSetting" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Components\Containers\Menus\Components" />
-      <recent name="E:\BussinesProjects\AwesomeGridLayout\awesomegridlayout\src\AwesomeGridLayout\Test\Animations" />
-      <recent name="E:\BussinesProjects\AwesomeGridLayout\awesomegridlayout\src\AwesomeGridLayout\Editor" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\json" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\data" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Test\Theme" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\icon" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Test\PageManager\PageSetting" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\json" />
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\data" />
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Test\PageManager\PageSetting" />
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Components\Containers\Menus\Components" />
+      <recent name="E:\BussinesProjects\AwesomeGridLayout\awesomegridlayout\src\AwesomeGridLayout\Test\Animations" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -536,12 +580,14 @@
       <workItem from="1599722786308" duration="3000" />
       <workItem from="1599724259612" duration="6768000" />
       <workItem from="1599735345890" duration="2000" />
-      <workItem from="1599739588517" duration="1572000" />
+      <workItem from="1599739588517" duration="2411000" />
+      <workItem from="1599896967510" duration="550000" />
+      <workItem from="1599904894338" duration="196000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1437094000" />
+    <option name="totallyTimeSpent" value="1438679000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -554,8 +600,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29761904" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29761904" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -570,7 +617,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="TypeScript" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.27868852" />
+      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.27868852" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24962178" />
@@ -590,12 +637,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/AnchorManager.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/AnimationHolder.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/AwesomeGridLayout.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -719,10 +760,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
           <caret line="7" column="61" selection-start-line="7" selection-start-column="61" selection-end-line="7" selection-end-column="61" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-            <element signature="e#134#202#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -730,9 +767,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="6" selection-start-line="6" selection-end-line="6" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -741,10 +775,16 @@
     <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/tree-node-renderer.js" />
     <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/node-content-renderer.css" />
     <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/index.js" />
-    <entry file="file://$PROJECT_DIR$/package.json">
+    <entry file="file://$PROJECT_DIR$/src/data/servicePorts.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="26" column="40" selection-start-line="26" selection-start-column="40" selection-end-line="26" selection-end-column="40" />
+        <state relative-caret-position="180">
+          <caret line="9" column="2" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -785,20 +825,108 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js">
+    <entry file="file://$PROJECT_DIR$/public/static/json/config.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="36" column="21" selection-start-line="36" selection-start-column="21" selection-end-line="36" selection-end-column="21" />
+        <state relative-caret-position="60">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.js">
+    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
+        <state relative-caret-position="40">
+          <caret line="36" column="59" lean-forward="true" selection-start-line="36" selection-start-column="59" selection-end-line="36" selection-end-column="59" />
           <folding>
-            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#1973#2159#0" />
+            <element signature="e#2018#2125#0" />
+            <element signature="e#2218#5139#0" />
+            <element signature="e#2914#3081#0" />
+            <element signature="e#4245#5131#0" />
+            <element signature="e#4465#4594#0" />
+            <element signature="e#4633#4772#0" />
+            <element signature="e#4811#4951#0" />
+            <element signature="e#4990#5121#0" />
+            <element signature="e#5165#5256#0" />
+            <element signature="e#5289#5349#0" />
+            <element signature="e#5390#5451#0" />
+            <element signature="e#5478#5705#0" />
+            <element signature="e#5746#5948#0" />
+            <element signature="e#5788#5940#0" />
+            <element signature="e#6002#6052#0" />
+            <element signature="e#6093#6489#0" />
+            <element signature="e#6162#6193#0" />
+            <element signature="e#6251#6481#0" />
+            <element signature="e#6342#6469#0" />
+            <element signature="e#6525#6566#0" />
+            <element signature="e#6603#6664#0" />
+            <element signature="e#6693#6742#0" />
+            <element signature="e#6839#7018#0" />
+            <element signature="e#7098#7277#0" />
+            <element signature="e#7329#7559#0" />
+            <element signature="e#7589#7870#0" />
+            <element signature="e#7899#7948#0" />
+            <element signature="e#7976#8659#0" />
+            <element signature="e#8390#8566#0" />
+            <element signature="e#8461#8551#0" />
+            <element signature="e#8689#8739#0" />
+            <element signature="e#8788#9155#0" />
+            <element signature="e#8998#9149#0" />
+            <element signature="e#9187#9262#0" />
+            <element signature="e#9304#9499#0" />
+            <element signature="e#9547#9742#0" />
+            <element signature="e#9781#9943#0" />
+            <element signature="e#9975#10134#0" />
+            <element signature="e#10167#10336#0" />
+            <element signature="e#10364#11483#0" />
+            <element signature="e#10503#11118#0" />
+            <element signature="e#10589#11107#0" />
+            <element signature="e#10765#11027#0" />
+            <element signature="e#11042#11092#0" />
+            <element signature="e#11149#11345#0" />
+            <element signature="e#11509#11555#0" />
+            <element signature="e#11582#11629#0" />
+            <element signature="e#11661#11713#0" />
+            <element signature="e#11746#11799#0" />
+            <element signature="e#11830#11881#0" />
+            <element signature="e#11913#11965#0" />
+            <element signature="e#12003#12140#0" />
+            <element signature="e#12233#12400#0" />
+            <element signature="e#12250#12393#0" />
+            <element signature="e#12431#12589#0" />
+            <element signature="e#12619#13095#0" />
+            <element signature="e#13111#18231#0" />
+            <element signature="e#13216#18215#0" />
+            <element signature="e#13274#13362#0" />
+            <element signature="e#13381#13460#0" />
+            <element signature="e#13477#13553#0" />
+            <element signature="e#13570#13657#0" />
+            <element signature="e#13674#13759#0" />
+            <element signature="e#13777#13992#0" />
+            <element signature="e#14075#16609#0" />
+            <element signature="e#14172#14299#0" />
+            <element signature="e#14404#14528#0" />
+            <element signature="e#14576#14956#0" />
+            <element signature="e#14686#14777#0" />
+            <element signature="e#14822#14928#0" />
+            <element signature="e#14981#16582#0" />
+            <element signature="e#15051#16551#0" />
+            <element signature="e#16711#16778#0" />
+            <element signature="e#16814#16889#0" />
+            <element signature="e#16907#16997#0" />
+            <element signature="e#17015#17099#0" />
+            <element signature="e#17182#17300#0" />
+            <element signature="e#17444#17679#0" />
+            <element signature="e#17715#17944#0" />
+            <element signature="e#17962#18100#0" />
+            <element signature="e#18117#18196#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
         </state>
       </provider>
     </entry>

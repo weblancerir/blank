@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ee3df027-738a-4634-bc4a-d7b9163847a2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/static/json/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -123,7 +120,7 @@
           <entry key="css" value="5551" />
           <entry key="gitignore" value="10" />
           <entry key="html" value="27" />
-          <entry key="js" value="75310" />
+          <entry key="js" value="75328" />
           <entry key="json" value="1989" />
           <entry key="scss" value="141" />
         </counts>
@@ -133,7 +130,7 @@
           <entry key="CSS" value="5551" />
           <entry key="HTML" value="27" />
           <entry key="JSON" value="1989" />
-          <entry key="JavaScript" value="75310" />
+          <entry key="JavaScript" value="75328" />
           <entry key="PLAIN_TEXT" value="10" />
           <entry key="SCSS" value="141" />
         </counts>
@@ -162,11 +159,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="40">
-              <caret line="36" column="59" lean-forward="true" selection-start-line="36" selection-start-column="59" selection-end-line="36" selection-end-column="59" />
+            <state relative-caret-position="120">
+              <caret line="251" column="8" selection-start-line="251" selection-start-column="8" selection-end-line="251" selection-end-column="8" />
               <folding>
                 <element signature="e#1973#2159#0" />
                 <element signature="e#2018#2125#0" />
@@ -202,9 +199,7 @@
                 <element signature="e#8689#8739#0" />
                 <element signature="e#8788#9155#0" />
                 <element signature="e#8998#9149#0" />
-                <element signature="e#9187#9262#0" />
                 <element signature="e#9304#9499#0" />
-                <element signature="e#9547#9742#0" />
                 <element signature="e#9781#9943#0" />
                 <element signature="e#9975#10134#0" />
                 <element signature="e#10167#10336#0" />
@@ -255,11 +250,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+            <state relative-caret-position="220">
+              <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -400,8 +395,8 @@
         <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Layout.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/data/config.json" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js" />
         <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js" />
       </list>
     </option>
   </component>
@@ -582,12 +577,12 @@
       <workItem from="1599735345890" duration="2000" />
       <workItem from="1599739588517" duration="2411000" />
       <workItem from="1599896967510" duration="550000" />
-      <workItem from="1599904894338" duration="196000" />
+      <workItem from="1599904894338" duration="1300000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1438679000" />
+    <option name="totallyTimeSpent" value="1439783000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -602,7 +597,7 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29761904" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29761904" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -617,7 +612,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="TypeScript" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.27868852" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.27868852" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24962178" />
@@ -832,10 +827,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="36" column="59" lean-forward="true" selection-start-line="36" selection-start-column="59" selection-end-line="36" selection-end-column="59" />
+        <state relative-caret-position="120">
+          <caret line="251" column="8" selection-start-line="251" selection-start-column="8" selection-end-line="251" selection-end-column="8" />
           <folding>
             <element signature="e#1973#2159#0" />
             <element signature="e#2018#2125#0" />
@@ -871,9 +873,7 @@
             <element signature="e#8689#8739#0" />
             <element signature="e#8788#9155#0" />
             <element signature="e#8998#9149#0" />
-            <element signature="e#9187#9262#0" />
             <element signature="e#9304#9499#0" />
-            <element signature="e#9547#9742#0" />
             <element signature="e#9781#9943#0" />
             <element signature="e#9975#10134#0" />
             <element signature="e#10167#10336#0" />
@@ -920,13 +920,6 @@
             <element signature="e#17962#18100#0" />
             <element signature="e#18117#18196#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
         </state>
       </provider>
     </entry>

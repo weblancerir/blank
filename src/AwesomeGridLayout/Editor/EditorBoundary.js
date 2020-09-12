@@ -247,6 +247,9 @@ export default class EditorBoundary extends React.Component{
     };
 
     onResize = (e, width) => {
+        if (!this.rootLayoutRef.current)
+            return;
+
         this.onResizeD(e, width);
         this.onResizeT(e, width);
     };

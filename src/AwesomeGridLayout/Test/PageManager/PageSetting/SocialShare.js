@@ -3,8 +3,11 @@ import './PageSetting.css';
 import '../PageManager.css';
 import Image from "../../../Menus/CommonComponents/Image";
 import Button from "@material-ui/core/Button/Button";
+import {EditorContext} from "../../../Editor/EditorContext";
 
 export default class SocialShare extends React.Component {
+    static contextType = EditorContext;
+
     constructor(props) {
         super(props);
 
@@ -13,17 +16,17 @@ export default class SocialShare extends React.Component {
     }
 
     onChangeSocialShareSetting = (param) => (e, value) => {
-        let {pageData, editor} = this.props;
+        let {pageData} = this.props;
 
         value = value || e.target.value;
         pageData.props.pageSetting.socialShare[param] = value;
 
-        editor.setState({reload: true});
+        this.context.update();
     };
 
     render () {
-        let {pageData, editor} = this.props;
-        let siteData = editor.state.siteData;
+        let {pageData} = this.props;
+        let siteData = this.context.siteData;
         return (
             <div className="PageSettingTabPanelRoot">
                 <div className="PageInfoBox">

@@ -3,6 +3,7 @@ import './Inspector.css';
 import {setStyleParam} from "../../AwesomwGridLayoutHelper";
 import ColorPicker from "../../Menus/CommonComponents/ColorPicker";
 import InspectorTitle from "./InspectorTitle";
+import Background from "../../Components/Containers/Menus/Components/Background";
 
 export default class InspectorBackground extends React.Component {
     constructor(props) {
@@ -54,7 +55,9 @@ export default class InspectorBackground extends React.Component {
                         </span>
                         <ColorPicker
                             color={style.backgroundColor || 'rgba(0, 0, 0, 0)'}
-                            onDesignChange={this.onChangeColor}
+                            designKey={"design.fillColor"}
+                            // onDesignChange={this.onChangeColor}
+                            onDesignChange={this.props.onDesignChange}
                             editor={this.props.item.props.editor}
                         />
                     </div>

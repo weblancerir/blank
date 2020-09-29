@@ -8,8 +8,11 @@ import classNames from "classnames";
 import {cloneObject} from "../../AwesomeGridLayoutUtils";
 import PageSetting from "./PageSetting/PageSetting";
 import {v4 as uuidv4} from "uuid";
+import {EditorContext} from "../../Editor/EditorContext";
 
 export default class PageItem extends React.Component {
+    static contextType = EditorContext;
+
     constructor(props) {
         super(props);
 
@@ -27,10 +30,10 @@ export default class PageItem extends React.Component {
         let newName = `${pageData.props.pageName}(Copy)`;
         let newId = uuidv4();
 
-        editor.state.siteData.allPages[newId] = cloneObject(pageData);
-        editor.state.siteData.allPages[newId].props.pageName = newName;
-        editor.state.siteData.allPages[newId].props.pageId = newId;
-        delete editor.state.siteData.allPages[newId].props.isHome;
+        this.context.siteData.allPages[newId] = cloneObject(pageData);
+        this.context.siteData.allPages[newId].props.pageName = newName;
+        this.context.siteData.allPages[newId].props.pageId = newId;
+        delete this.context.siteData.allPages[newId].props.isHome;
 
         this.setState({pageMenuAnchorEl: undefined});
         editor.setState({reload: true});
@@ -40,15 +43,15 @@ export default class PageItem extends React.Component {
         // TODO ask verify
         let {pageData, editor} = this.props;
 
-        delete editor.state.siteData.allPages[pageData.props.pageId];
+        delete this.context.siteData.allPages[pageData.props.pageId];
 
         this.setState({pageMenuAnchorEl: undefined});
-        editor.onPageChange(Object.keys(editor.state.siteData.allPages)[0], true);
+        editor.onPageChange(Object.keys(this.context.siteData.allPages)[0], true);
     };
 
     setAsHome = () => {
         let {pageData, editor} = this.props;
-        let home = Object.values(editor.state.siteData.allPages).find(p => {return p.props.isHome});
+        let home = Object.values(this.context.siteData.allPages).find(p => {return p.props.isHome});
 
         if (home)
             delete home.props.isHome;
@@ -83,8 +86,6 @@ export default class PageItem extends React.Component {
             this.newPageName = undefined;
 
             editor.setState({reload: true});
-            // if (editor.state.pageData === pageData)
-            //     editor.onPageChange(pageData.props.pageName, true);
         }
     };
 
@@ -93,10 +94,10 @@ export default class PageItem extends React.Component {
     };
 
     render () {
-        let {pageData, onClick, editor, siteData} = this.props;
+        let {pageData, onClick, editor} = this.props;
         let boxClasses = classNames(
             "PageManagerNormalPageBox",
-            editor.state.pageData === pageData && "PageManagerNormalPageBoxSelected"
+            this.context.pageData === pageData && "PageManagerNormalPageBoxSelected"
         );
         return (
             <div className={boxClasses} key={pageData.props.pageId}

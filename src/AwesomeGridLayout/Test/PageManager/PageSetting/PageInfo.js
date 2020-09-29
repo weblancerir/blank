@@ -3,8 +3,11 @@ import './PageSetting.css';
 import '../PageManager.css';
 import Image from "../../../Menus/CommonComponents/Image";
 import Button from "@material-ui/core/Button/Button";
+import {EditorContext} from "../../../Editor/EditorContext";
 
 export default class PageInfo extends React.Component {
+    static contextType = EditorContext;
+
     constructor(props) {
         super(props);
 
@@ -17,7 +20,7 @@ export default class PageInfo extends React.Component {
     };
 
     rename = () => {
-        let {pageData, editor} = this.props;
+        let {pageData} = this.props;
 
         if (this.newPageName === pageData.props.pageName)
             return;
@@ -30,19 +33,20 @@ export default class PageInfo extends React.Component {
         pageData.props.pageName = this.newPageName;
         this.newPageName = undefined;
 
-        editor.setState({reload: true});
+        this.context.update();
     };
 
     setAsHomePage = () => {
-        let {pageData, editor} = this.props;
+        let {pageData} = this.props;
+        let siteData = this.context.siteData;
 
-        let home = Object.values(editor.state.siteData.allPages).find(p => {return p.props.isHome});
+        let home = Object.values(siteData.allPages).find(p => {return p.props.isHome});
 
         if (home)
             delete home.props.isHome;
         pageData.props.isHome = true;
 
-        editor.setState({reload: true});
+        this.context.update();
     };
 
     render () {

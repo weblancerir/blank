@@ -38,6 +38,8 @@ export default class SnapManager {
             if (!snapH){
                 for (let h = 0; h < snap.horizontals.length; h++) {
                     let horizontal = snap.horizontals[h];
+                    if (!horizontal)
+                        continue;
                     if (horizontal.value <= topUp && horizontal.value >= topDown) {
                         snapH = horizontal;
                         break;
@@ -48,6 +50,8 @@ export default class SnapManager {
             if (!snapV) {
                 for (let v = 0; v < snap.verticals.length; v++) {
                     let vertical = snap.verticals[v];
+                    if (!vertical)
+                        continue;
                     if (vertical.value <= leftUp && vertical.value >= leftDown) {
                         snapV = vertical;
                         break;

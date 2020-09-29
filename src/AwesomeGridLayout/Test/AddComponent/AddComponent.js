@@ -32,18 +32,19 @@ export default class AddComponent extends React.Component {
         this.opening = true;
         clearInterval(this.closeInterval);
         clearInterval(this.openInterval);
+        this.setState({ open: true});
         this.openInterval = setInterval(() => {
             if (!this.mounted) {
                 clearInterval(this.openInterval);
                 return;
             }
             let percent = this.state.percent += (this.props.speed * this.props.interval / 1000);
-            if (percent > 100) {
+            if (percent >= 100) {
                 this.opening = false;
                 clearInterval(this.openInterval);
             }
             percent = Math.min(100, percent);
-            this.setState({percent, open: (percent === 100)});
+            this.setState({percent});
         }, this.props.interval);
     };
 
@@ -51,8 +52,9 @@ export default class AddComponent extends React.Component {
         this.closing = true;
         clearInterval(this.closeInterval);
         clearInterval(this.openInterval);
+        this.setState({ open: false});
         if (force) {
-            this.setState({percent: 0, open: false});
+            this.setState({percent: 0});
             return;
         }
         this.closeInterval = setInterval(() => {
@@ -61,13 +63,20 @@ export default class AddComponent extends React.Component {
                 return;
             }
             let percent = this.state.percent -= (this.props.speed * this.props.interval / 1000);
-            if (percent < 0) {
+            if (percent <= 0) {
                 this.closing = false;
                 clearInterval(this.closeInterval);
             }
             percent = Math.max(0, percent);
-            this.setState({percent, open: (percent !== 0)});
+            this.setState({percent});
         }, this.props.interval);
+    };
+
+    toggle = (force) => {
+        let toggleState = !this.state.open;
+        this.state.open ? this.close(force) : this.open();
+
+        return toggleState;
     };
 
     setComponentListItemDebounce = debounce((componentListItem) => {

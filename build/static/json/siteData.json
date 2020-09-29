@@ -32,7 +32,7 @@
         "editorData": {
           "innerWidth": 1366,
           "innerHeight": 625,
-          "inspectorWidth": 270,
+          "inspectorWidth": 260,
           "inspectorPinned": false
         },
         "inspectorPinned": true,
@@ -318,7 +318,7 @@
                         "editorData": {
                           "innerWidth": 1366,
                           "innerHeight": 625,
-                          "inspectorWidth": 270,
+                          "inspectorWidth": 260,
                           "inspectorPinned": false
                         },
                         "width": "100%",
@@ -633,7 +633,7 @@
         "editorData": {
           "innerWidth": 1366,
           "innerHeight": 625,
-          "inspectorWidth": 270,
+          "inspectorWidth": 260,
           "inspectorPinned": false
         },
         "inspectorPinned": true,

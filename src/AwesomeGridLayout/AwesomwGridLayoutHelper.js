@@ -922,6 +922,7 @@ export function getCompositeDesignData (item) {
     if (!getCompositeFromData(item.props.griddata, "design", breakpointData))
         setData(item.props.griddata, "design", {}, breakpointData, breakpointData.getHighestBpName());
 
+    console.log("getCompositeDesignData", item.props.id, item.props.griddata, breakpointData);
     return getCompositeFromData(item.props.griddata, "design", breakpointData);
 }
 
@@ -1381,16 +1382,24 @@ export function getColorScheme (baseColor) {
 }
 
 export function parseColor (color, alpha, editor) {
-    if (!color)
-        return;
+    console.log("parseColor", color, alpha)
+    if (!color) {
+        color = '#000000';
+        alpha = alpha || 0;
+    }
 
     if (color instanceof Object) {
         let chromaColor = chroma(editor.themeManagerRef.current.getColor(color.paletteName, color.key));
-        chromaColor = chromaColor.alpha(alpha || 1);
+        if (alpha === undefined || color.alpha !== undefined)
+            chromaColor = chromaColor.alpha(alpha || color.alpha);
+        else
+            chromaColor = chromaColor.alpha(1);
         return chromaColor.css();
     } else {
         let chromaColor = chroma(color);
-        chromaColor = chromaColor.alpha(alpha || 1);
+        // chromaColor = chromaColor.alpha(alpha || 1);
+        if (alpha !== undefined)
+            chromaColor = chromaColor.alpha(alpha);
         return chromaColor.css();
     }
 }

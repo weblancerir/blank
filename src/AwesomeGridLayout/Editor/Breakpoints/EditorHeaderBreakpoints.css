@@ -1,0 +1,19 @@
+.EditorHeaderBreakpointsRoot{
+
+}
+
+.EditorHeaderBreakpointsTabRoot{
+    height: 30px !important;
+    min-height: unset !important;
+}
+
+.EditorHeaderBreakpointsTab{
+    padding: 0px !important;
+    min-width: 50px !important;
+    height: 30px !important;
+    min-height: 30px !important;
+}
+
+.EditorHeaderBreakpoints {
+    display: flex;
+}

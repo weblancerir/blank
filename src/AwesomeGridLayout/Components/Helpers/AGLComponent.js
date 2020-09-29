@@ -37,6 +37,7 @@ export default class AGLComponent extends React.Component{
     };
 
     onDesignChange = (designKey, value) => {
+        console.log("onDesignChange", designKey, value)
         setDataInBreakpoint(designKey, value, this.getAgl(), true, undefined, true);
         this.updateDesign(getCompositeDesignData(this.getAgl()));
     };

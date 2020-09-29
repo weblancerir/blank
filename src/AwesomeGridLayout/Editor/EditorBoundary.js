@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import BreakPointManager from "../BreakPointManager";
 import DragDropManager from "../DragDropManager";
 import InputManager from "../InputManager";
@@ -33,14 +33,18 @@ import {v4 as uuidv4} from "uuid";
 import ThemeManager from "../Test/Theme/ThemeManager";
 import defaultSiteData from "../../data/defaultSiteData.json";
 import defaultAllComponentData from "../../data/allComponentData.json";
+import EditorHeader from "./EditorHeader";
+import {EditorContext} from "./EditorContext";
+import EditorType from "./EditorType";
+import PreviewHeader from "./PreviewHeader";
 
 export default class EditorBoundary extends React.Component{
+    static contextType = EditorContext;
+
     constructor(props) {
         super(props);
         this.state = {
-            editorScale: 1,
-            inspectorPinned: true,
-            pageData: undefined,
+            preview: true
         };
 
         this.init(props);
@@ -62,16 +66,6 @@ export default class EditorBoundary extends React.Component{
         this.addComponentRef = React.createRef();
         this.pageManagerRef = React.createRef();
         this.themeManagerRef = React.createRef();
-
-        this.editorData = {
-            innerWidth: window.innerWidth,
-            innerHeight: window.innerHeight,
-            inspectorWidth: 270,
-            inspectorPinned: false
-        };
-        this.breakpointmanager =
-            new BreakPointManager(undefined, this.editorData, undefined, this.onZoomLevelChange,
-                this.onHeightChange, this.onResize);
         this.dragdrop = new DragDropManager();
         this.inputManager = new InputManager();
         this.select = new SelectManager(this.inputManager, this.groupSelectRef,
@@ -117,12 +111,47 @@ export default class EditorBoundary extends React.Component{
                 this.exportSiteData();
             }
         });
+
+
+    };
+
+    initContext = () => {
+        this.context.initContext({
+            editor: this,
+            rightMenus: {
+                addComponent: {
+                    state: false,
+                    toggle: this.toggleAddComponent
+                },
+                pageManager: {
+                    state: false,
+                    toggle: this.togglePageManager
+                },
+                themeManager: {
+                    state: false,
+                    toggle: this.toggleThemeManager
+                }
+            }
+        });
+
+        this.select.setContext(this.context);
     };
 
     componentDidMount(){
-        this.postMessage({event: "Editor Mounted"});
-        // this.testWebsite();
+        this.initContext();
+        this.postMessage({
+            type: "Holder",
+            func: "onEditorMounted",
+            inputs: []
+        }, (data) => {
+            console.log("componentDidMount initFromHolder", data);
+            this.initFromHolder(data.result);
+        });
     }
+
+    initFromHolder = (data) => {
+        this.onSetZoomScale(data.zoomScale);
+    };
 
     onMessage = (data, res) => {
         EditorController.onMessage(data, res, this);
@@ -131,6 +160,11 @@ export default class EditorBoundary extends React.Component{
     postMessage = (data, callback) => {
         this.iFrameCommunicator.post(data, callback);
     };
+
+    setPreview = (preview, callback) => {
+        callback && callback();
+        this.context.setPreview(preview);
+    }
 
     testWebsite = () => {
         let siteData = cloneObject(defaultSiteData);
@@ -141,27 +175,42 @@ export default class EditorBoundary extends React.Component{
     };
 
     onSiteDataUpdated = (siteData) => {
-        this.setState({siteData}, () => {
+        if (!siteData) {
+            siteData = cloneObject(defaultSiteData);
+        }
+
+        this.context.setSiteData(siteData, () => {
             let pageData = siteData.allPages[Object.keys(siteData.allPages)[0]];
-            this.setState({pageData}, this.onHeightChange);
+            this.context.setPageData(pageData.props.pageId, false, this.onHeightChange);
         });
+
+        // TODO Test
+        let allComponentData = cloneObject(defaultAllComponentData);
+        this.onComponentDataUpdated(allComponentData);
     };
+
+    setBreakpoints = (breakpoints) => {
+        this.breakpointmanager = new BreakPointManager(breakpoints, this,
+            undefined, this.onZoomLevelChange,
+            this.onHeightChange, this.onResize);
+    }
 
     onComponentDataUpdated = (allComponentData) => {
         this.setState({allComponentData});
     };
 
     onPageChange = (pageId, force) => {
-        if (!force && this.state.pageData.props.pageId === pageId) {
+        if (!force && this.context.pageData.props.pageId === pageId) {
             return;
         }
 
+        console.log("onPageChange");
         this.rootLayoutRef.current.onSelect(true, () => {
             this.idMan.clear();
 
-            this.setState({pageData: undefined} , () => {
-                let pageData = this.state.siteData.allPages[pageId];
-                this.setState({pageData});
+            this.context.setPageData(undefined , () => {
+                let pageData = this.context.siteData.allPages[pageId];
+                this.context.setPageData(pageData);
             });
         });
     };
@@ -177,6 +226,22 @@ export default class EditorBoundary extends React.Component{
     componentWillUnmount(){
         this.breakpointmanager.dispose();
     }
+
+    onPageZoomChange = (zoomScale) => {
+        this.postMessage({
+            type: "Holder",
+            func: "changePageZoom",
+            inputs: [zoomScale]
+        }, (data) => {
+            this.onSetZoomScale(data.result)
+        });
+    };
+
+    onSetZoomScale = (zoomScale) => {
+        document.documentElement.style.setProperty('--zoom-scale', zoomScale);
+
+        this.context.setZoomScale(zoomScale, this.onZoomLevelChange);
+    };
 
     // Just in editor
     onBreakpointChange = (width, newBreakpointName, devicePixelRatio) => {
@@ -194,51 +259,50 @@ export default class EditorBoundary extends React.Component{
     onZoomLevelChange = (newDevicePixelRatio) => {
         if (!this.rootLayoutRef.current)
             return;
-        this.rootLayoutRef.current.invalidateSize(true, true, true);
-        this.select.onScrollItem();
+        !this.isPreview() && this.rootLayoutRef.current.invalidateSize(true, true, true);
+        !this.isPreview() && this.select.onScrollItem();
         this.rootLayoutRef.current.onWindowSizeChange();
     };
 
-    onHeightChange = () => {
+    isPreview = () => {
+        return this.context.preview;
+    }
+
+    onHeightChange = (e) => {
         if (!this.rootLayoutRef.current)
             return;
         this.rootLayoutRef.current.invalidateSize(true, true, true);
-        this.select.onScrollItem();
+        !this.isPreview() && this.select.onScrollItem();
         this.rootLayoutRef.current.onWindowSizeChange();
         this.rootLayoutRef.current.updateLayout();
+
+        this.onResize(e);
     };
 
-    openInspector = () => {
-        this.inspectorRef.current.open();
+    toggleInspector = () => {
+        return this.inspectorRef.current.toggle();
     };
 
     pinInspector = () => {
-        let selected = this.select.getSelected();
-        this.rootLayoutRef.current.props.aglRef.current.onSelect(true);
-        this.editorData.inspectorPinned = !this.state.inspectorPinned;
-        this.editorData.innerWidth = window.innerWidth -
-            this.editorData.inspectorPinned ? this.editorData.inspectorWidth : 0;
-        this.setState({inspectorPinned: this.editorData.inspectorPinned}, () => {
+        this.context.setInspectorPinned(!this.context.inspectorPinned, () => {
             this.select.onScrollItem();
-            setTimeout(() => {
-                if (selected)
-                    selected.onSelect(true);
-            }, 0);
+            this.rootLayoutRef.current.invalidateSize();
         });
+
+        // this.editorData.innerWidth = window.innerWidth -
+        // this.context.inspectorPinned ? this.context.inspectorWidth : 0;
 
         this.onScrollBoundary();
         this.rootLayoutRef.current.updateLayout();
     };
 
-    closeInspector = () => {
-        this.inspectorRef.current.close();
-    };
-
     onPageResize = (width, pageAgl, force) => {
         let result = this.breakpointmanager.checkBreakPointChange(width);
-        this.breakpointmanager.setWindowWidth(width);
 
         this.onResize(undefined, width);
+
+        console.log("onPageResize", width)
+        this.context.setPageSizeWidth(width);
 
         if (result.changed || force) {
             this.notifyBreakpointChange(width, result.currentBreakpointName,
@@ -263,24 +327,28 @@ export default class EditorBoundary extends React.Component{
     onResizeT = throttle((e, width) => {
         if (!width)
             width = this.rootLayoutRef.current.getSize(false, true).width;
+
         document.documentElement.style.setProperty('--vw-ratio', width / window.innerWidth);
     }, 100);
 
     onPageResizeStart = () => {
+        if (this.isPreview()) return;
         this.resizeRef.current.activate(false);
         this.helpLinesRef.current.activate(false);
         this.miniMenuHolderRef.current.activate(false);
     };
 
     onPageResizeStop = () => {
+        if (this.isPreview()) return;
         this.resizeRef.current.activate(true);
         this.helpLinesRef.current.activate(true);
         this.miniMenuHolderRef.current.activate(true);
     };
 
     onScrollBoundary = (e) => {
-        this.rootLayoutRef.current.invalidateSize(true, true, true);
-        this.select.onScrollItem();
+        !this.isPreview() && this.rootLayoutRef.current.invalidateSize(true, true, true);
+        !this.isPreview() &&this.select.onScrollItem();
+
         this.rootLayoutRef.current.onWindowSizeChange();
     };
 
@@ -328,27 +396,28 @@ export default class EditorBoundary extends React.Component{
         this.layoutRef.current.close();
     };
 
-    openAddComponent = () => {
-        this.addComponentRef.current.open();
+    toggleAddComponent = (force, state) => {
+        if (state === true) {
+            this.addComponentRef.current.open();
+            return true;
+        }
+        return this.addComponentRef.current.toggle(force);
     };
 
-    closeAddComponent = () => {
-        this.addComponentRef.current.close();
+    togglePageManager = (force, state) => {
+        if (state === true) {
+            this.pageManagerRef.current.open();
+            return true;
+        }
+        return this.pageManagerRef.current.toggle(force);
     };
 
-    openPageManager = () => {
-        this.pageManagerRef.current.open();
-    };
-
-    closePageManager = () => {
-        this.pageManagerRef.current.close();
-    };
-
-    toggleThemeManager = (open) => {
-        if (open)
+    toggleThemeManager = (force, state) => {
+        if (state === true) {
             this.themeManagerRef.current.open();
-        else
-            this.themeManagerRef.current.close();
+            return true;
+        }
+        return this.themeManagerRef.current.toggle(force);
     };
 
     // pageData is a childData that is for PageBase component
@@ -360,7 +429,7 @@ export default class EditorBoundary extends React.Component{
     };
 
     getLiveSiteData = () => {
-        let siteData = this.state.siteData || {allPages: {}};
+        let siteData = this.context.siteData || {allPages: {}};
 
         siteData.allPages[uuidv4()] = this.getLivePageData();
 
@@ -382,140 +451,179 @@ export default class EditorBoundary extends React.Component{
         document.body.removeChild(link);
     };
 
+    getSiteData = (callback) => {
+        callback && callback(this.context.siteData);
+        return this.context.siteData;
+    }
+
     render() {
-        // TODO if this.state.siteData not loaded, show loading component
+        // TODO if this.context.siteData not loaded, show loading component
         return (
-            <div className="EditorBoundaryRoot" onContextMenu={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-            }}>
-                <AdjustmentGrid
-                    ref={this.gridEditorRef}
-                />
-                <AdjustmentSnap
-                    ref={this.snapSvgRef}
-                />
-                <AdjustmentGridLines
-                    ref={this.gridContainerRef}
-                />
-                <AdjustmentGroupRect
-                    ref={this.groupSelectRef}
-                />
-
-                <PageManager
-                    ref={this.pageManagerRef}
-                    siteData={this.state.siteData}
-                    editor={this}
-                    onPageChange={this.onPageChange}
-                />
-
-                {
-                    this.state.pageData &&
-                    <div
-                        className="EditorBoundaryPageHolder"
-                        style={{
-                            // TODO add scale support
-                            padding: "0 50px"
-                        }}
-                        onScroll={this.onScrollBoundary}
-                        onContextMenu={(e) => {
-                            e.stopPropagation();
-                            e.preventDefault();
-                        }}
-                    >
-                        <div
-                            className="EditorBoundaryPageHolderHover"
-                            style={{
-                                bottom: getScrollbarWidth()
-                            }}
-                            onClick={() => {
-                                this.rootLayoutRef.current.onSelect(true);
-                            }}
-                        />
-                        <div className="PageBaseWhiteBackground">
-                            <PageBase
-                                key={this.state.pageData.props.pageId}
-                                id="page"
-                                aglRef={this.rootLayoutRef}
-                                viewRef={this.rootLayoutRef}
-                                breakpointmanager={this.breakpointmanager}
-                                undoredo={this.undoredo}
-                                dragdrop={this.dragdrop}
-                                select={this.select}
-                                snap={this.snap}
-                                input={this.inputManager}
-                                idMan={this.idMan}
-                                gridLine={this.gridLine}
-                                gridEditorRef={this.gridEditorRef}
-                                anchorMan={this.anchorMan}
-                                copyMan={this.copyMan}
-                                editorData={this.editorData}
-                                onPageResize={this.onPageResize}
-                                onPageResizeStart={this.onPageResizeStart}
-                                onPageResizeStop={this.onPageResizeStop}
-                                editor={this}
-                                devicePixelRatio={this.state.devicePixelRatio}
-                                inspectorPinned={this.state.inspectorPinned}
-                                {...this.state.pageData.props}
-                                // griddata={{}}
+                <div className="EditorBoundaryRoot" onContextMenu={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }}>
+                    {
+                        !this.isPreview() &&
+                        <div className="EditorBoundaryHeader">
+                            <EditorHeader
+                                onAddComponentClick={this.toggleAddComponent}
+                                onInspectorClick={this.toggleInspector}
+                                onThemeManagerClick={this.toggleThemeManager}
+                                onPageManagerClick={this.togglePageManager}
+                                onPageZoomChange={this.onPageZoomChange}
                             />
                         </div>
+                    }
+                    {
+                        this.isPreview() &&
+                        <div className="EditorBoundaryHeader">
+                            <PreviewHeader
+                                onAddComponentClick={this.toggleAddComponent}
+                                onInspectorClick={this.toggleInspector}
+                                onThemeManagerClick={this.toggleThemeManager}
+                                onPageManagerClick={this.togglePageManager}
+                                onPageZoomChange={this.onPageZoomChange}
+                            />
+                        </div>
+                    }
+                    <div className="EditorBoundaryContent">
+                        {
+                            !this.isPreview() &&
+                            <>
+                                <AdjustmentGrid
+                                    ref={this.gridEditorRef}
+                                />
+                                <AdjustmentSnap
+                                    ref={this.snapSvgRef}
+                                />
+                                <AdjustmentGridLines
+                                    ref={this.gridContainerRef}
+                                />
+                                <AdjustmentGroupRect
+                                    ref={this.groupSelectRef}
+                                />
+
+                                <PageManager
+                                    ref={this.pageManagerRef}
+                                    editor={this}
+                                    onPageChange={this.onPageChange}
+                                />
+                            </>
+                        }
+
+                        {
+                            this.context.pageData &&
+                            <div
+                                className="EditorBoundaryPageHolder"
+                                style={{
+                                    // TODO add scale support
+                                    padding: "0 50px"
+                                }}
+                                onScroll={this.onScrollBoundary}
+                                onContextMenu={(e) => {
+                                    e.stopPropagation();
+                                    e.preventDefault();
+                                }}
+                            >
+                                <div
+                                    className="EditorBoundaryPageHolderHover"
+                                    style={{
+                                        bottom: getScrollbarWidth()
+                                    }}
+                                    onClick={() => {
+                                        this.rootLayoutRef.current.onSelect(true);
+                                    }}
+                                />
+                                <div className="PageBaseWhiteBackground" style={{
+                                    marginTop: `${8*this.context.zoomScale}vh`
+                                }}>
+                                    <PageBase
+                                        key={this.context.pageData.props.pageId}
+                                        id="page"
+                                        aglRef={this.rootLayoutRef}
+                                        viewRef={this.rootLayoutRef}
+                                        breakpointmanager={this.breakpointmanager}
+                                        undoredo={this.undoredo}
+                                        dragdrop={this.dragdrop}
+                                        select={this.select}
+                                        snap={this.snap}
+                                        input={this.inputManager}
+                                        idMan={this.idMan}
+                                        gridLine={this.gridLine}
+                                        gridEditorRef={this.gridEditorRef}
+                                        anchorMan={this.anchorMan}
+                                        copyMan={this.copyMan}
+                                        editorData={this.editorData}
+                                        onPageResize={this.onPageResize}
+                                        onPageResizeStart={this.onPageResizeStart}
+                                        onPageResizeStop={this.onPageResizeStop}
+                                        editor={!this.isPreview() && this}
+                                        devicePixelRatio={this.state.devicePixelRatio}
+                                        {...this.context.pageData.props}
+                                        pageSize={this.context.pageSize}
+                                    />
+                                </div>
+                            </div>
+                        }
+
+                        {
+                            !this.isPreview() &&
+                            <>
+                                {
+                                    !this.context.pageData &&
+                                    <div>
+                                        {/*Loading...*/}
+                                    </div>
+                                }
+
+                                <AdjustmentHover
+                                    ref={this.hoverRef}
+                                />
+
+                                <AdjustmentHelpLinesWrapper
+                                    ref={this.helpLinesRef}
+                                />
+
+                                <AdjustmentResizeWrapper
+                                    ref={this.resizeRef}
+                                />
+
+                                {
+                                    this.context.pageData &&
+                                    <Layout
+                                        ref={this.layoutRef}
+                                        idMan={this.idMan}
+                                    />
+                                }
+
+                                {
+                                    this.context.siteData &&
+                                    this.context.pageData &&
+                                    <ThemeManager
+                                        ref={this.themeManagerRef}
+                                        editor={this}
+                                    />
+                                }
+
+                                <AddComponent
+                                    ref={this.addComponentRef}
+                                    allComponentData={this.state.allComponentData}
+                                    pageRef={this.rootLayoutRef}
+                                    editor={this}
+                                />
+
+                                <Inspector
+                                    ref={this.inspectorRef}
+                                    pinInspector={this.pinInspector}
+                                />
+                                <MenuHolder
+                                    ref={this.miniMenuHolderRef}
+                                />
+                            </>
+                        }
                     </div>
-                }
-
-                {
-                    !this.state.pageData &&
-                    <div>
-                        Loading...
-                    </div>
-                }
-
-                <AdjustmentHover
-                    ref={this.hoverRef}
-                />
-
-                <AdjustmentHelpLinesWrapper
-                    ref={this.helpLinesRef}
-                />
-
-                <AdjustmentResizeWrapper
-                    ref={this.resizeRef}
-                />
-
-                {
-                    this.state.pageData &&
-                    <Layout
-                        ref={this.layoutRef}
-                        idMan={this.idMan}
-                    />
-                }
-
-                {
-                    this.state.siteData &&
-                    this.state.pageData &&
-                    <ThemeManager
-                        ref={this.themeManagerRef}
-                        siteData={this.state.siteData}
-                        pageData={this.state.pageData}
-                        editor={this}
-                    />
-                }
-
-                <AddComponent
-                    ref={this.addComponentRef}
-                    allComponentData={this.state.allComponentData}
-                    pageRef={this.rootLayoutRef}
-                    editor={this}
-                />
-
-                <Inspector
-                    ref={this.inspectorRef}
-                    inspectorPinned={this.state.inspectorPinned}
-                />
-                <MenuHolder
-                    ref={this.miniMenuHolderRef}
-                />
-            </div>
+                </div>
         )
     }
 }

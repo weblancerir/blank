@@ -9,6 +9,7 @@ export default class IFrameCommunicator {
         this.responses = {};
 
         window.addEventListener("message", (event) => {
+            console.log("message", event);
             if (this.origin && event.origin !== this.origin) {
                 return;
             }
@@ -33,13 +34,13 @@ export default class IFrameCommunicator {
             let responseFunc = () => {};
             if (data && data.c) {
                 let c = data.c;
-                responseFunc = this.responses[c] = (data) => {
-                    data.r = c;
-                    this.post(data);
+                responseFunc = this.responses[c] = (result) => {
+                    let newData = {r: c, result};
+                    this.post(newData);
                 }
             }
 
-            this.onMessage(event, responseFunc);
+            this.onMessage(event.data, responseFunc);
         }
     };
 
@@ -51,6 +52,9 @@ export default class IFrameCommunicator {
         }
 
         data.authKey = this.authKey;
-        this.otherWindow.postMessage(data, this.origin || "*");
+
+        let otherWindow = typeof(this.otherWindow) === 'function' ? this.otherWindow() : this.otherWindow;
+
+        otherWindow.postMessage(data, this.origin || "*");
     };
 }

@@ -1,0 +1,47 @@
+.EditorHeaderBreakpointsSettingRoot{
+
+}
+
+.BpSettingRoot {
+    width: 300px !important;
+    outline: none;
+}
+
+.BpSettingHeader {
+    width: 100%;
+    pointer-events: auto;
+    box-shadow: 0 0 2px 0 rgba(22,45,61,.27);
+    background-color: #fff;
+    margin-bottom: 12px;
+}
+
+.BpSettingHeaderContainer {
+    width: auto;
+    height: 48px;
+    padding-left: 16px;
+    padding-right: 16px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.BpSettingHeaderTitle{
+    flex: 1;
+    font-weight: bold;
+}
+
+.BpSettingGuideSpan{
+    font-size: 12px;
+    line-height: 16px;
+    -webkit-font-smoothing: antialiased;
+    padding: 0 16px;
+    box-sizing: border-box;
+    color: #7a92a5;
+}
+
+.BpSettingAddBp{
+    width: 100% !important;
+    text-transform: none !important;
+    color: #0a79e6 !important;
+    height: 48px !important;
+}

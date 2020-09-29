@@ -1,8 +1,23 @@
 .EditorBoundaryRoot {
     display: flex;
-    justify-content: center;
+    /*justify-content: center;*/
+    flex-direction: column;
     width: 100%;
     height: 100vh;
+}
+
+.EditorBoundaryHeader {
+    width: 100%;
+    height: calc(48px/var(--zoom-scale));
+    min-height: calc(48px/var(--zoom-scale));
+}
+
+.EditorBoundaryContent {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
 }
 
 .EditorBoundaryPageHolder {
@@ -23,10 +38,10 @@
 
 .PageBaseWhiteBackground{
     /* display: block; */
-    margin-top: 10vh !important;
+    /*margin-top: 8vh !important;*/
     /* margin-bottom: 50vh !important; */
     width: inherit;
-    height: 80vh;
+    height: calc((1 - 2*8*var(--zoom-scale)/100) * (100vh - calc(48px/var(--zoom-scale))));
     display: inline-block;
     background-color: white;
 }
@@ -34,4 +49,94 @@
 :root {
     --vw-ratio: 0.7335285505124451;
     --vh-ratio: 0.8;
+    --zoom-scale: 1;
+}
+
+.EditorHeaderRoot{
+    position: fixed;
+    z-index: 99999999999999;
+    top: 0;
+    height: 48px;
+    background-color: white;
+    border-bottom: 1px solid #cfcfcf;
+    box-sizing: border-box;
+    padding: 8px;
+    display: flex;
+
+    transform: scale(calc(1/var(--zoom-scale)));
+    transform-origin: 0 0;
+}
+
+.EditorHeaderRightShortcuts {
+    width: fit-content;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+}
+
+.EditorHeaderRightShortcuts > button {
+    margin-right: 10px;
+}
+
+.EditorHeaderLeftShortcuts {
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    direction: rtl;
+    padding: 8px;
+}
+
+.EditorHeaderCenterShortcuts {
+    flex: 1;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+}
+
+.EditorHeaderCenterDiv{
+    padding-left: 8px;
+    padding-right: 8px;
+    border-left: 1px solid #cfcfcf;
+}
+
+.EditorHeaderLastCenterDiv{
+    border-right: 1px solid #cfcfcf;
+}
+
+.EditorHeaderZoomReset{
+    color: blue !important;
+    text-transform: none !important;
+}
+
+.PreviewButton{
+    text-transform: none !important;
+    color:  rgb(17, 109, 255)  !important;
+    margin-left: 12px !important;
+    padding: 5px 16px !important;
+}
+
+.PublishButton{
+    text-transform: none !important;
+    color: white !important;
+    background-color: rgb(17, 109, 255)  !important;
+    margin-left: 12px !important;
+    padding: 5px 16px !important;
+}
+
+.PreviewHeaderLeftShortcuts {
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    direction: rtl;
+    padding: 8px;
+    position: absolute;
+    right: 4px;
+    top: 0px;
 }

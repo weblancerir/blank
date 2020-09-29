@@ -2,8 +2,11 @@ import React from "react";
 import './PageSetting.css';
 import '../PageManager.css';
 import Switch from "@material-ui/core/Switch/Switch";
+import {EditorContext} from "../../../Editor/EditorContext";
 
 export default class SeoGoogle extends React.Component {
+    static contextType = EditorContext;
+
     constructor(props) {
         super(props);
 
@@ -12,7 +15,7 @@ export default class SeoGoogle extends React.Component {
     }
 
     onChangeSeoSetting = (param) => (e, value) => {
-        let {pageData, editor} = this.props;
+        let {pageData} = this.props;
 
         value = value || e.target.value;
         console.log("onChangeSeoSetting", value, param);
@@ -21,7 +24,7 @@ export default class SeoGoogle extends React.Component {
                 return;
 
             value = this.newEndUrl.replace(/\s+/g, '').toLowerCase();
-            let siteData = editor.state.siteData;
+            let siteData = this.context.siteData;
             let same = Object.values(siteData.allPages).find(p => p.props.pageSetting.seoGoogle.endUrl === value);
             if (same) {
                 console.log("onChangeSeoSetting2");
@@ -35,12 +38,12 @@ export default class SeoGoogle extends React.Component {
 
         pageData.props.pageSetting.seoGoogle[param] = value;
 
-        editor.setState({reload: true});
+        this.context.update();
     };
 
     render () {
-        let {pageData, editor} = this.props;
-        let siteData = editor.state.siteData;
+        let {pageData} = this.props;
+        let siteData = this.context.siteData;
         return (
             <div className="PageSettingTabPanelRoot">
                 <div className="PageInfoBox">

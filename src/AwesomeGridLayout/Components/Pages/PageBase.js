@@ -7,7 +7,8 @@ import InspectorBreadcrumbs from "../../Test/Inspector/InspectorBreadcrumbs";
 import InspectorPadding from "../../Test/Inspector/InspectorPadding";
 import InspectorBackground from "../../Test/Inspector/InspectorBackground";
 import './PageBase.css';
-import {isHideInBreakpoint} from "../../AwesomwGridLayoutHelper";
+import {isHideInBreakpoint, parseColor, setStyleParam} from "../../AwesomwGridLayoutHelper";
+import BorderDesign from "../Containers/Menus/BorderDesign";
 
 const mainColTemplate = "minmax(0px,1fr)";
 
@@ -693,7 +694,6 @@ export default class PageBase extends AGLComponent {
 
         let section = <Tag
             as={as}
-            portalNodeId={tagName === "Section" ? "page-main-sections" : undefined}
             isSection
             data={{
                 bpData: {
@@ -805,7 +805,6 @@ export default class PageBase extends AGLComponent {
 
         let section = <Tag
             as={as}
-            portalNodeId={tagName === "Section" ? "page-main-sections" : undefined}
             isSection
             isVerticalSection
             data={{
@@ -831,6 +830,7 @@ export default class PageBase extends AGLComponent {
             onItemPreResizeStop={this.onItemPreResizeStop}
         />;
 
+        console.log("this.allSectionsH", this.allSectionsH)
         this.allSectionsH.forEach(horizontalSection => {
             horizontalSection = this.props.idMan.getItem(horizontalSection);
             let gridArea = horizontalSection.getGridArea();
@@ -987,7 +987,10 @@ export default class PageBase extends AGLComponent {
 
         let currentIndex = y1 - 1;
         let sideSection = this.allSectionsV[currentIndex + 1];
-        sideSection = this.props.idMan.getItem(sideSection) || null;
+        if (sideSection !== null){
+            sideSection = this.props.idMan.getItem(sideSection);
+        }
+        // sideSection = this.props.idMan.getItem(sideSection) || null;
         if (sideSection) {
             gridArea2 = sideSection.getGridArea();
             areas2 = gridArea2.split('/');
@@ -1016,6 +1019,7 @@ export default class PageBase extends AGLComponent {
             verticalSection.setGridArea(
                 `${x1}/${y1 + 1}/${x2}/${y2 + 1}`
                 , this.props.breakpointmanager.getHighestBpName());
+
             this.allSectionsH.forEach(horizontalSection => {
                 horizontalSection = this.props.idMan.getItem(horizontalSection);
                 let gridArea = horizontalSection.getGridArea();
@@ -1028,9 +1032,14 @@ export default class PageBase extends AGLComponent {
                 let firstRow = x1;
                 let lastRow = x2;
 
-                if (x13 >= firstRow || x23 <= lastRow) {
+                console.log("moveRight firstRow:", firstRow, "lastRow:", lastRow, "x13:", x13, "x23:", x23);
+                if (x13 >= firstRow && x23 <= lastRow) {
+                    console.log("moveRight yes");
                     y13--;
                     y23--;
+
+                    if (y23 > y1 + 1)
+                        y23 = y1 + 1;
                 }
 
                 gridArea = `${x13}/${y13}/${x23}/${y23}`;
@@ -1072,7 +1081,10 @@ export default class PageBase extends AGLComponent {
 
         let currentIndex = y1 - 1;
         let sideSection = this.allSectionsV[currentIndex - 1];
-        sideSection = this.props.idMan.getItem(sideSection) || null;
+        if (sideSection !== null){
+            sideSection = this.props.idMan.getItem(sideSection);
+        }
+        // sideSection = this.props.idMan.getItem(sideSection) || null;
         if (sideSection) {
             gridArea2 = sideSection.getGridArea();
             areas2 = gridArea2.split('/');
@@ -1113,9 +1125,12 @@ export default class PageBase extends AGLComponent {
                 let firstRow = x1;
                 let lastRow = x2;
 
-                if (x13 >= firstRow || x23 <= lastRow) {
+                if (x13 >= firstRow && x23 <= lastRow) {
                     y13++;
                     y23++;
+
+                    if (y13 < y2 - 1)
+                        y13 = y2 - 1;
                 }
 
                 gridArea = `${x13}/${y13}/${x23}/${y23}`;
@@ -1187,6 +1202,7 @@ export default class PageBase extends AGLComponent {
                 />
                 <InspectorBackground
                     item={this.getAgl()}
+                    onDesignChange={this.onDesignChange}
                 />
                 <InspectorPadding
                     item={this.getAgl()}
@@ -1220,6 +1236,14 @@ export default class PageBase extends AGLComponent {
     };
 
     updateDesign = (compositeDesign) => {
+        let fillColor;
+
+        console.log("updateDesign", compositeDesign.fillColor)
+        if (compositeDesign.fillColor)
+            fillColor = parseColor(compositeDesign.fillColor, compositeDesign.fillColor.alpha, this.props.editor);
+
+        setStyleParam("backgroundColor", fillColor || "unset",
+            this.getAgl(), 2, undefined, true);
     };
     // White Background
     getStaticChildren = () => {
@@ -1233,8 +1257,9 @@ export default class PageBase extends AGLComponent {
     };
 
     render() {
-        let fullWidth = (this.getAgl() && this.getAgl().getSize(false)) ||
-            (1002/*0.735 * this.props.editorData.innerWidth*/);
+        // let fullWidth = (this.getAgl() && this.getAgl().getSize(false)) || (1002);
+        let fullWidth = this.props.pageSize;
+        console.log("fullWidth", fullWidth)
         return (
             <AGLWrapper tagName="PageBase"
                         aglRef={!this.props.aglRef ? this.root : this.root = this.props.aglRef}
@@ -1245,7 +1270,6 @@ export default class PageBase extends AGLComponent {
                             width: `${fullWidth}px`,
                             height: "100%",
                             boxShadow: "0 2px 12px 6px rgba(134,138,165,.41)",
-                            // marginTop: "10vh !important",
                             display: "inline-block",
                         }}
                         data={this.getData()}
@@ -1255,13 +1279,7 @@ export default class PageBase extends AGLComponent {
                         hasMiniMenuOverride={this.hasMiniMenuOverride}
                         getInspector={this.getInspector}
                         invalidateSizeOverride={this.invalidateSizeOverride}
-                        // getStaticChildren={this.getStaticChildren}
-
             >
-                <main
-                    style={{display: "contents"}}
-                    id={"page-main-sections"}
-                />
             </AGLWrapper>
         )
     }

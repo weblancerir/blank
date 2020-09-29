@@ -8,12 +8,15 @@ import IconButton from "../../HelperComponents/IconButton";
 import chroma from "chroma-js";
 import HexColorPicker from "./HexColorPicker";
 import {parseColor} from "../../AwesomwGridLayoutHelper";
+import {EditorContext} from "../../Editor/EditorContext";
 
 const colorKeys = [
     "1","2","3","4","5",
 ];
 
 export default class ThemeColorPicker extends React.Component {
+    static contextType = EditorContext;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -42,15 +45,14 @@ export default class ThemeColorPicker extends React.Component {
     };
 
     onAddColor = (color) => {
-        let {editor} = this.props;
-        let siteData = editor.state.siteData;
+        let siteData = this.context.siteData;
         if (!siteData.myColors.find(c => c === color))
             siteData.myColors.unshift(color);
 
         siteData.myColors = siteData.myColors.slice(0, 17);
 
         this.onSelectColor(color);
-        editor.setState({reload: true});
+        this.context.update();
     };
 
     onAddColorClick = () => {
@@ -58,8 +60,8 @@ export default class ThemeColorPicker extends React.Component {
     };
 
     render() {
-        let {editor} = this.props;
-        let siteData = editor.state.siteData;
+        let {editor} = this.context;
+        let siteData = this.context.siteData;
         let themeColorCategoryItems = siteData.theme.Colors.items;
         return (
             <Portal node={document.body}>

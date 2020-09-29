@@ -84,7 +84,7 @@ export default class InspectorPadding extends React.Component {
 
         setDataInBreakpoint("padding", padding, item, true, undefined, true);
 
-        item.invalidateSize(true, true, true);
+        item.invalidateSize(true, true, true, undefined, true);
 
         window.requestAnimationFrame(() => {
             item.props.select.onScrollItem();
@@ -118,7 +118,7 @@ export default class InspectorPadding extends React.Component {
 
             setDataInBreakpoint("padding", padding, item, true, undefined, true);
 
-            item.invalidateSize(true, true, true);
+            item.invalidateSize(true, true, true, undefined, true);
         }
     };
 

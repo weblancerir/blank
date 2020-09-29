@@ -2,8 +2,11 @@ import React from "react";
 import './ThemeManager.css';
 import IconButton from "../../HelperComponents/IconButton";
 import Image from "../../Menus/CommonComponents/Image";
+import {EditorContext} from "../../Editor/EditorContext";
 
 export default class ThemeTextItem extends React.Component {
+    static contextType = EditorContext;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -23,7 +26,8 @@ export default class ThemeTextItem extends React.Component {
     };
 
     render() {
-        let {siteData, pageData, editor, item} = this.props;
+        let {item} = this.props;
+        let {siteData} = this.context;
         if (!siteData)
             return null;
 

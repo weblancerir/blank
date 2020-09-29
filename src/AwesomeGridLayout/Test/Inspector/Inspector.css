@@ -1,19 +1,39 @@
 .InspectorRoot {
     position: fixed;
     z-index: 9999999999;
-    top: 0;
+    /*top: 48px;*/
     bottom: 0;
-    width: 270px;
+    /*width: 260px;*/
     background-color: white;
     display: flex;
     flex-direction: column;
     border-left: 1px solid #e5e5e5;
-    height: 100%;
-    overflow-y: auto;
+    overflow-y: overlay;
+
+    height: calc(100% - 1/var(--zoom-scale)*48px);
+    top: calc(1/var(--zoom-scale)*48px);
+    width: calc(260px/var(--zoom-scale));
 }
+
+.InspectorRoot > div {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+
+    transform: scale(calc(1/var(--zoom-scale)));
+    transform-origin: 0 0;
+    width: calc(260px);
+}
+
+.InspectorPin{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
 .InspectorPinRoot {
     position: relative;
-    width: 270px;
+    width: calc(260px/var(--zoom-scale));
     height: 100%;
 }
 .InspectorDefaultMenuRoot {

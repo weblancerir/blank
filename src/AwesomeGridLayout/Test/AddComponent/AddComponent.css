@@ -1,19 +1,22 @@
 .AddComponentRoot {
     position: fixed;
     z-index: 9999999999;
-    top: 0;
     bottom: 0;
     width: auto;
     background-color: white;
     display: flex;
     border-right: 1px solid #e5e5e5;
-    height: 100%;
     box-sizing: border-box;
 
     -webkit-user-select: none; /* Safari */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
+
+    transform-origin: 0 0;
+    top: calc(48px / var(--zoom-scale));
+    height: calc(100% - calc(48px / var(--zoom-scale)));
+
 }
 
 .AddComponentList{

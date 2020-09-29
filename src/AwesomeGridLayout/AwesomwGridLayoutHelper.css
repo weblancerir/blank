@@ -1,5 +1,6 @@
 .fixed-holder{
     position: fixed;
+    /*position: absolute;*/
     margin-top: 0;
     z-index: 52;
     display: grid;
@@ -7,4 +8,5 @@
     grid-template-rows: 1fr;
     pointer-events: none;
     overflow: hidden;
+    grid-area: 1/1/2/2;
 }

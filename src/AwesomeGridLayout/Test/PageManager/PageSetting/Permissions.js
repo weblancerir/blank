@@ -9,8 +9,11 @@ import AglRadio from "../../../Menus/CommonComponents/AglRadio";
 import Menu from "@material-ui/core/Menu/Menu";
 import MenuItem from "@material-ui/core/MenuItem/MenuItem";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
+import {EditorContext} from "../../../Editor/EditorContext";
 
 export default class Permissions extends React.Component {
+    static contextType = EditorContext;
+
     constructor(props) {
         super(props);
 
@@ -19,28 +22,28 @@ export default class Permissions extends React.Component {
     }
 
     changePermission = (type) => (e) => {
-        let {pageData, editor} = this.props;
+        let {pageData} = this.props;
         pageData.props.pageSetting.permissions.type = type;
 
-        editor.setState({reload: true});
+        this.context.update();
     };
 
     onSetPassword = (e) => {
-        let {pageData, editor} = this.props;
+        let {pageData} = this.props;
         pageData.props.pageSetting.permissions.password = e.target.value;
 
-        editor.setState({reload: true});
+        this.context.update();
     };
 
     onChangeMemberType = (e) => {
-        let {pageData, editor} = this.props;
+        let {pageData} = this.props;
         pageData.props.pageSetting.permissions.memberType = e.target.value;
 
-        editor.setState({reload: true});
+        this.context.update();
     };
 
     onRoleChange = (checked, role) => {
-        let {pageData, editor} = this.props;
+        let {pageData} = this.props;
         if (checked) {
             if (pageData.props.pageSetting.permissions.memberRoles.findIndex(r => r === role) < 0)
                 pageData.props.pageSetting.permissions.memberRoles.push(role);
@@ -51,11 +54,12 @@ export default class Permissions extends React.Component {
             }
         }
 
-        editor.setState({reload: true});
+        this.context.update();
     };
 
     render () {
-        let {pageData, editor} = this.props;
+        let {pageData} = this.props;
+        let siteData = this.context.siteData;
         return (
             <div className="PageSettingTabPanelRoot">
                 <div className="PageInfoBox">
@@ -231,7 +235,7 @@ export default class Permissions extends React.Component {
                                 </MenuItem>
 
                                 {
-                                    editor.state.siteData.allApps.member.setting.roles.map(role => {
+                                    siteData.allApps.member.setting.roles.map(role => {
                                         return (
                                             <MenuItem dense onClick={(e) => {
                                                 this.onRoleChange(!(pageData.props.pageSetting.permissions.memberRoles

@@ -4,16 +4,19 @@ import {getColorScheme, sortBy} from "../../AwesomwGridLayoutHelper";
 import ThemeTextItem from "./ThemeTextItem";
 import IconButton from "../../HelperComponents/IconButton";
 import ThemeColorsItem from "./ThemeColorsItem";
+import {EditorContext} from "../../Editor/EditorContext";
 
 const colorKeys = [
     "1","2","3","4","5",
 ];
 export default class ThemeManager extends React.Component {
+    static contextType = EditorContext;
+
     constructor(props) {
         super(props);
         this.state = {
             percent: props.open ? 100 : 0,
-            category: sortBy(Object.values(props.siteData.theme), "order")[0],
+            // category: sortBy(Object.values(props.siteData.theme), "order")[0],
         };
 
         this.opening = false;
@@ -22,6 +25,9 @@ export default class ThemeManager extends React.Component {
 
     componentDidMount() {
         this.mounted = true;
+        this.setState({
+            category: sortBy(Object.values(this.context.siteData.theme), "order")[0],
+        })
     }
 
     componentWillUnmount() {
@@ -32,18 +38,19 @@ export default class ThemeManager extends React.Component {
         this.opening = true;
         clearInterval(this.closeInterval);
         clearInterval(this.openInterval);
+        this.setState({ open: true});
         this.openInterval = setInterval(() => {
             if (!this.mounted) {
                 clearInterval(this.openInterval);
                 return;
             }
             let percent = this.state.percent += (this.props.speed * this.props.interval / 1000);
-            if (percent > 100) {
+            if (percent >= 100) {
                 this.opening = false;
                 clearInterval(this.openInterval);
             }
             percent = Math.min(100, percent);
-            this.setState({percent, open: (percent === 100)});
+            this.setState({percent});
         }, this.props.interval);
     };
 
@@ -51,8 +58,9 @@ export default class ThemeManager extends React.Component {
         this.closing = true;
         clearInterval(this.closeInterval);
         clearInterval(this.openInterval);
+        this.setState({ open: false});
         if (force) {
-            this.setState({percent: 0, open: false});
+            this.setState({percent: 0});
             return;
         }
         this.closeInterval = setInterval(() => {
@@ -61,13 +69,20 @@ export default class ThemeManager extends React.Component {
                 return;
             }
             let percent = this.state.percent -= (this.props.speed * this.props.interval / 1000);
-            if (percent < 0) {
+            if (percent <= 0) {
                 this.closing = false;
                 clearInterval(this.closeInterval);
             }
             percent = Math.max(0, percent);
-            this.setState({percent, open: (percent !== 0)});
+            this.setState({percent});
         }, this.props.interval);
+    };
+
+    toggle = (force) => {
+        let toggleState = !this.state.open;
+        this.state.open ? this.close(force) : this.open();
+
+        return toggleState;
     };
 
     setCategory = (category) => (e) => {
@@ -76,7 +91,7 @@ export default class ThemeManager extends React.Component {
     };
 
     calculateTheme = () => {
-        let {siteData, pageData, editor} = this.props;
+        let {siteData} = this.context;
 
         let theme = siteData.theme;
 
@@ -93,7 +108,7 @@ export default class ThemeManager extends React.Component {
     };
 
     getColor = (paletteName, key) => {
-        let {siteData, pageData, editor} = this.props;
+        let {siteData} = this.context;
 
         let theme = siteData.theme;
 
@@ -103,7 +118,8 @@ export default class ThemeManager extends React.Component {
     };
 
     render() {
-        let {siteData, pageData, editor} = this.props;
+        let {editor} = this.props;
+        let {siteData, pageData} = this.context;
         if (!siteData)
             return null;
 
@@ -154,7 +170,9 @@ export default class ThemeManager extends React.Component {
                             </span>
 
                                 <IconButton
-                                    onClick={this.close}
+                                    onClick={() => {
+                                        this.context.toggleRightMenu("themeManager", false);
+                                    }}
                                 >
                                     <img
                                         draggable={false}
@@ -173,7 +191,6 @@ export default class ThemeManager extends React.Component {
                                                 <ThemeTextItem
                                                     key={key}
                                                     item={this.state.category.items[key]}
-                                                    siteData={siteData}
                                                     editor={editor}
                                                 />
                                             )
@@ -183,8 +200,6 @@ export default class ThemeManager extends React.Component {
                                                 <ThemeColorsItem
                                                     key={key}
                                                     item={this.state.category.items[key]}
-                                                    siteData={siteData}
-                                                    pageData={pageData}
                                                     editor={editor}
                                                     recalculateColors={this.calculateTheme()}
                                                 />

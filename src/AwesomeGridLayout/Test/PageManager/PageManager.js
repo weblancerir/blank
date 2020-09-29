@@ -7,8 +7,11 @@ import PageTypeTitle from "./PageTypeTitle";
 import PageItem from "./PageItem";
 import AddNewPageDialog from "./AddNewPageDialog";
 import {v4 as uuidv4} from "uuid";
+import {EditorContext} from "../../Editor/EditorContext";
 
 export default class PageManager extends React.Component {
+    static contextType = EditorContext;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -29,22 +32,25 @@ export default class PageManager extends React.Component {
         this.mounted = false;
     }
 
+
+
     open = () => {
         this.opening = true;
         clearInterval(this.closeInterval);
         clearInterval(this.openInterval);
+        this.setState({ open: true});
         this.openInterval = setInterval(() => {
             if (!this.mounted) {
                 clearInterval(this.openInterval);
                 return;
             }
             let percent = this.state.percent += (this.props.speed * this.props.interval / 1000);
-            if (percent > 100) {
+            if (percent >= 100) {
                 this.opening = false;
                 clearInterval(this.openInterval);
             }
             percent = Math.min(100, percent);
-            this.setState({percent, open: (percent === 100)});
+            this.setState({percent});
         }, this.props.interval);
     };
 
@@ -52,8 +58,9 @@ export default class PageManager extends React.Component {
         this.closing = true;
         clearInterval(this.closeInterval);
         clearInterval(this.openInterval);
+        this.setState({ open: false});
         if (force) {
-            this.setState({percent: 0, open: false});
+            this.setState({percent: 0});
             return;
         }
         this.closeInterval = setInterval(() => {
@@ -62,13 +69,20 @@ export default class PageManager extends React.Component {
                 return;
             }
             let percent = this.state.percent -= (this.props.speed * this.props.interval / 1000);
-            if (percent < 0) {
+            if (percent <= 0) {
                 this.closing = false;
                 clearInterval(this.closeInterval);
             }
             percent = Math.max(0, percent);
-            this.setState({percent, open: (percent !== 0)});
+            this.setState({percent});
         }, this.props.interval);
+    };
+
+    toggle = (force) => {
+        let toggleState = !this.state.open;
+        this.state.open ? this.close(force) : this.open();
+
+        return toggleState;
     };
 
     onChangeSearch = (e) => {
@@ -77,7 +91,7 @@ export default class PageManager extends React.Component {
     };
 
     getFilteredPages = () => {
-        let {siteData} = this.props;
+        let {siteData} = this.context;
         return Object.keys(siteData.allPages).filter(siteId => {
             if (!this.state.searchValue)
                 return true;
@@ -91,11 +105,12 @@ export default class PageManager extends React.Component {
     };
 
     onPageClick = (pageData) => {
-        this.props.onPageChange(pageData.props.pageId);
+        this.context.setPageData(pageData.props.pageId);
     };
 
     onAddNormalPage = () => {
-        let {siteData, editor} = this.props;
+        let {siteData} = this.context;
+
         if (!this.props.newPageDataUrl) {
             fetch('/static/json/newPageData.json')
                 .then((r) => r.json())
@@ -106,9 +121,9 @@ export default class PageManager extends React.Component {
                     pageData.props.pageName = newName;
                     pageData.props.pageId = newId;
 
-                    editor.state.siteData.allPages[newId] = pageData;
+                    siteData.allPages[newId] = pageData;
 
-                    this.onPageClick(editor.state.siteData.allPages[newId]);
+                    this.onPageClick(siteData.allPages[newId]);
                 });
             // return;
         }
@@ -119,7 +134,7 @@ export default class PageManager extends React.Component {
     };
 
     render() {
-        let {siteData} = this.props;
+        let {siteData} = this.context;
 
         if (!siteData)
             return null;
@@ -147,7 +162,9 @@ export default class PageManager extends React.Component {
                             </span>
 
                             <IconButton
-                                onClick={this.close}
+                                onClick={() => {
+                                    this.context.toggleRightMenu("pageManager", false);
+                                }}
                             >
                                 <img
                                     draggable={false}
@@ -194,7 +211,6 @@ export default class PageManager extends React.Component {
                                             this.onPageClick(pageData);
                                         }}
                                         editor={this.props.editor}
-                                        siteData={siteData}
                                     />
                                 )
                             })

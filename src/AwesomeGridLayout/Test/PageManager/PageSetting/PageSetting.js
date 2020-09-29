@@ -24,7 +24,7 @@ export default class PageSetting extends React.Component {
     };
 
     render () {
-        let {pageData, editor} = this.props;
+        let {pageData} = this.props;
         return (
             <Modal
                 open={this.props.open}
@@ -77,7 +77,6 @@ export default class PageSetting extends React.Component {
                         this.state.tabValue === "Page Info" &&
                         <PageInfo
                             pageData={pageData}
-                            editor={editor}
                         />
                     }
 
@@ -85,7 +84,6 @@ export default class PageSetting extends React.Component {
                         this.state.tabValue === "Permissions" &&
                         <Permissions
                             pageData={pageData}
-                            editor={editor}
                         />
                     }
 
@@ -93,7 +91,6 @@ export default class PageSetting extends React.Component {
                         this.state.tabValue === "SEO (Google)" &&
                         <SeoGoogle
                             pageData={pageData}
-                            editor={editor}
                         />
                     }
 
@@ -101,7 +98,6 @@ export default class PageSetting extends React.Component {
                         this.state.tabValue === "Social Share" &&
                         <SocialShare
                             pageData={pageData}
-                            editor={editor}
                         />
                     }
 

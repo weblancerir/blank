@@ -48,6 +48,19 @@
     box-sizing: border-box;
 }
 
+.DropDownSpan{
+    padding: 4px;
+    border: 1px solid rgb(152, 152, 152);
+    border-radius: 4px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    width: 48px;
+    background-color: unset;
+    text-align: center;
+    box-sizing: border-box;
+}
+
 .NumberInput:hover {
     border: 1px solid rgb(75, 75, 75) !important;
     border-radius: 4px;
@@ -157,6 +170,7 @@
     right: 8px;
     top: 50%;
     transform: translateY(-50%);
+    pointer-events: none;
 }
 
 .GridViewerRoot{

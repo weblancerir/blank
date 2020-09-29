@@ -47,6 +47,10 @@ export default class SelectManager {
         });
     }
 
+    setContext = (editorContext) => {
+        this.context = editorContext;
+    }
+
     getPageOverflowRef = () => {
         if (this.pageAglRef.current)
             return this.pageAglRef.current.overflowRef.current;
@@ -247,8 +251,15 @@ export default class SelectManager {
             item.state.helpLinesParent.prepareRects(true, true);
     }, 40);
 
+    isEditor = () => {
+        return !this.context.preview;
+    }
+
     // change grid line positions and resize panes
     onScrollItem = throttleDebounce(() => {
+        if (!this.isEditor())
+            return;
+
         this.updateGroupRect();
 
         if (!this.getSelected() || !this.getSelected().mounted)

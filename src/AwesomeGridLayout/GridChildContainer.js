@@ -223,8 +223,8 @@ export default class GridChildContainer extends React.Component {
     };
 
     updateAdjustments = () => {
-        this.controllerRef.current.forceUpdate();
-        this.fixedHolderRef.current.forceUpdate();
+        this.controllerRef.current && this.controllerRef.current.forceUpdate();
+        this.fixedHolderRef.current && this.fixedHolderRef.current.forceUpdate();
     };
 
     needOverflow = () => {
@@ -245,7 +245,7 @@ export default class GridChildContainer extends React.Component {
         if (!this.props.show)
             return null;
         this.saveState();
-        let {allChildren, id, grid, isPage, page, size, getChildrenOverride, agl} = this.props;
+        let {allChildren, id, grid, isPage, page, size, getChildrenOverride, agl, editor} = this.props;
 
         let overflowClasses = classNames(
             this.getOverflowStyleId()
@@ -329,22 +329,20 @@ export default class GridChildContainer extends React.Component {
                         />
 
                         {
-                            isPage &&
+                            editor &&
                             <AdjustmentPageControllers
                                 grid={grid}
                                 page={page}
+                                editor={editor}
                                 ref={this.controllerRef}
                             />
                         }
 
-                        {
-                            isPage &&
-                            <GridChildContainerFixedHolder
-                                ref={this.fixedHolderRef}
-                                size={size}
-                                id={id}
-                            />
-                        }
+                        <GridChildContainerFixedHolder
+                            ref={this.fixedHolderRef}
+                            size={size}
+                            id={id}
+                        />
                     </div>
             )
         }

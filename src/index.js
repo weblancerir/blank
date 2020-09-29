@@ -3,9 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import EditorBoundary from "./AwesomeGridLayout/Editor/EditorBoundary";
+import EditorContextProvider from "./AwesomeGridLayout/Editor/EditorContext";
 
 ReactDOM.render(
-    <EditorBoundary />,
+    <EditorContextProvider>
+        <EditorBoundary />
+    </EditorContextProvider>,
   document.getElementById('root')
 );
 

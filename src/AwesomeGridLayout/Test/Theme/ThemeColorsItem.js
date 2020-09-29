@@ -3,8 +3,11 @@ import './ThemeManager.css';
 import Image from "../../Menus/CommonComponents/Image";
 import {getColorScheme} from "../../AwesomwGridLayoutHelper";
 import HexColorPicker from "./HexColorPicker";
+import {EditorContext} from "../../Editor/EditorContext";
 
 export default class ThemeColorsItem extends React.Component {
+    static contextType = EditorContext;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -28,7 +31,8 @@ export default class ThemeColorsItem extends React.Component {
     };
 
     onChangeColor = (color) => {
-        let {siteData, pageData, editor, item} = this.props;
+        let {editor} = this.props;
+        let {siteData} = this.context;
         let {toChange} = this.state;
         siteData.theme.Colors.items[toChange.paletteName][toChange.key] = color;
 
@@ -42,7 +46,8 @@ export default class ThemeColorsItem extends React.Component {
     };
 
     render() {
-        let {siteData, pageData, editor, item} = this.props;
+        let {item} = this.props;
+        let {siteData} = this.context;
         if (!siteData)
             return null;
 

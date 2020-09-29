@@ -1,14 +1,21 @@
 import {cloneObject, throttleDebounce} from "./AwesomeGridLayoutUtils";
 import merge from "lodash.merge";
+import {EditorContext} from "./Editor/EditorContext";
+import {useContext} from "react";
 
 export default class BreakPointManager {
-    constructor(breakpoints, editorData, onBreakpointChange, onZoomLevelChange, onHeightChange, onResize) {
+    constructor(breakpoints, editor, onBreakpointChange, onZoomLevelChange, onHeightChange, onResize) {
         if (!breakpoints)
-            breakpoints = this.getDefault();
+            breakpoints = BreakPointManager.getDefault();
+
+        this.fixBreakpointRules(breakpoints);
+
+        // TODO test
+
         this.breakpoints = breakpoints;
-        this.editorData = editorData;
-        this.windowInnerWidth = editorData && editorData.innerWidth;
-        this.lastWidth = editorData && editorData.innerWidth;
+        this.editor = editor;
+        this.windowInnerWidth = window.innerWidth;
+        this.lastWidth = window.innerWidth;
         this.onBreakpointChange = onBreakpointChange || (() => {});
         this.onZoomLevelChange = onZoomLevelChange || (() => {});
         this.onHeightChange = onHeightChange || (() => {});
@@ -22,6 +29,13 @@ export default class BreakPointManager {
             window.addEventListener("resize", this.onHeightResize);
     }
 
+    fixBreakpointRules = (breakpoints) => {
+        breakpoints.forEach(bpData => {
+            if (!bpData.end)
+                bpData.end = 99999;
+        });
+    }
+
     updateBreakpoint = (name, start, end) => {
         let bp = this.breakpoints.find(b => b.name === name);
         if (bp) {
@@ -33,6 +47,7 @@ export default class BreakPointManager {
 
         start++;
         bp = {name, start, end};
+        let prevBp;
 
         let sortedBreakPoints = this.getSortedBreakPoints();
         for(let i = 0; i < sortedBreakPoints.length; i++) {
@@ -42,11 +57,14 @@ export default class BreakPointManager {
             if (bp.start >= sortedBreakPoints[i].start) {
                 bp.end = sortedBreakPoints[i].end;
                 sortedBreakPoints[i].end = bp.start - 1;
+                prevBp = sortedBreakPoints[i];
                 break;
             }
         }
 
         this.breakpoints.push(bp);
+
+        return {newBpData: bp, prevBpData: prevBp};
     };
 
     deleteBreakpoint = (name) => {
@@ -54,23 +72,23 @@ export default class BreakPointManager {
         for(let i = 0; i < sortedBreakPoints.length; i++) {
             if (name === sortedBreakPoints[i].name) {
                 let upper = sortedBreakPoints[i - 1];
-                if (upper) {
-                    upper.start = sortedBreakPoints[i].start;
-                    break;
-                } else {
-                    return;
-                }
+                upper.start = sortedBreakPoints[i].start;
+                break;
             }
         }
 
-        delete this.breakpoints[name];
+        let index = this.breakpoints.findIndex(bp => {
+            return bp.name === name;
+        });
+
+        this.breakpoints.splice(index, 1);
     };
 
     fromClone = (clone) => {
         this.breakpoints = clone.breakpoints;
         this.windowInnerWidth = clone.windowInnerWidth;
         this.lastWidth = clone.lastWidth;
-        this.editorData = clone.editorData;
+        this.editor = clone.editorData;
 
         return this;
     };
@@ -111,7 +129,8 @@ export default class BreakPointManager {
     };
 
     getWindowHeight = () => {
-        return window.innerHeight * 0.8;
+        return this.editor.rootLayoutRef.current.getSize(false).height;
+        // return window.innerHeight * 0.8;
     };
 
     setWindowWidth = (width) => {
@@ -142,16 +161,16 @@ export default class BreakPointManager {
         }
     };
 
-    onHeightResize = throttleDebounce(() => {
+    onHeightResize = throttleDebounce((e) => {
         if (this.lastHeight !== window.innerHeight) {
             this.lastHeight = window.innerHeight;
-            this.onHeightChange();
+            this.onHeightChange(e);
         }
     }, 100);
 
     onWindowResize = throttleDebounce(() => {
         let newWidth = window.innerWidth -
-            this.editorData.inspectorPinned ? this.editorData.inspectorWidth : 0;
+            this.editor.context.inspectorPinned ? this.editor.context.inspectorWidth : 0;
 
         let result = this.checkBreakPointChange(newWidth);
 
@@ -184,11 +203,23 @@ export default class BreakPointManager {
         return sortedBreakPoints[sortedBreakPoints.length - 1].name;
     };
 
+    currentBpData = (size) => {
+        if (!size)
+            size = this.getWindowWidth();
+        let sortedBreakPoints = this.getSortedBreakPoints();
+        for(let i = 0; i < sortedBreakPoints.length; i++) {
+            if (this.getSize(size) >= sortedBreakPoints[i].start)
+                return sortedBreakPoints[i];
+        }
+
+        return sortedBreakPoints[sortedBreakPoints.length - 1];
+    };
+
     getUpperBreakPoint = (bpName) => {
         let sortedBreakPoints = this.getSortedBreakPoints();
         for(let i = 0; i < sortedBreakPoints.length; i++) {
             if (bpName === sortedBreakPoints[i].name)
-                return sortedBreakPoints[i - 1] && sortedBreakPoints[i - 1].name;
+                return sortedBreakPoints[i - 1] && sortedBreakPoints[i - 1];
         }
     };
 
@@ -275,15 +306,16 @@ export default class BreakPointManager {
             if (firstParamResult === undefined)
                 continue;
 
-            if (params.length === 1)
+            if (params.length === 1) {
                 results.push(firstParamResult);
+            } else {
+                params.slice(1).forEach(p => {
+                    if (firstParamResult)
+                        firstParamResult = firstParamResult[p];
+                });
 
-            params.slice(1).forEach(p => {
-                if (firstParamResult)
-                    firstParamResult = firstParamResult[p];
-            });
-
-            results.push(firstParamResult);
+                results.push(firstParamResult);
+            }
         }
 
         if (!(results[0] instanceof Object))
@@ -355,6 +387,7 @@ export default class BreakPointManager {
                 return bp.end >= minSize;
             });
         }
+        // console.log("breakpoints.length", breakpoints.length, minSize)
         return breakpoints.sort((a,b) => {
             if (a.start > b.start) {
                 return -1;
@@ -372,22 +405,25 @@ export default class BreakPointManager {
         });
     };
 
-    getDefault = () => {
+    static getDefault = () => {
         return [
             {
                 name: "laptop",
                 start: 1001,
-                end: Infinity
+                end: 99999,
+                prefer: 1006
             },
             {
                 name: "tablet",
                 start: 751,
-                end: 1000
+                end: 1000,
+                prefer: 768
             },
             {
                 name: "mobile",
                 start: 320,
-                end: 750
+                end: 750,
+                prefer: 360
             },
         ]
     };

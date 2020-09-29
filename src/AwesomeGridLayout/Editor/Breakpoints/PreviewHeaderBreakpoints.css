@@ -1,0 +1,31 @@
+.PreviewHeaderBreakpointsRenderer{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 28px;
+}
+
+.PreviewHeaderBreakpointsRendererIcon{
+    margin-right: 8px;
+    min-width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.PreviewHeaderBreakpointsRendererName{
+    flex: 1;
+    text-align: left;
+}
+
+.PreviewHeaderBreakpointsRendererSize{
+    font-size: 10px;
+}
+
+.PreviewHeaderBreakpointsRendererTitle{
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+    color: #838383;
+    font-weight: bold;
+}

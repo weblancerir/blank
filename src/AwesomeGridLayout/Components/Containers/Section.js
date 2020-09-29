@@ -9,7 +9,7 @@ import InspectorScroll from "../../Test/Inspector/InspectorScroll";
 import InspectorPadding from "../../Test/Inspector/InspectorPadding";
 import InspectorAnchor from "../../Test/Inspector/InspectorAnchor";
 import MenuButton from "../../Menus/MenuBase/MenuButton";
-import {setStyleParam} from "../../AwesomwGridLayoutHelper";
+import {getCompositeDesignData, parseColor, setStyleParam} from "../../AwesomwGridLayoutHelper";
 import SectionDesign from "./Menus/SectionDesign";
 
 export default class Section extends AGLComponent{
@@ -54,7 +54,12 @@ export default class Section extends AGLComponent{
     };
 
     updateDesign = (compositeDesign) => {
-        setStyleParam("backgroundColor", compositeDesign.fillColor || "unset",
+        let fillColor;
+
+        if (compositeDesign.fillColor)
+            fillColor = parseColor(compositeDesign.fillColor, compositeDesign.fillColor.alpha, this.props.editor);
+
+        setStyleParam("backgroundColor", fillColor || "unset",
             this.getAgl(), 2, undefined, true);
     };
 

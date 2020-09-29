@@ -2,264 +2,107 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ee3df027-738a-4634-bc4a-d7b9163847a2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/build/static/icon/delete.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/close.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/computer.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/delete.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/edit2.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/inspector-white.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/inspector.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/ipad.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/laptop.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/minus.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/open-menu.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/page.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/phone.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/pin-white.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/pin.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/theme.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/zoom-in.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Breakpoints/BreakpointHelper.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Breakpoints/EditorHeaderBreakpoints.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Breakpoints/EditorHeaderBreakpoints.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Breakpoints/EditorHeaderBreakpointsSetting.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Breakpoints/EditorHeaderBreakpointsSetting.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Breakpoints/EditorHeaderBreakpointsSettingItem.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Breakpoints/EditorHeaderBreakpointsSettingItem.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Breakpoints/PreviewHeaderBreakpoints.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Breakpoints/PreviewHeaderBreakpoints.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorContext.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorHeader.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorPreview.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorPreview.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorType.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/PageSelect/EditorHeaderPageSelect.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/PageSelect/EditorHeaderPageSelect.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/PreviewHeader.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Zoom/EditorHeaderZoom.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/NumberInputEnterToChange.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/asset-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/precache-manifest.874a57295a2238ed12232420ab8478ee.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/service-worker.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/service-worker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/css/main.814c832b.chunk.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/css/main.814c832b.chunk.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/2.323d4cac.chunk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/2.323d4cac.chunk.js.LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/2.323d4cac.chunk.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/main.a4ff7a79.chunk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/main.a4ff7a79.chunk.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/json/newPageData.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/static/json/newPageData.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/json/siteData.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/static/json/siteData.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/static/json/newPageData.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/json/newPageData.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/static/json/siteData.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/json/siteData.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/AwesomeGridLayout2.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/AwesomeGridLayout2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/AwesomwGridLayoutHelper.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/AwesomwGridLayoutHelper.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/AwesomwGridLayoutHelper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/AwesomwGridLayoutHelper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/BreakPointManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/BreakPointManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Containers/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Containers/Footer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Containers/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Containers/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Containers/Section.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Containers/Section.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Helpers/AGLComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Helpers/AGLComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Pages/PageBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Pages/PageBase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/GridChildContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/GridChildContainer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/HelperComponents/IconButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/HelperComponents/IconButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/IdManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/IdManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/ColorPicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/ColorPicker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/CommonMenu.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/CommonMenu.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/DropDown.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/DropDown.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/SelectManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/SelectManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/SnapManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/SnapManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/AddComponent/AddComponent.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/AddComponent/AddComponent.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/AddComponent/AddComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/AddComponent/AddComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/BreakpointController.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/EditorController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/EditorController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/IFrameCommunicator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/IFrameCommunicator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Inspector/Inspector.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Inspector/Inspector.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Inspector/Inspector.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Inspector/Inspector.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Inspector/InspectorBackground.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Inspector/InspectorBackground.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Inspector/InspectorPadding.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Inspector/InspectorPadding.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageManager.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageManager.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/PageInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/PageInfo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/PageSetting.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/PageSetting.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/Permissions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/Permissions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/SeoGoogle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/SeoGoogle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/SocialShare.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/SocialShare.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeColorPicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeColorPicker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeColorsItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeColorsItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeManager.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeManager.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeTextItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeTextItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/.tmp/" />
-    <ignored path="$PROJECT_DIR$/temp/" />
-    <ignored path="$PROJECT_DIR$/tmp/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="-2085686758">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="13" />
-          <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.1" value="2" />
-          <entry key="project.open.time.10" value="5" />
-          <entry key="project.open.time.11" value="2" />
-          <entry key="project.open.time.12" value="1" />
-          <entry key="project.open.time.14" value="1" />
-          <entry key="project.open.time.2" value="1" />
-          <entry key="project.open.time.6" value="1" />
-          <entry key="project.open.time.7" value="5" />
-          <entry key="project.open.time.8" value="6" />
-          <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="27" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="css" value="114" />
-          <entry key="html" value="3" />
-          <entry key="js" value="862" />
-          <entry key="json" value="19" />
-          <entry key="png" value="4" />
-          <entry key="rnc" value="3" />
-          <entry key="svg" value="22" />
-          <entry key="ts" value="45" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="CSS" value="114" />
-          <entry key="HTML" value="3" />
-          <entry key="Image" value="4" />
-          <entry key="JSON" value="19" />
-          <entry key="JavaScript" value="862" />
-          <entry key="RNG Compact" value="3" />
-          <entry key="SVG" value="22" />
-          <entry key="TypeScript" value="45" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="css" value="5023" />
-          <entry key="html" value="27" />
-          <entry key="js" value="173996" />
-          <entry key="json" value="1" />
-          <entry key="svg" value="6" />
-          <entry key="ts" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="CSS" value="5023" />
-          <entry key="HTML" value="27" />
-          <entry key="JSON" value="1" />
-          <entry key="JavaScript" value="173996" />
-          <entry key="SVG" value="6" />
-          <entry key="TypeScript" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.js.language.service.starts">
-        <counts>
-          <entry key="ESLintLanguageService" value="27" />
-          <entry key="TypeScriptServerServiceImpl" value="8" />
-        </counts>
-      </usages-collector>
-    </session>
-    <session id="2004439622">
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="InspectorTitle" value="1" />
-          <entry key="css" value="114" />
-          <entry key="env" value="1" />
-          <entry key="gitignore" value="1" />
-          <entry key="html" value="5" />
-          <entry key="js" value="995" />
-          <entry key="json" value="46" />
-          <entry key="map" value="1" />
-          <entry key="md" value="1" />
-          <entry key="png" value="1" />
-          <entry key="scss" value="8" />
-          <entry key="svg" value="37" />
-          <entry key="ts" value="24" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="CSS" value="114" />
-          <entry key="HTML" value="5" />
-          <entry key="Image" value="1" />
-          <entry key="JSON" value="46" />
-          <entry key="JavaScript" value="995" />
-          <entry key="PLAIN_TEXT" value="4" />
-          <entry key="SCSS" value="8" />
-          <entry key="SVG" value="37" />
-          <entry key="SourceMap" value="1" />
-          <entry key="TypeScript" value="24" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="css" value="5551" />
-          <entry key="gitignore" value="10" />
-          <entry key="html" value="27" />
-          <entry key="js" value="75328" />
-          <entry key="json" value="1989" />
-          <entry key="scss" value="141" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="CSS" value="5551" />
-          <entry key="HTML" value="27" />
-          <entry key="JSON" value="1989" />
-          <entry key="JavaScript" value="75328" />
-          <entry key="PLAIN_TEXT" value="10" />
-          <entry key="SCSS" value="141" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.js.language.service.starts">
-        <counts>
-          <entry key="ESLintLanguageService" value="14" />
-          <entry key="TypeScriptServerServiceImpl" value="4" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="17" />
-          <entry key="project.open.time.0" value="11" />
-          <entry key="project.open.time.1" value="2" />
-          <entry key="project.open.time.10" value="2" />
-          <entry key="project.open.time.11" value="1" />
-          <entry key="project.open.time.12" value="2" />
-          <entry key="project.open.time.14" value="1" />
-          <entry key="project.open.time.2" value="1" />
-          <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="22" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="251" column="8" selection-start-line="251" selection-start-column="8" selection-end-line="251" selection-end-column="8" />
-              <folding>
-                <element signature="e#1973#2159#0" />
-                <element signature="e#2018#2125#0" />
-                <element signature="e#2218#5139#0" />
-                <element signature="e#2914#3081#0" />
-                <element signature="e#4245#5131#0" />
-                <element signature="e#4465#4594#0" />
-                <element signature="e#4633#4772#0" />
-                <element signature="e#4811#4951#0" />
-                <element signature="e#4990#5121#0" />
-                <element signature="e#5165#5256#0" />
-                <element signature="e#5289#5349#0" />
-                <element signature="e#5390#5451#0" />
-                <element signature="e#5478#5705#0" />
-                <element signature="e#5746#5948#0" />
-                <element signature="e#5788#5940#0" />
-                <element signature="e#6002#6052#0" />
-                <element signature="e#6093#6489#0" />
-                <element signature="e#6162#6193#0" />
-                <element signature="e#6251#6481#0" />
-                <element signature="e#6342#6469#0" />
-                <element signature="e#6525#6566#0" />
-                <element signature="e#6603#6664#0" />
-                <element signature="e#6693#6742#0" />
-                <element signature="e#6839#7018#0" />
-                <element signature="e#7098#7277#0" />
-                <element signature="e#7329#7559#0" />
-                <element signature="e#7589#7870#0" />
-                <element signature="e#7899#7948#0" />
-                <element signature="e#7976#8659#0" />
-                <element signature="e#8390#8566#0" />
-                <element signature="e#8461#8551#0" />
-                <element signature="e#8689#8739#0" />
-                <element signature="e#8788#9155#0" />
-                <element signature="e#8998#9149#0" />
-                <element signature="e#9304#9499#0" />
-                <element signature="e#9781#9943#0" />
-                <element signature="e#9975#10134#0" />
-                <element signature="e#10167#10336#0" />
-                <element signature="e#10364#11483#0" />
-                <element signature="e#10503#11118#0" />
-                <element signature="e#10589#11107#0" />
-                <element signature="e#10765#11027#0" />
-                <element signature="e#11042#11092#0" />
-                <element signature="e#11149#11345#0" />
-                <element signature="e#11509#11555#0" />
-                <element signature="e#11582#11629#0" />
-                <element signature="e#11661#11713#0" />
-                <element signature="e#11746#11799#0" />
-                <element signature="e#11830#11881#0" />
-                <element signature="e#11913#11965#0" />
-                <element signature="e#12003#12140#0" />
-                <element signature="e#12233#12400#0" />
-                <element signature="e#12250#12393#0" />
-                <element signature="e#12431#12589#0" />
-                <element signature="e#12619#13095#0" />
-                <element signature="e#13111#18231#0" />
-                <element signature="e#13216#18215#0" />
-                <element signature="e#13274#13362#0" />
-                <element signature="e#13381#13460#0" />
-                <element signature="e#13477#13553#0" />
-                <element signature="e#13570#13657#0" />
-                <element signature="e#13674#13759#0" />
-                <element signature="e#13777#13992#0" />
-                <element signature="e#14075#16609#0" />
-                <element signature="e#14172#14299#0" />
-                <element signature="e#14404#14528#0" />
-                <element signature="e#14576#14956#0" />
-                <element signature="e#14686#14777#0" />
-                <element signature="e#14822#14928#0" />
-                <element signature="e#14981#16582#0" />
-                <element signature="e#15051#16551#0" />
-                <element signature="e#16711#16778#0" />
-                <element signature="e#16814#16889#0" />
-                <element signature="e#16907#16997#0" />
-                <element signature="e#17015#17099#0" />
-                <element signature="e#17182#17300#0" />
-                <element signature="e#17444#17679#0" />
-                <element signature="e#17715#17944#0" />
-                <element signature="e#17962#18100#0" />
-                <element signature="e#18117#18196#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -268,159 +111,13 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>setState</find>
-      <find>MenuBaseHeaderTitle</find>
-      <find>box-shad</find>
-      <find>rgb</find>
-      <find>map</find>
-      <find>Selected</find>
-      <find>co\\</find>
-      <find>diviv</find>
-      <find>edit</find>
-      <find>alpha</find>
-      <find>siteData</find>
-      <find>fetchSiteData</find>
-      <find>defaultSiteDate</find>
-      <find>Popper</find>
-      <find>import</find>
-      <find>react-vir</find>
-      <find>material-ui</find>
-      <find>react-color</find>
-      <find>SketchPicker</find>
-      <find>react-sorta</find>
-      <find>react-d</find>
-      <find>rcslider</find>
-      <find>react-draggable</find>
-      <find>react-anima</find>
-      <find>lodash</find>
-      <find>bounce</find>
-      <find>@popperjs/core</find>
-      <find>react-dnd</find>
-      <find>scss</find>
-      <find>config.json</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>breakpointmanager</replace>
-      <replace>onDesignChange(</replace>
-      <replace>this.state.radius</replace>
-      <replace>Transform</replace>
-      <replace>transform</replace>
-      <replace>14</replace>
-      <replace>12</replace>
-      <replace>16</replace>
-      <replace>window.document.getEl</replace>
-      <replace>document.getEl</replace>
-      <replace />
-      <replace>this.props.animation</replace>
-      <replace>-circle::after</replace>
-      <replace>-circle::before</replace>
-      <replace>coordinatesAbs</replace>
-      <replace>line::before</replace>
-      <replace>&quot;T&quot;</replace>
-      <replace>scroll</replace>
-      <replace>this.props.shadow</replace>
-      <replace>MenuOptionSectionTitle</replace>
-      <replace>tagName</replace>
-      <replace>presetProps</replace>
-      <replace>PageManager</replace>
-      <replace>80</replace>
-      <replace>92</replace>
-      <replace>ThemeColorsItemDetailOverlay</replace>
-      <replace>24</replace>
-      <replace>20</replace>
-      <replace>18</replace>
-      <replace>getColorScheme</replace>
-    </replaceStrings>
-    <dirStrings>
-      <dir>H:\Weblancer\WeblancerEditor\test-project\public</dir>
-      <dir>H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout</dir>
-      <dir>H:\Weblancer\WeblancerEditor\test-project\src</dir>
-      <dir>H:\Weblancer\WeblancerEditor\test-project\src\data</dir>
-    </dirStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/GridSelect.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/Image.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/SelectInput.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/SliderInputControlled.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/MenuBase/MenuBaseIndexTitle.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/MenuBase/MenuButton.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/MiniMenu/Components/RightClick.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/MenuHolder.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Animations/BounceInAnimation.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Animations/ExpandInAnimation.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Animations/FadeInAnimation.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Animations/FlipInAnimation.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Animations/FloatInAnimation.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Animations/FlyInAnimation.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Animations/FoldInAnimation.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Animations/GlideInAnimation.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Animations/PuffInAnimation.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Animations/RevealAnimation.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Animations/TurnInAnimation.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Inspector/InspectorAdjustment.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Inspector/InspectorAnchor.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Inspector/InspectorBackground.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Inspector/InspectorPadding.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Inspector/InspectorPosition.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Inspector/InspectorScroll.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/PageInfo.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/Permissions.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/SeoGoogle.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/SocialShare.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/AddNewPageDialog.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageManager.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeColorEditMenu.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeColorPicker.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeColorsItem.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeTextEditMenu.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeTextItem.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/ContextMenu.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/CSSManager.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/EventTrigger.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/StyledTest.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/AwesomeGridLayout2.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/GridChildContainerChildren.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/GridChildContainerGridLine.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/UndoRedo.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/HexColorPicker.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/SelectManager.js" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Layout.js" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/data/config.json" />
-        <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js" />
-      </list>
-    </option>
-  </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
-    <package-json value="$PROJECT_DIR$/package.json" />
-  </component>
-  <component name="JsGulpfileManager">
-    <detection-done>true</detection-done>
-    <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="NodePackageJsonFileManager">
-    <packageJsonPaths>
-      <path value="$PROJECT_DIR$/package.json" />
-    </packageJsonPaths>
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="40" />
-    <option name="width" value="1364" />
-    <option name="height" value="726" />
-  </component>
+  <component name="ProjectId" id="1haUg6fOsTQb7WsNoFVKPwQ99GB" />
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
       <profile-state>
@@ -442,83 +139,44 @@
     </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="test-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test-project" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="test-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="test-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="AwesomeGridLayout" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="test-project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="test-project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="AwesomeGridLayout" type="462c0819:PsiDirectoryNode" />
-              <item name="Editor" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://H:/Weblancer/WeblancerEditor/test-project/node_modules/react-sortable-tree/dist/index.esm.js&#10;adjustmentPa&#9;FILE&#9;file://E:/BussinesProjects/AwesomeGridLayout/awesomegridlayout/src/AwesomeGridLayout/Adjustment/AdjustmentResizePage.js&#10;stack&#9;FILE&#9;file://E:/BussinesProjects/AwesomeGridLayout/awesomegridlayout/src/AwesomeGridLayout/Test/Stack.js&#10; =&gt; {&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Breakpoints" />
     <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
-    <property name="node.js.selected.package.eslint" value="E:\BussinesProjects\AwesomeGridLayout\awesomegridlayout\node_modules\eslint" />
+    <property name="node.js.path.for.package.standard" value="project" />
+    <property name="node.js.selected.package.eslint" value="H:\Weblancer\WeblancerEditor\test-project\node_modules\eslint" />
+    <property name="node.js.selected.package.standard" value="H:\Weblancer\WeblancerEditor\test-project\node_modules\eslint" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2018.2.6\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\json" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\data" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Test\Theme" />
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Editor\Breakpoints" />
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Editor" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\icon" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Test\PageManager\PageSetting" />
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\build\static\icon" />
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Menus\CommonComponents" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Editor\Breakpoints" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\json" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\data" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Test\PageManager\PageSetting" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Components\Containers\Menus\Components" />
-      <recent name="E:\BussinesProjects\AwesomeGridLayout\awesomegridlayout\src\AwesomeGridLayout\Test\Animations" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -577,12 +235,18 @@
       <workItem from="1599735345890" duration="2000" />
       <workItem from="1599739588517" duration="2411000" />
       <workItem from="1599896967510" duration="550000" />
-      <workItem from="1599904894338" duration="1300000" />
+      <workItem from="1599904894338" duration="38263000" />
+      <workItem from="1600153574895" duration="8024000" />
+      <workItem from="1600240610162" duration="6932000" />
+      <workItem from="1600247590877" duration="577000" />
+      <workItem from="1600248810677" duration="32000" />
+      <workItem from="1600248887054" duration="10683000" />
+      <workItem from="1600321761931" duration="10366000" />
+      <workItem from="1600587827706" duration="25020000" />
+      <workItem from="1600937063205" duration="29914000" />
+      <workItem from="1601288120345" duration="2547000" />
     </task>
     <servers />
-  </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1439783000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -593,335 +257,25 @@
       <is-autoscroll-to-source value="true" />
     </todo-panel>
   </component>
-  <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
-    <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29761904" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="npm" order="2" side_tool="true" />
-      <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3295082" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3295082" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.3295082" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="TypeScript" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.27868852" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24962178" />
-    </layout>
-  </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
-    <option name="exactExcludedFiles">
-      <list>
-        <option value="$PROJECT_DIR$/node_modules/wait-for-expect/lib/toBeInRangeMatcher.d.js" />
-        <option value="$PROJECT_DIR$/node_modules/wait-for-expect/lib/waitForExpect.spec.d.js" />
-        <option value="$PROJECT_DIR$/node_modules/wait-for-expect/lib/index.d.js" />
-      </list>
-    </option>
+    <option name="version" value="3" />
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/AwesomeGridLayout.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/AwesomeGridLayout.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/AwesomeGridLayout2.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="2" column="46" selection-start-line="2" selection-start-column="46" selection-end-line="2" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/AwesomeGridLayoutUtils.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/AwesomwGridLayoutHelper.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/AwesomwGridLayoutHelper.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/BreakPointManager.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/CopyManager.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/CostumElement2.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/CostumElement3.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/DragDropManager.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/ElementTreeManager.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/GridChildContainerChildren.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20">
-          <caret line="1" column="8" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/GridChildContainer.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/GridChildContainerFixedHolder.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/GridChildContainerGridLine.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/GridChildContent.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/GridChildDraggable.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/GridChildResizable.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/GridLineManager.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/GridSystemUtils.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/HelperStyle.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/IdManager.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/InputManager.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Portal.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/SnapManager.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/UndoRedo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/App2.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/package.json" />
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/webpack.config.js" />
-    <entry file="file://$PROJECT_DIR$/node_modules/react-color/lib/components/sketch/Sketch.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/react-color/lib/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1800">
-          <caret line="90" column="36" selection-start-line="90" selection-start-column="36" selection-end-line="90" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bundle.js" />
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/HexColorPicker.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="7" column="61" selection-start-line="7" selection-start-column="61" selection-end-line="7" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/GridChildDraggable.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/tree-node-renderer.css" />
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/node-content-renderer.js" />
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/tree-node-renderer.js" />
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/node-content-renderer.css" />
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Theme/index.js" />
-    <entry file="file://$PROJECT_DIR$/src/data/servicePorts.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="9" column="2" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="740">
-          <caret line="37" selection-start-line="37" selection-end-line="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Layout.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3080">
-          <caret line="154" column="39" selection-start-line="154" selection-start-column="39" selection-end-line="154" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/Slider.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="4" column="23" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/SelectManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
-          <folding>
-            <element signature="e#0#58#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/json/config.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="251" column="8" selection-start-line="251" selection-start-column="8" selection-end-line="251" selection-end-column="8" />
-          <folding>
-            <element signature="e#1973#2159#0" />
-            <element signature="e#2018#2125#0" />
-            <element signature="e#2218#5139#0" />
-            <element signature="e#2914#3081#0" />
-            <element signature="e#4245#5131#0" />
-            <element signature="e#4465#4594#0" />
-            <element signature="e#4633#4772#0" />
-            <element signature="e#4811#4951#0" />
-            <element signature="e#4990#5121#0" />
-            <element signature="e#5165#5256#0" />
-            <element signature="e#5289#5349#0" />
-            <element signature="e#5390#5451#0" />
-            <element signature="e#5478#5705#0" />
-            <element signature="e#5746#5948#0" />
-            <element signature="e#5788#5940#0" />
-            <element signature="e#6002#6052#0" />
-            <element signature="e#6093#6489#0" />
-            <element signature="e#6162#6193#0" />
-            <element signature="e#6251#6481#0" />
-            <element signature="e#6342#6469#0" />
-            <element signature="e#6525#6566#0" />
-            <element signature="e#6603#6664#0" />
-            <element signature="e#6693#6742#0" />
-            <element signature="e#6839#7018#0" />
-            <element signature="e#7098#7277#0" />
-            <element signature="e#7329#7559#0" />
-            <element signature="e#7589#7870#0" />
-            <element signature="e#7899#7948#0" />
-            <element signature="e#7976#8659#0" />
-            <element signature="e#8390#8566#0" />
-            <element signature="e#8461#8551#0" />
-            <element signature="e#8689#8739#0" />
-            <element signature="e#8788#9155#0" />
-            <element signature="e#8998#9149#0" />
-            <element signature="e#9304#9499#0" />
-            <element signature="e#9781#9943#0" />
-            <element signature="e#9975#10134#0" />
-            <element signature="e#10167#10336#0" />
-            <element signature="e#10364#11483#0" />
-            <element signature="e#10503#11118#0" />
-            <element signature="e#10589#11107#0" />
-            <element signature="e#10765#11027#0" />
-            <element signature="e#11042#11092#0" />
-            <element signature="e#11149#11345#0" />
-            <element signature="e#11509#11555#0" />
-            <element signature="e#11582#11629#0" />
-            <element signature="e#11661#11713#0" />
-            <element signature="e#11746#11799#0" />
-            <element signature="e#11830#11881#0" />
-            <element signature="e#11913#11965#0" />
-            <element signature="e#12003#12140#0" />
-            <element signature="e#12233#12400#0" />
-            <element signature="e#12250#12393#0" />
-            <element signature="e#12431#12589#0" />
-            <element signature="e#12619#13095#0" />
-            <element signature="e#13111#18231#0" />
-            <element signature="e#13216#18215#0" />
-            <element signature="e#13274#13362#0" />
-            <element signature="e#13381#13460#0" />
-            <element signature="e#13477#13553#0" />
-            <element signature="e#13570#13657#0" />
-            <element signature="e#13674#13759#0" />
-            <element signature="e#13777#13992#0" />
-            <element signature="e#14075#16609#0" />
-            <element signature="e#14172#14299#0" />
-            <element signature="e#14404#14528#0" />
-            <element signature="e#14576#14956#0" />
-            <element signature="e#14686#14777#0" />
-            <element signature="e#14822#14928#0" />
-            <element signature="e#14981#16582#0" />
-            <element signature="e#15051#16551#0" />
-            <element signature="e#16711#16778#0" />
-            <element signature="e#16814#16889#0" />
-            <element signature="e#16907#16997#0" />
-            <element signature="e#17015#17099#0" />
-            <element signature="e#17182#17300#0" />
-            <element signature="e#17444#17679#0" />
-            <element signature="e#17715#17944#0" />
-            <element signature="e#17962#18100#0" />
-            <element signature="e#18117#18196#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+  <component name="WindowStateProjectService">
+    <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1601042979593">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1601042979593" />
+    <state x="390" y="97" width="776" height="562" key="find.popup" timestamp="1601288609434">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="390" y="97" width="776" height="562" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1601288609434" />
+    <state x="339" y="162" key="run.anything.popup" timestamp="1600779692543">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="339" y="162" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1600779692543" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1601056121810">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1601056121810" />
   </component>
 </project>

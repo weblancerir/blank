@@ -1,0 +1,59 @@
+.BreakpointSettingItemRoot{
+    width: 100%;
+    display: flex;
+    padding: 0 16px;
+    align-items: center;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.BreakpointSettingItemIcon{
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 4px;
+}
+
+.BreakpointSettingItemStart{
+    margin-right: 4px;
+}
+
+.BreakpointSettingItemNoneEdit{
+    flex: 1;
+    direction: rtl;
+    opacity: 0.3;
+}
+
+.BreakpointSettingItemNoneEdit:hover{
+    opacity: 1;
+}
+
+.BreakpointSettingItemEditMode{
+    flex: 1;
+    direction: rtl;
+    display: flex;
+}
+
+.BreakpointSettingItemPx{
+    margin-left: 4px;
+}
+
+.BreakpointSettingItemCancel{
+    color: #4573e0 !important;
+    margin-right: 4px !important;
+}
+
+.BreakpointSettingItemDone{
+    box-shadow: unset !important;
+    background-color: #4573e0 !important;
+    color: white !important;
+}
+
+.BreakpointSettingItemButtons{
+    padding: 4px 10px !important;
+    text-transform: none !important;
+    font-size: 12px !important;
+    min-width: unset !important;
+}

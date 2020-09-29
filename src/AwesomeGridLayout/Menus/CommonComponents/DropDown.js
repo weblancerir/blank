@@ -22,17 +22,28 @@ export default class DropDown extends React.Component {
         this.props.onChange(option);
     };
 
+    getValue = () => {
+        if (this.props.valueRenderer) {
+            return this.props.valueRenderer(this.props.value) ||
+                (this.props.renderer && this.props.renderer(this.props.value)) ||
+                this.props.value || "";
+        } else {
+            return this.props.value || "";
+        }
+    }
+
     render () {
         return (
             <div className="DropDownRoot">
                 <span
-                    className="NumberInput"
+                    className="DropDownSpan"
                     style={{...this.props.spanStyle, ...{
                         cursor: "pointer"
                     }}}
                     onClick={this.onClick}
                 >
-                    {this.props.value || ""}
+                    {console.log("DropDown", this.getValue())}
+                    {this.getValue()}
                 </span>
 
                 <Menu
@@ -63,9 +74,14 @@ export default class DropDown extends React.Component {
 
                                         this.setState({anchorEl: undefined});
                                     }}
+                                    style={{...(option.disabled && {
+                                        pointerEvents: "none"
+                                    })}}
                                 >
-                                    <span>
-                                        {option}
+                                    <span style={{
+                                        width: "100%"
+                                    }}>
+                                        {this.props.renderer ? this.props.renderer(option) : option}
                                     </span>
                                 </MenuItem>
                             )
@@ -76,7 +92,7 @@ export default class DropDown extends React.Component {
                 <div
                     className="DropDOwnArrow"
                 >
-                    <img width={10} height={10} src="/static/icon/down-arrow.svg"/>
+                    <img width={10} height={10} src={"/static/icon/down-arrow.svg"}/>
                 </div>
 
                 {

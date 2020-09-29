@@ -51,6 +51,9 @@ export default class AwesomeGridLayout2 extends React.Component{
         this.props.idMan.setItem(this.props.id, this);
 
         this.onPropsChange = new EventTrigger(this);
+
+        props.id === "comp_ContainerBase_1_1_1_1_1_1" && console.log("AwesomeGridLayout2 constructor", props.griddata)
+
     }
 
     componentDidMount () {
@@ -62,14 +65,14 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (this.needRender) {
             delete this.needRender;
             this.updateLayout(() => {
-                this.onSelect(this.getFromTempData("selected"), this.lateMounted);
+                this.isEditor() ? this.onSelect(this.getFromTempData("selected"), this.lateMounted) : this.lateMounted();
             });
         }
     }
 
     componentWillUnmount() {
         this.mounted = false;
-        this.props.editor.updateLayout();
+        this.isEditor() && this.props.editor.updateLayout();
     }
 
     callOverride = (funcName, ...args) => {
@@ -223,14 +226,18 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (this.callOverride("initLayout"))
             return;
 
-        let style = this.getDefaultStyle();
+        let style = this.getCompositeFromData("style") || this.getDefaultStyle();
 
         this.setTransformStyle(this.getCompositeFromData("transform"), undefined,
             this.props.breakpointmanager.getHighestBpName());
         this.setGridItemStyle(this.getCompositeFromData("gridItemStyle") ||
             this.props.defaultGridItemStyle,
             this.props.breakpointmanager.getHighestBpName());
-        this.setStyle(this.getCompositeFromData("style") || style, undefined,
+
+        if (this.props.isPage)
+            style.width = this.props.style.width;
+
+        this.setStyle(style, undefined,
             this.props.breakpointmanager.getHighestBpName());
         this.setGrid(this.getCompositeFromData("grid") || this.props.defaultGrid, undefined,
             this.props.breakpointmanager.getHighestBpName());
@@ -256,19 +263,20 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         let size = this.getSize(false, true, true);
         this.addToSnap();
-        // this.onSelect(this.getFromTempData("selected"));
 
         let baseDocks = this.getBaseDocks();
         this.setDocks(baseDocks.top, baseDocks.left, baseDocks.bottom, baseDocks.right,
             this.getFromTempData("autoDock"),
             this.props.breakpointmanager.getHighestBpName(), true);
 
+        console.log("AwesomeGridLayout2 lateMounted", this.props.id)
         if (this.props.onPageResize) {
+            console.log("AwesomeGridLayout2 lateMounted.onPageResize", this.props.id)
             this.props.onPageResize(size.width, this, true);
         }
 
         this.props.onChildMounted && this.props.onChildMounted(this);
-        this.props.editor.updateLayout();
+        this.isEditor() && this.props.editor.updateLayout();
     };
 
     getPrimaryOptions = () => {
@@ -302,7 +310,7 @@ export default class AwesomeGridLayout2 extends React.Component{
                         p1: rect.left,
                         p2: rect.left + rect.width
                     },
-                    {
+                    !this.props.isPage && {
                         id: this.props.id,
                         value: rect.top + rect.height / 2,
                         p1: rect.left,
@@ -322,7 +330,7 @@ export default class AwesomeGridLayout2 extends React.Component{
                         p1: rect.top,
                         p2: rect.top + rect.height
                     },
-                    {
+                    !this.props.isPage && {
                         id: this.props.id,
                         value: rect.left + rect.width / 2,
                         p1: rect.top,
@@ -423,8 +431,12 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         this.allChildRefs[props.id] = React.createRef();
 
+        if (this.getFromTempData("isFixed", props.griddata))
+            fixed = true;
+
         let AGLProps = {};
         if (tagName[0] == tagName[0].toUpperCase()) {
+            console.log("createChildByData portalNodeId",props.portalNodeId, (fixed && `${this.props.id}_fixed_holder`))
             AGLProps = {
                 aglRef: this.allChildRefs[props.id],
                 viewRef: this.props.viewRef,
@@ -445,7 +457,7 @@ export default class AwesomeGridLayout2 extends React.Component{
                 parent: this,
                 editor: this.props.editor,
                 onChildMounted: onChildMounted,
-                portalNodeId: (fixed && `${this.props.id}_fixed_holder`) || props.portalNodeId,
+                portalNodeId: (fixed && `${this.props.id}_fixed_holder`),
                 ...this.getAllChildOverrideProps()
             };
         }
@@ -545,9 +557,13 @@ export default class AwesomeGridLayout2 extends React.Component{
         }
     };
 
-    invalidateSize = (self = true, updateParent = true, updateChildren = true, sourceId) => {
+    invalidateSize = (self = true, updateParent = true, updateChildren = true, sourceId,
+                      addToSnap = false) => {
         if (this.callOverride("invalidateSize", self, updateParent, updateChildren, sourceId))
             return;
+
+        if (addToSnap)
+            this.addToSnap();
 
         if (!sourceId)
             sourceId = this.props.id;
@@ -558,7 +574,7 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (updateChildren) {
             Object.values(this.allChildRefs).forEach(childRef => {
                 if (childRef && childRef.current && sourceId !== childRef.current.props.id) {
-                    childRef.current.invalidateSize(true, false, true, sourceId);
+                    childRef.current.invalidateSize(true, false, true, sourceId, addToSnap);
                 }
             });
         }
@@ -567,7 +583,7 @@ export default class AwesomeGridLayout2 extends React.Component{
             this.getParentsId().forEach(id => {
                 let parent = this.props.idMan.getItem(id);
                 if (parent && parent.mounted && sourceId !== parent.props.id) {
-                    parent.invalidateSize(true, false, false, sourceId);
+                    parent.invalidateSize(true, false, false, sourceId, addToSnap);
                 }
             });
         }
@@ -767,11 +783,9 @@ export default class AwesomeGridLayout2 extends React.Component{
             return;
 
         let style = this.getCompositeFromData("style");
-        let designStyle = this.getCompositeFromData("designStyle");
         let gridItemStyle = this.getCompositeFromData("gridItemStyle");
         let transform = this.getCompositeFromData("transform");
         this.setStyle(style, undefined, undefined, true);
-        // this.setDesignStyle(designStyle, undefined, undefined, true);
         this.setGridItemStyle(gridItemStyle, undefined, true);
         this.setTransformStyle(transform, undefined, undefined, true);
 
@@ -894,10 +908,10 @@ export default class AwesomeGridLayout2 extends React.Component{
             delete props[key];
         });
 
-        // Object.keys(props).forEach(key => {
-        //     if (typeof props[key] === "function")
-        //         delete props[key];
-        // });
+        Object.keys(props).forEach(key => {
+            if (typeof props[key] === "function")
+                delete props[key];
+        });
 
         return props;
     };
@@ -987,6 +1001,8 @@ export default class AwesomeGridLayout2 extends React.Component{
     };
 
     setItemHover = (hover) => {
+        if (!this.isEditor()) return;
+
         if (hover)
             this.props.select.updateHover(this, this.getSize(false));
         else
@@ -1011,16 +1027,7 @@ export default class AwesomeGridLayout2 extends React.Component{
         let rect = this.getSize(false, forceRect);
 
         if (forceGridLines || !this.props.gridLine.isPrepared(this.props.id)) {
-            // if (this.props.gridLine.hasGridLine(this.props.id)) {
-                this.props.gridLine.prepareRects(this.props.id);
-            // }
-            // else {
-            //     this.toggleGridLines(true, () => {
-            //         this.props.gridLine.prepareRects(this.props.id);
-            //         if (callback)
-            //             callback(rect);
-            //     }, gridType || "B");
-            // }
+            this.isEditor() && this.props.gridLine.prepareRects(this.props.id);
         }
 
         return rect;
@@ -1037,9 +1044,10 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         if (!newId) {
             let relativeY = childRect.top - thisRect.top;
-            if (fixed) {
-                relativeY = childRect.top - this.props.breakpointmanager.getWindowHeight() / 8;
-            }
+            // if (fixed) {
+            //     // relativeY = childRect.top - this.props.breakpointmanager.getWindowHeight() / 8;
+            //     relativeY = childRect.top - thisRect.top;
+            // }
             this.prepareRects();
             calcResult = this.calculateChildGridItem(child,
                 childRect.left - thisRect.left, relativeY, this,
@@ -1299,6 +1307,8 @@ export default class AwesomeGridLayout2 extends React.Component{
     };
 
     updateGridLines = (top, left, bottom, right, gridType) => {
+        if (!this.isEditor()) return;
+
         let grid = this.getFromData("grid");
         this.props.gridLine.addGrid(
             this.props.id,
@@ -2011,9 +2021,6 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (this.resizing)
             return;
 
-        // this.onSelect(true);
-
-
         this.resizing = true;
 
         let runtimeStyle = {...this.state.runtimeStyle};
@@ -2031,7 +2038,7 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         this.setDraggingState(true, false, undefined, runtimeStyle);
 
-        this.props.select.activateHover(false);
+        this.isEditor() && this.props.select.activateHover(false);
 
         if (this.props.onPageResizeStart)
             this.props.onPageResizeStart();
@@ -2175,18 +2182,19 @@ export default class AwesomeGridLayout2 extends React.Component{
         runtimeStyle.width = this.resizeData.firstX + finalDelta.width;
         runtimeStyle.height = this.resizeData.firstY + finalDelta.height;
 
+        // For snaps
+        let boundarySize = this.getBoundarySize();
+
+        if (!group && !boundarySize)
+            this.checkSnapOnResize(runtimeStyle, dir, this.resizeData);
+        // this.checkSnapOnResize(rect, dir, this.resizeData);
+
         let rect = {
             top: runtimeStyle.top,
             left: runtimeStyle.left,
             width: runtimeStyle.width,
             height: runtimeStyle.height
         };
-
-        // For snaps
-        let boundarySize = this.getBoundarySize();
-
-        if (!group && !boundarySize)
-            this.checkSnapOnResize(rect, dir, this.resizeData);
 
         this.props.select.updateResizePanes(this, rect);
 
@@ -2227,11 +2235,9 @@ export default class AwesomeGridLayout2 extends React.Component{
             return;
         }
 
-        let {runtimeStyle, animationCss} = this.resizeData.onResizeData;
-        // runtimeStyle.width = this.resizeData.lastWidth;
-        // runtimeStyle.height = this.resizeData.lastHeight;
+        let {runtimeStyle} = this.resizeData.onResizeData;
 
-        this.setRuntimeStyle(runtimeStyle/*, animationCss*/);
+        this.setRuntimeStyle(runtimeStyle);
 
         window.requestAnimationFrame(this.onResizeCalculate);
     };
@@ -2242,7 +2248,7 @@ export default class AwesomeGridLayout2 extends React.Component{
 
     pageResizeStop = (e, dir, delta) => {
         let {width, height} = this.state.runtimeStyle;
-        this.props.select.activateHover(true);
+        this.isEditor() && this.props.select.activateHover(true);
         this.setPageSize(this.resizeData.top, this.resizeData.left, width, height);
     };
 
@@ -2250,21 +2256,9 @@ export default class AwesomeGridLayout2 extends React.Component{
         this.setProps("width", width, undefined, undefined,
             this.props.breakpointmanager.getHighestBpName());
 
-       /* if (this.resizeData.left === 50) {
-            let gridItemStyle = this.getCompositeFromData("gridItemStyle");
-            gridItemStyle.marginLeft = "50px";
-            this.setGridItemStyle(gridItemStyle, this.props.breakpointmanager.getHighestBpName());
-        } else {
-            let gridItemStyle = this.getCompositeFromData("gridItemStyle");
-            gridItemStyle.marginLeft = 0;
-            this.setGridItemStyle(gridItemStyle, this.props.breakpointmanager.getHighestBpName());
-        }*/
-
         this.setRuntimeStyle();
         this.invalidateSize();
-        // this.setState({dragging: false}, () => {
-        //     this.addToSnap();
-        // });
+
         this.setDraggingState(false, false, () => {
             this.addToSnap();
         }, {top, left, width, height});
@@ -2277,14 +2271,48 @@ export default class AwesomeGridLayout2 extends React.Component{
             "A"
         );
 
-        this.props.select.onScrollItem(this);
-        // this.prepareRects(true);
+        this.isEditor() && this.props.select.onScrollItem(this);
+
         this.prepareRects();
 
         if (this.props.onPageResizeStop)
             this.props.onPageResizeStop(width, this);
 
         this.resizeData = undefined;
+    };
+
+    setPageSizeWidth = (width) => {
+        this.setProps("width", width, undefined, undefined,
+            this.props.breakpointmanager.getHighestBpName());
+
+        this.invalidateSize();
+
+        this.addToSnap();
+
+        let rect = this.getSize(false);
+        let minWidth = this.props.breakpointmanager.getMinWidth();
+
+        if (width < minWidth)
+            width = minWidth;
+
+        let deltaX = width - rect.width;
+        let firstLeft = rect.left;
+        let left = firstLeft + deltaX;
+        if (left < 50)
+            left = 50;
+
+        let top = rect.top;
+
+        this.updateGridLines(
+            top, left,
+            window.innerHeight - top - rect.height,
+            window.innerWidth - left - width,
+            "A"
+        );
+
+        this.isEditor() && this.props.select.onScrollItem(this);
+
+        this.prepareRects();
     };
 
     onResizeStop = (e, dir, delta, group) => {
@@ -3028,6 +3056,8 @@ export default class AwesomeGridLayout2 extends React.Component{
     };
 
     onSelect = (selected, callback, deselectParent, clicked, dontUpdateAdjustment) => {
+        if (!this.isEditor()) return;
+
         if (this.callOverride("onSelect", selected, callback, deselectParent))
             return;
 
@@ -3132,21 +3162,59 @@ export default class AwesomeGridLayout2 extends React.Component{
     };
 
     onScroll = (e) => {
+        console.log("onScroll", this.props.id);
         if (this.callOverride("onScroll", e))
             return;
 
-        this.invalidateSize(true, false, true);
-        this.props.select.updateParentsRect();
-        this.props.select.onScrollItem();
+        this.isEditor() && this.invalidateSize(true, false, true);
+        this.isEditor() && this.props.select.updateParentsRect();
+        this.isEditor() && this.props.select.onScrollItem();
         this.onScrollEnd(e);
     };
+
+    onRootScroll = (e) => {
+        if (this.getFromTempData("isFixed")) {
+            this.props.parent.forceScroll(e);
+        }
+    };
+
+    forceScroll = (e) => {
+        console.log("forceScroll", this.props.id, this.rootDivRef.current.scrollTop, e.deltaY);
+
+        clearTimeout(this.scrollReset);
+
+        if (!this.targetScroll) this.targetScroll = {
+            top: this.rootDivRef.current.scrollTop
+        };
+
+        if (this.targetScroll.top < 0 && e.deltaY > 0)
+            this.targetScroll.top = 0;
+
+        let maxTop = this.rootDivRef.current.scrollHeight - this.getSize(false).height;
+        if (this.targetScroll.top > maxTop && e.deltaY < 0) {
+            this.targetScroll.top = maxTop;
+        }
+
+        this.targetScroll.top += e.deltaY;
+
+        this.rootDivRef.current.scrollTo({
+            top: this.targetScroll.top,
+            behavior: 'smooth'
+        });
+
+        this.scrollReset = setTimeout(() => {
+            this.targetScroll = {
+                top: this.rootDivRef.current.scrollTop
+            };
+        }, 500);
+    }
 
     onScrollEnd = debounce((e) => {
         if (this.callOverride("onScrollEnd", e))
             return;
 
-        this.invalidateSize();
-        this.addToSnap();
+        this.isEditor() && this.invalidateSize();
+        this.isEditor() && this.addToSnap();
     }, 500);
 
     editGrid = () => {
@@ -3164,6 +3232,10 @@ export default class AwesomeGridLayout2 extends React.Component{
         this.setTempData("anchor", anchor);
         this.updateLayout();
     };
+
+    isEditor = () => {
+        return this.props.editor;
+    }
 
     playAnimation = (disable) => {
         let compositeDesign = getCompositeDesignData(this);
@@ -3187,16 +3259,16 @@ export default class AwesomeGridLayout2 extends React.Component{
             this.setTempData("dontAnimate", true);
         }
 
-        this.props.select.activateHover(false);
-        this.props.select.activateResize(false);
+        this.isEditor() && this.props.select.activateHover(false);
+        this.isEditor() && this.props.select.activateResize(false);
 
         this.setState(stateChange);
     };
 
     onAnimationEnd = () => {
         this.setState({forceKey: undefined, showAnimation: undefined});
-        this.props.select.activateHover(true);
-        this.props.select.activateResize(true);
+        this.isEditor() && this.props.select.activateHover(true);
+        this.isEditor() && this.props.select.activateResize(true);
     };
 
     getCompositeAnimationCss = (compositeAnimation = {}) => {
@@ -3208,6 +3280,8 @@ export default class AwesomeGridLayout2 extends React.Component{
     };
 
     onContextMenu = (e) => {
+        if (!this.isEditor()) return;
+
         e.preventDefault();
         this.onSelect(true);
         this.props.select.onContextMenu(e, this);
@@ -3231,6 +3305,7 @@ export default class AwesomeGridLayout2 extends React.Component{
         let compositeTransform = this.getCompositeFromData("transform") || {};
         let compositeStyle = this.getCompositeFromData("style");
         let overflowData = this.getCompositeFromData("overflowData");
+        console.log("bpData", this.props.griddata.bpData, this.props.id);
         let anchor = this.getFromTempData("anchor");
         let selectAsParent = this.props.gridLine.hasGridLine(this.props.id, "B") !== undefined;
 
@@ -3241,7 +3316,8 @@ export default class AwesomeGridLayout2 extends React.Component{
             this.getDesignStyleId(),
             this.getGridItemStyleId(),
             this.getStyleId(),
-            this.getCompositeAnimationCss(compositeDesign.animation)
+            this.getCompositeAnimationCss(compositeDesign.animation),
+            isPage && "PageScrollBar"
         );
 
         let holderClasses = classNames(
@@ -3265,11 +3341,14 @@ export default class AwesomeGridLayout2 extends React.Component{
                             onMouseOver={this.onMouseOver}
                             onMouseEnter={this.onMouseEnter}
                             onMouseOut={this.onMouseOut}
+                            onScroll={this.onRootScroll}
+                            onWheel={this.onRootScroll}
                             id={id}
                             className={classes}
                             style={{
                                 ...runtimeStyle,
                                 ...(this.canMove() && {cursor: "move"}),
+                                // ...(!this.isEditor() && this.getFromTempData("isFixed") && {pointerEvents: "none"}),
                                 ...(isPage && {overflowY: "auto", overflowX: "hidden"}),
                                 ...(overflowData.state === 'hide' && {
                                     overflowY: 'hidden',
@@ -3337,6 +3416,7 @@ export default class AwesomeGridLayout2 extends React.Component{
                                     show={isContainer}
                                     onScroll={this.onScroll}
                                     isPage={isPage}
+                                    editor={editor}
                                     page={page}
                                     ref={this.backContainerRef}
                                     size={runtimeStyle || size}

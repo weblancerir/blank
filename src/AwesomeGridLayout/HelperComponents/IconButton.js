@@ -9,7 +9,8 @@ export default class IconButton extends React.Component {
                 onClick={this.props.onClick}
                 style={{...{
                     marginLeft: 4,
-                    borderRadius: 4
+                    borderRadius: 4,
+                    boxSizing: "border-box"
                 }, ...this.props.buttonBaseStyle}}
                 className={this.props.className}
                 disabled={this.props.disabled}
@@ -18,7 +19,7 @@ export default class IconButton extends React.Component {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    padding: 8,
+                    padding: 6,
                 }, ...this.props.imageContainerStyle}}>
                     {
                         this.props.icon

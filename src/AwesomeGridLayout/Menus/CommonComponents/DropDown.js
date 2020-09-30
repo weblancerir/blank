@@ -92,7 +92,7 @@ export default class DropDown extends React.Component {
                 <div
                     className="DropDOwnArrow"
                 >
-                    <img width={10} height={10} src={"/static/icon/down-arrow.svg"}/>
+                    <img width={10} height={10} src={process.env.PUBLIC_URL + "/static/icon/down-arrow.svg"}/>
                 </div>
 
                 {

@@ -25,8 +25,8 @@ export default class Image extends React.Component {
         return (
             <img
                 {...this.props}
-                onError={this.onError}
-                src={this.state.src || this.props.errorsrc}
+                // onError={this.onError}
+                src={this.state.src/* || this.props.errorsrc*/}
             />
         )
     }

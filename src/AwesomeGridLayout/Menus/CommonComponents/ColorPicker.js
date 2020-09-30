@@ -92,7 +92,7 @@ export default class ColorPicker extends React.Component {
                 <div className="CommonMenuRoot ColorPickerRoot">
                     <ButtonBase
                         style={{
-                            background: `url('/static/icon/transparency.png')`,
+                            background: `url(${process.env.PUBLIC_URL}'/static/icon/transparency.png')`,
                         }}
                         className="ColorPickerRGB"
                         onClick={ this.handleClick }

@@ -187,7 +187,7 @@ export default class PageManager extends React.Component {
 
                         <Image
                             className="PageManagerSearchImage"
-                            src={process.env.PUBLIC_URL + 'static/icon/search.svg'}
+                            src={process.env.PUBLIC_URL + '/static/icon/search.svg'}
                         />
                     </div>
 

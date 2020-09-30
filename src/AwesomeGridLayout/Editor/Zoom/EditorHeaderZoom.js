@@ -35,7 +35,6 @@ export default class EditorHeaderZoom extends React.Component {
                             this.setState({zoomSetting: e.currentTarget});
                         }}
                     >
-                        {console.log("LOG PUBLIC ADDRESS ZOOM IN: ",process.env.PUBLIC_URL + 'static/icon/edit.svg')}
                         <img
                             draggable={false}
                             width={18}

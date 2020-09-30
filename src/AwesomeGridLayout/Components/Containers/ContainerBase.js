@@ -53,7 +53,7 @@ export default class ContainerBase extends AGLComponent{
             <MenuButton
                 key={2}
                 icon={ <img draggable={false} width={16} height={16}
-                            src={process.env.PUBLIC_URL + 'static/icon/animation.svg'} /> }
+                            src={process.env.PUBLIC_URL + '/static/icon/animation.svg'} /> }
                 select={this.props.select}
                 menu={(e) =>
                     <AnimationDesign

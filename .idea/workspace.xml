@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ee3df027-738a-4634-bc4a-d7b9163847a2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Layout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Zoom/EditorHeaderZoom.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Zoom/EditorHeaderZoom.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeTextItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeTextItem.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -152,7 +152,7 @@
       <workItem from="1600587827706" duration="25020000" />
       <workItem from="1600937063205" duration="29914000" />
       <workItem from="1601288120345" duration="3504000" />
-      <workItem from="1601448214702" duration="2337000" />
+      <workItem from="1601448214702" duration="2815000" />
     </task>
     <servers />
   </component>

@@ -76,7 +76,7 @@ export default class EditorHeaderBreakpointsSetting extends React.Component {
                                             draggable={false}
                                             width={12}
                                             height={12}
-                                            src={'/static/icon/close.svg'}
+                                            src={process.env.PUBLIC_URL + '/static/icon/close.svg'}
                                         />
                                     </IconButton>
                                 </div>

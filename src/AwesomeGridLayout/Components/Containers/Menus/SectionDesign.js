@@ -30,7 +30,7 @@ export default class SectionDesign extends React.Component {
             {
                 key: "Fill Color & Opacity",
                 icon: <img draggable={false} width={16} height={16}
-                           src={'/static/icon/water.svg'} />
+                           src={process.env.PUBLIC_URL + '/static/icon/water.svg'} />
             }
         ]
     };

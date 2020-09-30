@@ -132,8 +132,8 @@ export default class Inspector extends React.Component {
                                 width={12}
                                 height={12}
                                 src={this.context.inspectorPinned ?
-                                    '/static/icon/pin-white.svg':
-                                        '/static/icon/pin.svg'}
+                                    process.env.PUBLIC_URL + '/static/icon/pin-white.svg':
+                                    process.env.PUBLIC_URL + '/static/icon/pin.svg'}
                             />
                         </IconButton>
                     </div>

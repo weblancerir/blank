@@ -78,7 +78,7 @@ export default class PageInfo extends React.Component {
                             draggable={false}
                             width={16}
                             height={16}
-                            src={'/static/icon/home.svg'}
+                            src={process.env.PUBLIC_URL + '/static/icon/home.svg'}
                             style={{
                                 marginTop: 2,
                                 marginRight: 12

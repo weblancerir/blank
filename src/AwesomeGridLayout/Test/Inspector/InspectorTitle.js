@@ -25,12 +25,12 @@ export default class InspectorTitle extends React.Component {
                         {
                             this.state.open &&
                             <img draggable={false} width={10} height={10}
-                                 src={'/static/icon/down-arrow.svg'} />
+                                 src={process.env.PUBLIC_URL + '/static/icon/down-arrow.svg'} />
                         }
                         {
                             !this.state.open &&
                             <img draggable={false} width={10} height={10}
-                                 src={'/static/icon/right-arrow.svg'} />
+                                 src={process.env.PUBLIC_URL + '/static/icon/right-arrow.svg'} />
                         }
                     </div>
             </ButtonBase>

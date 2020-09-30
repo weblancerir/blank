@@ -149,7 +149,7 @@ export default class EditorHeaderBreakpointsSettingItem extends React.Component 
                                         draggable={false}
                                         width={16}
                                         height={16}
-                                        src={'/static/icon/delete.svg'}
+                                        src={process.env.PUBLIC_URL + '/static/icon/delete.svg'}
                                     />
                                 </IconButton>
                                 <IconButton
@@ -163,7 +163,7 @@ export default class EditorHeaderBreakpointsSettingItem extends React.Component 
                                         draggable={false}
                                         width={16}
                                         height={16}
-                                        src={'/static/icon/edit2.svg'}
+                                        src={process.env.PUBLIC_URL + '/static/icon/edit2.svg'}
                                     />
                                 </IconButton>
                             </div>

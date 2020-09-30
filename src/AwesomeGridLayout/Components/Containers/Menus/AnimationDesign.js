@@ -31,12 +31,12 @@ export default class AnimationDesign extends React.Component {
             {
                 key: "Animation Type",
                 icon: <img draggable={false} width={16} height={16}
-                           src={'/static/icon/animation-black.svg'} />
+                           src={process.env.PUBLIC_URL + '/static/icon/animation-black.svg'} />
             },
             {
                 key: "Animation Options",
                 icon: <img draggable={false} width={16} height={16}
-                           src={'/static/icon/time.svg'} />
+                           src={process.env.PUBLIC_URL + '/static/icon/time.svg'} />
             }
         ]
     };

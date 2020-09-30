@@ -160,7 +160,7 @@ export default class ThemeColorPicker extends React.Component {
                                     <Image
                                         width={10}
                                         height={10}
-                                        src={'static/icon/add.svg'}
+                                        src={process.env.PUBLIC_URL + 'static/icon/add.svg'}
                                     />
                                 </div>
 

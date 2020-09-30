@@ -182,7 +182,7 @@ export class ContextMenuItem extends React.Component {
                         }}>
                             {menuItem.name}
                             <img draggable={false} width={8} height={8}
-                                 src={'/static/icon/right-arrow.svg'}
+                                 src={process.env.PUBLIC_URL + '/static/icon/right-arrow.svg'}
                                 style={{
                                     marginLeft: 24,
                                     color: "#9a9a9a"

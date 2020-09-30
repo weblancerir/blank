@@ -181,7 +181,7 @@ export default class Layout extends React.Component {
                                             draggable={false}
                                             width={16}
                                             height={16}
-                                            src={'static/icon/more-black.svg'}
+                                            src={process.env.PUBLIC_URL + 'static/icon/more-black.svg'}
                                         />
                                     </IconButton>
                                 ];
@@ -200,7 +200,7 @@ export default class Layout extends React.Component {
                                                 draggable={false}
                                                 width={16}
                                                 height={16}
-                                                src={'static/icon/hide.svg'}
+                                                src={process.env.PUBLIC_URL + 'static/icon/hide.svg'}
                                             />
                                         </IconButton>
                                     )
@@ -222,7 +222,7 @@ export default class Layout extends React.Component {
                                             style={{
                                                 marginTop: 2
                                             }}
-                                            errorsrc={'/static/icon/rectangle.svg'}
+                                            errorsrc={process.env.PUBLIC_URL + '/static/icon/rectangle.svg'}
                                         />
                                     ],
                                     buttons: buttons,

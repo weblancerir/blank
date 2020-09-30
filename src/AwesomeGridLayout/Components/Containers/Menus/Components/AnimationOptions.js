@@ -34,7 +34,7 @@ export default class AnimationOptions extends React.Component {
                                 }}
                     >
                         <img draggable={false} width={24} height={24}
-                                   src={'/static/icon/play-button.svg'}
+                                   src={process.env.PUBLIC_URL + '/static/icon/play-button.svg'}
                         />
                     </IconButton>
                 </div>

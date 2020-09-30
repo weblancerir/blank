@@ -39,7 +39,7 @@ export default class EditorHeaderZoom extends React.Component {
                             draggable={false}
                             width={18}
                             height={18}
-                            src={'/static/icon/zoom-in.svg'}
+                            src={process.env.PUBLIC_URL + '/static/icon/zoom-in.svg'}
                         />
 
                     </IconButton>
@@ -105,7 +105,7 @@ export default class EditorHeaderZoom extends React.Component {
                                         draggable={false}
                                         width={14}
                                         height={14}
-                                        src={'/static/icon/add.svg'}
+                                        src={process.env.PUBLIC_URL + '/static/icon/add.svg'}
                                     />
                                 </IconButton>
                                 <span style={{
@@ -133,7 +133,7 @@ export default class EditorHeaderZoom extends React.Component {
                                         draggable={false}
                                         width={14}
                                         height={14}
-                                        src={'/static/icon/minus.svg'}
+                                        src={process.env.PUBLIC_URL + '/static/icon/minus.svg'}
                                     />
                                 </IconButton>
                                 <Button className="EditorHeaderZoomReset"

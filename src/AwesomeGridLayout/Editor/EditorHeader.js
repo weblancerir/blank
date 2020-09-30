@@ -64,7 +64,7 @@ export default class EditorHeader extends React.Component {
                             draggable={false}
                             width={18}
                             height={18}
-                            src={'/static/icon/add.svg'}
+                            src={process.env.PUBLIC_URL + '/static/icon/add.svg'}
                         />
                     </IconButton>
                     <IconButton
@@ -81,7 +81,7 @@ export default class EditorHeader extends React.Component {
                             draggable={false}
                             width={18}
                             height={18}
-                            src={'/static/icon/page.svg'}
+                            src={process.env.PUBLIC_URL + '/static/icon/page.svg'}
                         />
                     </IconButton>
                     <IconButton
@@ -98,7 +98,7 @@ export default class EditorHeader extends React.Component {
                             draggable={false}
                             width={18}
                             height={18}
-                            src={'/static/icon/water.svg'}
+                            src={process.env.PUBLIC_URL + '/static/icon/water.svg'}
                         />
                     </IconButton>
                 </div>
@@ -129,7 +129,7 @@ export default class EditorHeader extends React.Component {
                             draggable={false}
                             width={18}
                             height={18}
-                            src={'/static/icon/inspector.svg'}
+                            src={process.env.PUBLIC_URL + '/static/icon/inspector.svg'}
                         />
                     </IconButton>
                     <EditorHeaderZoom

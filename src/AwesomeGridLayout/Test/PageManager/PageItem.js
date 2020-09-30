@@ -146,7 +146,7 @@ export default class PageItem extends React.Component {
                         disabled
                     >
                         <Image
-                            src={'static/icon/home.svg'}
+                            src={process.env.PUBLIC_URL + 'static/icon/home.svg'}
                             width={16}
                             height={16}
                         />
@@ -162,7 +162,7 @@ export default class PageItem extends React.Component {
                     }}
                 >
                     <Image
-                        src={'static/icon/more-black.svg'}
+                        src={process.env.PUBLIC_URL + 'static/icon/more-black.svg'}
                         width={16}
                         height={16}
                     />

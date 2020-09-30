@@ -78,7 +78,7 @@ export default class Permissions extends React.Component {
                                 draggable={false}
                                 width={92}
                                 height={92}
-                                src={'/static/icon/world.svg'}
+                                src={process.env.PUBLIC_URL + '/static/icon/world.svg'}
                             />
 
                             <span className="PermissionsItemTitle">
@@ -95,7 +95,7 @@ export default class Permissions extends React.Component {
                                 draggable={false}
                                 width={92}
                                 height={92}
-                                src={'/static/icon/password.svg'}
+                                src={process.env.PUBLIC_URL + '/static/icon/password.svg'}
                             />
 
                             <span className="PermissionsItemTitle">
@@ -112,7 +112,7 @@ export default class Permissions extends React.Component {
                                 draggable={false}
                                 width={92}
                                 height={92}
-                                src={'/static/icon/group.svg'}
+                                src={process.env.PUBLIC_URL + '/static/icon/group.svg'}
                             />
 
                             <span className="PermissionsItemTitle">

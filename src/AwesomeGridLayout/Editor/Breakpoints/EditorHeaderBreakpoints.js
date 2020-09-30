@@ -96,7 +96,7 @@ export default class EditorHeaderBreakpoints extends React.Component {
                                     draggable={false}
                                     width={18}
                                     height={18}
-                                    src={'/static/icon/open-menu.svg'}
+                                    src={process.env.PUBLIC_URL + '/static/icon/open-menu.svg'}
                                 />
                             </IconButton>
                         }

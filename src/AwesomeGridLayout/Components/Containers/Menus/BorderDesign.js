@@ -33,17 +33,17 @@ export default class BorderDesign extends React.Component {
             {
                 key: "Fill Color & Opacity",
                 icon: <img draggable={false} width={16} height={16}
-                           src={'/static/icon/water.svg'} />
+                           src={process.env.PUBLIC_URL + '/static/icon/water.svg'} />
             },
             {
                 key: "Border",
                 icon: <img draggable={false} width={16} height={16}
-                           src={'/static/icon/border.svg'} />
+                           src={process.env.PUBLIC_URL + '/static/icon/border.svg'} />
             },
             {
                 key: "Corner",
                 icon: <img draggable={false} width={16} height={16}
-                           src={'/static/icon/corner.svg'} />
+                           src={process.env.PUBLIC_URL + '/static/icon/corner.svg'} />
             },
             {
                 key: "Shadow",

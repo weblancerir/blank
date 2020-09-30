@@ -57,7 +57,7 @@ export default class ThemeTextItem extends React.Component {
                     <Image
                         width={16}
                         height={16}
-                        src={'static/icon/edit.svg'}
+                        src={process.env.PUBLIC_URL + 'static/icon/edit.svg'}
                     />
                 </IconButton>
             </div>

@@ -67,7 +67,7 @@ export default class ThemeColorsItem extends React.Component {
                         <Image
                             className="ThemeColorsItemDetailOverlay"
                             style={{opacity: 1}}
-                            src={'static/icon/edit-white.svg'}
+                            src={process.env.PUBLIC_URL + 'static/icon/edit-white.svg'}
                             width={18}
                             height={18}
                         />
@@ -83,7 +83,7 @@ export default class ThemeColorsItem extends React.Component {
 
                             <Image
                                 className="ThemeColorsItemDetailOverlay"
-                                src={'static/icon/edit-white.svg'}
+                                src={process.env.PUBLIC_URL + 'static/icon/edit-white.svg'}
                                 width={18}
                                 height={18}
                             />
@@ -96,7 +96,7 @@ export default class ThemeColorsItem extends React.Component {
 
                             <Image
                                 className="ThemeColorsItemDetailOverlay"
-                                src={'static/icon/edit-white.svg'}
+                                src={process.env.PUBLIC_URL + 'static/icon/edit-white.svg'}
                                 width={18}
                                 height={18}
                             />
@@ -109,7 +109,7 @@ export default class ThemeColorsItem extends React.Component {
 
                             <Image
                                 className="ThemeColorsItemDetailOverlay"
-                                src={'static/icon/edit.svg'}
+                                src={process.env.PUBLIC_URL + 'static/icon/edit.svg'}
                                 width={18}
                                 height={18}
                             />
@@ -122,7 +122,7 @@ export default class ThemeColorsItem extends React.Component {
 
                             <Image
                                 className="ThemeColorsItemDetailOverlay"
-                                src={'static/icon/edit.svg'}
+                                src={process.env.PUBLIC_URL + 'static/icon/edit.svg'}
                                 width={18}
                                 height={18}
                             />
@@ -137,7 +137,7 @@ export default class ThemeColorsItem extends React.Component {
 
                             <Image
                                 className="ThemeColorsItemDetailOverlay"
-                                src={'static/icon/edit.svg'}
+                                src={process.env.PUBLIC_URL + 'static/icon/edit.svg'}
                                 width={18}
                                 height={18}
                             />

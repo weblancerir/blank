@@ -2,13 +2,13 @@ import React from "react";
 
 export const getBreakpointIcon = (bpData) => {
     if (bpData.start >= 1255)
-        return <img draggable={false} width={24} height={24} src={'/static/icon/computer.svg'} />
+        return <img draggable={false} width={24} height={24} src={process.env.PUBLIC_URL + '/static/icon/computer.svg'} />
     if (bpData.start >= 1001)
-        return <img draggable={false} width={24} height={24} src={'/static/icon/laptop.svg'} />
+        return <img draggable={false} width={24} height={24} src={process.env.PUBLIC_URL + '/static/icon/laptop.svg'} />
     if (bpData.start >= 751)
-        return <img draggable={false} width={18} height={18} src={'/static/icon/ipad.svg'} />
+        return <img draggable={false} width={18} height={18} src={process.env.PUBLIC_URL + '/static/icon/ipad.svg'} />
 
-    return <img draggable={false} width={16} height={16} src={'/static/icon/phone.svg'} />
+    return <img draggable={false} width={16} height={16} src={process.env.PUBLIC_URL + '/static/icon/phone.svg'} />
 };
 
 export const getBreakpointName = (bpData) => {

@@ -30,8 +30,8 @@ export default class AnimationSelector extends React.Component {
                         <img
                             className="MenuOptionAnimationItemImage"
                             draggable={false} width={48} height={48}
-                            // src={`/static/icons/animation/${name}.svg`} />
-                            src={`/static/icon/animation-black.svg`}
+                            // src={process.env.PUBLIC_URL + `/static/icons/animation/${name}.svg`} />
+                            src={process.env.PUBLIC_URL + `/static/icon/animation-black.svg`}
                         />
                         <span>
                             none
@@ -54,8 +54,8 @@ export default class AnimationSelector extends React.Component {
                                     <img
                                         className="MenuOptionAnimationItemImage"
                                         draggable={false} width={48} height={48}
-                                        // src={`/static/icons/animation/${name}.svg`} />
-                                        src={`/static/icon/animation-black.svg`}
+                                        // src={process.env.PUBLIC_URL + `/static/icons/animation/${name}.svg`} />
+                                        src={process.env.PUBLIC_URL + `/static/icon/animation-black.svg`}
                                     />
                                     <span className="MenuOptionAnimationItemTitle">
                                         {displayName}

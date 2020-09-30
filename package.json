@@ -2,7 +2,7 @@
   "name": "awesomegridlayout",
   "version": "v0.0.1-alpha",
   "private": true,
-  "homepage": "./",
+  "homepage": "",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/lab": "^4.0.0-alpha.56",

@@ -1,9 +1,6 @@
 import React from "react";
 import './Layout.css';
-// import SortableTree from 'react-sortable-tree';
 import IconButton from "../../HelperComponents/IconButton";
-// import {isHideInBreakpoint, showInBreakPoint} from "../../AwesomwGridLayoutHelper";
-// import Image from "../../Menus/CommonComponents/Image";
 
 export default class Layout extends React.Component {
     constructor(props) {

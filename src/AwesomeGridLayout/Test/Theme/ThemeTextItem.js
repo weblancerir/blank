@@ -54,7 +54,7 @@ export default class ThemeTextItem extends React.Component {
                     className="ThemeTextItemEdit"
                     onClick={this.onEditClick}
                 >
-                    <Image
+                    <img
                         width={16}
                         height={16}
                         src={process.env.PUBLIC_URL + 'static/icon/edit.svg'}

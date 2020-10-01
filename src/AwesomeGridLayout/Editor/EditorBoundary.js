@@ -139,15 +139,33 @@ export default class EditorBoundary extends React.Component{
 
     componentDidMount(){
         this.initContext();
-        this.postMessage({
-            type: "Holder",
-            func: "onEditorMounted",
-            inputs: []
-        }, (data) => {
-            console.log("componentDidMount initFromHolder", data);
-            this.initFromHolder(data.result);
-        });
+        this.loadSiteData();
     }
+
+    loadSiteData = () => {
+        fetch(process.env.PUBLIC_URL + '/static/json/env.json').then((res) => res.json())
+        .then((data) => {
+            if (data.value === 'editor') {
+                this.postMessage({
+                    type: "Holder",
+                    func: "onEditorMounted",
+                    inputs: []
+                }, (data) => {
+                    console.log("componentDidMount initFromHolder", data);
+                    this.initFromHolder(data.result);
+                });
+            } else {
+                fetch(process.env.PUBLIC_URL + '/static/json/siteData.json').then((res) => res.json())
+                    .then((siteData) => {
+                        this.onSiteDataUpdated(siteData);
+                    }).catch(err => {
+                    console.log("loadSiteData error", err);
+                })
+            }
+        }).catch(err => {
+            console.log("loadSiteData error", err);
+        })
+    };
 
     initFromHolder = (data) => {
         this.onSetZoomScale(data.zoomScale);

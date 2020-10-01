@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ee3df027-738a-4634-bc4a-d7b9163847a2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/json/env.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -150,7 +152,8 @@
       <workItem from="1600587827706" duration="25020000" />
       <workItem from="1600937063205" duration="29914000" />
       <workItem from="1601288120345" duration="3504000" />
-      <workItem from="1601448214702" duration="5202000" />
+      <workItem from="1601448214702" duration="6757000" />
+      <workItem from="1601543525741" duration="2507000" />
     </task>
     <servers />
   </component>
@@ -171,10 +174,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1601042979593" />
-    <state x="389" y="96" width="776" height="562" key="find.popup" timestamp="1601451331646">
+    <state x="389" y="96" width="776" height="562" key="find.popup" timestamp="1601551789970">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="389" y="96" width="776" height="562" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1601451331646" />
+    <state x="389" y="96" width="776" height="562" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1601551789970" />
     <state x="339" y="162" key="run.anything.popup" timestamp="1600779692543">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

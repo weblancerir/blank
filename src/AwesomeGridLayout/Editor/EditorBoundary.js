@@ -37,6 +37,8 @@ import EditorHeader from "./EditorHeader";
 import {EditorContext} from "./EditorContext";
 import EditorType from "./EditorType";
 import PreviewHeader from "./PreviewHeader";
+import PageView from "./PageView";
+import classNames from "classnames";
 
 export default class EditorBoundary extends React.Component{
     static contextType = EditorContext;
@@ -157,7 +159,9 @@ export default class EditorBoundary extends React.Component{
             } else {
                 fetch(process.env.PUBLIC_URL + '/static/json/siteData.json').then((res) => res.json())
                     .then((siteData) => {
-                        this.onSiteDataUpdated(siteData);
+                        this.context.setProduction(() => {
+                            this.onSiteDataUpdated(siteData);
+                        });
                     }).catch(err => {
                     console.log("loadSiteData error", err);
                 })
@@ -474,15 +478,23 @@ export default class EditorBoundary extends React.Component{
         return this.context.siteData;
     }
 
+    isProduction = () => {
+        return this.context.production;
+    }
+
     render() {
         // TODO if this.context.siteData not loaded, show loading component
+        let borderClassess = classNames(
+            "PageBaseWhiteBackground",
+            this.context.production ? "PageBaseWhiteBackgroundHeightProduction" : "PageBaseWhiteBackgroundHeightEditor",
+        );
         return (
                 <div className="EditorBoundaryRoot" onContextMenu={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                 }}>
                     {
-                        !this.isPreview() &&
+                        !this.isPreview() && !this.isProduction() &&
                         <div className="EditorBoundaryHeader">
                             <EditorHeader
                                 onAddComponentClick={this.toggleAddComponent}
@@ -494,7 +506,7 @@ export default class EditorBoundary extends React.Component{
                         </div>
                     }
                     {
-                        this.isPreview() &&
+                        this.isPreview() && !this.isProduction() &&
                         <div className="EditorBoundaryHeader">
                             <PreviewHeader
                                 onAddComponentClick={this.toggleAddComponent}
@@ -507,7 +519,7 @@ export default class EditorBoundary extends React.Component{
                     }
                     <div className="EditorBoundaryContent">
                         {
-                            !this.isPreview() &&
+                            !this.isPreview() && !this.isProduction() &&
                             <>
                                 <AdjustmentGrid
                                     ref={this.gridEditorRef}
@@ -532,7 +544,41 @@ export default class EditorBoundary extends React.Component{
 
                         {
                             this.context.pageData &&
-                            <div
+                                <PageView
+                                    onScrollBoundary={this.onScrollBoundary}
+                                    rootLayoutRef={this.rootLayoutRef}
+                                >
+                                    <div className={borderClassess} style={{
+                                        marginTop: this.context.production? 0 : `${8*this.context.zoomScale}vh`
+                                    }}>
+                                        <PageBase
+                                            key={this.context.pageData.props.pageId}
+                                            id="page"
+                                            aglRef={this.rootLayoutRef}
+                                            viewRef={this.rootLayoutRef}
+                                            breakpointmanager={this.breakpointmanager}
+                                            undoredo={this.undoredo}
+                                            dragdrop={this.dragdrop}
+                                            select={this.select}
+                                            snap={this.snap}
+                                            input={this.inputManager}
+                                            idMan={this.idMan}
+                                            gridLine={this.gridLine}
+                                            gridEditorRef={this.gridEditorRef}
+                                            anchorMan={this.anchorMan}
+                                            copyMan={this.copyMan}
+                                            editorData={this.editorData}
+                                            onPageResize={this.onPageResize}
+                                            onPageResizeStart={this.onPageResizeStart}
+                                            onPageResizeStop={this.onPageResizeStop}
+                                            editor={!this.isPreview() && this}
+                                            devicePixelRatio={this.state.devicePixelRatio}
+                                            {...this.context.pageData.props}
+                                            pageSize={this.context.pageSize}
+                                        />
+                                    </div>
+                                </PageView>
+                            /*<div
                                 className="EditorBoundaryPageHolder"
                                 style={{
                                     // TODO add scale support
@@ -582,11 +628,11 @@ export default class EditorBoundary extends React.Component{
                                         pageSize={this.context.pageSize}
                                     />
                                 </div>
-                            </div>
+                            </div>*/
                         }
 
                         {
-                            !this.isPreview() &&
+                            !this.isPreview() && !this.isProduction() &&
                             <>
                                 {
                                     !this.context.pageData &&

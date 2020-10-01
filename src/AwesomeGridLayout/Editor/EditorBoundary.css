@@ -41,9 +41,16 @@
     /*margin-top: 8vh !important;*/
     /* margin-bottom: 50vh !important; */
     width: inherit;
-    height: calc((1 - 2*8*var(--zoom-scale)/100) * (100vh - calc(48px/var(--zoom-scale))));
     display: inline-block;
     background-color: white;
+}
+
+.PageBaseWhiteBackgroundHeightEditor{
+    height: calc((1 - 2*8*var(--zoom-scale)/100) * (100vh - calc(48px/var(--zoom-scale))));
+}
+
+.PageBaseWhiteBackgroundHeightProduction{
+    height: 100vh;
 }
 
 :root {

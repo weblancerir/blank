@@ -8,11 +8,13 @@ import InspectorPadding from "../../Test/Inspector/InspectorPadding";
 import InspectorBackground from "../../Test/Inspector/InspectorBackground";
 import './PageBase.css';
 import {isHideInBreakpoint, parseColor, setStyleParam} from "../../AwesomwGridLayoutHelper";
-import BorderDesign from "../Containers/Menus/BorderDesign";
+import {EditorContext} from "../../Editor/EditorContext";
 
 const mainColTemplate = "minmax(0px,1fr)";
 
 export default class PageBase extends AGLComponent {
+    static contextType = EditorContext;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -1259,7 +1261,6 @@ export default class PageBase extends AGLComponent {
     render() {
         // let fullWidth = (this.getAgl() && this.getAgl().getSize(false)) || (1002);
         let fullWidth = this.props.pageSize;
-        console.log("fullWidth", fullWidth)
         return (
             <AGLWrapper tagName="PageBase"
                         aglRef={!this.props.aglRef ? this.root : this.root = this.props.aglRef}
@@ -1267,7 +1268,7 @@ export default class PageBase extends AGLComponent {
                         {...this.props}
                         className="Page1Root"
                         style={{
-                            width: `${fullWidth}px`,
+                            width: this.context.production ? "100%" : `${fullWidth}px`,
                             height: "100%",
                             boxShadow: "0 2px 12px 6px rgba(134,138,165,.41)",
                             display: "inline-block",

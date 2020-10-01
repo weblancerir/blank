@@ -43,11 +43,17 @@ export default class EditorContextProvider extends React.Component {
             setRightMenus: this.setRightMenus,
             toggleRightMenu: this.toggleRightMenu,
             onNewBpAdded: this.onNewBpAdded,
-            preview: false,
             setPreview: this.setPreview,
             sendEditCommand: this.sendEditCommand,
-            sendPublishCommand: this.sendPublishCommand
+            sendPublishCommand: this.sendPublishCommand,
+            setProduction: this.setProduction,
+            preview: false,
+            production: false
         };
+    }
+
+    setProduction = (callback) => {
+        this.setState({production:true, preview:true}, callback);
     }
 
     sendEditCommand = (callback) => {

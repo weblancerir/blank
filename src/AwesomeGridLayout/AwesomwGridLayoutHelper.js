@@ -64,6 +64,11 @@ export function stretch(item, fromUndoRedo) {
     item.props.select.onScrollItem();
 }
 
+export function getFromTempData(item, prop) {
+    let dataToRead = item.props.griddata;
+    return dataToRead[prop];
+}
+
 export function isStretch(item, log) {
     if (item.hasOverride("isStretch")) {
         return item.callOverride("isStretch", item, log);
@@ -258,6 +263,11 @@ export function showInBreakPoint(item, fromUndoRedo) {
     item.props.viewRef.current.props.aglComponent.updateTemplates();
     item.props.editor.updateLayout();
 }
+
+export function getFromComponentData(item, prop, breakpointName) {
+    return item.props.breakpointmanager
+        .getFromData(item.props.griddata, prop, breakpointName)
+};
 
 export function hasBreakpointDesign(fromName, item) {
     let fromData = item.props.griddata.bpData[fromName];
@@ -922,7 +932,6 @@ export function getCompositeDesignData (item) {
     if (!getCompositeFromData(item.props.griddata, "design", breakpointData))
         setData(item.props.griddata, "design", {}, breakpointData, breakpointData.getHighestBpName());
 
-    console.log("getCompositeDesignData", item.props.id, item.props.griddata, breakpointData);
     return getCompositeFromData(item.props.griddata, "design", breakpointData);
 }
 
@@ -1381,19 +1390,19 @@ export function getColorScheme (baseColor) {
     }
 }
 
-export function parseColor (color, alpha, editor) {
-    console.log("parseColor", color, alpha)
+export function parseColor (color, alpha, editorContext) {
     if (!color) {
         color = '#000000';
         alpha = alpha || 0;
     }
 
     if (color instanceof Object) {
-        let chromaColor = chroma(editor.themeManagerRef.current.getColor(color.paletteName, color.key));
-        if (alpha === undefined || color.alpha !== undefined)
+        let chromaColor = chroma(editorContext.getColor(color.paletteName, color.key));
+        if (alpha !== undefined || color.alpha !== undefined)
             chromaColor = chromaColor.alpha(alpha || color.alpha);
         else
             chromaColor = chromaColor.alpha(1);
+
         return chromaColor.css();
     } else {
         let chromaColor = chroma(color);

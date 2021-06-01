@@ -1,14 +1,11 @@
 import React from "react";
 import './ThemeManager.css';
-import {getColorScheme, sortBy} from "../../AwesomwGridLayoutHelper";
+import {sortBy} from "../../AwesomwGridLayoutHelper";
 import ThemeTextItem from "./ThemeTextItem";
 import IconButton from "../../HelperComponents/IconButton";
 import ThemeColorsItem from "./ThemeColorsItem";
 import {EditorContext} from "../../Editor/EditorContext";
 
-const colorKeys = [
-    "1","2","3","4","5",
-];
 export default class ThemeManager extends React.Component {
     static contextType = EditorContext;
 
@@ -90,29 +87,12 @@ export default class ThemeManager extends React.Component {
             this.setState({category});
     };
 
-    calculateTheme = () => {
-        let {siteData} = this.context;
-
-        let theme = siteData.theme;
-
-        if (!theme.Colors.calculated) {
-            Object.values(theme.Colors.items).forEach(item => {
-                let scheme = getColorScheme(item.main);
-                colorKeys.forEach(key => {
-                    item[key] = scheme[key];
-                })
-            });
-
-            theme.Colors.calculated = true;
-        }
-    };
-
     getColor = (paletteName, key) => {
         let {siteData} = this.context;
 
         let theme = siteData.theme;
 
-        this.calculateTheme();
+        this.context.calculateTheme(false);
 
         return theme.Colors.items[paletteName][key];
     };
@@ -201,7 +181,7 @@ export default class ThemeManager extends React.Component {
                                                     key={key}
                                                     item={this.state.category.items[key]}
                                                     editor={editor}
-                                                    recalculateColors={this.calculateTheme()}
+                                                    // recalculateColors={this.context.calculateTheme()}
                                                 />
                                             )
                                         }

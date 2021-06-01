@@ -56,7 +56,7 @@ export default class AdjustmentResize extends React.Component {
                     })
                 }
                 {
-                    !(item.getCompositeFromData("transform") || {}).rotateDegree &&
+                    !(item.getCompositeFromData("transform") || {}).rotateDegree && !item.props.noStretch &&
                     <AdjustmentStretch
                         style={stretchStyle}
                         isStretch={isStretch}

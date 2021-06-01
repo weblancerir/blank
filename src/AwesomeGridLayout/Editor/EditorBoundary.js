@@ -1,4 +1,5 @@
-import React, {useContext} from "react";
+import React from "react";
+import {EditorContext} from "./EditorContext";
 import BreakPointManager from "../BreakPointManager";
 import DragDropManager from "../DragDropManager";
 import InputManager from "../InputManager";
@@ -23,7 +24,7 @@ import Inspector from "../Test/Inspector/Inspector";
 import AdjustmentResizeWrapper from "../Adjustment/AdjustmentResizeWrapper";
 import AdjustmentHelpLinesWrapper from "../Adjustment/AdjustmentHelpLinesWrapper";
 import AdjustmentHover from "../Adjustment/AdjustmentHover";
-import {cloneObject, getScrollbarWidth} from "../AwesomeGridLayoutUtils";
+import {cloneObject} from "../AwesomeGridLayoutUtils";
 import debounce from 'lodash.debounce';
 import throttle from "lodash.throttle";
 import Layout from "../Test/Layout/Layout";
@@ -34,8 +35,6 @@ import ThemeManager from "../Test/Theme/ThemeManager";
 import defaultSiteData from "../../data/defaultSiteData.json";
 import defaultAllComponentData from "../../data/allComponentData.json";
 import EditorHeader from "./EditorHeader";
-import {EditorContext} from "./EditorContext";
-import EditorType from "./EditorType";
 import PreviewHeader from "./PreviewHeader";
 import PageView from "./PageView";
 import classNames from "classnames";
@@ -200,6 +199,7 @@ export default class EditorBoundary extends React.Component{
         if (!siteData) {
             siteData = cloneObject(defaultSiteData);
         }
+        // siteData = cloneObject(defaultSiteData);
 
         this.context.setSiteData(siteData, () => {
             let pageData = siteData.allPages[Object.keys(siteData.allPages)[0]];

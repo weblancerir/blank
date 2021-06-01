@@ -14,6 +14,7 @@ export default class IconButton extends React.Component {
                 }, ...this.props.buttonBaseStyle}}
                 className={this.props.className}
                 disabled={this.props.disabled}
+                ref={this.props.rootRef}
             >
                 <div style={{...{
                     display: "flex",

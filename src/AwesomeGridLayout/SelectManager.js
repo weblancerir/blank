@@ -7,6 +7,7 @@ import ContainerBase from "./Components/Containers/ContainerBase";
 import React from "react";
 import './AwesomwGridLayoutHelper.css';
 import throttle from "lodash.throttle";
+import Text from "./Components/Text/Text";
 
 export default class SelectManager {
     constructor(inputManager, groupSelectRef, pageAglRef, miniMenuHolderRef,
@@ -212,7 +213,7 @@ export default class SelectManager {
 
     updateGroupRect = () => {
         if (!this.group) {
-            this.groupSelectRef.current.updateRect();
+            this.groupSelectRef.current && this.groupSelectRef.current.updateRect();
             return;
         }
 
@@ -341,17 +342,21 @@ export default class SelectManager {
             return;
 
         let child =
-            <ContainerBase
+            <Text
                 style={{
                     width: "50%",
-                    height: "auto",
-                    minHeight: "75px"
+                    height: "auto"
                 }}
                 data={{
+                    textStaticData: {
+                        textValue: "Normal Text"
+                    },
                     bpData: {
-                        design:{
-                            fillColor: `#5cff${Math.floor(Math.random() * 89) + 10  }`,
-                        },
+                        design: {
+                            textDesignData: {
+                                textTheme: "Heading 6"
+                            }
+                        }
                     }
                 }}
             />;

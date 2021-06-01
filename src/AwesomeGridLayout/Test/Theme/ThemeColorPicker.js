@@ -120,18 +120,17 @@ export default class ThemeColorPicker extends React.Component {
                                     colorKeys.map(key => {
                                         return (
                                             Object.values(themeColorCategoryItems).map(item => {
-                                                console.log("this.state.color", this.state.color, parseColor(this.state.color, undefined, editor))
                                                return (
                                                    <div
                                                        key={item.name + key}
                                                        className={`ThemeColorPickerSiteColorItem ${
-                                                           parseColor(this.state.color, undefined, editor) ===
-                                                           editor.themeManagerRef.current.getColor(item.name, key) ?
+                                                           parseColor(this.state.color, undefined, this.context) ===
+                                                           this.context.getColor(item.name, key) ?
                                                                "ThemeColorPickerSiteColorItemSelected": ''
                                                            }`}
                                                        style={{
                                                            backgroundColor:
-                                                               editor.themeManagerRef.current.getColor(item.name, key)
+                                                               this.context.getColor(item.name, key)
                                                        }}
                                                        onClick={(e) => {
                                                            this.onSelectColor(
@@ -196,7 +195,7 @@ export default class ThemeColorPicker extends React.Component {
                                 </div>
 
                                 <div className="ThemeColorPickerSiteColorHex">
-                                    {chroma(parseColor(this.state.color, 1, editor)).hex()}
+                                    {chroma(parseColor(this.state.color, 1, this.context)).hex()}
                                 </div>
                             </div>
                         </div>

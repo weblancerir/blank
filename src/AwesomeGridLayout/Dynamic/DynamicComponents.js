@@ -18,6 +18,7 @@ import PuffInAnimation from "../Test/Animations/PuffInAnimation";
 import FoldInAnimation from "../Test/Animations/FoldInAnimation";
 import FlipInAnimation from "../Test/Animations/FlipInAnimation";
 import RevealAnimation from "../Test/Animations/RevealAnimation";
+import Text from "../Components/Text/Text";
 
 let DynamicComponents = {};
 
@@ -29,6 +30,7 @@ export let initDynamicComponents = () => {
     DynamicComponents["Section"] = Section;
     DynamicComponents["Stack"] = Stack;
     DynamicComponents["VerticalSpacer"] = VerticalSpacer;
+    DynamicComponents["Text"] = Text;
 };
 
 export default DynamicComponents;

@@ -194,7 +194,36 @@
     "Text": {
       "name": "Text",
       "order": 5,
-      "allItems": []
+      "subList": {
+        "Texts": [
+          {
+            "name": "Themed Text",
+            "listName": "Text",
+            "allItems": [
+              {
+                "tagName": "Text",
+                "widthRatio": 1,
+                "aspectRatio": 4,
+                "imageUrl": "",
+                "presetProps": {
+                  "griddata": {
+                    "textStaticData": {
+                      "textValue": "Normal Text"
+                    },
+                    "bpData": {
+                      "design": {
+                        "textDesignData": {
+                          "textTheme": "Heading 6"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
     },
     "Button": {
       "name": "Button",

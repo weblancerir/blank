@@ -2,8 +2,71 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ee3df027-738a-4634-bc4a-d7b9163847a2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/align-center.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/align-left.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/align-right.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/bold.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/color.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/fill.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/format.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/indent-add.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/indent-minus.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/indent-plus.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/indent-remove.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/italic.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/justify.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/left-align.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/line-space.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/link-blue.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/link.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/list-dot.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/list-number.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/right-align.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/spacing.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/text-direction-ltr.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/text-direction-rtl.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/text.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/icon/texteditor/underline.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Text/Menus/InputDiv.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Text/Menus/InputWrapper.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Text/Menus/TextEditor.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Text/Menus/TextEditor.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Text/Menus/TextEditorButton.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Text/Menus/components/FontSizeAutoComplete.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Text/Menus/components/FontSizeSelector.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Text/Menus/components/TextColorSelector.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Text/Text.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Text/Text.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Text/TextHelper.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Text/TextWrapper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/static/json/siteData.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/json/siteData.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Adjustment/AdjustmentResize.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Adjustment/AdjustmentResize.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/AwesomeGridLayout2.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/AwesomeGridLayout2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/AwesomeGridLayoutUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/AwesomeGridLayoutUtils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/AwesomwGridLayoutHelper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/AwesomwGridLayoutHelper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/BreakPointManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/BreakPointManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Containers/ContainerBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Containers/ContainerBase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Containers/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Containers/Footer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Containers/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Containers/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Containers/Section.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Containers/Section.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Pages/PageBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Pages/PageBase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Dynamic/DynamicComponents.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Dynamic/DynamicComponents.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorContext.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/HelperComponents/IconButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/HelperComponents/IconButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/IdManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/IdManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/ColorPicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/ColorPicker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/DropDown.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/DropDown.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/SelectManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/SelectManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeColorPicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeColorPicker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeColorsItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeColorsItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/allComponentData.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/allComponentData.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/defaultSiteData.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/defaultSiteData.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/siteData.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/siteData.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +115,7 @@
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://H:/Weblancer/WeblancerEditor/test-project/node_modules/react-sortable-tree/dist/index.esm.js&#10;adjustmentPa&#9;FILE&#9;file://E:/BussinesProjects/AwesomeGridLayout/awesomegridlayout/src/AwesomeGridLayout/Adjustment/AdjustmentResizePage.js&#10;stack&#9;FILE&#9;file://E:/BussinesProjects/AwesomeGridLayout/awesomegridlayout/src/AwesomeGridLayout/Test/Stack.js&#10; =&gt; {&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Breakpoints" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Text/Menus/components" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -63,23 +126,23 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
-    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.2.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2020.3.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Components\Text\Menus" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Editor\Breakpoints" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\json" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\data" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Test\PageManager\PageSetting" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Components\Containers\Menus\Components" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Components\Text\Menus\components" />
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Components\Text\Menus" />
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Components\Text" />
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\icon\texteditor" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Editor\Breakpoints" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Editor" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\icon" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\build\static\icon" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Menus\CommonComponents" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -152,7 +215,75 @@
       <workItem from="1600937063205" duration="29914000" />
       <workItem from="1601288120345" duration="3504000" />
       <workItem from="1601448214702" duration="6757000" />
-      <workItem from="1601543525741" duration="4981000" />
+      <workItem from="1601543525741" duration="9064000" />
+      <workItem from="1601724741923" duration="26822000" />
+      <workItem from="1601825401855" duration="95585000" />
+      <workItem from="1602698561565" duration="8617000" />
+      <workItem from="1603041116747" duration="37698000" />
+      <workItem from="1603707906897" duration="39531000" />
+      <workItem from="1604138335819" duration="5000" />
+      <workItem from="1604325365603" duration="1230000" />
+      <workItem from="1604529229129" duration="1198000" />
+      <workItem from="1604569134453" duration="8127000" />
+      <workItem from="1605114035314" duration="22348000" />
+      <workItem from="1606422316550" duration="7236000" />
+      <workItem from="1606726062133" duration="3571000" />
+      <workItem from="1606815787221" duration="744000" />
+      <workItem from="1606827486620" duration="291000" />
+      <workItem from="1606827929065" duration="13434000" />
+      <workItem from="1607415734531" duration="1836000" />
+      <workItem from="1607427160479" duration="5379000" />
+      <workItem from="1607628034294" duration="27718000" />
+      <workItem from="1608472357641" duration="5602000" />
+      <workItem from="1608889878933" duration="592000" />
+      <workItem from="1608898108578" duration="125999000" />
+      <workItem from="1610873280654" duration="141000" />
+      <workItem from="1610873436210" duration="393000" />
+      <workItem from="1610874059010" duration="3000" />
+      <workItem from="1610874584786" duration="3000" />
+      <workItem from="1610875081418" duration="4000" />
+      <workItem from="1610875565388" duration="4256000" />
+      <workItem from="1611082818883" duration="595000" />
+      <workItem from="1611154065306" duration="3879000" />
+      <workItem from="1611477994859" duration="595000" />
+      <workItem from="1611606678280" duration="3643000" />
+      <workItem from="1611690258711" duration="6007000" />
+      <workItem from="1611842736256" duration="8449000" />
+      <workItem from="1612026641018" duration="690000" />
+      <workItem from="1612081660510" duration="9971000" />
+      <workItem from="1612193472338" duration="1189000" />
+      <workItem from="1612258555404" duration="596000" />
+      <workItem from="1612259674488" duration="4851000" />
+      <workItem from="1612550610281" duration="1884000" />
+      <workItem from="1612681626632" duration="3283000" />
+      <workItem from="1612876811725" duration="25359000" />
+      <workItem from="1613474950857" duration="49586000" />
+      <workItem from="1615025142808" duration="595000" />
+      <workItem from="1615566060374" duration="9499000" />
+      <workItem from="1616005552515" duration="596000" />
+      <workItem from="1616058795178" duration="1785000" />
+      <workItem from="1616144258776" duration="1791000" />
+      <workItem from="1616524441892" duration="1189000" />
+      <workItem from="1616575764699" duration="4068000" />
+      <workItem from="1617023190977" duration="15043000" />
+      <workItem from="1617652613229" duration="597000" />
+      <workItem from="1617703192061" duration="3105000" />
+      <workItem from="1617737298297" duration="5245000" />
+      <workItem from="1618084165722" duration="662000" />
+      <workItem from="1618157348922" duration="595000" />
+      <workItem from="1618216739430" duration="8782000" />
+      <workItem from="1618388042282" duration="72658000" />
+      <workItem from="1618904341742" duration="9387000" />
+      <workItem from="1619122027541" duration="740000" />
+      <workItem from="1619369073868" duration="597000" />
+      <workItem from="1619605035639" duration="4110000" />
+      <workItem from="1619786593487" duration="1190000" />
+      <workItem from="1620066529033" duration="1190000" />
+      <workItem from="1620197567732" duration="606000" />
+      <workItem from="1620238786885" duration="2040000" />
+      <workItem from="1621522707455" duration="55000" />
+      <workItem from="1622404829336" duration="1191000" />
+      <workItem from="1622532601818" duration="167000" />
     </task>
     <servers />
   </component>
@@ -167,23 +298,5 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1601042979593">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1601042979593" />
-    <state x="389" y="96" width="776" height="562" key="find.popup" timestamp="1601556069250">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="389" y="96" width="776" height="562" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1601556069250" />
-    <state x="339" y="162" key="run.anything.popup" timestamp="1600779692543">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="339" y="162" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1600779692543" />
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1601056121810">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1601056121810" />
   </component>
 </project>

@@ -1,7 +1,5 @@
 import {cloneObject, throttleDebounce} from "./AwesomeGridLayoutUtils";
 import merge from "lodash.merge";
-import {EditorContext} from "./Editor/EditorContext";
-import {useContext} from "react";
 
 export default class BreakPointManager {
     constructor(breakpoints, editor, onBreakpointChange, onZoomLevelChange, onHeightChange, onResize) {

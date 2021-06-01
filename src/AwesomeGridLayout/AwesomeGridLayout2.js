@@ -1073,20 +1073,24 @@ export default class AwesomeGridLayout2 extends React.Component{
         coordinates = calcResult.coordinates;
         if (!newId) {
             if (gridItemStyle.alignSelf !== "stretch") {
-                child.setProps("width", childRect.width, coordinates, undefined,
-                    this.props.breakpointmanager.getHighestBpName());
+                if (child.getFromData("style").width !== "auto")
+                    child.setProps("width", childRect.width, coordinates, undefined,
+                        this.props.breakpointmanager.getHighestBpName());
             } else {
                 child.setProps("width", "auto", undefined,
                     this.props.breakpointmanager.getHighestBpName());
             }
             if (child.getFromData("style").height === "auto")
-                child.setProps("minHeight", childRect.height, coordinates, undefined,
-                    this.props.breakpointmanager.getHighestBpName());
+                if (child.getFromData("style").minHeight !== "auto")
+                    child.setProps("minHeight", childRect.height, coordinates, undefined,
+                        this.props.breakpointmanager.getHighestBpName());
             else {
-                child.setProps("height", childRect.height, coordinates, undefined,
-                    this.props.breakpointmanager.getHighestBpName());
-                child.setProps("minHeight", childRect.height, coordinates, undefined,
-                    this.props.breakpointmanager.getHighestBpName());
+                if (child.getFromData("style").height !== "auto")
+                    child.setProps("height", childRect.height, coordinates, undefined,
+                        this.props.breakpointmanager.getHighestBpName());
+                if (child.getFromData("style").minHeight !== "auto")
+                    child.setProps("minHeight", childRect.height, coordinates, undefined,
+                        this.props.breakpointmanager.getHighestBpName());
             }
         } else {
             newProps = {...child.props};
@@ -1309,6 +1313,9 @@ export default class AwesomeGridLayout2 extends React.Component{
     updateGridLines = (top, left, bottom, right, gridType) => {
         if (!this.isEditor()) return;
 
+        if (!this.getFromTempData("isContainer"))
+            return;
+
         let grid = this.getFromData("grid");
         this.props.gridLine.addGrid(
             this.props.id,
@@ -1398,17 +1405,18 @@ export default class AwesomeGridLayout2 extends React.Component{
         let {gridItemStyle, coordinates} = this.calculateGridItem(relativeX, relativeY, this.props.parent,
             width, height, parentRect);
 
-        if (gridItemStyle.justifySelf !== "stretch"){
-            this.setProps("width", width, coordinates, undefined, undefined, true);
-        } else {
-            this.setProps("width", "auto", undefined, undefined, undefined, true);
-        }
-        if (this.getCompositeFromData("style").height === "auto")
-            this.setProps("minHeight", height, coordinates, undefined, undefined, true);
-        else {
-            this.setProps("height", height, coordinates, undefined, undefined, true);
-            this.setProps("minHeight", height, coordinates, undefined, undefined, true);
-        }
+        // TODO uncomment if bug found
+        // if (gridItemStyle.justifySelf !== "stretch"){
+        //     this.setProps("width", width, coordinates, undefined, undefined, true);
+        // } else {
+        //     this.setProps("width", "auto", undefined, undefined, undefined, true);
+        // }
+        // if (this.getCompositeFromData("style").height === "auto")
+        //     this.setProps("minHeight", height, coordinates, undefined, undefined, true);
+        // else {
+        //     this.setProps("height", height, coordinates, undefined, undefined, true);
+        //     this.setProps("minHeight", height, coordinates, undefined, undefined, true);
+        // }
 
         this.setGridItemStyle(gridItemStyle);
 
@@ -2380,27 +2388,31 @@ export default class AwesomeGridLayout2 extends React.Component{
             calcResult.gridItemStyle;
         coordinates = calcResult.coordinates;
 
-        if (gridItemStyle.justifySelf !== "stretch" && this.getCompositeFromData("style").width !== "auto")
-            this.setProps("width", width, coordinates, undefined, undefined, true);
-        else
-            this.setProps("width", "auto", undefined, undefined, undefined, true);
+        if (dir.includes('e') || dir.includes('w')) {
+            if (gridItemStyle.justifySelf !== "stretch" && this.getCompositeFromData("style").width !== "auto")
+                this.setProps("width", width, coordinates, undefined, undefined, true);
+            else
+                this.setProps("width", "auto", undefined, undefined, undefined, true);
 
-        if (this.getCompositeFromData("style").minWidth) {
-            this.setProps("minWidth", width, coordinates, undefined, undefined, true);
-        }
-        if (this.getCompositeFromData("style").maxWidth) {
-            this.setProps("maxWidth", width, coordinates, undefined, undefined, true);
-        }
-
-        if (this.getCompositeFromData("style").height !== "auto") {
-            this.setProps("height", height, coordinates, undefined, undefined, true);
-        }
-        if (!this.getFromTempData("isVerticalSection")) {
-            if (this.getCompositeFromData("style").minHeight) {
-                this.setProps("minHeight", height, coordinates, undefined, undefined, true);
+            if (this.getCompositeFromData("style").minWidth) {
+                this.setProps("minWidth", width, coordinates, undefined, undefined, true);
             }
-            if (this.getCompositeFromData("style").maxHeight) {
-                this.setProps("maxHeight", height, coordinates, undefined, undefined, true);
+            if (this.getCompositeFromData("style").maxWidth) {
+                this.setProps("maxWidth", width, coordinates, undefined, undefined, true);
+            }
+        }
+
+        if (dir.includes('s') || dir.includes('n')) {
+            if (this.getCompositeFromData("style").height !== "auto") {
+                this.setProps("height", height, coordinates, undefined, undefined, true);
+            }
+            if (!this.getFromTempData("isVerticalSection")) {
+                if (this.getCompositeFromData("style").minHeight) {
+                    this.setProps("minHeight", height, coordinates, undefined, undefined, true);
+                }
+                if (this.getCompositeFromData("style").maxHeight) {
+                    this.setProps("maxHeight", height, coordinates, undefined, undefined, true);
+                }
             }
         }
 
@@ -2960,6 +2972,9 @@ export default class AwesomeGridLayout2 extends React.Component{
     };
 
     onMouseDown = (e, moveWithMouse) => {
+        if (!this.isEditor())
+            return;
+
         if (this.isLeftClick(e)) {
             e.stopPropagation();
             e.preventDefault();
@@ -3068,8 +3083,10 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         if (selected) {
             this.props.select.selectItem(this, clicked, dontUpdateAdjustment);
+            this.props.gridLine.removeGridLineByType("A");
             this.toggleGridLines(selected, undefined, "A");
         } else {
+            this.props.onDeSelectListener && this.props.onDeSelectListener(this);
             this.props.select.updateHelpSizeLines();
         }
 
@@ -3110,6 +3127,9 @@ export default class AwesomeGridLayout2 extends React.Component{
             this.updateLayout();
             return;
         }
+
+        if (!this.getFromTempData("isContainer"))
+            return;
 
         if (this.props.gridLine.hasGridLine(this.props.id, gridType)) {
             if (callback)
@@ -3292,6 +3312,11 @@ export default class AwesomeGridLayout2 extends React.Component{
             return this.callOverride("getContextMenu");
     };
 
+    onDoubleClick = (e) => {
+        if (this.callOverride("onDoubleClick", e))
+            return;
+    }
+
     render () {
         let {className, animationCss, as, editor, select, id, getStaticChildren,
             isPage, page, getChildrenOverride, modifyContainerStyleOverride} = this.props;
@@ -3305,7 +3330,6 @@ export default class AwesomeGridLayout2 extends React.Component{
         let compositeTransform = this.getCompositeFromData("transform") || {};
         let compositeStyle = this.getCompositeFromData("style");
         let overflowData = this.getCompositeFromData("overflowData");
-        console.log("bpData", this.props.griddata.bpData, this.props.id);
         let anchor = this.getFromTempData("anchor");
         let selectAsParent = this.props.gridLine.hasGridLine(this.props.id, "B") !== undefined;
 
@@ -3343,6 +3367,7 @@ export default class AwesomeGridLayout2 extends React.Component{
                             onMouseOut={this.onMouseOut}
                             onScroll={this.onRootScroll}
                             onWheel={this.onRootScroll}
+                            onDoubleClick={this.onDoubleClick}
                             id={id}
                             className={classes}
                             style={{

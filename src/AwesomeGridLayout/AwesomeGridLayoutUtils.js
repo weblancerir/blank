@@ -953,6 +953,28 @@ export function appendStyle(style, styleId, styleName){
     document.getElementsByTagName('head')[0].appendChild(styleNode);
 };
 
+export function addCSS(cssText, cssId, doc){
+    let styleNode = (doc || document).getElementById(cssId);
+
+    console.log("addCSS1", styleNode)
+    if (!styleNode) {
+        styleNode = (doc || document).createElement('style');
+        styleNode.setAttribute("id", cssId);
+        styleNode.type = 'text/css';
+    } else {
+        styleNode.innerHTML = "";
+    }
+
+    console.log("addCSS", cssId, doc, styleNode)
+    if (styleNode.styleSheet) { // IE
+        styleNode.styleSheet.cssText = cssText;
+    } else {
+        styleNode.appendChild((doc || document).createTextNode(cssText));
+    }
+
+    (doc || document).getElementsByTagName('head')[0].appendChild(styleNode);
+};
+
 /*export function appendStyle(style, styleId, styleName){
     return StyleSheet.create({
         [styleId]: style

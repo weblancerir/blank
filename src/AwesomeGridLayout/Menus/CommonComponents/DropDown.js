@@ -34,7 +34,7 @@ export default class DropDown extends React.Component {
 
     render () {
         return (
-            <div className="DropDownRoot">
+            <div className="DropDownRoot" style={this.props.rootStyle}>
                 <span
                     className="DropDownSpan"
                     style={{...this.props.spanStyle, ...{
@@ -42,7 +42,6 @@ export default class DropDown extends React.Component {
                     }}}
                     onClick={this.onClick}
                 >
-                    {console.log("DropDown", this.getValue())}
                     {this.getValue()}
                 </span>
 
@@ -76,7 +75,7 @@ export default class DropDown extends React.Component {
                                     }}
                                     style={{...(option.disabled && {
                                         pointerEvents: "none"
-                                    })}}
+                                    }), ...this.props.menuItemStyle}}
                                 >
                                     <span style={{
                                         width: "100%"

@@ -1,7 +1,23 @@
 import React from 'react';
 import BreakPointManager from "../BreakPointManager";
+import chroma from "chroma-js";
+import {addCSS, JSToCSS} from "../AwesomeGridLayoutUtils";
+
+function getColorScheme (baseColor) {
+    return {
+        "1": chroma(baseColor).luminance(0.025).css(),
+        "2": chroma(baseColor).luminance(0.06).css(),
+        "3": chroma(baseColor).luminance(0.15).css(),
+        "4": chroma(baseColor).luminance(0.35).css(),
+        "5": chroma(baseColor).luminance(0.55).css(),
+    }
+}
 
 export const EditorContext = React.createContext({});
+
+const colorKeys = [
+    "1","2","3","4","5",
+];
 
 export default class EditorContextProvider extends React.Component {
     constructor(props){
@@ -48,8 +64,101 @@ export default class EditorContextProvider extends React.Component {
             sendPublishCommand: this.sendPublishCommand,
             setProduction: this.setProduction,
             preview: false,
-            production: false
+            production: false,
+            getTheme: this.getTheme,
+            getColor: this.getColor,
+            getThemeColorClass: this.getThemeColorClass,
+            getThemeBackColorClass: this.getThemeBackColorClass,
+            calculateTheme: this.calculateTheme,
+            calculateColorCSS: this.calculateColorCSS
         };
+    }
+
+    getThemeColorClass = (color) => {
+        if (!color.paletteName || !color.key)
+            return '';
+
+        let name = color.paletteName.replaceAll(' ', '_');
+        return `Color_${name}_${color.key}`;
+    }
+
+    getThemeBackColorClass = (color) => {
+        if (!color.paletteName || !color.key)
+            return '';
+
+        let name = color.paletteName.replaceAll(' ', '_');
+        return `BackColor_${name}_${color.key}`;
+    }
+
+    getTheme = (category, name) => {
+        if (name)
+            return Object.values(this.state.siteData.theme[category].items).find(t => {
+                return t.name === name;
+            })
+
+        return Object.values(this.state.siteData.theme[category].items);
+    }
+
+    getColor = (paletteName, key) => {
+        let {siteData} = this.state;
+
+        let theme = siteData.theme;
+
+        this.calculateTheme(false);
+
+        return theme.Colors.items[paletteName][key];
+    };
+
+    calculateTheme = (force = true) => {
+        let {siteData} = this.state;
+
+        let theme = siteData.theme;
+
+        if (!theme.Colors.calculated) {
+            Object.values(theme.Colors.items).forEach(item => {
+                let scheme = getColorScheme(item.main);
+                colorKeys.forEach(key => {
+                    if (force || !item[key])
+                        item[key] = scheme[key];
+                })
+            });
+
+            theme.Colors.calculated = true;
+
+            this.calculateColorCSS();
+        }
+    };
+
+    calculateColorCSS = (doc) => {
+        let {siteData} = this.state;
+        let theme = siteData.theme;
+        let colorsCSS = [];
+        console.log("calculateColorCSS", doc);
+        Object.values(theme.Colors.items).forEach(item => {
+            colorKeys.forEach(key => {
+                let id = this.getThemeColorClass({
+                    paletteName: item.name,
+                    key: key
+                });
+                let backColor = this.getThemeBackColorClass({
+                    paletteName: item.name,
+                    key: key
+                });
+
+                let cssText = `
+                    .${id} {
+                        color: ${item[key]}
+                    }
+                    
+                    .${backColor} {
+                        background-color: ${item[key]}
+                    }
+                    `;
+
+                colorsCSS.push({cssText, id});
+                addCSS(cssText, id, doc);
+            })
+        });
     }
 
     setProduction = (callback) => {
@@ -102,8 +211,15 @@ export default class EditorContextProvider extends React.Component {
     };
 
     setSiteData = (siteData, callback) => {
-        this.setState({siteData}, callback);
+        this.setState({siteData}, () => {
+            this.postSiteData();
+            callback && callback();
+        });
     };
+
+    postSiteData = () => {
+        this.calculateColorCSS();
+    }
 
     setPageData = (pageId, force, callback) => {
         if (this.state.pageData && !force && this.state.pageData.props.pageId === pageId) {

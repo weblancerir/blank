@@ -1073,7 +1073,8 @@
           "fontSize": 22,
           "textColor": "#000000",
           "fontWeight": "normal",
-          "fontStyle": "normal"
+          "fontStyle": "normal",
+          "tagName": "h1"
         },
         "heading 2": {
           "name": "Heading 2",
@@ -1081,7 +1082,8 @@
           "fontSize": 28,
           "textColor": "#000000",
           "fontWeight": "bold",
-          "fontStyle": "normal"
+          "fontStyle": "normal",
+          "tagName": "h2"
         },
         "heading 3": {
           "name": "Heading 3",
@@ -1089,7 +1091,8 @@
           "fontSize": 88,
           "textColor": "#000000",
           "fontWeight": "bold",
-          "fontStyle": "normal"
+          "fontStyle": "normal",
+          "tagName": "h3"
         },
         "heading 4": {
           "name": "Heading 4",
@@ -1097,7 +1100,8 @@
           "fontSize": 72,
           "textColor": "#000000",
           "fontWeight": "bold",
-          "fontStyle": "normal"
+          "fontStyle": "normal",
+          "tagName": "h4"
         },
         "heading 5": {
           "name": "Heading 5",
@@ -1105,7 +1109,8 @@
           "fontSize": 50,
           "textColor": "#000000",
           "fontWeight": "bold",
-          "fontStyle": "normal"
+          "fontStyle": "normal",
+          "tagName": "h5"
         },
         "heading 6": {
           "name": "Heading 6",
@@ -1113,7 +1118,8 @@
           "fontSize": 40,
           "textColor": "#000000",
           "fontWeight": "bold",
-          "fontStyle": "normal"
+          "fontStyle": "normal",
+          "tagName": "h6"
         },
         "paragraph 1": {
           "name": "Paragraph 1",
@@ -1121,7 +1127,8 @@
           "fontSize": 18,
           "textColor": "#000000",
           "fontWeight": "normal",
-          "fontStyle": "normal"
+          "fontStyle": "normal",
+          "tagName": "p"
         },
         "paragraph 2": {
           "name": "Paragraph 2",
@@ -1129,7 +1136,8 @@
           "fontSize": 15,
           "textColor": "#000000",
           "fontWeight": "normal",
-          "fontStyle": "normal"
+          "fontStyle": "normal",
+          "tagName": "p"
         },
         "paragraph 3": {
           "name": "Paragraph 3",
@@ -1137,7 +1145,8 @@
           "fontSize": 14,
           "textColor": "#000000",
           "fontWeight": "normal",
-          "fontStyle": "normal"
+          "fontStyle": "normal",
+          "tagName": "p"
         }
       }
     },

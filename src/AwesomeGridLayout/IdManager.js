@@ -28,13 +28,11 @@ export default class IdManager {
     };
 
     setItem = (id, item) => {
-        console.log("IdMan setItem", id, item.props.id)
         this.allId[id] = item;
     };
 
     // return agl reference
     getItem = (id) => {
-        console.log("IdMan", Object.keys(this.allId))
         return this.allId[id];
     };
 

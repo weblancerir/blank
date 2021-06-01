@@ -1071,73 +1071,91 @@
           "name": "Heading 1",
           "font": "Arial",
           "fontSize": 22,
+          "lineHeight": "22px",
           "textColor": "#000000",
           "fontWeight": "normal",
-          "fontStyle": "normal"
+          "fontStyle": "normal",
+          "tagName": "h1"
         },
         "heading 2": {
           "name": "Heading 2",
           "font": "Arial",
           "fontSize": 28,
+          "lineHeight": "28px",
           "textColor": "#000000",
           "fontWeight": "bold",
-          "fontStyle": "normal"
+          "fontStyle": "normal",
+          "tagName": "h2"
         },
         "heading 3": {
           "name": "Heading 3",
           "font": "Arial",
           "fontSize": 88,
+          "lineHeight": "88px",
           "textColor": "#000000",
           "fontWeight": "bold",
-          "fontStyle": "normal"
+          "fontStyle": "normal",
+          "tagName": "h3"
         },
         "heading 4": {
           "name": "Heading 4",
           "font": "Arial",
           "fontSize": 72,
+          "lineHeight": "72px",
           "textColor": "#000000",
           "fontWeight": "bold",
-          "fontStyle": "normal"
+          "fontStyle": "normal",
+          "tagName": "h4"
         },
         "heading 5": {
           "name": "Heading 5",
           "font": "Arial",
           "fontSize": 50,
+          "lineHeight": "50px",
           "textColor": "#000000",
           "fontWeight": "bold",
-          "fontStyle": "normal"
+          "fontStyle": "normal",
+          "tagName": "h5"
         },
         "heading 6": {
           "name": "Heading 6",
           "font": "Arial",
           "fontSize": 40,
+          "lineHeight": "40px",
           "textColor": "#000000",
           "fontWeight": "bold",
-          "fontStyle": "normal"
+          "fontStyle": "normal",
+          "tagName": "h6"
         },
         "paragraph 1": {
           "name": "Paragraph 1",
           "font": "Arial",
           "fontSize": 18,
+          "lineHeight": "18px",
           "textColor": "#000000",
           "fontWeight": "normal",
-          "fontStyle": "normal"
+          "fontStyle": "normal",
+          "tagName": "p"
         },
         "paragraph 2": {
           "name": "Paragraph 2",
           "font": "Arial",
           "fontSize": 15,
+          "lineHeight": "15px",
           "textColor": "#000000",
           "fontWeight": "normal",
-          "fontStyle": "normal"
+          "fontStyle": "normal",
+          "tagName": "p"
         },
         "paragraph 3": {
           "name": "Paragraph 3",
           "font": "Arial",
           "fontSize": 14,
+          "lineHeight": "14px",
           "textColor": "#000000",
           "fontWeight": "normal",
-          "fontStyle": "normal"
+          "fontStyle": "normal",
+          "tagName": "p"
         }
       }
     },
@@ -1145,8 +1163,8 @@
       "name": "Colors",
       "order": 2,
       "items": {
-        "Background & Text": {
-          "name": "Background & Text",
+        "Background And Text": {
+          "name": "Background And Text",
           "main": "#C7C7C7",
           "1": null,
           "2": null,

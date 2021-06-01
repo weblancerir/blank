@@ -11,8 +11,11 @@ import InspectorAnchor from "../../Test/Inspector/InspectorAnchor";
 import MenuButton from "../../Menus/MenuBase/MenuButton";
 import SectionDesign from "./Menus/SectionDesign";
 import {parseColor, setStyleParam} from "../../AwesomwGridLayoutHelper";
+import {EditorContext} from "../../Editor/EditorContext";
 
 export default class Header extends AGLComponent{
+    static contextType = EditorContext;
+
     getDefaultData = () => {
         return {
             draggable: false,
@@ -58,7 +61,7 @@ export default class Header extends AGLComponent{
 
         console.log("updateDesign", compositeDesign.fillColor)
         if (compositeDesign.fillColor)
-            fillColor = parseColor(compositeDesign.fillColor, compositeDesign.fillColor.alpha, this.props.editor);
+            fillColor = parseColor(compositeDesign.fillColor, compositeDesign.fillColor.alpha, this.context);
 
         setStyleParam("backgroundColor", fillColor || "unset",
             this.getAgl(), 2, undefined, true);

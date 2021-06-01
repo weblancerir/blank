@@ -1,0 +1,9 @@
+.TextRoot{
+    position: relative;
+    margin: 0;
+    word-break: break-word;
+    text-align: center;
+    height: max-content;
+    /*overflow: hidden;*/
+    white-space: pre-wrap;
+}

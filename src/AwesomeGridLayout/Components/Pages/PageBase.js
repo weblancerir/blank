@@ -1242,7 +1242,7 @@ export default class PageBase extends AGLComponent {
 
         console.log("updateDesign", compositeDesign.fillColor)
         if (compositeDesign.fillColor)
-            fillColor = parseColor(compositeDesign.fillColor, compositeDesign.fillColor.alpha, this.props.editor);
+            fillColor = parseColor(compositeDesign.fillColor, compositeDesign.fillColor.alpha, this.context);
 
         setStyleParam("backgroundColor", fillColor || "unset",
             this.getAgl(), 2, undefined, true);

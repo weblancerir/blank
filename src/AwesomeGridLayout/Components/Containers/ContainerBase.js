@@ -7,8 +7,11 @@ import '../../HelperStyle.css';
 import './ContainerBase.css';
 import {getCompositeDesignData, parseColor, resolveDesignData} from "../../AwesomwGridLayoutHelper";
 import AnimationDesign from "./Menus/AnimationDesign";
+import {EditorContext} from "../../Editor/EditorContext";
 
 export default class ContainerBase extends AGLComponent{
+    static contextType = EditorContext;
+
     resolveDesignData = () => {
         resolveDesignData(this, "border", {shadow: {
                 xOffset: -1,
@@ -79,17 +82,17 @@ export default class ContainerBase extends AGLComponent{
         let border = getCompositeDesignData(this).border;
         let fillColor = getCompositeDesignData(this).fillColor;
         if (fillColor)
-            fillColor = parseColor(fillColor, fillColor.alpha, this.props.editor);
+            fillColor = parseColor(fillColor, fillColor.alpha, this.context);
 
         border.radius = border.radius || {};
         border.shadow = border.shadow || {};
 
         let shadowColor = border.shadow.color;
         if (shadowColor)
-            shadowColor = parseColor(shadowColor, shadowColor.alpha, this.props.editor);
+            shadowColor = parseColor(shadowColor, shadowColor.alpha, this.context);
         let borderColor = border.color;
         if (borderColor)
-            borderColor = parseColor(borderColor, borderColor.alpha, this.props.editor);
+            borderColor = parseColor(borderColor, borderColor.alpha, this.context);
 
         return <div
             className="ContainerBaseBorderRoot"

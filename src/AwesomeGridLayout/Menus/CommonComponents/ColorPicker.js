@@ -5,8 +5,11 @@ import SliderInputControlled from "./SliderInputControlled";
 import ThemeColorPicker from "../../Test/Theme/ThemeColorPicker";
 import chroma from "chroma-js";
 import {parseColor} from "../../AwesomwGridLayoutHelper";
+import {EditorContext} from "../../Editor/EditorContext";
 
 export default class ColorPicker extends React.Component {
+    static contextType = EditorContext;
+
     constructor (props) {
         super(props);
 
@@ -20,7 +23,7 @@ export default class ColorPicker extends React.Component {
             return;
 
         if (value instanceof Object) {
-            value = this.props.editor.themeManagerRef.current.getColor(value.paletteName, value.key);
+            value = this.context.getColor(value.paletteName, value.key);
         }
 
         let color = chroma(value);
@@ -45,11 +48,11 @@ export default class ColorPicker extends React.Component {
 
     handleChangeComplete = (color) => {
         if (color instanceof Object) {
-            console.log("handlehangeComplete1 this.lastValue", this.lastValue, parseColor(this.lastValue, this.lastValue.alpha, this.props.editor));
-            color.alpha = chroma(parseColor(this.lastValue, this.lastValue.alpha, this.props.editor)).alpha();
+            console.log("handlehangeComplete1 this.lastValue", this.lastValue, parseColor(this.lastValue, this.lastValue.alpha, this.context));
+            color.alpha = chroma(parseColor(this.lastValue, this.lastValue.alpha, this.context)).alpha();
             console.log("handlehangeComplete1 alpha", color.alpha);
             this.lastValue = color;
-            // color.alpha = chroma(parseColor(color, undefined, this.props.editor)).alpha();
+            // color.alpha = chroma(parseColor(color, undefined, this.context)).alpha();
             this.props.onDesignChange(this.props.designKey, color);
             return;
         }
@@ -63,15 +66,11 @@ export default class ColorPicker extends React.Component {
     };
 
     getColorAndAlpha = () => {
-        console.log("getColorAndAlpha",
-            this.props.color, parseColor(this.props.color, 1, this.props.editor), parseColor(this.props.color, this.props.color && this.props.color.alpha, this.props.editor));
-
         let result = {
-            color: chroma(parseColor(this.props.color, 1, this.props.editor)).alpha(0).hex(),
-            alpha: chroma(parseColor(this.props.color, this.props.color && this.props.color.alpha, this.props.editor)).alpha() * 100
+            color: chroma(parseColor(this.props.color, 1, this.context)).alpha(0).hex(),
+            alpha: chroma(parseColor(this.props.color, this.props.color && this.props.color.alpha, this.context)).alpha() * 100
         };
 
-        console.log("getColorAndAlpha result", result)
         return result;
     };
 
@@ -79,7 +78,6 @@ export default class ColorPicker extends React.Component {
         if (this.lastValue instanceof Object) {
             this.lastValue.alpha = alpha / 100;
         } else {
-            console.log("handleAlphaChange", alpha)
             this.lastValue = chroma(this.lastValue).alpha(alpha / 100).css();
         }
         this.props.onDesignChange(this.props.designKey, this.lastValue);
@@ -87,7 +85,6 @@ export default class ColorPicker extends React.Component {
 
     render () {
         let {color, alpha} = this.getColorAndAlpha();
-        console.log("colorpicker", color, alpha)
         return (
                 <div className="CommonMenuRoot ColorPickerRoot">
                     <ButtonBase
@@ -99,7 +96,7 @@ export default class ColorPicker extends React.Component {
                     >
                         <div
                             style={{
-                                background: parseColor(this.props.color, alpha/100, this.props.editor),
+                                background: parseColor(this.props.color, alpha/100, this.context),
                             }}
                         />
                     </ButtonBase>

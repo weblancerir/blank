@@ -38,11 +38,13 @@ export default class ThemeColorsItem extends React.Component {
 
         if (toChange.key === "main") {
             siteData.theme.Colors.calculated = false;
+            this.context.calculateTheme(true);
         }
 
         toChange.color = color;
         this.setState({toChange});
-        editor.setState({reload: true});
+        this.context.update();
+        // editor.setState({reload: true});
     };
 
     render() {

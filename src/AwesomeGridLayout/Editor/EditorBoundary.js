@@ -341,6 +341,9 @@ export default class EditorBoundary extends React.Component{
     };
 
     onResizeD = debounce((e, width) => {
+        if (!this.rootLayoutRef.current)
+            return;
+
         if (!width)
             width = this.rootLayoutRef.current.getSize(false, true).width;
         document.documentElement.style.setProperty('--vw-ratio', width / window.innerWidth);

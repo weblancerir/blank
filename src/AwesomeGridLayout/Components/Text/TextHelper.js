@@ -1,6 +1,6 @@
 export function getTextStyle (textTheme, textStaticData, textDesignData) {
     return {
-        fontFamily: "'Arial'",
+        fontFamily: textDesignData.fontFamily || "Arial",
         textAlign: `${textDesignData.textAlign || 'left'}`,
         fontSize: `${textDesignData.fontSize || textTheme.fontSize || 22}px`,
         fontWeight: `${textDesignData.fontWeight || textTheme.fontWeight || 'normal'}`,
@@ -11,6 +11,32 @@ export function getTextStyle (textTheme, textStaticData, textDesignData) {
         lineHeight: textDesignData.lineHeight || textTheme.lineHeight || 'normal',
         letterSpacing: textDesignData.letterSpacing || textTheme.letterSpacing || 'normal'
     }
+}
+
+export function getFontDataByFamily (allFonts, fontFamily) {
+    let fontData = Object.values(allFonts).find(fontData => {
+        return fontFamily === fontData.fontFamily;
+    })
+
+    if (fontData)
+        return fontData;
+
+    return Object.values(allFonts).find(fontData => {
+        return "Arial" === fontData.name;
+    })
+}
+
+export function getFontDataByName (allFonts, name) {
+    let fontData = Object.values(allFonts).find(fontData => {
+        return name === fontData.fontFamily;
+    })
+
+    if (fontData)
+        return fontData;
+
+    return Object.values(allFonts).find(fontData => {
+        return "Arial" === fontData.name;
+    })
 }
 
 export function getInheritTextStyle () {

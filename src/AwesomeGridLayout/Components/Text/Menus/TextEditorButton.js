@@ -1,8 +1,5 @@
 import React from "react";
-import Popper from "@material-ui/core/Popper/Popper";
-import {Button} from "@material-ui/core";
 import './TextEditor.css';
-import {alignItem} from "../../../AwesomwGridLayoutHelper";
 import IconButton from "../../../HelperComponents/IconButton";
 
 export default class TextEditorButton extends React.Component {
@@ -11,6 +8,7 @@ export default class TextEditorButton extends React.Component {
             <IconButton
                 buttonBaseStyle={{
                     marginLeft: 4,
+                    backgroundColor: this.props.selected ? "#dce9ff" : "unset"
                 }}
                 imageContainerStyle={{
                     padding: 6

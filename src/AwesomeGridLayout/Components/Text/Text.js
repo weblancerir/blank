@@ -11,6 +11,7 @@ import {
 } from "../../AwesomwGridLayoutHelper";
 import TextWrapper from "./TextWrapper";
 import {EditorContext} from "../../Editor/EditorContext";
+// import "./Fonts/StaticFonts.css";
 
 export default class Text extends AGLComponent{
     static contextType = EditorContext;

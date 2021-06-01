@@ -1,0 +1,33 @@
+@font-face {
+    font-family: 'Yekan';
+    src: url(https://weblancerstaticdata.s3.ir-thr-at1.arvanstorage.com/Yekan.woff2) format('truetype');
+}
+
+@font-face {
+    font-family: 'Mitra';
+    src: url(https://weblancerstaticdata.s3.ir-thr-at1.arvanstorage.com/Mitra.woff2) format('truetype');
+}
+
+@font-face {
+    font-family: 'Roya';
+    src: url(https://weblancerstaticdata.s3.ir-thr-at1.arvanstorage.com/Roya.woff2) format('truetype');
+}
+
+@font-face {
+    font-family: 'Tabassom';
+    src: url(https://weblancerstaticdata.s3.ir-thr-at1.arvanstorage.com/Tabassom.woff2) format('truetype');
+}
+
+@font-face {
+    font-family: 'Titr';
+    src: url(https://weblancerstaticdata.s3.ir-thr-at1.arvanstorage.com/Titr.woff2) format('truetype');
+}
+
+@font-face {
+    font-family: 'Vazir';
+    src: url(https://weblancerstaticdata.s3.ir-thr-at1.arvanstorage.com/Vazir.woff2) format('truetype');
+}
+
+@font-face {
+    font-family: 'Arial';
+}

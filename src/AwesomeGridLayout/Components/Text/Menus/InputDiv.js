@@ -7,7 +7,8 @@ export default class InputDiv extends React.Component {
     }
 
     render () {
-        let TextTag = this.props.tag;
+        let {tag, textStaticData} = this.props;
+        let TextTag = tag;
         return (
             <TextTag
                 id={"editableDiv"}

@@ -52,7 +52,7 @@ export default class InputWrapper extends React.Component {
     keydown = (e) => {
         e = e || window.event;
         let key = e.which || e.keyCode; // keyCode detection
-        if (key === 13) {
+        if (key === 13) { // Enter or Return
             e.preventDefault();
             e.stopPropagation();
 

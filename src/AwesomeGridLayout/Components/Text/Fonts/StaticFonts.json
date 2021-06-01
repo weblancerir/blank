@@ -1,0 +1,98 @@
+{
+  "Yekan": {
+    "name": "Yekan",
+    "display": "یکان",
+    "fontFamily": "Yekan, Arial, serif",
+    "isRtl": true
+  },
+  "Mitra": {
+    "name": "Mitra",
+    "display": "میترا",
+    "fontFamily": "Mitra, Arial, serif",
+    "isRtl": true
+  },
+  "Roya": {
+    "name": "Roya",
+    "display": "رویا",
+    "fontFamily": "Roya, Arial, serif",
+    "isRtl": true
+  },
+  "Tabassom": {
+    "name": "Tabassom",
+    "display": "تبسم",
+    "fontFamily": "Tabassom, Arial, serif",
+    "isRtl": true
+  },
+  "Titr": {
+    "name": "Titr",
+    "display": "تیتر",
+    "fontFamily": "Titr, Arial, serif",
+    "isRtl": true
+  },
+  "Vazir": {
+    "name": "Vazir",
+    "display": "وزیر",
+    "fontFamily": "Vazir, Arial, serif",
+    "isRtl": true
+  },
+  "Arial": {
+    "name": "Arial",
+    "display": "Arial",
+    "fontFamily": "Arial, serif",
+    "isRtl": false
+  },
+  "Verdana": {
+    "name": "Verdana",
+    "display": "Verdana",
+    "fontFamily": "Verdana, serif",
+    "isRtl": false
+  },
+  "Helvetica": {
+    "name": "Helvetica",
+    "display": "Helvetica",
+    "fontFamily": "Helvetica, serif",
+    "isRtl": false
+  },
+  "Tahoma": {
+    "name": "Tahoma",
+    "display": "Tahoma",
+    "fontFamily": "Tahoma, serif",
+    "isRtl": false
+  },
+  "Trebuchet MS": {
+    "name": "Trebuchet MS",
+    "display": "Trebuchet MS",
+    "fontFamily": "Trebuchet MS, serif",
+    "isRtl": false
+  },
+  "Times New Roman": {
+    "name": "Times New Roman",
+    "display": "Times New Roman",
+    "fontFamily": "Times New Roman, serif",
+    "isRtl": false
+  },
+  "Georgia": {
+    "name": "Georgia",
+    "display": "Georgia",
+    "fontFamily": "Georgia, serif",
+    "isRtl": false
+  },
+  "Garamond": {
+    "name": "Garamond",
+    "display": "Garamond",
+    "fontFamily": "Garamond, serif",
+    "isRtl": false
+  },
+  "Courier New": {
+    "name": "Courier New",
+    "display": "Courier New",
+    "fontFamily": "Courier New, serif",
+    "isRtl": false
+  },
+  "Brush Script MT": {
+    "name": "Brush Script MT",
+    "display": "Brush Script MT",
+    "fontFamily": "Brush Script MT, serif",
+    "isRtl": false
+  }
+}

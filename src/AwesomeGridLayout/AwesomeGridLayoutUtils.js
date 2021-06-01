@@ -956,7 +956,6 @@ export function appendStyle(style, styleId, styleName){
 export function addCSS(cssText, cssId, doc){
     let styleNode = (doc || document).getElementById(cssId);
 
-    console.log("addCSS1", styleNode)
     if (!styleNode) {
         styleNode = (doc || document).createElement('style');
         styleNode.setAttribute("id", cssId);
@@ -965,7 +964,6 @@ export function addCSS(cssText, cssId, doc){
         styleNode.innerHTML = "";
     }
 
-    console.log("addCSS", cssId, doc, styleNode)
     if (styleNode.styleSheet) { // IE
         styleNode.styleSheet.cssText = cssText;
     } else {

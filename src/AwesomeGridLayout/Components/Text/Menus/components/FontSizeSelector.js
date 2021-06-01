@@ -18,6 +18,10 @@ export default class FontSizeSelector extends React.Component {
         });
     }
 
+    setForceValue = (value) => {
+        this.onFontSizeChange(undefined, value, "input");
+    }
+
     onFontSizeChange = (e, value, reason) => {
         console.log("onFontSizeChange value reason", value, reason);
         if (reason === "input") {

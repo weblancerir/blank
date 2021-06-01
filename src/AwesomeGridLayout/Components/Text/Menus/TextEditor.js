@@ -4,9 +4,11 @@ import './TextEditor.css';
 import TextEditorButton from "./TextEditorButton";
 import {EditorContext} from "../../../Editor/EditorContext";
 import DropDown from "../../../Menus/CommonComponents/DropDown";
-import {getRandomColor} from "../TextHelper";
+import {getRandomColor, getFontDataByFamily} from "../TextHelper";
 import FontSizeSelector from "./components/FontSizeSelector";
 import TextColorSelector from "./components/TextColorSelector";
+import CSSManager from "../../../Test/CSSManager";
+import StaticFonts from '../Fonts/StaticFonts.json';
 
 export default class TextEditor extends React.Component {
     static contextType = EditorContext;
@@ -14,6 +16,8 @@ export default class TextEditor extends React.Component {
         super(props);
 
         this.state = {};
+
+        this.fontSizeSelectorRef = React.createRef();
     }
 
     // Depricated: These function does not support undo redo
@@ -31,6 +35,46 @@ export default class TextEditor extends React.Component {
         return textStaticData.dir;
     }
 
+    onIframeTextClicked = (e) => {
+        this.refreshState();
+    }
+
+    refreshState = () => {
+        window.requestAnimationFrame(() => {
+            const selection = this.props.doc.getSelection();
+
+            // set size
+            const size = window.getComputedStyle(selection.anchorNode.parentElement, null).getPropertyValue('font-size');
+            this.fontSizeSelectorRef.current.setForceValue(size);
+
+            // set bold
+            const fontWeight = window.getComputedStyle(selection.anchorNode.parentElement, null).getPropertyValue('font-weight');
+            let bold = (fontWeight === "700");
+
+            // set italic
+            const fontStyle = window.getComputedStyle(selection.anchorNode.parentElement, null).getPropertyValue('font-style');
+            let italic = (fontStyle === "italic");
+
+            // set underline
+            const decoration = window.getComputedStyle(selection.anchorNode.parentElement, null).getPropertyValue('text-decoration');
+            console.log("decoration", decoration)
+            let underline = (decoration.includes("underline"));
+
+            // set font name
+            let fontFamily =
+                window.getComputedStyle(selection.anchorNode.parentElement, null).getPropertyValue('font-family');
+
+            let fontData = getFontDataByFamily(StaticFonts, fontFamily);
+
+            this.setState({bold, italic, underline, fontData});
+        });
+    }
+
+    isTextSelcted = () => {
+            let sel = this.props.doc.getSelection();
+            return !(sel.toString().length < 1);
+    }
+
     render () {
         let {textTheme, textStaticData, textDesignData, anchorEI} = this.props;
         return (
@@ -39,7 +83,8 @@ export default class TextEditor extends React.Component {
                 anchorEl={anchorEI}
                 placement="top-start"
                 style={{
-                    zIndex: 9999999999999999
+                    zIndex: 9999999999999999,
+                    ...this.props.style
                 }}
                 modifiers={{
                     flip: {
@@ -116,28 +161,92 @@ export default class TextEditor extends React.Component {
                                     )
                                 }}
                             />
+                            <DropDown
+                                rootStyle={{
+                                    borderRight: "1px solid #c6c6c6",
+                                    marginRight: 12,
+                                    marginLeft: 4
+                                }}
+                                menuItemStyle={{
+                                    padding: 0
+                                }}
+                                options={Object.values(StaticFonts)}
+                                onChange={(fontData) => {
+                                    if (!this.isTextSelcted()) {
+                                        textDesignData.fontFamily = fontData.fontFamily;
+                                        this.props.onChangeData(textStaticData, textDesignData);
+                                        window.requestAnimationFrame(() => {
+                                            this.props.updateInputWrapper();
+                                            this.props.inputWrapperRef.current.onInput();
+                                        })
+                                    } else {
+                                        this.props.doc.execCommand('fontName', false, fontData.fontFamily);
+                                        this.refreshState();
+                                    }
+                                }}
+                                value={this.state.fontData? this.state.fontData:
+                                    getFontDataByFamily(StaticFonts, textDesignData.fontFamily)}
+                                spanStyle={{
+                                    width: 180,
+                                    fontSize: 14,
+                                    border: "0px solid #cfcfcf",
+                                }}
+                                renderer={(fontData) => {
+                                    let isRtlStyle = fontData.isRtl ? {justifyContent: "flex-end"}: {}
+                                    return (
+                                        <div className="TextEditorThemeRendererRoot" style={isRtlStyle} >
+                                            <span style={{
+                                                fontFamily: fontData.fontFamily
+                                            }}>
+                                                {fontData.display}
+                                            </span>
+                                        </div>
+                                    )
+                                }}
+                                valueRenderer={(fontData) => {
+                                    return (
+                                        <span style={{
+                                            fontFamily: fontData.fontFamily
+                                        }}>
+                                            {fontData.display}
+                                        </span>
+                                    )
+                                }}
+                            />
                             <FontSizeSelector
+                                ref={this.fontSizeSelectorRef}
                                 style={{ width: 64 }}
                                 textTheme={textTheme}
                                 textStaticData={textStaticData}
                                 textDesignData={textDesignData}
                                 onChange={(value) => {
-                                    this.props.doc.execCommand('fontSize', false, 1);
+                                    console.log("this.isTextSelcted()", this.isTextSelcted())
+                                    if (this.isTextSelcted()) {
+                                        this.props.doc.execCommand('fontSize', false, 1);
 
-                                    let nodes = this.props.doc.querySelectorAll(`[size="1"]`);
+                                        let nodes = this.props.doc.querySelectorAll(`[size="1"]`);
 
-                                    nodes.forEach(node => {
-                                        node.removeAttribute("size");
-                                        node.style.fontSize = `${value}px`;
-                                    })
+                                        nodes.forEach(node => {
+                                            node.removeAttribute("size");
+                                            node.style.fontSize = `${value}px`;
+                                        })
 
-                                    this.props.inputWrapperRef.current.onInput();
+                                        this.props.inputWrapperRef.current.onInput();
+                                    } else {
+                                        textDesignData.fontSize = value;
+                                        this.props.onChangeData(textStaticData, textDesignData);
+                                        window.requestAnimationFrame(() => {
+                                            this.props.inputWrapperRef.current.onInput();
+                                        })
+                                    }
                                 }}
                             />
                             <TextEditorButton
                                 onClick={(e) => {
                                     this.props.doc.execCommand('bold');
+                                    this.refreshState();
                                 }}
+                                selected={this.state.bold}
                             >
                                 <img draggable={false} width={16} height={16}
                                      src={process.env.PUBLIC_URL + '/static/icon/texteditor/bold.svg'} />
@@ -145,7 +254,9 @@ export default class TextEditor extends React.Component {
                             <TextEditorButton
                                 onClick={(e) => {
                                     this.props.doc.execCommand('italic');
+                                    this.refreshState();
                                 }}
+                                selected={this.state.italic}
                             >
                                 <img draggable={false} width={16} height={16}
                                      src={process.env.PUBLIC_URL + '/static/icon/texteditor/italic.svg'} />
@@ -153,7 +264,9 @@ export default class TextEditor extends React.Component {
                             <TextEditorButton
                                 onClick={(e) => {
                                     this.props.doc.execCommand('underline');
+                                    this.refreshState();
                                 }}
+                                selected={this.state.underline}
                             >
                                 <img draggable={false} width={16} height={16}
                                      src={process.env.PUBLIC_URL + '/static/icon/texteditor/underline.svg'} />
@@ -259,32 +372,44 @@ export default class TextEditor extends React.Component {
                         <div className="TextEditorContainerRow">
                             <TextEditorButton
                                 onClick={(e) => {
-                                    this.props.doc.execCommand('justifyLeft');
+                                    // this.props.doc.execCommand('justifyLeft');
+                                    textDesignData.textAlign = undefined;
+                                    this.props.onChangeData(textStaticData, textDesignData);
                                 }}
+                                selected={textDesignData.textAlign === undefined}
                             >
                                 <img draggable={false} width={16} height={16}
                                      src={process.env.PUBLIC_URL + '/static/icon/texteditor/align-left.svg'} />
                             </TextEditorButton>
                             <TextEditorButton
                                 onClick={(e) => {
-                                    this.props.doc.execCommand('justifyCenter');
+                                    // this.props.doc.execCommand('justifyCenter');
+                                    textDesignData.textAlign = "center";
+                                    this.props.onChangeData(textStaticData, textDesignData);
                                 }}
+                                selected={textDesignData.textAlign === "center"}
                             >
                                 <img draggable={false} width={16} height={16}
                                      src={process.env.PUBLIC_URL + '/static/icon/texteditor/align-center.svg'} />
                             </TextEditorButton>
                             <TextEditorButton
                                 onClick={(e) => {
-                                    this.props.doc.execCommand('justifyRight');
+                                    // this.props.doc.execCommand('justifyRight');
+                                    textDesignData.textAlign = "right";
+                                    this.props.onChangeData(textStaticData, textDesignData);
                                 }}
+                                selected={textDesignData.textAlign === "right"}
                             >
                                 <img draggable={false} width={16} height={16}
                                      src={process.env.PUBLIC_URL + '/static/icon/texteditor/align-right.svg'} />
                             </TextEditorButton>
                             <TextEditorButton
                                 onClick={(e) => {
-                                    this.props.doc.execCommand('justifyFull');
+                                    // this.props.doc.execCommand('justifyFull');
+                                    textDesignData.textAlign = "justify";
+                                    this.props.onChangeData(textStaticData, textDesignData);
                                 }}
+                                selected={textDesignData.textAlign === "justify"}
                             >
                                 <img draggable={false} width={16} height={16}
                                      src={process.env.PUBLIC_URL + '/static/icon/texteditor/justify.svg'} />

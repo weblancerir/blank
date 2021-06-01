@@ -22,6 +22,7 @@ export default class TextWrapper extends React.PureComponent {
 
         this.iframe = React.createRef();
         this.inputWrapperRef = React.createRef();
+        this.textEditorRef = React.createRef();
     }
 
     setEditableStyle = (editableStyle) => {
@@ -71,120 +72,117 @@ export default class TextWrapper extends React.PureComponent {
         this.inputWrapperRef.current.updateHeight();
     }
 
+    onIframeTextClicked = (e) => {
+        if (this.textEditorRef && this.textEditorRef.current)
+            this.textEditorRef.current.onIframeTextClicked(e);
+    }
+
     render () {
         let {textTheme, textStaticData, textDesignData} = this.props;
 
         let TextTag = this.getTag();
 
-        if (!this.state.editMode) {
-            return (
+        let editDisplayNoneStyle = this.state.editMode? {}: {display: "none"};
+        let nonEditDisplayNoneStyle = !this.state.editMode? {}: {display: "none"};
+        return (
+            <>
                 <TextTag
                     className="TextRoot"
-                    style={getTextStyle(textTheme, textStaticData, textDesignData)}
+                    style={{
+                        ...getTextStyle(textTheme, textStaticData, textDesignData),
+                        ...nonEditDisplayNoneStyle
+                    }}
                     dir={textStaticData.dir || "ltr"}
                     dangerouslySetInnerHTML={{ __html: textStaticData.textValue }}
                 >
-                    {/*<div*/}
-                    {/*    style={{...{*/}
-                    {/*        width: "100%",*/}
-                    {/*        boxSizing: "border-box",*/}
-                    {/*        margin: 0,*/}
-                    {/*        height: "auto",*/}
-                    {/*        overflow: "hidden",*/}
-                    {/*        display: "inline-block",*/}
-                    {/*        whiteSpace: 'pre-wrap'*/}
-                    {/*    }}}*/}
-                    {/*    dangerouslySetInnerHTML={{ __html: textStaticData.textValue }}*/}
-                    {/*>*/}
-                    {/*</div>*/}
                 </TextTag>
-            )
-        } else {
-            return (
                 <ClickAwayListener onClickAway={(e) => this.setEditMode(false)}>
                     <>
-                    {
-                        this.state.iframeNode &&
-                        <TextEditor
-                            onChangeData={this.props.onChangeData}
-                            inputWrapperRef={this.inputWrapperRef}
-                            onChange={this.props.onChange}
-                            textStaticData={textStaticData}
-                            textTheme={textTheme}
-                            textDesignData={textDesignData}
-                            anchorEI={this.state.iframeNode}
-                            iframeNode={this.state.iframeNode}
-                            updateInputWrapper={this.updateInputWrapper}
-                            doc={this.doc}
-                        />
-                    }
-                    <Frame
-                        id={"Hello"}
-                        key={'textEditorFrame'}
-                        ref={this.iframe}
-                        title="iFrame example"
-                        style={{
-                            width: this.state.iframeWidth || "unset",
-                            height: this.state.iframeHeight || "unset",
-                            border: 0
-                        }}
-                        head={<>
-                            <style type="text/css">
-                                {`
-                                body{
-                                    width: fit-content;
-                                    height: fit-content;
-                                    box-sizing: border-box;
-                                    margin: 0px;
-                                    display: flex;
-                                    overflow: hidden;
-                                }
-                                body>div{
-                                    width: fit-content;
-                                    height: fit-content;
-                                    box-sizing: border-box;
-                                    margin: 0px;
-                                    display: flex;
-                                    overflow: hidden;
-                                }
-//                                 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
-//   margin: 0;
-//   padding: 0;
-//   border: 0;
-//   outline: 0;
-//   vertical-align: baseline;
-//   background: transparent;
-// }
-                            `}
-                            </style>
-                        </>}
-                        documentRef={(doc) => {
-                            this.doc = doc;
-                        }}
-                    >
-                        <InputWrapper
-                            onLoad={() => {
-                                this.resizeIFrameToFitContent(this.doc);
+                        {
+                            this.state.iframeNode && this.state.editMode &&
+                            <TextEditor
+                                ref={this.textEditorRef}
+                                onChangeData={this.props.onChangeData}
+                                inputWrapperRef={this.inputWrapperRef}
+                                onChange={this.props.onChange}
+                                textStaticData={textStaticData}
+                                textTheme={textTheme}
+                                textDesignData={textDesignData}
+                                anchorEI={this.state.iframeNode}
+                                iframeNode={this.state.iframeNode}
+                                updateInputWrapper={this.updateInputWrapper}
+                                doc={this.doc}
+                            />
+                        }
+                        <Frame
+                            id={"Hello"}
+                            key={'textEditorFrame'}
+                            ref={this.iframe}
+                            title="iFrame example"
+                            style={{
+                                width: this.state.iframeWidth || "unset",
+                                height: this.state.iframeHeight || "unset",
+                                border: 0,
+                                display: "block",
+                                ...editDisplayNoneStyle
                             }}
-                            onUpdate={() => {
-                                this.resizeIFrameToFitContent(this.doc);
+                            head={<>
+                                <link id="wix_richtext_font_url_googleFonts" type="text/css" rel="stylesheet"
+                                      href="https://weblancerstaticdata.s3.ir-thr-at1.arvanstorage.com/StaticFonts.css"/>
+                                <style type="text/css">
+                                    {`
+                            body{
+                                width: fit-content;
+                                height: fit-content;
+                                box-sizing: border-box;
+                                margin: 0px;
+                                display: flex;
+                                overflow: hidden;
+                            }
+                            body>div{
+                                width: fit-content;
+                                height: fit-content;
+                                box-sizing: border-box;
+                                margin: 0px;
+                                display: flex;
+                                overflow: hidden;
+                            }
+                            
+
+                        `}
+                                </style>
+                            </>}
+                            documentRef={(doc) => {
+                                this.doc = doc;
+                                console.log("Listen !!!!!!!")
+                                this.doc.addEventListener("click", (e) => {
+                                    this.onIframeTextClicked(e);
+                                })
                             }}
-                            onChange={this.props.onChange}
-                            value={textStaticData.textValue}
-                            width={this.props.width}
-                            ref={this.inputWrapperRef}
-                            tag={this.getTag()}
-                            textTheme={textTheme}
-                            textStaticData={textStaticData}
-                            textDesignData={textDesignData}
-                            iframeNode={this.state.iframeNode}
-                            doc={this.doc}
                         >
-                        </InputWrapper>
-                    </Frame>
+                            <InputWrapper
+                                onLoad={() => {
+                                    this.resizeIFrameToFitContent(this.doc);
+                                }}
+                                onUpdate={() => {
+                                    this.resizeIFrameToFitContent(this.doc);
+                                }}
+                                onChange={this.props.onChange}
+                                value={textStaticData.textValue}
+                                width={this.props.width}
+                                ref={this.inputWrapperRef}
+                                tag={this.getTag()}
+                                textTheme={textTheme}
+                                textStaticData={textStaticData}
+                                textDesignData={textDesignData}
+                                iframeNode={this.state.iframeNode}
+                                doc={this.doc}
+                            >
+                            </InputWrapper>
+                        </Frame>
                     </>
                 </ClickAwayListener>
-            )
-        }
+            </>
+        )
     }
 }

@@ -15,6 +15,7 @@ export default class TextEditorButton extends React.Component {
                 }}
                 onClick={this.props.onClick}
                 rootRef={this.props.rootRef}
+                disabled={this.props.disabled}
             >
                 {this.props.children}
             </IconButton>

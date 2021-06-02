@@ -1,0 +1,37 @@
+.LinkGeneratorRoot {
+    height: 300px;
+}
+
+.LinkGeneratorFooter {
+    height: 64px;
+}
+
+.LinkGeneratorFooterCancel {
+}
+
+.LinkGeneratorFooterDone {
+}
+
+.LinkGeneratorContent {
+    display: flex;
+}
+
+.LinkGeneratorTypes {
+    flex: 1;
+    background-color: #7faddb;
+}
+
+.LinkGeneratorOptions {
+    flex: 3;
+    background-color: #e5c88d;
+}
+
+.LinkGeneratorOptionNone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.LinkGeneratorOptionNoneInput {
+    flex: 1
+}

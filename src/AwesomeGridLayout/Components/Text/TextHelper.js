@@ -195,6 +195,15 @@ export function getRandomColor() {
     return color;
 }
 
+export function getRandomLinkId(lenght) {
+    var letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var id = '';
+    for (var i = 0; i < lenght; i++) {
+        id += letters[Math.floor(Math.random() * letters.length)];
+    }
+    return id;
+}
+
 export function getLineSelected(selection) {
     let range = selection.getRangeAt(0);
     let nodes = getRangeSelectedNodes(range);

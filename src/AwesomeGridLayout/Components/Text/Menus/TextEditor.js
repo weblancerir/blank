@@ -4,7 +4,7 @@ import './TextEditor.css';
 import TextEditorButton from "./TextEditorButton";
 import {EditorContext} from "../../../Editor/EditorContext";
 import DropDown from "../../../Menus/CommonComponents/DropDown";
-import {getRandomColor, getFontDataByFamily} from "../TextHelper";
+import {getRandomColor, getFontDataByFamily, getRandomLinkId, getRangeSelectedNodes} from "../TextHelper";
 import FontSizeSelector from "./components/FontSizeSelector";
 import TextColorSelector from "./components/TextColorSelector";
 import CSSManager from "../../../Test/CSSManager";
@@ -36,6 +36,7 @@ export default class TextEditor extends React.Component {
     }
 
     onIframeTextClicked = (e) => {
+        this.getSelectedLink();
         this.refreshState();
     }
 
@@ -66,13 +67,59 @@ export default class TextEditor extends React.Component {
 
             let fontData = getFontDataByFamily(StaticFonts, fontFamily);
 
-            this.setState({bold, italic, underline, fontData});
+            let multiLineSelect = /\r|\n/.exec(selection);
+
+            this.setState({bold, italic, underline, fontData, multiLineSelect});
         });
     }
 
     isTextSelcted = () => {
-            let sel = this.props.doc.getSelection();
-            return !(sel.toString().length < 1);
+            let selection = this.props.doc.getSelection();
+            return !(selection.toString().length < 1);
+    }
+
+    getSelectedLinkId = () => {
+        let selection = this.props.doc.getSelection();
+        let range = selection.getRangeAt(0);
+        let nodes = getRangeSelectedNodes(range);
+        nodes.forEach(node => {
+            while (node) {
+                if (node.hasAttribute("islink")) {
+                    return node.getAttribute("id");
+                }
+                node = node.parentNode;
+            }
+        });
+        return false;
+    }
+
+    onLinkGenerated = (linkData) => {
+        let {textDesignData} = this.props;
+
+        if (!textDesignData.links)
+            textDesignData.links = {};
+
+        let linkId = getRandomLinkId(12);
+        if (this.getSelectedLink())
+        {
+            linkId = this.getSelectedLinkId();
+            textDesignData.links[linkId] = linkData;
+        }
+        else
+        {
+            this.props.doc.execCommand('underline');
+            this.props.doc.execCommand('createlink', false, "link1");
+
+            let nodes = this.props.doc.querySelectorAll(`[href="link1"]`);
+
+            nodes.forEach(node => {
+                node.removeAttribute("href");
+                node.setAttribute("id", linkId);
+                node.setAttribute("islink", true);
+            })
+
+            this.refreshState();
+        }
     }
 
     render () {
@@ -370,6 +417,15 @@ export default class TextEditor extends React.Component {
                             </TextColorSelector>
                         </div>
                         <div className="TextEditorContainerRow">
+                            <TextEditorButton
+                                onClick={(e) => {
+
+                                }}
+                                selected={textDesignData.textAlign === undefined}
+                            >
+                                <img draggable={false} width={16} height={16}
+                                     src={process.env.PUBLIC_URL + '/static/icon/texteditor/align-left.svg'} />
+                            </TextEditorButton>
                             <TextEditorButton
                                 onClick={(e) => {
                                     // this.props.doc.execCommand('justifyLeft');

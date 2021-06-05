@@ -903,6 +903,7 @@ export default class AwesomeGridLayout2 extends React.Component{
         delete props.page;
         delete props.gridEditorRef;
         delete props.onChildMounted;
+        delete props.filDataOnMount;
 
         Object.keys(this.getAllOverrideProps(props)).forEach(key => {
             delete props[key];
@@ -1010,10 +1011,16 @@ export default class AwesomeGridLayout2 extends React.Component{
     };
 
     onMouseEnter = (e) => {
+        if (this.hasOverride("onMouseEnter"))
+            this.callOverride("onMouseEnter", e);
+
         this.onMouseOver(e, true);
     };
 
     onMouseOut = (e, outAllParent) => {
+        if (this.hasOverride("onMouseOut"))
+            this.callOverride("onMouseOut", e);
+
         if (outAllParent && this.props.parent && this.props.parent.onMouseOut)
             this.props.parent.onMouseOut(e);
 
@@ -3331,6 +3338,7 @@ export default class AwesomeGridLayout2 extends React.Component{
         let compositeStyle = this.getCompositeFromData("style");
         let overflowData = this.getCompositeFromData("overflowData");
         let anchor = this.getFromTempData("anchor");
+        let customStyle = this.getFromTempData("customStyle") || {};
         let selectAsParent = this.props.gridLine.hasGridLine(this.props.id, "B") !== undefined;
 
         let classes = classNames(
@@ -3360,6 +3368,7 @@ export default class AwesomeGridLayout2 extends React.Component{
                     select={select}
                     disableVS={disableVS}
                 >
+                    {console.log("customStyle", customStyle)}
                         <TagAs
                             onMouseDown={!showAnimation ? this.onMouseDown : undefined}
                             onMouseOver={this.onMouseOver}
@@ -3381,7 +3390,8 @@ export default class AwesomeGridLayout2 extends React.Component{
                                 }),
                                 ...(showAnimation && {
                                     opacity: 0
-                                })
+                                }),
+                                ...customStyle
                             }}
                             ref={this.rootDivRef}
                             key={id}
@@ -3417,6 +3427,7 @@ export default class AwesomeGridLayout2 extends React.Component{
                                 />
                             }
 
+                            {isPage && <div id={"top"}></div>}
                             <ChildHolder
                                 className={holderClasses}
                                 key={forceKey || `${id}_container`}
@@ -3453,6 +3464,7 @@ export default class AwesomeGridLayout2 extends React.Component{
                                     selected={selected}
                                 />
                             </ChildHolder>
+                            {isPage && <div id={"bottom"}></div>}
 
                             <AGLAnchor
                                 anchor={anchor}

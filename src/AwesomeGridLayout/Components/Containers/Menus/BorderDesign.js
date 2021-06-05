@@ -79,7 +79,7 @@ export default class BorderDesign extends React.Component {
             {
                 key: "Corner",
                 render: <Corners
-                    radius={design.border.radius}
+                    radius={design.border.radius || {}}
                     designKey={"design.border.radius"}
                     onDesignChange={this.props.onDesignChange}
                 />
@@ -87,7 +87,7 @@ export default class BorderDesign extends React.Component {
             {
                 key: "Shadow",
                 render: <Shadow
-                    shadow={design.border.shadow}
+                    shadow={design.border.shadow || {}}
                     designKey={"design.border.shadow"}
                     onDesignChange={this.props.onDesignChange}
                     editor={this.props.item.props.editor}

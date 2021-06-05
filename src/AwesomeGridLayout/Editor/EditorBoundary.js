@@ -38,6 +38,8 @@ import EditorHeader from "./EditorHeader";
 import PreviewHeader from "./PreviewHeader";
 import PageView from "./PageView";
 import classNames from "classnames";
+import LinkGenerator from "../Components/Text/Menus/components/LinkGenerator";
+import {addLinkData, getSelectedLinkData} from "../Components/Text/Menus/components/LinkHelper";
 
 export default class EditorBoundary extends React.Component{
     static contextType = EditorContext;
@@ -485,6 +487,10 @@ export default class EditorBoundary extends React.Component{
         return this.context.production;
     }
 
+    showLinkGenerator = (linkData, onDone) => {
+        this.setState({linkGenerator: {linkData, onDone}});
+    }
+
     render() {
         // TODO if this.context.siteData not loaded, show loading component
         let borderClassess = classNames(
@@ -671,6 +677,16 @@ export default class EditorBoundary extends React.Component{
                                     <ThemeManager
                                         ref={this.themeManagerRef}
                                         editor={this}
+                                    />
+                                }
+
+                                {
+                                    this.state.linkGenerator &&
+                                    <LinkGenerator
+                                        open={true}
+                                        linkData={this.state.linkGenerator.linkData}
+                                        onClose={() => {this.setState({linkGenerator: undefined})}}
+                                        onDone={this.state.linkGenerator.onDone}
                                     />
                                 }
 

@@ -3,6 +3,15 @@ import './TextEditor.css';
 import IconButton from "../../../HelperComponents/IconButton";
 
 export default class TextEditorButton extends React.Component {
+    getImage = () => {
+        if (this.props.selected && this.props.selectedIcon)
+            return this.props.selectedIcon;
+
+        if (this.props.disabled && this.props.disabledIcon)
+            return this.props.disabledIcon;
+
+        return this.props.children;
+    }
     render () {
         return (
             <IconButton
@@ -17,7 +26,7 @@ export default class TextEditorButton extends React.Component {
                 rootRef={this.props.rootRef}
                 disabled={this.props.disabled}
             >
-                {this.props.children}
+                {this.getImage()}
             </IconButton>
         )
     }

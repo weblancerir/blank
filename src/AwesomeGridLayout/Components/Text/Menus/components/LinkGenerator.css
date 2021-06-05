@@ -1,37 +1,87 @@
 .LinkGeneratorRoot {
-    height: 300px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .LinkGeneratorFooter {
-    height: 64px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 12px 12px;
 }
 
 .LinkGeneratorFooterCancel {
+    text-transform: capitalize !important;
+    margin-right: auto !important;
 }
 
 .LinkGeneratorFooterDone {
+    text-transform: capitalize !important;
 }
 
 .LinkGeneratorContent {
     display: flex;
+    align-items: stretch;
+    flex: 1;
+    border-bottom: solid 1px #d9d9d9;
 }
 
 .LinkGeneratorTypes {
     flex: 1;
-    background-color: #7faddb;
+    padding: 12px 24px;
+    border-right: solid 1px #d9d9d9;
+}
+
+.LinkGeneratorTypesLabel{
+    margin: 0;
+    font-size: 14px;
 }
 
 .LinkGeneratorOptions {
-    flex: 3;
-    background-color: #e5c88d;
+    flex: 2.7;
+    overflow-y: auto;
+    justify-content: center;
+    padding: 12px 24px;
+}
+
+.LinkGeneratorHorizontalDivider {
+    width: 100%;
+    border-bottom: solid 1px #d9d9d9;
+    margin: 24px 0 16px 0;
+}
+
+.LinkGeneratorVerticalSpace {
+    width: 100%;
+    /*border-bottom: solid 1px #d9d9d9;*/
+    margin: 12px 0 12px 0;
 }
 
 .LinkGeneratorOptionNone {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 100%;
 }
 
-.LinkGeneratorOptionNoneInput {
-    flex: 1
+.LinkGeneratorOptionWebAddress {
+}
+
+.LinkGeneratorOptionWebAddressInputContainer{
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.LinkGeneratorOptionWebAddressInput {
+    flex: 1;
+    margin: 0 !important;
+}
+
+.LinkGeneratorOptionWebAddressUrlError {
+    margin-left: 12px;
+}
+
+.LinkGeneratorOptionWebAddressTip {
 }

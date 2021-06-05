@@ -5,6 +5,7 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import TextEditor from "./Menus/TextEditor";
 import {EditorContext} from "../../Editor/EditorContext";
 import {getTextStyle} from "./TextHelper";
+import {resolveLinks} from "./Menus/components/LinkHelper";
 
 export default class TextWrapper extends React.PureComponent {
     static contextType = EditorContext;
@@ -23,6 +24,11 @@ export default class TextWrapper extends React.PureComponent {
         this.iframe = React.createRef();
         this.inputWrapperRef = React.createRef();
         this.textEditorRef = React.createRef();
+        this.textTagRef = React.createRef();
+    }
+
+    componentDidMount() {
+        resolveLinks(this.textTagRef.current, this.context.preview, this.context.production, this.context);
     }
 
     setEditableStyle = (editableStyle) => {
@@ -87,6 +93,7 @@ export default class TextWrapper extends React.PureComponent {
         return (
             <>
                 <TextTag
+                    ref={this.textTagRef}
                     className="TextRoot"
                     style={{
                         ...getTextStyle(textTheme, textStaticData, textDesignData),
@@ -114,11 +121,12 @@ export default class TextWrapper extends React.PureComponent {
                                 doc={this.doc}
                             />
                         }
+                        <div id="TextEditorIFrame">
                         <Frame
                             id={"Hello"}
                             key={'textEditorFrame'}
                             ref={this.iframe}
-                            title="iFrame example"
+                            title="TextEditorIFrame"
                             style={{
                                 width: this.state.iframeWidth || "unset",
                                 height: this.state.iframeHeight || "unset",
@@ -180,6 +188,7 @@ export default class TextWrapper extends React.PureComponent {
                             >
                             </InputWrapper>
                         </Frame>
+                        </div>
                     </>
                 </ClickAwayListener>
             </>

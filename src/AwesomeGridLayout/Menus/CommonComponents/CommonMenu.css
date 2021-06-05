@@ -99,7 +99,7 @@
     height: 1px;
     background-color: #cccccc;
     margin: 8px 16px;
-    display: inline-table;
+    display: block;
 }
 
 .CircularSliderRoot {

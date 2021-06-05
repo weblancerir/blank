@@ -14,6 +14,7 @@ import InspectorAdjustment from "../../Test/Inspector/InspectorAdjustment";
 export default class AGLComponent extends React.Component{
     constructor (props) {
         super(props);
+        console.log("AGLComponent constructor");
     }
 
     resolveDesignData = () => {

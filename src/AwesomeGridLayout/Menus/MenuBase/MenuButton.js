@@ -12,6 +12,11 @@ export default class MenuButton extends React.Component {
     }
 
     onClick = (e) => {
+        if (this.props.onClick) {
+            this.props.onClick(e);
+            return;
+        }
+
         let {menu} = this.props;
         this.props.select.updateMenu((typeof menu === "function") ? menu(e) : menu);
     };

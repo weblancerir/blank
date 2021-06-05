@@ -3,11 +3,12 @@ import {EditorContext} from "../../../../Editor/EditorContext";
 import IconButton from "../../../../HelperComponents/IconButton";
 import Modal from "@material-ui/core/Modal";
 import './LinkGenerator.css';
-import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import LightTooltip from "../../../Containers/Menus/Components/LightTooltip";
 import Button from "@material-ui/core/Button/Button";
+import SmallRadio from "../../../../HelperComponents/SmallRadio";
+import DropDown from "../../../../Menus/CommonComponents/DropDown";
 
 export default class LinkGenerator extends React.Component {
     static contextType = EditorContext;
@@ -17,10 +18,10 @@ export default class LinkGenerator extends React.Component {
 
         this.state = {
             type: props.linkData? props.linkData.type: "None",
-            linkData: props.linkData
+            linkData: props.linkData || {type: "None", data: {}}
         };
 
-        this.buttonRef = React.createRef();
+        console.log("LinkGenerator", props.linkData)
     }
 
 
@@ -32,8 +33,14 @@ export default class LinkGenerator extends React.Component {
         if (!homePage)
             homePage = Object.values(this.context.siteData.allPages)[0];
 
-        return homePage.id;
+        return homePage.props.pageId;
     }
+
+    getPageOptions = () => {
+        return Object.values(this.context.siteData.allPages).map(page => {
+            return {pageId: page.props.pageId, pageName: page.props.pageName};
+        })
+    };
 
     getFirstLightBoxId = () => {
         return "";
@@ -89,6 +96,22 @@ export default class LinkGenerator extends React.Component {
         return !!pattern.test(str);
     }
 
+    validPhone = (str) => {
+        if (!str || str.length < 3)
+            return false;
+
+        console.log("validPhone", !!/^\d+$/.test(str))
+        return !!/^\d+$/.test(str);
+    }
+
+    validEmail = (str) => {
+        if (!str || str.length < 3)
+            return false;
+
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(str).toLowerCase());
+    }
+
     isLinkReadyForDone = () => {
         let {type, linkData} = this.state;
 
@@ -98,17 +121,17 @@ export default class LinkGenerator extends React.Component {
             case "WebAddress":
                 return this.validURL(linkData.data.url);
             case "Page":
-                // TODO
+                return true;
             case "Anchor":
                 // TODO
             case "TopBottomThisPage":
-                // TODO
+                return true;
             case "Document":
                 // TODO
             case "Email":
-                // TODO
+                return this.validEmail(linkData.data.email);
             case "Phone":
-                // TODO
+                return this.validPhone(linkData.data.number);
             case "LightBox":
                 // TODO
         }
@@ -121,12 +144,12 @@ export default class LinkGenerator extends React.Component {
         return <Modal
             open={this.props.open}
             onClose={this.props.onClose}
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
+            aria-labelledby="simple-modal-title2"
+            aria-describedby="simple-modal-description2"
             className="PageSettingModal"
             disableBackdropClick
         >
-            <div className="PageSettingRoot">
+            <div className="PageSettingRoot" style={{height: "auto"}}>
                 {/*Header*/}
                 <div className="PageSettingHeader">
                     <div
@@ -143,7 +166,7 @@ export default class LinkGenerator extends React.Component {
                                 draggable={false}
                                 width={12}
                                 height={12}
-                                src={require('../../../icons/close.svg')}
+                                src={require('../../../../icons/close.svg')}
                             />
                         </IconButton>
                     </div>
@@ -154,15 +177,24 @@ export default class LinkGenerator extends React.Component {
                         <div className="LinkGeneratorTypes">
                             <RadioGroup name="type" value={type} onChange={
                                 (e) => {this.setLinkType(e.target.value)}}>
-                                <FormControlLabel value="None" control={<Radio />} label="None" />
-                                <FormControlLabel value="WebAddress" control={<Radio />} label="Web Address" />
-                                <FormControlLabel value="Page" control={<Radio />} label="Page" />
-                                <FormControlLabel value="Anchor" disabled control={<Radio />} label="Anchor" />
-                                <FormControlLabel value="TopBottomThisPage" control={<Radio />} label="Top Or Bottom" />
-                                <FormControlLabel value="Document" disabled control={<Radio />} label="Document" />
-                                <FormControlLabel value="Email"  control={<Radio />} label="Email" />
-                                <FormControlLabel value="Phone"  control={<Radio />} label="Phone" />
-                                <FormControlLabel value="LightBox" disabled  control={<Radio />} label="LightBox" />
+                                <FormControlLabel value="None" control={<SmallRadio />}
+                                                  label={<p className="LinkGeneratorTypesLabel">None</p>} />
+                                <FormControlLabel value="WebAddress" control={<SmallRadio />}
+                                                  label={<p className="LinkGeneratorTypesLabel">Web Address</p>}/>
+                                <FormControlLabel value="Page" control={<SmallRadio />}
+                                                  label={<p className="LinkGeneratorTypesLabel">Page</p>} />
+                                <FormControlLabel value="Anchor" disabled control={<SmallRadio />}
+                                                  label={<p className="LinkGeneratorTypesLabel">Anchor</p>} />
+                                <FormControlLabel value="TopBottomThisPage" control={<SmallRadio />}
+                                                  label={<p className="LinkGeneratorTypesLabel">Top / Bottom</p>} />
+                                <FormControlLabel value="Document" disabled control={<SmallRadio />}
+                                                  label={<p className="LinkGeneratorTypesLabel">Document</p>} />
+                                <FormControlLabel value="Email"  control={<SmallRadio />}
+                                                  label={<p className="LinkGeneratorTypesLabel">Email</p>} />
+                                <FormControlLabel value="Phone"  control={<SmallRadio />}
+                                                  label={<p className="LinkGeneratorTypesLabel">Phone</p>} />
+                                <FormControlLabel value="LightBox" disabled  control={<SmallRadio />}
+                                                  label={<p className="LinkGeneratorTypesLabel">LightBox</p>} />
                             </RadioGroup>
                         </div>
                         <div className="LinkGeneratorOptions">
@@ -175,41 +207,264 @@ export default class LinkGenerator extends React.Component {
                             }
                             {
                                 (type === "WebAddress") &&
-                                <div className="LinkGeneratorOptionNone">
-                                    <span className="PageInfoBoxTitle">
+                                <div className="LinkGeneratorOptionWebAddress">
+                                    <span className="LinkGeneratorTypesLabel">
                                         What's the web address (URL)?
                                     </span>
-                                    <input
-                                        defaultValue=""
-                                        className="NumberInput PageManagerRenameInput PageInfoNameInput"
-                                        type="text"
-                                        onChange={
-                                            (e) => {this.setState({tempUrl: e.target.value})}
+                                    <div className="LinkGeneratorOptionWebAddressInputContainer">
+                                        <input
+                                            defaultValue={linkData.data.url || ""}
+                                            className="NumberInput PageManagerRenameInput PageInfoNameInput LinkGeneratorOptionWebAddressInput"
+                                            type="text"
+                                            onChange={
+                                                (e) => {this.tempUrl = e.target.value}
+                                            }
+                                            onBlur={() => {
+                                                linkData.data.url = this.tempUrl || "";
+                                                this.setState({linkData});
+                                            }}
+                                            onKeyPress={(e) => {
+                                                if((e.keyCode || e.which) === 13) {
+                                                    linkData.data.url = this.tempUrl || "";
+                                                    this.setState({linkData});
+                                                }
+                                            }}
+                                        >
+                                        </input>
+                                        {
+                                            (this.tempUrl && !this.validURL(this.tempUrl)) &&
+                                            <LightTooltip
+                                                title="Check the URL and try again"
+                                                PopperProps={{style:{zIndex: 99999999999}}}
+                                            >
+                                                <img
+                                                    className="LinkGeneratorOptionWebAddressUrlError"
+                                                    draggable={false}
+                                                    width={24}
+                                                    height={24}
+                                                    src={require('../../../../icons/errorred.svg')}
+                                                />
+                                            </LightTooltip>
                                         }
-                                        onBlur={() => {
-                                            linkData.data.url = this.state.tempUrl;
+                                    </div>
+
+                                    <div className="LinkGeneratorHorizontalDivider">
+                                    </div>
+
+                                    <RadioGroup name="window" value={linkData.data.window} onChange={(e) => {
+                                        linkData.data.window = e.target.value;
+                                        this.setState({linkData});
+                                    }}>
+                                        <FormControlLabel value="new" control={<SmallRadio />}
+                                                          label={<p className="LinkGeneratorTypesLabel">New Window</p>} />
+                                        <FormControlLabel value="current" control={<SmallRadio />}
+                                                          label={<p className="LinkGeneratorTypesLabel">Current Window</p>} />
+                                    </RadioGroup>
+
+                                    {
+                                        linkData.data.window === "current" &&
+                                        <div className="LinkGeneratorOptionWebAddressTip">
+                                            You can only open this link from your published site.
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            {
+                                (type === "Page") &&
+                                <div className="LinkGeneratorOptionWebAddress">
+                                    <span className="LinkGeneratorTypesLabel">
+                                        Add your number
+                                    </span>
+                                    <DropDown
+                                        rootStyle={{
+                                            border: "1px solid #c6c6c6",
+                                            marginTop: 12,
+                                            borderRadius: 4
+                                        }}
+                                        menuItemStyle={{
+                                            padding: 0
+                                        }}
+                                        options={this.getPageOptions()}
+                                        onChange={(v) => {
+                                            linkData.data.pageId = v.pageId;
                                             this.setState({linkData});
                                         }}
-                                        onKeyPress={(e) => {
-                                            if((e.keyCode || e.which) === 13) {
-                                                linkData.data.url = this.state.tempUrl;
-                                                this.setState({linkData});
-                                            }
+                                        value={this.getPageOptions().find(p => p.pageId === linkData.data.pageId)}
+                                        spanStyle={{
+                                            width: 367,
+                                            fontSize: 14,
+                                            border: "0px solid #cfcfcf",
                                         }}
-                                    >
-                                    </input>
+                                        renderer={(page) => {
+                                            return (
+                                                <div id={"TEst"} className="TextEditorThemeRendererRoot">
+                                                    <span className="TextEditorThemeRendererName">
+                                                        {page.pageName}
+                                                    </span>
+                                                </div>
+                                            )
+                                        }}
+                                        valueRenderer={(page) => {
+                                            return (
+                                                <span>
+                                                    {page.pageName}
+                                                </span>
+                                            )
+                                        }}
+                                    />
+                                    <div className="LinkGeneratorHorizontalDivider">
+                                    </div>
+
+                                    <RadioGroup name="window" value={linkData.data.window} onChange={(e) => {
+                                        linkData.data.window = e.target.value;
+                                        this.setState({linkData});
+                                    }}>
+                                        <FormControlLabel value="new" control={<SmallRadio />}
+                                                          label={<p className="LinkGeneratorTypesLabel">New Window</p>} />
+                                        <FormControlLabel value="current" control={<SmallRadio />}
+                                                          label={<p className="LinkGeneratorTypesLabel">Current Window</p>} />
+                                    </RadioGroup>
+
                                     {
-                                        (this.state.tempUrl && !this.validURL(this.state.tempUrl)) &&
-                                        <LightTooltip title="Check the URL and try again">
-                                            <svg width="25" height="25" viewBox="0 0 25 25"
-                                                 className="symbol-input-validation-error">
-                                                <circle cx="13" cy="12" r="12"></circle>
-                                                <circle className="c2" cx="13" cy="17" r="1"></circle>
-                                                <path className="c1" fill-rule="evenodd"
-                                                      d="M13 7c.55 0 1 .45 1 1v5c0 .55-.45 1-1 1s-1-.45-1-1V8c0-.55.45-1 1-1z"></path>
-                                            </svg>
-                                        </LightTooltip>
+                                        linkData.data.window === "new" &&
+                                        <div className="LinkGeneratorOptionWebAddressTip">
+                                            You can only open this link from your published site.
+                                        </div>
                                     }
+                                </div>
+                            }
+                            {
+                                (type === "TopBottomThisPage") &&
+                                <div className="LinkGeneratorOptionWebAddress">
+                                    <span className="LinkGeneratorTypesLabel">
+                                        Select scroll destination
+                                    </span>
+
+                                    <div className="LinkGeneratorVerticalSpace">
+                                    </div>
+
+                                    <RadioGroup name="window" value={linkData.data.position} onChange={(e) => {
+                                        linkData.data.position = e.target.value;
+                                        this.setState({linkData});
+                                    }}>
+                                        <FormControlLabel value="top" control={<SmallRadio />}
+                                                          label={<p className="LinkGeneratorTypesLabel">Top of page</p>} />
+                                        <FormControlLabel value="bottom" control={<SmallRadio />}
+                                                          label={<p className="LinkGeneratorTypesLabel">Bottom of page</p>} />
+                                    </RadioGroup>
+                                </div>
+                            }
+                            {
+                                (type === "Phone") &&
+                                <div className="LinkGeneratorOptionWebAddress">
+                                    <span className="LinkGeneratorTypesLabel">
+                                        Add your number
+                                    </span>
+                                    <div className="LinkGeneratorOptionWebAddressInputContainer">
+                                        <input
+                                            defaultValue={linkData.data.number || ""}
+                                            placeholder="09123456789"
+                                            className="NumberInput PageManagerRenameInput PageInfoNameInput LinkGeneratorOptionWebAddressInput"
+                                            type="text"
+                                            onChange={
+                                                (e) => {this.tempNumber = e.target.value}
+                                            }
+                                            onBlur={() => {
+                                                linkData.data.number = this.tempNumber || "";
+                                            }}
+                                            onKeyPress={(e) => {
+                                                if((e.keyCode || e.which) === 13) {
+                                                    linkData.data.number = this.tempNumber || "";
+                                                    this.setState({linkData});
+                                                }
+                                            }}
+                                        >
+                                        </input>
+                                        {
+                                            (this.tempNumber && !this.validPhone(this.tempNumber)) &&
+                                            <LightTooltip
+                                                title="Check the number and try again"
+                                                PopperProps={{style:{zIndex: 99999999999}}}
+                                            >
+                                                <img
+                                                    className="LinkGeneratorOptionWebAddressUrlError"
+                                                    draggable={false}
+                                                    width={24}
+                                                    height={24}
+                                                    src={require('../../../../icons/errorred.svg')}
+                                                />
+                                            </LightTooltip>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            {
+                                (type === "Email") &&
+                                <div className="LinkGeneratorOptionWebAddress">
+                                    <span className="LinkGeneratorTypesLabel">
+                                        What's the email address?
+                                    </span>
+                                    <div className="LinkGeneratorOptionWebAddressInputContainer">
+                                        <input
+                                            defaultValue={linkData.data.email || ""}
+                                            placeholder="e.g. youremail@gmal.com"
+                                            className="NumberInput PageManagerRenameInput PageInfoNameInput LinkGeneratorOptionWebAddressInput"
+                                            type="text"
+                                            onChange={
+                                                (e) => {this.tempEmail = e.target.value}
+                                            }
+                                            onBlur={() => {
+                                                linkData.data.email = this.tempEmail || "";
+                                            }}
+                                            onKeyPress={(e) => {
+                                                if((e.keyCode || e.which) === 13) {
+                                                    linkData.data.email = this.tempEmail || "";
+                                                    this.setState({linkData});
+                                                }
+                                            }}
+                                        >
+                                        </input>
+                                        {
+                                            (this.tempEmail && !this.validEmail(this.tempEmail)) &&
+                                            <LightTooltip
+                                                title="Check the email and try again"
+                                                PopperProps={{style:{zIndex: 99999999999}}}
+                                            >
+                                                <img
+                                                    className="LinkGeneratorOptionWebAddressUrlError"
+                                                    draggable={false}
+                                                    width={24}
+                                                    height={24}
+                                                    src={require('../../../../icons/errorred.svg')}
+                                                />
+                                            </LightTooltip>
+                                        }
+                                    </div>
+
+                                    <div className="LinkGeneratorHorizontalDivider">
+                                    </div>
+
+                                    <div className="LinkGeneratorOptionWebAddressInputContainer">
+                                        <input
+                                            defaultValue={linkData.data.subject || ""}
+                                            placeholder=""
+                                            className="NumberInput PageManagerRenameInput PageInfoNameInput LinkGeneratorOptionWebAddressInput"
+                                            type="text"
+                                            onChange={
+                                                (e) => {this.tempSubject = e.target.value}
+                                            }
+                                            onBlur={() => {
+                                                linkData.data.subject = this.tempSubject || "";
+                                            }}
+                                            onKeyPress={(e) => {
+                                                if((e.keyCode || e.which) === 13) {
+                                                    linkData.data.subject = this.tempSubject || "";
+                                                    this.setState({linkData});
+                                                }
+                                            }}
+                                        >
+                                        </input>
+                                    </div>
                                 </div>
                             }
                         </div>
@@ -227,7 +482,11 @@ export default class LinkGenerator extends React.Component {
                             className="LinkGeneratorFooterDone"
                             variant="contained"
                             color="primary"
-                            disabled={}
+                            disabled={!this.isLinkReadyForDone()}
+                            onClick={() => {
+                                this.props.onDone(linkData);
+                                this.props.onClose();
+                            }}
                         >
                             Done
                         </Button>

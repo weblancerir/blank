@@ -228,7 +228,22 @@
     "Button": {
       "name": "Button",
       "order": 6,
-      "allItems": []
+      "allItems": [
+        {
+          "tagName": "Button",
+          "widthRatio": 1,
+          "aspectRatio": 4,
+          "imageUrl": "",
+          "presetProps": {
+            "griddata": {
+              "bpData": {
+                "design": {
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "Menu": {
       "name": "Menu",

@@ -5,16 +5,22 @@ import IconButton from "../../HelperComponents/IconButton";
 import '../../HelperStyle.css';
 import MenuBaseIndexTitle from "./MenuBaseIndexTitle";
 import LightTooltip from "../../Components/Containers/Menus/Components/LightTooltip";
+import Tab from "@material-ui/core/Tab/Tab";
+import Tabs from "@material-ui/core/Tabs/Tabs";
 
 export default class MenuBase extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedIndexNo: props.defaultIndexNo
+            selectedIndexNo: props.defaultIndexNo,
+            currentState: props.multiState ? Object.keys(props.states)[0]: ""
         }
     }
 
     close = () => {
+        if (this.props.multiState)
+            Object.values(this.props.states)[0].toggle();
+
         this.props.select.updateMenu();
     };
 
@@ -29,7 +35,28 @@ export default class MenuBase extends React.Component {
         }
     };
 
+    getOptions = () => {
+        if (!this.props.multiState)
+            return this.props.options;
+
+        return this.props.states[this.state.currentState].options;
+    }
+
+    getIndex = () => {
+        if (!this.props.multiState)
+            return this.props.index;
+
+        return this.props.states[this.state.currentState].index;
+    }
+
+    onChangeTab = (e, currentState) => {
+        this.setState({currentState});
+        this.props.states[currentState].toggle();
+    };
+
     render() {
+        let options = this.getOptions();
+        let index = this.getIndex();
         return (
             <Draggable
                 handle=".MenuBaseHeaderTitle"
@@ -60,13 +87,34 @@ export default class MenuBase extends React.Component {
                         </IconButton>
                     </div>
 
+                    {/*Tabs*/}
+                    {
+                        this.props.multiState &&
+                        <Tabs
+                            className="MenuBaseTabBox"
+                            value={this.state.currentState}
+                            indicatorColor="primary"
+                            textColor="primary"
+                            variant="fullWidth"
+                            onChange={this.onChangeTab}
+                        >
+                            {
+                                Object.values(this.props.states).map(stateData => {
+                                    return (
+                                        <Tab key={stateData.name} label={stateData.render} value={stateData.name} className="MenuBaseTab"/>
+                                    )
+                                })
+                            }
+                        </Tabs>
+                    }
+
                     {/*Body*/}
                     <div
                         className="MenuBaseBodyContainer"
                     >
                         <div className="MenuBaseBodyIndex">
                             {
-                                this.props.index.map((indexData, i) => {
+                                index.map((indexData, i) => {
                                     return (
                                         <LightTooltip
                                             key={i}
@@ -103,21 +151,22 @@ export default class MenuBase extends React.Component {
                             }
                         </div>
                         <div className="MenuBaseBodyOptions">
+                            <div className="MenuBaseBodyOptionsContainer">
                             {
                                 this.state.selectedIndexNo !== undefined &&
                                 <MenuBaseIndexTitle
                                     index={this.state.selectedIndexNo}
-                                    key={this.props.options[this.state.selectedIndexNo].key}
-                                    title={this.props.options[this.state.selectedIndexNo].key}
+                                    key={options[this.state.selectedIndexNo].key}
+                                    title={options[this.state.selectedIndexNo].key}
                                 />
                             }
                             {
                                 this.state.selectedIndexNo !== undefined &&
-                                this.props.options[this.state.selectedIndexNo].render
+                                options[this.state.selectedIndexNo].render
                             }
                             {
                                 this.state.selectedIndexNo === undefined &&
-                                this.props.options.map((option, i) => {
+                                options.map((option, i) => {
                                     return (
                                         <MenuBaseIndexTitle
                                             index={i}
@@ -128,6 +177,7 @@ export default class MenuBase extends React.Component {
                                     )
                                 })
                             }
+                            </div>
                         </div>
                     </div>
                 </div>

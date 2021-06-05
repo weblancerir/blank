@@ -5,9 +5,16 @@ import MenuButton from "../../Menus/MenuBase/MenuButton";
 import BorderDesign from "./Menus/BorderDesign";
 import '../../HelperStyle.css';
 import './ContainerBase.css';
-import {getCompositeDesignData, parseColor, resolveDesignData} from "../../AwesomwGridLayoutHelper";
+import {
+    getCompositeDesignData,
+    getFromTempData,
+    parseColor,
+    resolveDesignData,
+    setTempData
+} from "../../AwesomwGridLayoutHelper";
 import AnimationDesign from "./Menus/AnimationDesign";
 import {EditorContext} from "../../Editor/EditorContext";
+import {addLinkData, getSelectedLinkData} from "../Text/Menus/components/LinkHelper";
 
 export default class ContainerBase extends AGLComponent{
     static contextType = EditorContext;
@@ -35,6 +42,7 @@ export default class ContainerBase extends AGLComponent{
 
     getPrimaryOptions = () => {
         this.resolveDesignData();
+
         return [
             <MenuButton
                 key={0}

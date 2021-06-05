@@ -127,7 +127,10 @@ export default class PageBase extends AGLComponent {
                     gridTemplateRows: this.gridTemplateRows,
                     gridTemplateColumns: this.gridTemplateColumns
                 },
-                containerHeight: "max-content",
+                containerHeight: "max-content"
+            },
+            customStyle: {
+                scrollBehavior: "smooth"
             }
         };
     };
@@ -1261,6 +1264,7 @@ export default class PageBase extends AGLComponent {
     render() {
         // let fullWidth = (this.getAgl() && this.getAgl().getSize(false)) || (1002);
         let fullWidth = this.props.pageSize;
+        console.log("this.getData()", this.getData())
         return (
             <AGLWrapper tagName="PageBase"
                         aglRef={!this.props.aglRef ? this.root : this.root = this.props.aglRef}
@@ -1271,7 +1275,7 @@ export default class PageBase extends AGLComponent {
                             width: this.context.production ? "100%" : `${fullWidth}px`,
                             height: "100%",
                             boxShadow: "0 2px 12px 6px rgba(134,138,165,.41)",
-                            display: "inline-block",
+                            display: "inline-block"
                         }}
                         data={this.getData()}
                         isPage

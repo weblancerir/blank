@@ -25,6 +25,13 @@
     height: auto;
 }
 
+.TextEditorVerticalDivider {
+    width: 1px;
+    height: auto;
+    background-color: #c8c8c8;
+    margin-left: 4px;
+}
+
 .TextEditorButton{
 
 }

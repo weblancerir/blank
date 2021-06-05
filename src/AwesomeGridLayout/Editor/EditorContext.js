@@ -70,7 +70,9 @@ export default class EditorContextProvider extends React.Component {
             getThemeColorClass: this.getThemeColorClass,
             getThemeBackColorClass: this.getThemeBackColorClass,
             calculateTheme: this.calculateTheme,
-            calculateColorCSS: this.calculateColorCSS
+            calculateColorCSS: this.calculateColorCSS,
+            showLinkGenerator: this.showLinkGenerator,
+            isEditor: this.isEditor
         };
     }
 
@@ -182,6 +184,10 @@ export default class EditorContextProvider extends React.Component {
                 inputs: []
             });
         });
+    }
+
+    isEditor = () => {
+        return !this.state.preview && !this.state.production;
     }
 
     setPreview = (preview, callback) => {
@@ -361,6 +367,10 @@ export default class EditorContextProvider extends React.Component {
     setRightMenus = (rightMenus, callback) => {
         this.setState({rightMenus}, callback);
     };
+
+    showLinkGenerator = (linkData, onDone) => {
+        this.state.editor.showLinkGenerator(linkData, onDone);
+    }
 
     render () {
         return (

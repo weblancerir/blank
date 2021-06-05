@@ -4,11 +4,12 @@ import './TextEditor.css';
 import TextEditorButton from "./TextEditorButton";
 import {EditorContext} from "../../../Editor/EditorContext";
 import DropDown from "../../../Menus/CommonComponents/DropDown";
-import {getRandomColor, getFontDataByFamily, getRandomLinkId, getRangeSelectedNodes} from "../TextHelper";
+import {getRandomColor, getFontDataByFamily} from "../TextHelper";
 import FontSizeSelector from "./components/FontSizeSelector";
 import TextColorSelector from "./components/TextColorSelector";
-import CSSManager from "../../../Test/CSSManager";
 import StaticFonts from '../Fonts/StaticFonts.json';
+import LinkGenerator from "./components/LinkGenerator";
+import {addLinkData, getSelectedLinkData, getSelectedLinkId} from "./components/LinkHelper";
 
 export default class TextEditor extends React.Component {
     static contextType = EditorContext;
@@ -36,8 +37,14 @@ export default class TextEditor extends React.Component {
     }
 
     onIframeTextClicked = (e) => {
-        this.getSelectedLink();
-        this.refreshState();
+        if (this.mounted) {
+            this.refreshState();
+            return;
+        }
+
+        setTimeout(() => {
+            this.onIframeTextClicked(e);
+        }, 200);
     }
 
     refreshState = () => {
@@ -67,9 +74,9 @@ export default class TextEditor extends React.Component {
 
             let fontData = getFontDataByFamily(StaticFonts, fontFamily);
 
-            let multiLineSelect = /\r|\n/.exec(selection);
+            // let multiLineSelect = /\r|\n/.exec(selection);
 
-            this.setState({bold, italic, underline, fontData, multiLineSelect});
+            this.setState({bold, italic, underline, fontData});
         });
     }
 
@@ -78,56 +85,27 @@ export default class TextEditor extends React.Component {
             return !(selection.toString().length < 1);
     }
 
-    getSelectedLinkId = () => {
-        let selection = this.props.doc.getSelection();
-        let range = selection.getRangeAt(0);
-        let nodes = getRangeSelectedNodes(range);
-        nodes.forEach(node => {
-            while (node) {
-                if (node.hasAttribute("islink")) {
-                    return node.getAttribute("id");
-                }
-                node = node.parentNode;
-            }
+    tryAgain = () => {
+        window.requestAnimationFrame(() => {
+            this.forceUpdate();
         });
-        return false;
-    }
-
-    onLinkGenerated = (linkData) => {
-        let {textDesignData} = this.props;
-
-        if (!textDesignData.links)
-            textDesignData.links = {};
-
-        let linkId = getRandomLinkId(12);
-        if (this.getSelectedLink())
-        {
-            linkId = this.getSelectedLinkId();
-            textDesignData.links[linkId] = linkData;
-        }
-        else
-        {
-            this.props.doc.execCommand('underline');
-            this.props.doc.execCommand('createlink', false, "link1");
-
-            let nodes = this.props.doc.querySelectorAll(`[href="link1"]`);
-
-            nodes.forEach(node => {
-                node.removeAttribute("href");
-                node.setAttribute("id", linkId);
-                node.setAttribute("islink", true);
-            })
-
-            this.refreshState();
-        }
     }
 
     render () {
         let {textTheme, textStaticData, textDesignData, anchorEI} = this.props;
+        if (document.getElementById("TextEditorIFrame") === null){
+            this.tryAgain();
+            return null;
+        }
+
+        this.mounted = true;
+        console.log("TextEditorIFrame", document.getElementById("TextEditorIFrame"))
         return (
+            <>
             <Popper
                 open={true}
-                anchorEl={anchorEI}
+                // anchorEl={anchorEI}
+                anchorEl={document.getElementById("TextEditorIFrame")}
                 placement="top-start"
                 style={{
                     zIndex: 9999999999999999,
@@ -288,6 +266,9 @@ export default class TextEditor extends React.Component {
                                     }
                                 }}
                             />
+                        </div>
+                        <div className="TextEditorContainerRow">
+
                             <TextEditorButton
                                 onClick={(e) => {
                                     this.props.doc.execCommand('bold');
@@ -318,6 +299,7 @@ export default class TextEditor extends React.Component {
                                 <img draggable={false} width={16} height={16}
                                      src={process.env.PUBLIC_URL + '/static/icon/texteditor/underline.svg'} />
                             </TextEditorButton>
+                            <div className="TextEditorVerticalDivider"/>
                             <TextColorSelector
                                 onChange={(color) => {
                                     let randomColor = getRandomColor();
@@ -415,17 +397,30 @@ export default class TextEditor extends React.Component {
                                 <img draggable={false} width={16} height={16}
                                      src={process.env.PUBLIC_URL + '/static/icon/texteditor/fill.svg'} />
                             </TextColorSelector>
-                        </div>
-                        <div className="TextEditorContainerRow">
+                            <div className="TextEditorVerticalDivider"/>
                             <TextEditorButton
                                 onClick={(e) => {
-
+                                    this.context.showLinkGenerator(
+                                        getSelectedLinkData(this.props.doc),
+                                        (linkData) => {
+                                            console.log("OnDone", linkData)
+                                            addLinkData(this.props.doc, linkData);
+                                            this.refreshState();
+                                            this.props.inputWrapperRef.current.onInput();
+                                        }
+                                    );
                                 }}
-                                selected={textDesignData.textAlign === undefined}
+                                selected={getSelectedLinkId(this.props.doc) !== false}
+                                selectedIcon={<img draggable={false} width={16} height={16}
+                                                   src={require('../../../icons/linkblue.svg')} />}
+                                disabled={getSelectedLinkId(this.props.doc) === false && !this.isTextSelcted()}
+                                disabledIcon={<img draggable={false} width={16} height={16}
+                                                   src={require('../../../icons/linkdisable.svg')} />}
                             >
                                 <img draggable={false} width={16} height={16}
-                                     src={process.env.PUBLIC_URL + '/static/icon/texteditor/align-left.svg'} />
+                                     src={require('../../../icons/link.svg')} />
                             </TextEditorButton>
+                            <div className="TextEditorVerticalDivider"/>
                             <TextEditorButton
                                 onClick={(e) => {
                                     // this.props.doc.execCommand('justifyLeft');
@@ -470,6 +465,7 @@ export default class TextEditor extends React.Component {
                                 <img draggable={false} width={16} height={16}
                                      src={process.env.PUBLIC_URL + '/static/icon/texteditor/justify.svg'} />
                             </TextEditorButton>
+                            <div className="TextEditorVerticalDivider"/>
                             <TextEditorButton
                                 onClick={(e) => {
                                     this.props.doc.execCommand('insertUnorderedList');
@@ -486,22 +482,7 @@ export default class TextEditor extends React.Component {
                                 <img draggable={false} width={16} height={16}
                                      src={process.env.PUBLIC_URL + '/static/icon/texteditor/list-number.svg'} />
                             </TextEditorButton>
-                            {/*<TextEditorButton
-                                onClick={(e) => {
-                                    this.props.doc.execCommand('indent');
-                                }}
-                            >
-                                <img draggable={false} width={16} height={16}
-                                     src={process.env.PUBLIC_URL + '/static/icon/texteditor/indent-plus.svg'} />
-                            </TextEditorButton>
-                            <TextEditorButton
-                                onClick={(e) => {
-                                    this.props.doc.execCommand('outdent');
-                                }}
-                            >
-                                <img draggable={false} width={16} height={16}
-                                     src={process.env.PUBLIC_URL + '/static/icon/texteditor/indent-remove.svg'} />
-                            </TextEditorButton>*/}
+                            <div className="TextEditorVerticalDivider"/>
                             <TextEditorButton
                                 onClick={(e) => {
                                     // let sel = this.props.doc.getSelection();
@@ -523,6 +504,19 @@ export default class TextEditor extends React.Component {
                     </div>
                 </div>
             </Popper>
+                {
+                    this.state.linkGenerator &&
+                    <LinkGenerator
+                        open={true}
+                        linkData={getSelectedLinkData(this.props.doc)}
+                        onClose={() => {this.setState({linkGenerator: false})}}
+                        onDone={(linkData) => {
+                            addLinkData(this.props.doc, linkData);
+                            this.setState({linkGenerator: false});
+                        }}
+                    />
+                }
+            </>
         )
     }
 }

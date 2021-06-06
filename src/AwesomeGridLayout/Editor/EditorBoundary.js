@@ -39,7 +39,7 @@ import PreviewHeader from "./PreviewHeader";
 import PageView from "./PageView";
 import classNames from "classnames";
 import LinkGenerator from "../Components/Text/Menus/components/LinkGenerator";
-import {addLinkData, getSelectedLinkData} from "../Components/Text/Menus/components/LinkHelper";
+import FileManager from "../Components/FileManager/FileManager";
 
 export default class EditorBoundary extends React.Component{
     static contextType = EditorContext;
@@ -491,6 +491,10 @@ export default class EditorBoundary extends React.Component{
         this.setState({linkGenerator: {linkData, onDone}});
     }
 
+    showFileManager = (options, onDone) => {
+        this.setState({fileManager: {options, onDone}});
+    }
+
     render() {
         // TODO if this.context.siteData not loaded, show loading component
         let borderClassess = classNames(
@@ -687,6 +691,16 @@ export default class EditorBoundary extends React.Component{
                                         linkData={this.state.linkGenerator.linkData}
                                         onClose={() => {this.setState({linkGenerator: undefined})}}
                                         onDone={this.state.linkGenerator.onDone}
+                                    />
+                                }
+
+                                {
+                                    this.state.fileManager &&
+                                    <FileManager
+                                        open={true}
+                                        options={this.state.fileManager.options}
+                                        onClose={() => {this.setState({fileManager: undefined})}}
+                                        onDone={this.state.fileManager.onDone}
                                     />
                                 }
 

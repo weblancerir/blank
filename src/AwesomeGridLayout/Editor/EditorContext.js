@@ -72,6 +72,7 @@ export default class EditorContextProvider extends React.Component {
             calculateTheme: this.calculateTheme,
             calculateColorCSS: this.calculateColorCSS,
             showLinkGenerator: this.showLinkGenerator,
+            showFileManager: this.showFileManager,
             isEditor: this.isEditor
         };
     }
@@ -370,6 +371,10 @@ export default class EditorContextProvider extends React.Component {
 
     showLinkGenerator = (linkData, onDone) => {
         this.state.editor.showLinkGenerator(linkData, onDone);
+    }
+
+    showFileManager = (options, onDone) => {
+        this.state.editor.showFileManager(options, onDone);
     }
 
     render () {

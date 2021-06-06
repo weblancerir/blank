@@ -20,6 +20,7 @@ import FlipInAnimation from "../Test/Animations/FlipInAnimation";
 import RevealAnimation from "../Test/Animations/RevealAnimation";
 import Text from "../Components/Text/Text";
 import Button from "../Components/Button/Button";
+import Image from "../Components/Image/Image";
 
 let DynamicComponents = {};
 
@@ -33,6 +34,7 @@ export let initDynamicComponents = () => {
     DynamicComponents["VerticalSpacer"] = VerticalSpacer;
     DynamicComponents["Text"] = Text;
     DynamicComponents["Button"] = Button;
+    DynamicComponents["Image"] = Image;
 };
 
 export default DynamicComponents;

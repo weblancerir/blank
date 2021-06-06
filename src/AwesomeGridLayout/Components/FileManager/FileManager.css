@@ -1,0 +1,125 @@
+.FileManagerModal {
+    z-index: 9999999999999 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.FileManagerRoot{
+    width: 90%;
+    height: 90%;
+    background-color: #fdfdfd;
+    border-radius: 8px;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.FileManagerHeader {
+    width: 100%;
+    pointer-events: auto;
+    box-shadow: 0 0 2px 0 rgba(22,45,61,.27);
+    background-color: #f3f3f3;
+}
+
+.FileManagerContainer {
+    display: flex;
+    flex: 1;
+}
+
+.FileManagerMenu {
+    width: 160px;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 0;
+    box-sizing: border-box;
+    border-right: 1px solid #e2e2e2;
+}
+
+.FileManagerMenuTitle {
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    margin-left: 16px;
+}
+
+.FileManagerMenuOptionButton {
+    justify-content: flex-start !important;
+}
+
+.FileManagerMenuOption {
+    font-size: 12px;
+    padding: 12px;
+    margin-left: 4px;
+}
+
+.FileManagerMenuOptionSelected {
+    background-color: #f5f5f5 !important;
+}
+
+.FileManagerContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.FileManagerContentHeader {
+    height: 52px;
+    border-bottom: 1px solid #e2e2e2;
+    padding: 12px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.FileManagerContentHeaderRoute {
+    flex: 1;
+}
+
+.FileManagerContentData {
+    flex: 1;
+    padding: 24px;
+}
+
+.FileManagerEmptyFolderRoot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: 100%;
+    border-radius: 8px;
+    border: 1px dashed #5e65ff;
+    box-sizing: border-box;
+}
+
+.FileManagerEmptyFolderImage {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 24px;
+}
+
+.FileManagerEmptyFolderTitle {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.FileManagerEmptyFolderMessage {
+    margin-bottom: 12px;
+}
+
+.FileManagerEmptyFolderUploadButton {
+    padding: 12px !important;
+    border-radius: 8px !important;
+    border: 1px dashed #5e65ff !important;
+    color: #5e65ff !important;
+}
+
+.FileManagerUploadingRoot {
+    position: absolute;
+}

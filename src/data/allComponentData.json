@@ -253,7 +253,25 @@
     "Medias": {
       "name": "Medias",
       "order": 8,
-      "allItems": []
+      "subList": {
+        "Image":  [
+          {
+            "name": "Single Image",
+            "listName": "Image",
+            "allItems": [
+              {
+                "tagName": "Image",
+                "widthRatio": 2,
+                "aspectRatio": 2,
+                "imageUrl": "",
+                "presetProps": {
+
+                }
+              }
+            ]
+          }
+        ]
+      }
     },
     "Decorative": {
       "name": "Decorative",

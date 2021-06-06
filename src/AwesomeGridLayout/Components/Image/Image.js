@@ -2,7 +2,7 @@ import React from "react";
 import AGLWrapper from "../Helpers/AGLWrapper";
 import AGLComponent from "../Helpers/AGLComponent";
 import '../../HelperStyle.css';
-import './Button.css';
+import './Image.css';
 import {
     getCompositeDesignData,
     getFromTempData,
@@ -14,12 +14,8 @@ import {EditorContext} from "../../Editor/EditorContext";
 import MenuButton from "../../Menus/MenuBase/MenuButton";
 import AnimationDesign from "../Containers/Menus/AnimationDesign";
 import {prepareLink} from "../Text/Menus/components/LinkHelper";
-import ButtonDesign from "./Menus/ButtonDesign";
-import TextDesign from "./Menus/TextDesign";
-import {getFontDataByName} from "../Text/TextHelper";
-import StaticFonts from "../Text/Fonts/StaticFonts.json";
 
-export default class Button extends AGLComponent{
+export default class Image extends AGLComponent{
     static contextType = EditorContext;
     constructor (props) {
         super(props);
@@ -45,11 +41,9 @@ export default class Button extends AGLComponent{
     }
 
     resolveDesignData = () => {
-        resolveDesignData(this, "spanData", {
-            text: "Start Now",
-            fontFamily: getFontDataByName(StaticFonts, "Yekan").fontFamily,
-            fontSize: 14,
-            margin: 0
+        resolveDesignData(this, "imageData", {
+            src: "https://weblancerstaticdata.s3.ir-thr-at1.arvanstorage.com/image-default.webp",
+            fit: "cover"
         });
         resolveDesignData(this, "normal", {border: {shadow: {
                     xOffset: -1,
@@ -57,21 +51,21 @@ export default class Button extends AGLComponent{
                     distance: 1,
                     size: 0,
                     blur: 4
-                }, radius: {}}, textColor: "#000000"});
+                }, radius: {}}, imageOpacity: 1});
         resolveDesignData(this, "hover", {border: {shadow: {
                     xOffset: -1,
                     yOffset: 1,
                     distance: 1,
                     size: 5,
                     blur: 4
-                }, radius: {}}, textColor: "#000000"});
+                }, radius: {}}, imageOpacity: 1});
     };
 
     getDefaultData = () => {
         return {
             bpData: {
                 overflowData: {
-                    state: "show"
+                    state: "hide"
                 }
             }
         };
@@ -83,42 +77,6 @@ export default class Button extends AGLComponent{
         let linkData = getFromTempData(this, "linkData");
 
         return [
-            <MenuButton
-                key={0}
-                icon={ <img draggable={false} width={16} height={16}
-                            src={require('../../icons/textwhite.svg')} /> }
-                select={this.props.select}
-                menu={(e) =>
-                    <TextDesign
-                        defaultPosition={{
-                            x: e.clientX + 48 || 48,
-                            y: e.clientY + 48 || 48
-                        }}
-                        onDesignChange={this.onDesignChange}
-                        select={this.props.select}
-                        item={this.getAgl()}
-                        onStateChange={this.onStateChange}
-                    />
-                }
-            />,
-            <MenuButton
-                key={1}
-                icon={ <img draggable={false} width={16} height={16}
-                            src={require('../../icons/paint.svg')} /> }
-                select={this.props.select}
-                menu={(e) =>
-                    <ButtonDesign
-                        defaultPosition={{
-                            x: e.clientX + 48 || 48,
-                            y: e.clientY + 48 || 48
-                        }}
-                        onDesignChange={this.onDesignChange}
-                        select={this.props.select}
-                        item={this.getAgl()}
-                        onStateChange={this.onStateChange}
-                    />
-                }
-            />,
             <MenuButton
                 key={2}
                 icon={ <img draggable={false} width={16} height={16}
@@ -150,6 +108,24 @@ export default class Button extends AGLComponent{
                         }
                     );
                 }}
+            />,
+            <MenuButton
+                key={4}
+                icon={ <img draggable={false} width={16} height={16}
+                            src={process.env.PUBLIC_URL + '/static/icon/edit.svg'} /> }
+                select={this.props.select}
+                onClick={(e) => {
+                    this.context.showFileManager(
+                        {
+                            type: "Images"
+                        },
+                        (filesData) => {
+                            console.log("Image FIle Pick OnDone", filesData);
+                            let fileData = filesData[0];
+                            this.onDesignChange('design.imageData.src', fileData.url);
+                        }
+                    );
+                }}
             />
         ]
     };
@@ -160,7 +136,7 @@ export default class Button extends AGLComponent{
     getStaticChildren = () => {
         this.resolveDesignData();
 
-        let spanData = getCompositeDesignData(this).spanData;
+        let imageData = getCompositeDesignData(this).imageData;
 
         let data;
         if (this.state.hover)
@@ -168,14 +144,8 @@ export default class Button extends AGLComponent{
         else
             data = getCompositeDesignData(this).normal;
 
-        let textColor = data.textColor;
-        console.log("textColor", textColor)
-        if (textColor)
-            textColor = parseColor(textColor, textColor.alpha, this.context);
-
         let border = data.border;
         let fillColor = data.fillColor;
-        console.log("fillColor", fillColor)
         if (fillColor)
             fillColor = parseColor(fillColor, fillColor.alpha, this.context);
 
@@ -189,16 +159,8 @@ export default class Button extends AGLComponent{
         if (borderColor)
             borderColor = parseColor(borderColor, borderColor.alpha, this.context);
 
-        let spanMarginStyle = {};
-        if (spanData.textAlign === "flex-start")
-            spanMarginStyle.marginLeft = `${spanData.margin}px`;
-        if (spanData.textAlign === "flex-end")
-            spanMarginStyle.marginRight = `${spanData.margin}px`;
-
         return <a
-            onMouseOver={this.onMouseOver}
-            onMouseOut={this.onMouseOut}
-            className="ButtonBorderRoot"
+            className="ImageBorderRoot"
             ref={this.rootBorderRef}
             style={{
                 border:
@@ -207,20 +169,17 @@ export default class Button extends AGLComponent{
                 borderRadius:
                     `${border.radius.topLeft || 0}px ${border.radius.topRight || 0}px ${border.radius.bottomRight || 0}px ${border.radius.bottomLeft || 0}px`,
                 boxShadow: `${(border.shadow.xOffset) * (border.shadow.distance)}px ${(border.shadow.yOffset) * (border.shadow.distance)}px ${border.shadow.blur}px ${border.shadow.size}px ${shadowColor || 'rgba(186,218,85,0.63)'}`,
-                justifyContent: spanData.textAlign || "center"
             }}
         >
-            <span
-                className="ButtonText"
+            <img
+                className="ImageImage"
+                onMouseOver={this.onMouseOver}
+                onMouseOut={this.onMouseOut}
+                src={imageData.src}
                 style={{
-                    color: textColor || "#000000",
-                    fontFamily: spanData.fontFamily || getFontDataByName(StaticFonts, "Yekan").fontFamily,
-                    fontSize: `${spanData.fontSize}px`,
-                    ...spanMarginStyle
+                    objectFit: imageData.fit
                 }}
-            >
-                {spanData.text}
-            </span>
+            />
         </a>
     };
 
@@ -252,8 +211,8 @@ export default class Button extends AGLComponent{
                 aglComponent={this}
                 {...this.props}
                 style={{
-                    width: "100px",
-                    height: "50px",
+                    width: "150px",
+                    height: "150px",
                 }}
                 data={this.getData()}
                 getPrimaryOptions={this.getPrimaryOptions}
@@ -264,6 +223,6 @@ export default class Button extends AGLComponent{
     }
 }
 
-Button.defaultProps = {
-    tagName: "Button"
+Image.defaultProps = {
+    tagName: "Image"
 };

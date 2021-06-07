@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e77901c8e1ee5735312a8a43820c31f5",
+    "revision": "feb4ca56f75afc70010425a1878dbf09",
     "url": "./index.html"
   },
   {
-    "revision": "408241fae8b8a90633a5",
+    "revision": "4552dd9e2ed97d03818b",
     "url": "./static/css/2.ed590494.chunk.css"
   },
   {
-    "revision": "6f774938303ec99417fa",
-    "url": "./static/css/main.9f34895c.chunk.css"
+    "revision": "ffeffda77cfd82de9407",
+    "url": "./static/css/main.738c8bcb.chunk.css"
   },
   {
-    "revision": "408241fae8b8a90633a5",
-    "url": "./static/js/2.527ca0ba.chunk.js"
+    "revision": "4552dd9e2ed97d03818b",
+    "url": "./static/js/2.98c5bdd1.chunk.js"
   },
   {
     "revision": "ed62fa59297061ed8277c0342618e0ad",
-    "url": "./static/js/2.527ca0ba.chunk.js.LICENSE.txt"
+    "url": "./static/js/2.98c5bdd1.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "6f774938303ec99417fa",
-    "url": "./static/js/main.3b90443a.chunk.js"
+    "revision": "ffeffda77cfd82de9407",
+    "url": "./static/js/main.2aa80a14.chunk.js"
   },
   {
     "revision": "6ca68c72ade5283eb48f",
@@ -60,6 +60,38 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "./static/media/close.ebf2f3f4.svg"
   },
   {
+    "revision": "dbdbbcac78c373380b10ece9146cda2c",
+    "url": "./static/media/cloudupload.dbdbbcac.svg"
+  },
+  {
+    "revision": "b7152f66bf6a49d68944ab42c44c7ae5",
+    "url": "./static/media/errorred.b7152f66.svg"
+  },
+  {
+    "revision": "4fc544fbe2c6163a8c5d303dbdaf5a03",
+    "url": "./static/media/file.4fc544fb.svg"
+  },
+  {
+    "revision": "45405b617d9a90f6d3935dcf225c2c49",
+    "url": "./static/media/folder.45405b61.svg"
+  },
+  {
+    "revision": "ec1620e4b1289d2da0ad7f2fcc344ee6",
+    "url": "./static/media/folderback.ec1620e4.svg"
+  },
+  {
+    "revision": "3473cffcf0c74d681e79030e34662d7d",
+    "url": "./static/media/link.3473cffc.svg"
+  },
+  {
+    "revision": "34eb0e5552553e9e7c64e36159f4d058",
+    "url": "./static/media/linkblue.34eb0e55.svg"
+  },
+  {
+    "revision": "b12d5832698674bd8757665e0f5353dd",
+    "url": "./static/media/linkdisable.b12d5832.svg"
+  },
+  {
     "revision": "c16a073ead87cfa48143509c3762a1ef",
     "url": "./static/media/maximize.c16a073e.svg"
   },
@@ -82,6 +114,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "910508a9542d41bd344c469c3974ef6d",
     "url": "./static/media/question.910508a9.svg"
+  },
+  {
+    "revision": "0dd5b9bcf6683994450a2a7eb8618d84",
+    "url": "./static/media/textwhite.0dd5b9bc.svg"
   },
   {
     "revision": "91af39196e22ae67e243eab414db9dcf",

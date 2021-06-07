@@ -9,6 +9,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "aphrodite": "2.4.0",
+    "axios": "^0.21.1",
     "chroma-js": "2.1.0",
     "classnames": "2.2.6",
     "dom-css": "2.1.0",

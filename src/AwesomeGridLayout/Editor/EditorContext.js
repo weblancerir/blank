@@ -73,8 +73,14 @@ export default class EditorContextProvider extends React.Component {
             calculateColorCSS: this.calculateColorCSS,
             showLinkGenerator: this.showLinkGenerator,
             showFileManager: this.showFileManager,
-            isEditor: this.isEditor
+            isEditor: this.isEditor,
+            postMessageToHolder: this.postMessageToHolder,
+            setWebsiteId: this.setWebsiteId
         };
+    }
+
+    setWebsiteId = (websiteId) => {
+        this.setState({websiteId});
     }
 
     getThemeColorClass = (color) => {
@@ -166,6 +172,10 @@ export default class EditorContextProvider extends React.Component {
 
     setProduction = (callback) => {
         this.setState({production:true, preview:true}, callback);
+    }
+
+    postMessageToHolder = (data, callback) => {
+        this.state.editor.postMessage(data, callback);
     }
 
     sendEditCommand = (callback) => {

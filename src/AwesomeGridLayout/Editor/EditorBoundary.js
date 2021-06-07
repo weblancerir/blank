@@ -181,6 +181,7 @@ export default class EditorBoundary extends React.Component{
     };
 
     postMessage = (data, callback) => {
+        console.log("EditorBoundry.postMessage");
         this.iFrameCommunicator.post(data, callback);
     };
 
@@ -197,11 +198,13 @@ export default class EditorBoundary extends React.Component{
         this.onSiteDataUpdated(siteData);
     };
 
-    onSiteDataUpdated = (siteData) => {
+    onSiteDataUpdated = (siteData, websiteId) => {
         if (!siteData) {
             siteData = cloneObject(defaultSiteData);
         }
-        // siteData = cloneObject(defaultSiteData);
+
+        if (websiteId)
+            this.context.setWebsiteId(websiteId);
 
         this.context.setSiteData(siteData, () => {
             let pageData = siteData.allPages[Object.keys(siteData.allPages)[0]];
@@ -592,57 +595,6 @@ export default class EditorBoundary extends React.Component{
                                     />
                                 </div>
                             </PageView>
-                            /*<div
-                                className="EditorBoundaryPageHolder"
-                                style={{
-                                    // TODO add scale support
-                                    padding: "0 50px"
-                                }}
-                                onScroll={this.onScrollBoundary}
-                                onContextMenu={(e) => {
-                                    e.stopPropagation();
-                                    e.preventDefault();
-                                }}
-                            >
-                                <div
-                                    className="EditorBoundaryPageHolderHover"
-                                    style={{
-                                        bottom: getScrollbarWidth()
-                                    }}
-                                    onClick={() => {
-                                        this.rootLayoutRef.current.onSelect(true);
-                                    }}
-                                />
-                                <div className="PageBaseWhiteBackground" style={{
-                                    marginTop: `${8*this.context.zoomScale}vh`
-                                }}>
-                                    <PageBase
-                                        key={this.context.pageData.props.pageId}
-                                        id="page"
-                                        aglRef={this.rootLayoutRef}
-                                        viewRef={this.rootLayoutRef}
-                                        breakpointmanager={this.breakpointmanager}
-                                        undoredo={this.undoredo}
-                                        dragdrop={this.dragdrop}
-                                        select={this.select}
-                                        snap={this.snap}
-                                        input={this.inputManager}
-                                        idMan={this.idMan}
-                                        gridLine={this.gridLine}
-                                        gridEditorRef={this.gridEditorRef}
-                                        anchorMan={this.anchorMan}
-                                        copyMan={this.copyMan}
-                                        editorData={this.editorData}
-                                        onPageResize={this.onPageResize}
-                                        onPageResizeStart={this.onPageResizeStart}
-                                        onPageResizeStop={this.onPageResizeStop}
-                                        editor={!this.isPreview() && this}
-                                        devicePixelRatio={this.state.devicePixelRatio}
-                                        {...this.context.pageData.props}
-                                        pageSize={this.context.pageSize}
-                                    />
-                                </div>
-                            </div>*/
                         }
 
                         {

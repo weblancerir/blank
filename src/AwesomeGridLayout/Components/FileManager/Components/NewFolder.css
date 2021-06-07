@@ -1,0 +1,25 @@
+.NewFolderRoot {
+    width: 300px;
+    height: auto;
+    background-color: #fdfdfd;
+    border-radius: 8px;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.NewFolderContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 16px;
+}
+
+.NewFolderTitle {
+    font-size: 14px;
+}
+
+.NewFolderCreate {
+    margin-top: 16px !important;
+    width: 100% ;
+}

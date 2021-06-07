@@ -16,7 +16,9 @@ export default class UploadButton extends React.Component {
             <>
                 <input
                     style={{display: "none"}}
-                    type="file" name="file" onChange={this.props.onFileSelected} ref={this.inputRef}/>
+                    type="file" name="file" onChange={this.props.onFileSelected} ref={this.inputRef}
+                    multiple={this.props.multiple}
+                />
                 <div>
                     <ButtonBase
                         className={this.props.className}

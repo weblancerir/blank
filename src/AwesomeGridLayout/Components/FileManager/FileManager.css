@@ -143,16 +143,18 @@
     justify-content: center;
     border-radius: 4px;
     overflow: hidden;
-}
-
-.FileManagerFileData:hover {
-    background-color: #d3fff8;
-    cursor: pointer;
+    border: 3px solid transparent;
 }
 
 .FileManagerFileSelected {
     background-color: #d3fff8;
-    border: 2px solid #34c3a3;
+    border: 3px solid #34c3a3 !important;
+}
+
+.FileManagerFileData:hover {
+    background-color: #d3fff8;
+    border: 3px solid transparent;
+    cursor: pointer;
 }
 
 .FileManagerFileName {
@@ -202,4 +204,10 @@
 
 .FileManagerUploadingRoot {
     position: absolute;
+}
+
+.FileManagerImageIcon {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }

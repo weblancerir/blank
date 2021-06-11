@@ -57,7 +57,7 @@ FileManagerHelper.usage = (editorContext, onSuccess, onError) => {
         {
             type: "Server",
             route: "/file/usage",
-            input: {websiteId: editorContext.websiteId, },
+            input: {websiteId: editorContext.websiteId},
             method: "post"
         },
         ({result}) => {
@@ -83,6 +83,23 @@ FileManagerHelper.delete = (editorContext, deleteObjects, onSuccess, onError) =>
             route: "/file/delete",
             input: {websiteId: editorContext.websiteId, deleteObjects},
             method: "post"
+        },
+        ({result}) => {
+            console.log("FileManagerHelper.list callback", result);
+            if (result.success)
+                onSuccess(result.data);
+            else
+                onError(result.error);
+        });
+}
+
+FileManagerHelper.storage = (editorContext, onSuccess, onError) => {
+    editorContext.postMessageToHolder(
+        {
+            type: "Server",
+            route: "/file/storage",
+            input: {websiteId: editorContext.websiteId},
+            method: "get"
         },
         ({result}) => {
             console.log("FileManagerHelper.list callback", result);

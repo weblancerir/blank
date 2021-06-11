@@ -5,20 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ee3df027-738a-4634-bc4a-d7b9163847a2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/Components/FileUploader.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/Components/FileUploader.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/Components/NewFolder.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/Components/NewFolder.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManagerHelper.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/icons/file.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/icons/folderback.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/Components/UploadButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/Components/UploadButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/Components/FileUploader.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/Components/FileUploader.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/Components/FileUploader.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/Components/FileUploader.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManager.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManager.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorContext.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManagerHelper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManagerHelper.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,7 +236,7 @@
       <workItem from="1621522707455" duration="55000" />
       <workItem from="1622404829336" duration="1191000" />
       <workItem from="1622532601818" duration="84772000" />
-      <workItem from="1622888830783" duration="38590000" />
+      <workItem from="1622888830783" duration="52811000" />
     </task>
     <servers />
   </component>

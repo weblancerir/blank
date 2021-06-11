@@ -21,22 +21,30 @@ export default class FileManager extends React.Component {
         this.state = {
             selectedMenu: "Website Files",
             route: this.getFirstRoute(),
-            selectedFile: ""
+            selectedFile: "",
         };
+
+        this.uploaderRef = React.createRef();
     }
 
     componentDidMount() {
-        this.loadRoute();
+        FileManagerHelper.storage(this.context, ({url}) => {
+            this.baseUrl = url;
+            this.loadRoute();
+        }, (errorMessage) => {
+            console.log("storage error", errorMessage)
+        });
     }
 
     loadRoute = (continuationToken) => {
         // TODO call publisher server
-        this.setState({list: undefined});
+        this.setState({list: undefined, selectedFile: undefined});
 
         this.loadingPrefix = this.getCurrentPrefix();
         FileManagerHelper.list(this.context, this.loadingPrefix, continuationToken, (list, prefix) => {
             if (this.loadingPrefix !== prefix)
                 return;
+
             list.contents = list.contents.filter(item => {
                 return !item.Key.endsWith('/');
             });
@@ -85,9 +93,13 @@ export default class FileManager extends React.Component {
     uploadFile = (files) => {
         console.log(files)
         // TODO send files to storage and create a on done listner to show progress
-        this.setState({
-            uploadingData: {files, prefix: this.getCurrentPrefix()}
-        })
+
+        if (this.uploaderRef.current)
+            this.uploaderRef.current.addFiles(files, this.getCurrentPrefix());
+        else
+            this.setState({
+                uploadingData: {files, prefix: this.getCurrentPrefix()}
+            })
     }
 
     getEmptyFolder = () => {
@@ -136,6 +148,36 @@ export default class FileManager extends React.Component {
         else {
 
         }
+    }
+
+    getFileIconPreview = (fileData) => {
+        return (
+            <img draggable={false}
+                 className="FileManagerImageIcon"
+                 src={
+                     `${this.baseUrl}/${fileData.Key}`
+                 }
+                 style={{
+                     userDrag: "none",
+                     userSelect: "none"
+                 }}
+            />
+        )
+    }
+
+    addFileManually = (fileData) => {
+        if (fileData.prefix !== this.getCurrentPrefix())
+            return;
+
+        let {list} = this.state;
+
+        list.contents.push({
+            Key: `${list.basePrefix}/${fileData.prefix}/${fileData.file.name}`
+        })
+
+        console.log("addFileManually 4");
+        this.forceUpdate();
+        console.log("addFileManually 5");
     }
 
     render () {
@@ -312,7 +354,7 @@ export default class FileManager extends React.Component {
                                 </div>
 
                                 <Dropzone
-                                    onDrop={acceptedFiles => console.log(acceptedFiles)}
+                                    onDrop={acceptedFiles => this.uploadFile(acceptedFiles)}
                                 >
                                     {({getRootProps, getInputProps}) => (
                                         <div
@@ -381,7 +423,39 @@ export default class FileManager extends React.Component {
                                                 {
                                                     list &&
                                                     list.contents.map(fileData => {
-                                                        return null;
+                                                        let filename = fileData.Key.split('/')[fileData.Key.split('/').length - 1];
+
+                                                        let shortName = filename.split('.').slice(0, -1).join('.');
+
+                                                        return (
+                                                            <div key={filename} className="FileManagerFileRoot">
+                                                                <div>
+                                                                    <div
+                                                                        className={`FileManagerFileData ${
+                                                                            selectedFile === filename ?
+                                                                                "FileManagerFileSelected" : ""
+                                                                        }`}
+                                                                        onClick={
+                                                                            (e) => {
+                                                                                e.stopPropagation();
+                                                                                this.onClickFile(filename, "file");
+                                                                            }
+                                                                        }
+                                                                        onDoubleClick={
+                                                                            (e) => {
+                                                                                e.stopPropagation();
+                                                                                this.onDoubleClickFile(filename, "file");
+                                                                            }
+                                                                        }
+                                                                    >
+                                                                        {this.getFileIconPreview(fileData)}
+                                                                    </div>
+                                                                </div>
+                                                                <span className="FileManagerFileName">
+                                                                    {shortName}
+                                                                </span>
+                                                            </div>
+                                                        )
                                                     })
                                                 }
                                             </div>
@@ -389,8 +463,13 @@ export default class FileManager extends React.Component {
                                             {
                                                 uploadingData &&
                                                 <FileUploader
+                                                    ref={this.uploaderRef}
                                                     prefix={uploadingData.prefix}
                                                     files={uploadingData.files}
+                                                    onFinish={() => {
+                                                        this.setState({uploadingData: undefined})
+                                                    }}
+                                                    onSingleFileUploaded={this.addFileManually}
                                                 />
                                             }
                                         </div>

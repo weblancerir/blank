@@ -9,6 +9,8 @@ export default class AdjustmentHover extends React.Component {
         this.state = {
             active: true
         };
+
+        console.log("AdjustmentHover constructor")
     }
 
     update = (item, size, clear) => {

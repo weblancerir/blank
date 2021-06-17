@@ -142,15 +142,20 @@ export default class PageBase extends AGLComponent {
     };
 
     deleteHorizontalSection = (id) => {
+        console.log("deleteHorizontalSection 0", id);
+
         let index = this.allSectionsH.findIndex(h => {
             return h === id;
         });
+        console.log("deleteHorizontalSection 01", index);
         if (index < 0)
             return false;
 
+        console.log("deleteHorizontalSection 02", this.allSectionsH);
         if (this.allSectionsH.length === 1)
             return false;
 
+        console.log("deleteHorizontalSection 03");
         this.gridX--;
 
         let currentSection = this.allSectionsH[index];
@@ -208,9 +213,11 @@ export default class PageBase extends AGLComponent {
 
         index >= 0 && this.allSectionsH.splice(index, 1);
 
+        console.log("deleteHorizontalSection 1", index, this.allSectionsH);
         this.gridTemplateRows = new Array(this.allSectionsH.length).fill(0).map(a => {
             return "auto";
         }).join(' ');
+        console.log("deleteHorizontalSection 2", this.gridTemplateRows);
 
         this.root.current.setGrid({
             x: this.gridX,
@@ -364,6 +371,7 @@ export default class PageBase extends AGLComponent {
     };
 
     onItemPreDelete = (item) => {
+        console.log("onItemPreDelete 0", item.props.id);
         let allow = this.deleteHorizontalSection(item.props.id);
         if (!allow)
             allow = this.deleteVerticalSection(item.props.id);
@@ -1264,7 +1272,6 @@ export default class PageBase extends AGLComponent {
     render() {
         // let fullWidth = (this.getAgl() && this.getAgl().getSize(false)) || (1002);
         let fullWidth = this.props.pageSize;
-        console.log("this.getData()", this.getData())
         return (
             <AGLWrapper tagName="PageBase"
                         aglRef={!this.props.aglRef ? this.root : this.root = this.props.aglRef}

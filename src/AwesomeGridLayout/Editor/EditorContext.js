@@ -2,6 +2,7 @@ import React from 'react';
 import BreakPointManager from "../BreakPointManager";
 import chroma from "chroma-js";
 import {addCSS, JSToCSS} from "../AwesomeGridLayoutUtils";
+import {resolveDefaultMenu} from "../MenuManager/MenuManager";
 
 function getColorScheme (baseColor) {
     return {
@@ -75,8 +76,18 @@ export default class EditorContextProvider extends React.Component {
             showFileManager: this.showFileManager,
             isEditor: this.isEditor,
             postMessageToHolder: this.postMessageToHolder,
-            setWebsiteId: this.setWebsiteId
+            setWebsiteId: this.setWebsiteId,
+            showModal: this.showModal,
+            hideModal: this.hideModal
         };
+    }
+
+    showModal = (modal, callback) => {
+        this.state.editor.showModal(modal, callback);
+    }
+
+    hideModal = (callback) => {
+        this.state.editor.hideModal(callback);
     }
 
     setWebsiteId = (websiteId) => {
@@ -228,8 +239,10 @@ export default class EditorContextProvider extends React.Component {
     };
 
     setSiteData = (siteData, callback) => {
+        console.log("setSiteData", siteData)
         this.setState({siteData}, () => {
             this.postSiteData();
+            resolveDefaultMenu(siteData);
             callback && callback();
         });
     };

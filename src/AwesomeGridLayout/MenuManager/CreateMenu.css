@@ -1,0 +1,26 @@
+.CreateMenuRoot {
+    width: 300px;
+    height: auto;
+    background-color: #fdfdfd;
+    border-radius: 8px;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.CreateMenuContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 16px;
+}
+
+.CreateMenuTitle {
+    font-size: 14px;
+}
+
+.CreateMenuCreate {
+    margin-top: 16px !important;
+    width: 100% ;
+    text-transform: capitalize !important;
+}

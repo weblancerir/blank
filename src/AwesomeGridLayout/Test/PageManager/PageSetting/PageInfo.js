@@ -4,6 +4,7 @@ import '../PageManager.css';
 import Image from "../../../Menus/CommonComponents/Image";
 import Button from "@material-ui/core/Button/Button";
 import {EditorContext} from "../../../Editor/EditorContext";
+import {resolveDefaultMenu} from "../../../MenuManager/MenuManager";
 
 export default class PageInfo extends React.Component {
     static contextType = EditorContext;
@@ -34,6 +35,8 @@ export default class PageInfo extends React.Component {
         this.newPageName = undefined;
 
         this.context.update();
+
+        resolveDefaultMenu(this.context.siteData);
     };
 
     setAsHomePage = () => {

@@ -1,3 +1,4 @@
+import React from "react";
 import {getRandomLinkId, getRangeSelectedNodes} from "../../TextHelper";
 
 export function addLinkData (doc, linkData) {
@@ -93,6 +94,9 @@ export function prepareLink (node, preview, production, editorContext, linkData)
     if (!preview && !production)
         return;
 
+    if (!linkData)
+        return;
+
     switch (linkData.type) {
         case "WebAddress":
             if (linkData.data.window === "current" && !production)
@@ -114,7 +118,7 @@ export function prepareLink (node, preview, production, editorContext, linkData)
         // TODO
             break;
         case "TopBottomThisPage":
-            console.log("TopBottomThisPage");
+            console.log("TopBottomThisPage", linkData, node);
             node.setAttribute("href", `#${linkData.data.position}`);
             break;
         case "Document":
@@ -140,6 +144,6 @@ function pageLinkHandle (editorContext, linkData) {
     if (linkData.data.window === 'current') {
         editorContext.setPageData(linkData.data.pageId);
     } else {
-
+        // TODO open page in other window !Important
     }
 }

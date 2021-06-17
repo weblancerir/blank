@@ -22,11 +22,22 @@ export default class DragDropManager {
             !this.mouseOver.getParentsId().includes(this.draggingItem.props.id) &&
             !this.isDraggingItemFixed())
         {
-            this.mouseOver.prepareRects();
-            this.dropItem(this.draggingItem, this.draggingItem.props.parent, this.mouseOver);
+            // this.mouseOver.prepareRects();
+            let newParent = this.mouseOver.getContainerParent();
+            newParent.prepareRects(true, true);
+            newParent.toggleGridLines(true, () => {}, "B");
 
-            this.draggingItem = undefined;
-            return true;
+            console.log("setDraggingStop", newParent, this.draggingItem.props.parent, this.draggingItem.props.parent !== newParent)
+
+            if (this.draggingItem.props.parent !== newParent) {
+                this.dropItem(this.draggingItem, this.draggingItem.props.parent, newParent);
+
+                this.draggingItem = undefined;
+                return true;
+            } else {
+                this.draggingItem = undefined;
+                return false;
+            }
         }
 
         this.draggingItem = undefined;

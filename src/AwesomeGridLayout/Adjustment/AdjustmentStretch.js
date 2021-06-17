@@ -20,8 +20,15 @@ export default class AdjustmentStretch extends React.Component {
         return false;
     };
 
+    isDragging = () => {
+        let {itemId, idMan} = this.props;
+        return idMan.getItem(itemId).state.draggingStart;
+    }
+
     render () {
         let {isStretch} = this.props;
+        if (this.isDragging())
+            return null;
         return (
             <div
                 id="AdjustmentResize"

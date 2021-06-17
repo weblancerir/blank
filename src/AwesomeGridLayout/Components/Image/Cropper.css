@@ -1,0 +1,66 @@
+.CropperRoot {
+    width: 600px;
+    height: 80%;
+    background-color: #fdfdfd;
+    border-radius: 8px;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.CropperContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.CropperMargin {
+    position: relative;
+    width: auto;
+    height: auto;
+    margin: 10px;
+    flex: 1;
+    box-sizing: border-box;
+}
+
+.CropperFooter {
+    position: relative;
+    height: auto;
+    display: flex;
+    align-items: center;
+    padding: 12px;
+}
+
+.CropperZoomSpan {
+    margin: 0 12px 0 0;
+    font-size: 14px;
+    transform: translateY(-3px);
+}
+
+.CropperZoom {
+    flex: 1;
+}
+
+.CropperFooterSpacer {
+    height: 100%;
+    margin: 0 12px;
+    width: 1px;
+    background-color: #d2d2d2;
+}
+
+.CropperReset {
+    width: auto;
+}
+
+.CropperCancel {
+    width: auto;
+    text-transform: capitalize !important;
+}
+
+.CropperDone {
+    width: auto;
+    text-transform: capitalize !important;
+    margin-left: 12px !important;
+}

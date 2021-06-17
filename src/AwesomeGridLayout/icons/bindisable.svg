@@ -1,0 +1,17 @@
+<svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+
+ <title/>
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <path stroke-width="2px" stroke-linejoin="round" stroke-linecap="round" stroke="#cccccc" fill="none" id="svg_1" d="m15.73,11.53l32.41,0a4.18,4.18 0 0 1 4.18,4.18l0,36a11,11 0 0 1 -11,11l-18.74,0a11,11 0 0 1 -11,-11l0,-36a4.18,4.18 0 0 1 4.15,-4.18z" class="cls-1"/>
+  <rect stroke-width="2px" stroke-linejoin="round" stroke-linecap="round" stroke="#cccccc" fill="none" id="svg_2" y="6.52" x="7.52" width="48.84" ry="2.43" rx="2.43" height="5.01" class="cls-1"/>
+  <path stroke-width="2px" stroke-linejoin="round" stroke-linecap="round" stroke="#cccccc" fill="none" id="svg_3" d="m21.79,6.52l0,0a5.32,5.32 0 0 1 5.32,-5.33l9.81,0a5.33,5.33 0 0 1 5.33,5.33l0,0" class="cls-1"/>
+  <rect stroke-width="2px" stroke-linejoin="round" stroke-linecap="round" stroke="#cccccc" fill="none" id="svg_4" y="16.75" x="30.5" width="2.88" height="38.88" class="cls-1"/>
+  <rect stroke-width="2px" stroke-linejoin="round" stroke-linecap="round" stroke="#cccccc" fill="none" id="svg_5" y="16.75" x="16.13" width="2.88" height="38.88" class="cls-1"/>
+  <rect stroke-width="2px" stroke-linejoin="round" stroke-linecap="round" stroke="#cccccc" fill="none" id="svg_6" y="16.75" x="44.63" width="2.88" height="38.88" class="cls-1"/>
+ </g>
+</svg>

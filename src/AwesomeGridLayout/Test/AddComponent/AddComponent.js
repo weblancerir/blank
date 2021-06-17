@@ -99,6 +99,7 @@ export default class AddComponent extends React.Component {
     };
 
     setComponentSubListItemDebounce = debounce((componentSubListItem) => {
+        console.log("componentSubListItem", componentSubListItem)
         this.setComponentSubListItem(componentSubListItem);
     }, 500);
 
@@ -150,6 +151,9 @@ export default class AddComponent extends React.Component {
                                 let style = {};
                                 if (componentListItem === this.state.componentListItem)
                                     style.backgroundColor = "#e5ffff";
+                                if(!componentListItem.subList &&
+                                    (!componentListItem.allItems || componentListItem.allItems.length < 1))
+                                    return null;
                                 return (
                                     <div
                                         key={componentListItem.name}

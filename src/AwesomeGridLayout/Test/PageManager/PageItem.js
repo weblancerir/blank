@@ -9,6 +9,7 @@ import {cloneObject} from "../../AwesomeGridLayoutUtils";
 import PageSetting from "./PageSetting/PageSetting";
 import {v4 as uuidv4} from "uuid";
 import {EditorContext} from "../../Editor/EditorContext";
+import {resolveDefaultMenu} from "../../MenuManager/MenuManager";
 
 export default class PageItem extends React.Component {
     static contextType = EditorContext;
@@ -87,6 +88,8 @@ export default class PageItem extends React.Component {
 
             editor.setState({reload: true});
         }
+
+        resolveDefaultMenu(this.context.siteData);
     };
 
     onRename = (e) => {

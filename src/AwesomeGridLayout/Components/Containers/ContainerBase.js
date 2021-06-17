@@ -7,14 +7,11 @@ import '../../HelperStyle.css';
 import './ContainerBase.css';
 import {
     getCompositeDesignData,
-    getFromTempData,
     parseColor,
     resolveDesignData,
-    setTempData
 } from "../../AwesomwGridLayoutHelper";
 import AnimationDesign from "./Menus/AnimationDesign";
 import {EditorContext} from "../../Editor/EditorContext";
-import {addLinkData, getSelectedLinkData} from "../Text/Menus/components/LinkHelper";
 
 export default class ContainerBase extends AGLComponent{
     static contextType = EditorContext;

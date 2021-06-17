@@ -180,8 +180,7 @@
                   "style": {
                     "width": "auto",
                     "height": "auto",
-                    "minHeight": "150px",
-                    "zIndex": "50"
+                    "minHeight": "150px"
                   },
                   "grid": {
                     "x": 1,
@@ -357,7 +356,6 @@
                     "width": "auto",
                     "height": "auto",
                     "minHeight": "100px",
-                    "zIndex": "51"
                   },
                   "grid": {
                     "x": 1,

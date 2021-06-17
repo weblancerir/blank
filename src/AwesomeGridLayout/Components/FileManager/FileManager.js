@@ -11,6 +11,7 @@ import NewFolder from "./Components/NewFolder";
 import {cloneObject} from "../../AwesomeGridLayoutUtils";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FileUploader from "./Components/FileUploader";
+import MultiColorProgressBar from "./Components/MultiColorProgressBar";
 
 export default class FileManager extends React.Component {
     static contextType = EditorContext;
@@ -22,6 +23,7 @@ export default class FileManager extends React.Component {
             selectedMenu: "Website Files",
             route: this.getFirstRoute(),
             selectedFile: "",
+            selectedFiles: []
         };
 
         this.uploaderRef = React.createRef();
@@ -38,7 +40,7 @@ export default class FileManager extends React.Component {
 
     loadRoute = (continuationToken) => {
         // TODO call publisher server
-        this.setState({list: undefined, selectedFile: undefined});
+        this.setState({list: undefined, selectedFile: undefined, selectedFiles: []});
 
         this.loadingPrefix = this.getCurrentPrefix();
         FileManagerHelper.list(this.context, this.loadingPrefix, continuationToken, (list, prefix) => {
@@ -52,6 +54,8 @@ export default class FileManager extends React.Component {
         }, (errorMessage) => {
             this.setState({errorMessage});
         });
+
+        this.loadUserUsage();
     }
 
     getCurrentPrefix = () => {
@@ -91,8 +95,10 @@ export default class FileManager extends React.Component {
     }
 
     uploadFile = (files) => {
-        console.log(files)
-        // TODO send files to storage and create a on done listner to show progress
+        if (!this.isFilesValid(files)) {
+            this.showError("Upload files with valid extention !");
+            return;
+        }
 
         if (this.uploaderRef.current)
             this.uploaderRef.current.addFiles(files, this.getCurrentPrefix());
@@ -100,6 +106,72 @@ export default class FileManager extends React.Component {
             this.setState({
                 uploadingData: {files, prefix: this.getCurrentPrefix()}
             })
+    }
+
+    getValidFileExt = () => {
+        let {type} = this.props.options;
+
+        type = type.toLowerCase();
+        switch (type) {
+            case "images":
+                return [
+                    "jpg", "jpeg", "png",
+                    "gif", "jpe", "jfif",
+                    "bmp", "heic", "heif",
+                    "tiff", "tif", "png",
+                    "tiff", "tif", "png",
+                    "tiff", "tif", "webp"
+                ]
+                break;
+            case "voices":
+                return [
+                    "mp3", "wav", "flac",
+                    "m4a", "wma", "aac",
+                    "aif", "aiff"
+                ]
+                break;
+            case "videos":
+                return [
+                    "avi", "mpeg", "mpg",
+                    "mpe", "mp4", "mkv",
+                    "webm", "mov", "ogv",
+                    "vob", "m4v", "3gp",
+                    "divx", "xvid", "mxf",
+                    "wmv", "m1v", "flv",
+                    "m2ts"
+                ]
+                break;
+            case "documents":
+                return [
+                    "all"
+                ]
+                break;
+        }
+
+        return [
+            "all"
+        ];
+    }
+
+    isFilesValid = (files) => {
+        let validExt = this.getValidFileExt();
+
+        if (validExt.includes("all"))
+            return  true;
+
+        let valid = true;
+        files.forEach(file => {
+            let ext = file.name.split('.').pop();
+
+            if (!validExt.includes(ext.toLowerCase()))
+                valid = false;
+        });
+
+        return valid;
+    }
+
+    showError = (message) => {
+        console.log("showError", message);
     }
 
     getEmptyFolder = () => {
@@ -123,6 +195,10 @@ export default class FileManager extends React.Component {
                         }))
                     }}
                     multiple
+                    accept={
+                        this.getValidFileExt().includes("all") ? undefined :
+                        this.getValidFileExt().map(e => `.${e}`).join(',')
+                    }
                 >
                     Upload New File
                 </UploadButton>
@@ -138,7 +214,12 @@ export default class FileManager extends React.Component {
     }
 
     onClickFile = (name, type) => {
-        this.setState({selectedFile: name});
+        if (!name) {
+            this.setState({selectedFile: "", selectedFiles: []});
+            return;
+        }
+
+        this.setState({selectedFile: name, selectedFiles: [name]});
     }
 
     onDoubleClickFile = (name, type) => {
@@ -165,6 +246,62 @@ export default class FileManager extends React.Component {
         )
     }
 
+    deleteFiles = () => {
+        let {selectedFile, selectedFiles, list} = this.state;
+
+        let deleteObjects = [];
+        selectedFiles.forEach(filename => {
+            if (this.getFileType(filename) === "file")
+                deleteObjects.push({Key: `${this.getCurrentPrefix()}/${filename}`})
+        });
+
+        let currentPrifix = this.getCurrentPrefix();
+        FileManagerHelper.delete(this.context, deleteObjects, () => {
+            if (currentPrifix === this.getCurrentPrefix())
+                this.loadRoute();
+        }, (errorMessage) => {
+            this.setState({errorMessage});
+        });
+    }
+
+    getFileType = (selectedFile) => {
+        let {list} = this.state;
+
+        let isFile = list.contents.find(f => {
+            let filename = f.Key.split('/')[f.Key.split('/').length - 1];
+            return filename === selectedFile;
+        });
+
+        let isFolder = list.folders.find(f => {
+            let folderName = f.split('/')[0];
+            return folderName === selectedFile;
+        });
+
+        if (isFile)
+            return "file";
+
+        if (isFolder)
+            return "folder";
+
+        return "unknown";
+    }
+
+    selectedFilesContainFile = () => {
+        let {list, selectedFiles} = this.state;
+
+        if (!list)
+            return false;
+
+        let found = false;
+        list.contents.forEach(f => {
+            let filename = f.Key.split('/')[f.Key.split('/').length - 1];
+            if (selectedFiles.includes(filename))
+                found = true;
+        });
+
+        return found;
+    }
+
     addFileManually = (fileData) => {
         if (fileData.prefix !== this.getCurrentPrefix())
             return;
@@ -180,9 +317,37 @@ export default class FileManager extends React.Component {
         console.log("addFileManually 5");
     }
 
+    loadUserUsage = () => {
+        FileManagerHelper.usage(this.context, (usageData) => {
+            console.log("loadUserUsage", usageData);
+            this.setState({usageData})
+        }, (errorMessage) => {
+            this.setState({errorMessage});
+        });
+    }
+
+    getUsageColor = () => {
+        let {usageData} = this.state;
+
+        let usagePercent = this.getUsagePercent();
+        if (usagePercent < 50)
+            return "#53ff30";
+        if (usagePercent < 80)
+            return "#f8ff30";
+        if (usagePercent < 90)
+            return "#ff8a30";
+        // if (usagePercent < 100)
+        return "#ff3030";
+    }
+
+    getUsagePercent = () => {
+        let {usageData} = this.state;
+        return usageData.usage / 500 / 1024 / 1024 * 100;;
+    }
+
     render () {
-        let {options} = this.props;
-        let {list, selectedMenu, selectedFile, route, uploadingData} = this.state;
+        let {options, onDone, onClose} = this.props;
+        let {list, usageData, selectedMenu, selectedFiles, route, uploadingData} = this.state;
         return <Modal
             open={this.props.open}
             onClose={this.props.onClose}
@@ -242,6 +407,10 @@ export default class FileManager extends React.Component {
                                     }))
                                 }}
                                 multiple
+                                accept={
+                                    this.getValidFileExt().includes("all") ? undefined :
+                                    this.getValidFileExt().map(e => `.${e}`).join(',')
+                                }
                             >
                                 Upload New File
                             </UploadButton>
@@ -350,7 +519,35 @@ export default class FileManager extends React.Component {
                                         />
                                     </IconButton>
 
-
+                                    <IconButton
+                                        buttonBaseStyle={{
+                                            marginLeft: 16
+                                        }}
+                                        imageContainerStyle={{
+                                            padding: 0
+                                        }}
+                                        onClick={(e) => {
+                                            this.deleteFiles();
+                                        }}
+                                        disabled={!this.selectedFilesContainFile()}
+                                    >
+                                        {
+                                            !this.selectedFilesContainFile()?
+                                                <img
+                                                    draggable={false}
+                                                    width={20}
+                                                    height={20}
+                                                    src={require('../../icons/bindisable.svg')}
+                                                />
+                                                :
+                                                <img
+                                                    draggable={false}
+                                                    width={20}
+                                                    height={20}
+                                                    src={require('../../icons/bin.svg')}
+                                                />
+                                         }
+                                    </IconButton>
                                 </div>
 
                                 <Dropzone
@@ -361,7 +558,7 @@ export default class FileManager extends React.Component {
                                             className="FileManagerContentData"
                                             {...getRootProps({
                                                 onClick: event => {
-                                                    this.onClickFile("");
+                                                    this.onClickFile();
                                                     event.stopPropagation()
                                                 }
                                             })}
@@ -388,7 +585,7 @@ export default class FileManager extends React.Component {
                                                                 <div>
                                                                     <div
                                                                         className={`FileManagerFileData ${
-                                                                            selectedFile === folderPath ?
+                                                                            selectedFiles.includes(folderPath) ?
                                                                                 "FileManagerFileSelected" : ""
                                                                         }`}
                                                                         onClick={
@@ -432,7 +629,7 @@ export default class FileManager extends React.Component {
                                                                 <div>
                                                                     <div
                                                                         className={`FileManagerFileData ${
-                                                                            selectedFile === filename ?
+                                                                            selectedFiles.includes(filename) ?
                                                                                 "FileManagerFileSelected" : ""
                                                                         }`}
                                                                         onClick={
@@ -475,6 +672,62 @@ export default class FileManager extends React.Component {
                                         </div>
                                     )}
                                 </Dropzone>
+
+                                <div className="FileManagerContentFooter">
+                                        <div className="FileManagerContentUsageRoot">
+                                            {
+                                                usageData &&
+                                                <>
+                                                    <div className="FileManagerContentUsageLabelRoot">
+                                                    <span className="FileManagerContentUsageLabel">
+                                                        Website Usage
+                                                    </span>
+                                                        <span>
+                                                        {
+                                                            `${(usageData.usage / 1024 / 1024).toFixed(2)} Mb / 500 Mb`
+                                                        }
+                                                    </span>
+                                                    </div>
+                                                    <MultiColorProgressBar
+                                                    readings={[
+                                                        {
+                                                            name: 'Used Space',
+                                                            value: this.getUsagePercent(),
+                                                            color: this.getUsageColor()
+                                                        },
+                                                        {
+                                                            name: 'Free Space',
+                                                            value: 100 - this.getUsagePercent(),
+                                                            color: '#f8f8f8'
+                                                        }
+                                                    ]}
+                                                    />
+                                                </>
+                                            }
+                                        </div>
+                                    {
+                                        onDone &&
+                                        <div className="FileManagerContentCallbackRoot">
+                                            <ButtonBase
+                                                className={
+                                                    selectedFiles.length > 0 ?
+                                                    "FileManagerMenuSelectButton" :
+                                                    "FileManagerMenuSelectButtonDisabled"
+                                                }
+                                                onClick={(e) => {
+                                                    onClose();
+                                                    onDone(selectedFiles.map(filename => {
+                                                        return {
+                                                            url: `${this.baseUrl}/${list.basePrefix}/${this.getCurrentPrefix()}/${filename}`
+                                                        }
+                                                    }));
+                                                }}
+                                            >
+                                                Select
+                                            </ButtonBase>
+                                        </div>
+                                    }
+                                </div>
                             </>
                         }
                         <div className="FileManagerUploadingRoot">

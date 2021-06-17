@@ -121,7 +121,7 @@ export default class Header extends AGLComponent{
                             width: "100%",
                             height: "auto",
                             minHeight: "150px",
-                            zIndex: "50"
+                            // zIndex: "50"
                         }}
                         as="header"
                         autoConstraintsOff

@@ -9,12 +9,11 @@
     justify-content: center;
     text-decoration: none !important;
     transition: 0.3s;
-    /* TODO Test*/
-    /*background-color: #0a79e6;*/
+    clip-path: inset(0 0 0 0);
+    -webkit-clip-path: inset(0 0 0 0);
 }
 
 .ImageBorderRoot:hover {
-    /*background-color: #1a0dab;*/
 }
 
 .ImageBorderRoot, .ImageBorderRoot:visited, .ImageBorderRoot:hover, .ImageBorderRoot:active {
@@ -24,4 +23,16 @@
 .ImageImage{
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.ImageOverlay{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
 }

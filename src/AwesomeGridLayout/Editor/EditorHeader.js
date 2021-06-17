@@ -5,6 +5,7 @@ import EditorHeaderZoom from "./Zoom/EditorHeaderZoom";
 import {EditorContext} from "./EditorContext";
 import EditorHeaderPageSelect from "./PageSelect/EditorHeaderPageSelect";
 import EditorHeaderBreakpoints from "./Breakpoints/EditorHeaderBreakpoints";
+import MenuManagerUI from "../MenuManager/MenuManagerUI";
 
 export default class EditorHeader extends React.Component {
     static contextType = EditorContext;
@@ -99,6 +100,26 @@ export default class EditorHeader extends React.Component {
                             width={18}
                             height={18}
                             src={process.env.PUBLIC_URL + '/static/icon/water.svg'}
+                        />
+                    </IconButton>
+                    <IconButton
+                        buttonBaseStyle={{marginLeft: 0,
+                            backgroundColor: this.context.rightMenus.themeManager.state && "#d2fffc",
+                        }}
+                        onClick={(e) => {
+                            this.context.showModal(
+                                <MenuManagerUI
+                                    open={true}
+                                    onClose={() => {this.context.hideModal();}}
+                                />
+                            );
+                        }}
+                    >
+                        <img
+                            draggable={false}
+                            width={18}
+                            height={18}
+                            src={process.env.PUBLIC_URL + '/static/icon/menu.svg'}
                         />
                     </IconButton>
                 </div>

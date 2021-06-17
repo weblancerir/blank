@@ -71,15 +71,28 @@
     height: 100%;
     overflow-y: overlay;
     padding: 12px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-auto-rows: 62.655px;
     flex-wrap: wrap;
     box-sizing: border-box;
+    align-content: flex-start;
 }
 
 .AddComponentItemGridItem{
+    position: relative;
     box-sizing: border-box;
     padding: 6px;
     cursor: pointer;
+    display: flex;
+}
+
+.AddComponentItemGridItem > div{
+    position: relative;
+    margin: 6px;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
 }
 
 .AddComponentItemGridItem:hover{
@@ -87,10 +100,21 @@
 }
 
 .AddComponentItemGridItemImage{
+    width: 100%;
+    height: 100%;
 }
 
 .AddComponentItemGridItemLabel{
-    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 6px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
     box-sizing: border-box;
-    font-size: 12px;
+    font-size: 10px;
+    padding: 24px;
+    text-align: center;
 }

@@ -32,7 +32,8 @@
     width: 160px;
     display: flex;
     flex-direction: column;
-    padding: 24px 0;
+    padding-top: 24px;
+    padding-bottom: 12px;
     box-sizing: border-box;
     border-right: 1px solid #e2e2e2;
 }
@@ -45,7 +46,7 @@
 
 .FileManagerMenuUploadContainer {
     border-top: 1px solid #e2e2e2;
-    padding-top: 24px;
+    padding-top: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -56,6 +57,23 @@
     border-radius: 50px !important;
     background-color: #5e65ff !important;
     color: white !important;
+}
+
+.FileManagerMenuSelectButton {
+    padding: 12px !important;
+    border-radius: 50px !important;
+    width: 122px !important;
+    background-color: #5e65ff !important;
+    color: white !important;
+    margin-left: 24px !important;
+}
+.FileManagerMenuSelectButtonDisabled {
+    padding: 12px !important;
+    border-radius: 50px !important;
+    width: 122px !important;
+    background-color: #bfbfbf !important;
+    color: #737373 !important;
+    margin-left: 24px !important;
 }
 
 .FileManagerMenuTitle {
@@ -94,6 +112,39 @@
     display: flex;
     align-items: center;
     font-size: 14px;
+}
+
+.FileManagerContentFooter {
+    height: 64px;
+    border-top: 1px solid #e2e2e2;
+    padding: 12px 24px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.FileManagerContentUsageRoot {
+    flex: 1;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.FileManagerContentUsageLabelRoot {
+    font-size: 12px;
+    margin-bottom: 8px;
+    display: flex;
+}
+.FileManagerContentUsageLabel {
+    flex: 1;
+}
+.FileManagerContentUsage {
+
+}
+
+.FileManagerContentCallbackRoot {
+    /*border-left: 1px solid #e0e0e0;*/
 }
 
 .FileManagerContentHeaderRoute {
@@ -209,5 +260,5 @@
 .FileManagerImageIcon {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }

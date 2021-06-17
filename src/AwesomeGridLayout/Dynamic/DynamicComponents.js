@@ -21,6 +21,8 @@ import RevealAnimation from "../Test/Animations/RevealAnimation";
 import Text from "../Components/Text/Text";
 import Button from "../Components/Button/Button";
 import Image from "../Components/Image/Image";
+import Video from "../Components/Video/Video";
+import HorizontalMenu from "../Components/Menu/HorizontalMenu";
 
 let DynamicComponents = {};
 
@@ -35,6 +37,8 @@ export let initDynamicComponents = () => {
     DynamicComponents["Text"] = Text;
     DynamicComponents["Button"] = Button;
     DynamicComponents["Image"] = Image;
+    DynamicComponents["Video"] = Video;
+    DynamicComponents["HorizontalMenu"] = HorizontalMenu;
 };
 
 export default DynamicComponents;

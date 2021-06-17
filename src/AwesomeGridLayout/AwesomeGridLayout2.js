@@ -10,7 +10,7 @@ import {
     createItem,
     getCompositeDesignData, getPxValueFromCSSValue, getResizeDelta, getViewRatioStyle,
     isFixed,
-    isGroupSelected, isRightClick,
+    isGroupSelected, isRightClick, isStretch, stretch,
 } from "./AwesomwGridLayoutHelper";
 import AGLAnchor from "./AGLAnchor";
 import AdjustmentResizePage from "./Adjustment/AdjustmentResizePage";
@@ -58,6 +58,17 @@ export default class AwesomeGridLayout2 extends React.Component{
 
     componentDidMount () {
         this.mounted = true;
+
+        if (this.props.isPage) {
+            let el = this.rootDivRef.current;
+            console.log("--page-scroll", el.scrollTop, el.scrollHeight, el.clientHeight)
+            if (el.scrollHeight - el.clientHeight === 0)
+                document.documentElement.style.setProperty('--page-scroll', 0);
+            else
+                document.documentElement.style.setProperty('--page-scroll',
+                    el.scrollTop / (el.scrollHeight - el.clientHeight));
+        }
+
         this.init();
     }
 
@@ -366,6 +377,24 @@ export default class AwesomeGridLayout2 extends React.Component{
         return parentsId;
     };
 
+    getContainerParent = () => {
+        if (this.getFromTempData("isContainer"))
+            return this;
+
+        let containerParent;
+        let parent = this.props.parent;
+
+        while (!containerParent) {
+            if (parent.getFromTempData("isContainer")) {
+                containerParent = parent;
+            } else {
+                parent = parent.props.parent;
+            }
+        }
+
+        return containerParent;
+    };
+
     getGridLineSnaps = () => {
         let snaps = {
             horizontals: [],
@@ -587,6 +616,9 @@ export default class AwesomeGridLayout2 extends React.Component{
                 }
             });
         }
+
+        if (this.props.onInvalidateSize)
+            this.props.onInvalidateSize();
     };
 
     onWindowSizeChange = () => {
@@ -805,7 +837,10 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (!this.props.parent)
             return;
 
+
+        console.log("delete", this.props.onItemPreDelete);
         if (this.props.onItemPreDelete) {
+
             let allow = this.props.onItemPreDelete(this);
             if (!allow)
                 return;
@@ -1196,6 +1231,9 @@ export default class AwesomeGridLayout2 extends React.Component{
             this.props.dragdrop.setDragging(this);
 
         this.nonePointerEventForChildren(true);
+
+        if (isStretch(this))
+            stretch(this);
 
         let thisRect = this.getSize(false);
 
@@ -2236,6 +2274,9 @@ export default class AwesomeGridLayout2 extends React.Component{
         this.resizeData.onResizeData = {
             runtimeStyle: runtimeStyle,
         };
+
+        if (this.props.onResize)
+            this.props.onResize(runtimeStyle);
     };
 
     onResizeCalculate = () => {
@@ -3203,6 +3244,17 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (this.getFromTempData("isFixed")) {
             this.props.parent.forceScroll(e);
         }
+
+        let {isPage} = this.props;
+
+        if (isPage) {
+            let el = this.rootDivRef.current;
+            if (el.scrollHeight - el.clientHeight === 0)
+                document.documentElement.style.setProperty('--page-scroll', 0);
+            else
+                document.documentElement.style.setProperty('--page-scroll',
+                    el.scrollTop / (el.scrollHeight - el.clientHeight));
+        }
     };
 
     forceScroll = (e) => {
@@ -3264,12 +3316,12 @@ export default class AwesomeGridLayout2 extends React.Component{
         return this.props.editor;
     }
 
-    playAnimation = (disable) => {
+    playAnimation = (disable, force) => {
         let compositeDesign = getCompositeDesignData(this);
         if (!compositeDesign.animation || !compositeDesign.animation.name)
             return;
 
-        if (this.getFromData("dontAnimate"))
+        if (!force && this.getFromData("dontAnimate"))
             return;
 
         // Component going to show animation, so add end listener for more action
@@ -3368,7 +3420,6 @@ export default class AwesomeGridLayout2 extends React.Component{
                     select={select}
                     disableVS={disableVS}
                 >
-                    {console.log("customStyle", customStyle)}
                         <TagAs
                             onMouseDown={!showAnimation ? this.onMouseDown : undefined}
                             onMouseOver={this.onMouseOver}

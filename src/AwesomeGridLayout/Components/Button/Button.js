@@ -13,11 +13,11 @@ import {
 import {EditorContext} from "../../Editor/EditorContext";
 import MenuButton from "../../Menus/MenuBase/MenuButton";
 import AnimationDesign from "../Containers/Menus/AnimationDesign";
-import {prepareLink} from "../Text/Menus/components/LinkHelper";
 import ButtonDesign from "./Menus/ButtonDesign";
 import TextDesign from "./Menus/TextDesign";
 import {getFontDataByName} from "../Text/TextHelper";
 import StaticFonts from "../Text/Fonts/StaticFonts.json";
+import LinkedTag from "../Text/Menus/components/LinkedTag";
 
 export default class Button extends AGLComponent{
     static contextType = EditorContext;
@@ -30,25 +30,13 @@ export default class Button extends AGLComponent{
     }
 
     componentDidMount() {
-        this.resolveRootTag();
-    }
-
-    resolveRootTag = () => {
-        if (!this.context.preview && !this.context.production)
-            return;
-
-        let linkData = getFromTempData(this, "linkData");
-
-        if (linkData && linkData.type !== "None") {
-            prepareLink(this.rootBorderRef.current, this.context.preview, this.context.production, this.context, linkData);
-        }
     }
 
     resolveDesignData = () => {
         resolveDesignData(this, "spanData", {
             text: "Start Now",
             fontFamily: getFontDataByName(StaticFonts, "Yekan").fontFamily,
-            fontSize: 14,
+            fontSize: "14",
             margin: 0
         });
         resolveDesignData(this, "normal", {border: {shadow: {
@@ -150,6 +138,15 @@ export default class Button extends AGLComponent{
                         }
                     );
                 }}
+            />,
+            <MenuButton
+                key={33}
+                icon={ <img draggable={false} width={16} height={16}
+                            src={process.env.PUBLIC_URL + '/static/icon/add.svg'} /> }
+                select={this.props.select}
+                onClick={(e) => {
+                    this.showComponentCode();
+                }}
             />
         ]
     };
@@ -169,13 +166,11 @@ export default class Button extends AGLComponent{
             data = getCompositeDesignData(this).normal;
 
         let textColor = data.textColor;
-        console.log("textColor", textColor)
         if (textColor)
             textColor = parseColor(textColor, textColor.alpha, this.context);
 
         let border = data.border;
         let fillColor = data.fillColor;
-        console.log("fillColor", fillColor)
         if (fillColor)
             fillColor = parseColor(fillColor, fillColor.alpha, this.context);
 
@@ -195,11 +190,13 @@ export default class Button extends AGLComponent{
         if (spanData.textAlign === "flex-end")
             spanMarginStyle.marginRight = `${spanData.margin}px`;
 
-        return <a
+        let linkData = getFromTempData(this, "linkData");
+
+        return <LinkedTag
             onMouseOver={this.onMouseOver}
             onMouseOut={this.onMouseOut}
             className="ButtonBorderRoot"
-            ref={this.rootBorderRef}
+            linkData={linkData}
             style={{
                 border:
                     `${border.width || 0}px solid ${borderColor || 'rgba(186,218,85,0.63)'}`,
@@ -221,7 +218,7 @@ export default class Button extends AGLComponent{
             >
                 {spanData.text}
             </span>
-        </a>
+        </LinkedTag>
     };
 
     onStateChange = (stateName) => {

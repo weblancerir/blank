@@ -1,0 +1,52 @@
+.MenuTreeRoot {
+    flex: 1;
+    padding: 12px 24px;
+    overflow: auto;
+}
+
+.MenuTreeOrdererRoot {
+    box-sizing: border-box;
+    height: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.MenuTreeOrdererRootDropOver {
+    background-color: #968eff;
+    border-radius: 4px;
+}
+
+.MenuTreeItemRoot {
+
+}
+
+.MenuTreeItemRenderer {
+    display: flex;
+    border: 1px solid #c3c3c3;
+    padding: 4px;
+    border-radius: 4px;
+}
+.MenuTreeItemRenderer:hover {
+    background-color: #eaeaea;
+    cursor: pointer;
+}
+
+.MenuTreeItemLabel {
+    flex: 1;
+    padding-left: 8px;
+}
+
+.MenuTreeItem {
+    height: auto;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+.MenuTreeItemDropOver {
+    border: 2px solid #7b73ff;
+    padding: 0px;
+}
+
+.MenuTreeItemParentRoot {
+    padding-left: 24px;
+}

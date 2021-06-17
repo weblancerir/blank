@@ -19,37 +19,6 @@ export default class FileUploader extends React.Component {
                 progress: 0,
                 prefix: props.prefix,
             }}),
-            // TODO for test
-            // currentUploading: {
-            //     file: {name: "test.jpeg"},
-            //     progress: 24,
-            // },
-            // files: [
-            //     {
-            //         file: {name: "test2.jpeg"},
-            //         status: "pending",
-            //     },
-            //     {
-            //         file: {name: "test3.jpeg"},
-            //         status: "pending",
-            //     },
-            //     {
-            //         file: {name: "test4.jpeg"},
-            //         status: "pending",
-            //     },
-            //     {
-            //         file: {name: "test5.jpeg"},
-            //         status: "pending",
-            //     },
-            //     {
-            //         file: {name: "test6.jpeg"},
-            //         status: "pending",
-            //     },
-            //     {
-            //         file: {name: "test7.jpeg"},
-            //         status: "pending",
-            //     }
-            // ],
         };
     }
 
@@ -208,17 +177,20 @@ export default class FileUploader extends React.Component {
                                                 key={currentUploading.file.name}
                                     variant="determinate" value={currentUploading.progress}/>
                                 <span  className="FileUploaderCurrentLabel">{`${currentUploading.progress}%`}</span>
-                                <IconButton
-                                    className="FileUploaderCurrentCancel"
-                                    onClick={this.cancelCurrent}
-                                >
-                                    <img
-                                        draggable={false}
-                                        width={8}
-                                        height={8}
-                                        src={require('../../../icons/close.svg')}
-                                    />
-                                </IconButton>
+                                {
+                                    currentUploading.cancelTokenSource &&
+                                    <IconButton
+                                        className="FileUploaderCurrentCancel"
+                                        onClick={this.cancelCurrent}
+                                    >
+                                        <img
+                                            draggable={false}
+                                            width={8}
+                                            height={8}
+                                            src={require('../../../icons/close.svg')}
+                                        />
+                                    </IconButton>
+                                }
                             </div>
                         </div>
                     }

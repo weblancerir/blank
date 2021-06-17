@@ -79,7 +79,7 @@ export default class TextDesign extends React.Component {
     render () {
         return (
             <MenuBase
-                menuTitle="Box Design"
+                menuTitle="Text Design"
                 {...this.props}
                 item={this.props.item}
                 defaultIndexNo={0}

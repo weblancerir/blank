@@ -8,6 +8,7 @@ import PageItem from "./PageItem";
 import AddNewPageDialog from "./AddNewPageDialog";
 import {v4 as uuidv4} from "uuid";
 import {EditorContext} from "../../Editor/EditorContext";
+import {resolveDefaultMenu} from "../../MenuManager/MenuManager";
 
 export default class PageManager extends React.Component {
     static contextType = EditorContext;
@@ -122,6 +123,8 @@ export default class PageManager extends React.Component {
                     pageData.props.pageId = newId;
 
                     siteData.allPages[newId] = pageData;
+
+                    resolveDefaultMenu(siteData);
 
                     this.onPageClick(siteData.allPages[newId]);
                 });

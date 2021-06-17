@@ -10,8 +10,10 @@ import InspectorPadding from "../../Test/Inspector/InspectorPadding";
 import InspectorOverflow from "../../Test/Inspector/InspectorOverflow";
 import InspectorAnchor from "../../Test/Inspector/InspectorAnchor";
 import InspectorAdjustment from "../../Test/Inspector/InspectorAdjustment";
+import {EditorContext} from "../../Editor/EditorContext";
 
 export default class AGLComponent extends React.Component{
+    static contextType = EditorContext;
     constructor (props) {
         super(props);
         console.log("AGLComponent constructor");
@@ -36,6 +38,19 @@ export default class AGLComponent extends React.Component{
     getAgl = () => {
         return this.props.aglRef.current;
     };
+
+    getAglRef = () => {
+        return this.props.aglRef;
+    };
+
+    showComponentCode = () => {
+        if (!this.getAgl())
+            return;
+
+        let cloneProps = Object.assign({}, this.getAgl().props);
+        console.log("showComponentCode" , JSON.stringify(this.getAgl().getClearProps(cloneProps)));;
+        console.log("innerHtml" , this.getAgl().rootDivRef.current.innerHTML);
+    }
 
     onDesignChange = (designKey, value) => {
         console.log("onDesignChange", designKey, value)

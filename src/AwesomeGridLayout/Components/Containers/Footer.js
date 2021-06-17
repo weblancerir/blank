@@ -119,7 +119,7 @@ export default class Footer extends AGLComponent{
                             width: "100%",
                             height: "auto",
                             minHeight: "100px",
-                            zIndex: "51"
+                            // zIndex: "51"
                         }}
                         as="footer"
                         autoConstraintsOff

@@ -19,9 +19,11 @@ export default class ComponentGrid extends React.Component {
             this.rootRef.current.getBoundingClientRect().width - 24: 400 - 24;
 
         return {
-            width: rootWidth / (item.widthRatio || 2),
+            // width: rootWidth / (item.widthRatio || 2),
             // height: rootWidth / (item.widthRatio || 2) / (item.aspectRatio || 2)
-            height: "fit-content"
+            // height: "fit-content",
+            gridColumnEnd: `span ${item.width || 2}`,
+            gridRowEnd: `span ${item.height || 2}`
         };
     };
 
@@ -52,8 +54,11 @@ export default class ComponentGrid extends React.Component {
     createItemAndDrag = (item, e) => {
         let {pageRef, editor} = this.props;
         let selectedItem = editor.select.getSelected();
+        if (!selectedItem)
+            selectedItem = pageRef.current;
+        selectedItem = selectedItem.getContainerParent();
 
-        createItem(pageRef.current, {
+        createItem(selectedItem, {
             tagName: item.tagName,
             props: cloneObject(item.presetProps)
         }, undefined, undefined, undefined, (agl) => {
@@ -97,6 +102,10 @@ export default class ComponentGrid extends React.Component {
         this.props.closeMenu(true);
         let {pageRef, editor} = this.props;
         let selectedItem = editor.select.getSelected();
+        if (!selectedItem)
+            selectedItem = pageRef.current;
+
+        selectedItem = selectedItem.getContainerParent();
 
         createItem(pageRef.current, {
             tagName: item.tagName,
@@ -126,9 +135,34 @@ export default class ComponentGrid extends React.Component {
                 >
                     {
                         sortBy(allItems, "order").map((item, index) => {
-                            return (
-                                <React.Fragment key={index}>
+                            if (item.innerHtml) {
+                                return (
                                     <div
+                                        key={index}
+                                        className="AddComponentItemGridItem"
+                                        style={this.getItemStyle(item)}
+                                        onDragStart={(e) => {
+                                            this.setDraggingItem(item, e);
+                                        }}
+                                        onDragEnd={(e) => {
+                                            this.setDraggingEnd();
+                                        }}
+                                        onClick={(e) => {
+                                            this.createItem(item, e);
+                                        }}
+                                        draggable
+                                    >
+                                        <div
+                                            dangerouslySetInnerHTML={{__html: item.innerHtml}}
+                                        >
+
+                                        </div>
+                                    </div>
+                                )
+                            } else {
+                                return (
+                                    <div
+                                        key={index}
                                         className="AddComponentItemGridItem"
                                         style={this.getItemStyle(item)}
                                         onDragStart={(e) => {
@@ -150,15 +184,16 @@ export default class ComponentGrid extends React.Component {
                                         />
                                         {
                                             item.label &&
-                                            <div
+                                            <span
                                                 className="AddComponentItemGridItemLabel"
                                             >
                                                 {item.label}
-                                            </div>
+                                            </span>
                                         }
                                     </div>
-                                </React.Fragment>
-                            )
+                                )
+                            }
+
                         })
                     }
                 </div>

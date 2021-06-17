@@ -1,0 +1,93 @@
+.FocalPointRoot {
+    max-width: 600px;
+    height: auto;
+    background-color: #fdfdfd;
+    border-radius: 8px;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.FocalPointContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.FocalPointMargin {
+    position: relative;
+    width: auto;
+    height: auto;
+    margin: 10px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.FocalPointClicker {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.FocalPointImage {
+    max-width: 100%;
+    max-height: calc(80vh - 120px);
+    position: relative;
+    user-select: none;
+}
+
+.FocalPointPoint {
+    width: 10px;
+    height: 10px;
+    background-color: brown;
+    position: absolute;
+    transform: translateY(-50%) translateX(-50%);
+}
+
+.FocalPointFooter {
+    position: relative;
+    height: auto;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    padding: 0 12px 12px 12px;
+}
+
+.FocalPointZoomSpan {
+    margin: 0 12px 0 0;
+    font-size: 14px;
+    transform: translateY(-3px);
+}
+
+.FocalPointZoom {
+    flex: 1;
+}
+
+.FocalPointFooterSpacer {
+    height: 100%;
+    margin: 0 12px;
+    width: 1px;
+    background-color: #d2d2d2;
+}
+
+.FocalPointReset {
+    width: auto;
+}
+
+.FocalPointCancel {
+    width: auto;
+    text-transform: capitalize !important;
+}
+
+.FocalPointDone {
+    width: auto;
+    text-transform: capitalize !important;
+    margin-left: 12px !important;
+}

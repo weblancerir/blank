@@ -498,6 +498,14 @@ export default class EditorBoundary extends React.Component{
         this.setState({fileManager: {options, onDone}});
     }
 
+    showModal = (modal, callback) => {
+        this.setState({modal}, callback);
+    }
+
+    hideModal = (callback) => {
+        this.setState({modal: undefined}, callback);
+    }
+
     render() {
         // TODO if this.context.siteData not loaded, show loading component
         let borderClassess = classNames(
@@ -654,6 +662,10 @@ export default class EditorBoundary extends React.Component{
                                         onClose={() => {this.setState({fileManager: undefined})}}
                                         onDone={this.state.fileManager.onDone}
                                     />
+                                }
+
+                                {
+                                    this.state.modal
                                 }
 
                                 <AddComponent

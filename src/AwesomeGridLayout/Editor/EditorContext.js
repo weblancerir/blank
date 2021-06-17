@@ -216,6 +216,7 @@ export default class EditorContextProvider extends React.Component {
         let pageData = this.state.pageData;
         this.setPageData(undefined, false, () => {
             this.state.editor.idMan.clear();
+            this.state.editor.snap.clearSnaps();
             this.setState({preview}, () => {
                 this.setPageData(pageData.props.pageId, false, callback);
             });
@@ -276,6 +277,7 @@ export default class EditorContextProvider extends React.Component {
         if (!this.state.preview) {
             this.state.editor.rootLayoutRef.current.onSelect(true, () => {
                 this.state.editor.idMan.clear();
+                this.state.editor.snap.clearSnaps();
 
                 this.state.setPageData(undefined, false , () => {
                     let pageData = this.state.siteData.allPages[pageId];
@@ -292,6 +294,7 @@ export default class EditorContextProvider extends React.Component {
         else
         {
             this.state.editor.idMan.clear();
+            this.state.editor.snap.clearSnaps();
 
             console.log("setPageData", 62)
             this.state.setPageData(undefined, false , () => {

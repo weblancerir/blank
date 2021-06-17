@@ -234,10 +234,11 @@ export default class EditorBoundary extends React.Component{
         console.log("onPageChange");
         this.rootLayoutRef.current.onSelect(true, () => {
             this.idMan.clear();
+            this.snap.clearSnaps();
 
-            this.context.setPageData(undefined , () => {
-                let pageData = this.context.siteData.allPages[pageId];
-                this.context.setPageData(pageData);
+            this.context.setPageData(undefined ,force, () => {
+                console.log("onPageChange2");
+                this.context.setPageData(pageId);
             });
         });
     };

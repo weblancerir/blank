@@ -295,11 +295,13 @@ export default class PageBase extends AGLComponent {
             let x23 = parseInt(areas[2]);
             let y23 = parseInt(areas[3]);
 
+            console.log("Check Resize", horizontalSection.props.id, y13, y23, lastCol)
             if (y13 >= lastCol) {
                 // fully right
                 y13--;
                 y23--;
-            } else if (y23 >= lastRow) {
+            // } else if (y23 >= lastRow) {
+            } else if (y23 >= lastCol) { // TODO Check
                 // partially right
                 y23--;
             }
@@ -381,7 +383,14 @@ export default class PageBase extends AGLComponent {
 
     // Just for vertical items
     onItemPreResizeStop = (item, e, dir, delta, runtimeStyle) => {
-        console.log("small from top0", this.allSectionsH, this.allSectionsV)
+        console.log("small from top0", this.allSectionsH, this.allSectionsV);
+
+        let index = this.allSectionsH.findIndex(h => {
+            return h === item.props.id;
+        });
+
+        if (index >= 0)
+            return;
         if (dir === 'e' || dir === 'w')
             return;
 
@@ -721,7 +730,7 @@ export default class PageBase extends AGLComponent {
                 isSection: true,
             }}
             resizeSides={['s', 'n']}
-            onItemPreDelete={this.onItemPreDelete}
+            // onItemPreDelete={this.onItemPreDelete}
         />;
 
         this.allSectionsV.forEach(verticalSection => {
@@ -839,8 +848,8 @@ export default class PageBase extends AGLComponent {
                 minHeight: "auto",
             }}
             resizeSides={['e', 'w', 'n', 's']}
-            onItemPreDelete={this.onItemPreDelete}
-            onItemPreResizeStop={this.onItemPreResizeStop}
+            // onItemPreDelete={this.onItemPreDelete}
+            // onItemPreResizeStop={this.onItemPreResizeStop}
         />;
 
         console.log("this.allSectionsH", this.allSectionsH)
@@ -855,6 +864,7 @@ export default class PageBase extends AGLComponent {
 
             let firstCol = index + 1;
 
+            console.log("Check", horizontalSection.props.id, y1, y2, firstCol)
             if (y1 >= firstCol)
                 y1++;
             if (y2 > firstCol)
@@ -1291,6 +1301,8 @@ export default class PageBase extends AGLComponent {
                         hasMiniMenuOverride={this.hasMiniMenuOverride}
                         getInspector={this.getInspector}
                         invalidateSizeOverride={this.invalidateSizeOverride}
+                        onDeletingChild={this.onItemPreDelete}
+                        onChildResizeStoping={this.onItemPreResizeStop}
             >
             </AGLWrapper>
         )

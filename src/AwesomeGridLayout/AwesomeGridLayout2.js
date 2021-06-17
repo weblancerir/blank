@@ -830,6 +830,11 @@ export default class AwesomeGridLayout2 extends React.Component{
         this.updateLayout();
     };
 
+    onDeletingChild = (item) => {
+        if (this.props.onDeletingChild)
+            this.props.onDeletingChild(item);
+    }
+
     delete = (fromUndoRedo) => {
         if (this.callOverride("delete"))
             return;
@@ -845,6 +850,8 @@ export default class AwesomeGridLayout2 extends React.Component{
             if (!allow)
                 return;
         }
+
+        this.props.parent.onDeletingChild(this);
 
         if (!fromUndoRedo) {
             let itemId = this.props.id;
@@ -2371,6 +2378,11 @@ export default class AwesomeGridLayout2 extends React.Component{
         this.prepareRects();
     };
 
+    onChildResizeStoping = (item, e, dir, delta, runtimeStyle) => {
+        if (this.props.onChildResizeStoping)
+            this.props.onChildResizeStoping(item, e, dir, delta, runtimeStyle);
+    }
+
     onResizeStop = (e, dir, delta, group) => {
         if (this.hasOverride("onResizeStop"))
             return this.callOverride("onResizeStop", e, dir, delta, group);
@@ -2379,6 +2391,7 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (this.props.onItemPreResizeStop) {
             this.props.onItemPreResizeStop(this, e, dir, delta, this.state.runtimeStyle);
         }
+        this.props.parent.onChildResizeStoping(this, e, dir, delta, this.state.runtimeStyle);
         this.getSize(true, true);
 
         if (group)

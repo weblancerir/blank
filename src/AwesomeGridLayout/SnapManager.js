@@ -11,6 +11,10 @@ export default class SnapManager {
         };
     };
 
+    clearSnaps = () => {
+        this.snaps = {};
+    }
+
     removeSnap = (id) => {
         delete this.snaps[id];
     };

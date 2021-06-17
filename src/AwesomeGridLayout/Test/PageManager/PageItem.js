@@ -47,7 +47,12 @@ export default class PageItem extends React.Component {
         delete this.context.siteData.allPages[pageData.props.pageId];
 
         this.setState({pageMenuAnchorEl: undefined});
-        editor.onPageChange(Object.keys(this.context.siteData.allPages)[0], true);
+
+        console.log("delete", Object.keys(this.context.siteData.allPages)[0])
+        if (this.context.pageData === pageData)
+            editor.onPageChange(Object.keys(this.context.siteData.allPages)[0], true);
+
+        this.context.update();
     };
 
     setAsHome = () => {

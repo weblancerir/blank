@@ -93,7 +93,16 @@ export default class LinkGenerator extends React.Component {
             '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
             '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
             '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
-        return !!pattern.test(str);
+        if (!!pattern.test(str)) {
+            let result = str;
+            if (!str.startsWith("http")) {
+                result = "http://" + str;
+            }
+
+            return result;
+        } else {
+            return false;
+        }
     }
 
     validPhone = (str) => {
@@ -220,11 +229,17 @@ export default class LinkGenerator extends React.Component {
                                                 (e) => {this.tempUrl = e.target.value}
                                             }
                                             onBlur={() => {
+                                                if (this.validURL(this.tempUrl)) {
+                                                    this.tempUrl = this.validURL(this.tempUrl);
+                                                }
                                                 linkData.data.url = this.tempUrl || "";
                                                 this.setState({linkData});
                                             }}
                                             onKeyPress={(e) => {
                                                 if((e.keyCode || e.which) === 13) {
+                                                    if (this.validURL(this.tempUrl)) {
+                                                        this.tempUrl = this.validURL(this.tempUrl);
+                                                    }
                                                     linkData.data.url = this.tempUrl || "";
                                                     this.setState({linkData});
                                                 }

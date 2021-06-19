@@ -18,6 +18,7 @@ import CropperModal from "./CropperModal";
 import FocalPointModal from "./FocalPointModal";
 import ImageDesign from "./Menus/ImageDesign";
 import ImageBehaviorDesign from "./Menus/ImageBehaviorDesign";
+import LinkedTag from "../Text/Menus/components/LinkedTag";
 
 export default class Image extends AGLComponent{
     static contextType = EditorContext;
@@ -29,12 +30,14 @@ export default class Image extends AGLComponent{
             imageLoaded: false,
         };
 
-        this.rootBorderRef = React.createRef();
-        this.imgRef = React.createRef();
+        // this.imgRef = React.createRef();
+    }
+
+    setImageNode = (node) => {
+        this.imgNode = node;
     }
 
     componentDidMount() {
-        this.resolveRootTag();
         this.checkImageLoad();
     }
 
@@ -56,7 +59,8 @@ export default class Image extends AGLComponent{
         canvas.width = `${cropData.croppedAreaPixels.width}`;
         canvas.height = `${cropData.croppedAreaPixels.height}`;
         let context = canvas.getContext("2d");
-        let img = this.imgRef.current;
+        // let img = this.i mgRef.current;
+        let img = this.imgNode;
 
         context.drawImage(
             img,
@@ -99,28 +103,16 @@ export default class Image extends AGLComponent{
 
     checkImageLoad = () => {
         let interval = setInterval(() => {
-            if (this.imgRef.current) {
-                if (this.imgRef.current.naturalWidth) {
+            if (this.imgNode) {
+                if (this.imgNode.naturalWidth) {
                     clearInterval(interval);
                     this.setState({imageExactDimension: {
-                        width: this.imgRef.current.naturalWidth,
-                        height: this.imgRef.current.naturalHeight,
+                        width: this.imgNode.naturalWidth,
+                        height: this.imgNode.naturalHeight,
                     }});
                 }
             }
         }, 50);
-    }
-
-    resolveRootTag = () => {
-        if (!this.context.preview && !this.context.production)
-            return;
-
-        let linkData = getFromTempData(this, "linkData");
-
-        if (linkData && linkData.type !== "None") {
-            console.log("prepareLink")
-            prepareLink(this.rootBorderRef.current, this.context.preview, this.context.production, this.context, linkData);
-        }
     }
 
     resolveDesignData = () => {
@@ -378,8 +370,8 @@ export default class Image extends AGLComponent{
 
         if (imageDimension && imageLoaded) {
 
-            imageDimension.width = this.imgRef.current.width;
-            imageDimension.height = this.imgRef.current.height;
+            imageDimension.width = this.imgNode.width;
+            imageDimension.height = this.imgNode.height;
 
             if (imageBehavior) {
                 switch (imageBehavior.scrollType.toLowerCase()) {
@@ -425,12 +417,15 @@ export default class Image extends AGLComponent{
         let overlayStyle = {
             backgroundColor: overlayColor,
         }
-        return <a
+
+        let linkData = getFromTempData(this, "linkData");
+
+        return <LinkedTag
             key="ImageBorderRoot"
             onMouseOver={this.onMouseOver}
             onMouseOut={this.onMouseOut}
             className="ImageBorderRoot"
-            ref={this.rootBorderRef}
+            linkData={linkData}
             style={{
                 border:
                     `${border.width || 0}px solid ${borderColor || 'rgba(186,218,85,0.63)'}`,
@@ -453,7 +448,8 @@ export default class Image extends AGLComponent{
                     onMouseOut={this.onMouseOut}
                     src={this.state.altSrc || imageData.src}
                     style={imageStyle}
-                    ref={this.imgRef}
+                    // ref={this.imgRef}
+                    ref={(ref) => {this.setImageNode(ref)}}
                     onLoad={this.onImageLoaded}
                     crossOrigin="anonymous"
                     alt={imageBehavior.altText || ""}
@@ -463,7 +459,7 @@ export default class Image extends AGLComponent{
                     style={overlayStyle}
                 />
             </div>
-        </a>
+        </LinkedTag>
     };
 
     onStateChange = (stateName) => {

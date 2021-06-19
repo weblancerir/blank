@@ -27,8 +27,6 @@ export default class DragDropManager {
             newParent.prepareRects(true, true);
             newParent.toggleGridLines(true, () => {}, "B");
 
-            console.log("setDraggingStop", newParent, this.draggingItem.props.parent, this.draggingItem.props.parent !== newParent)
-
             if (this.draggingItem.props.parent !== newParent) {
                 this.dropItem(this.draggingItem, this.draggingItem.props.parent, newParent);
 
@@ -47,6 +45,12 @@ export default class DragDropManager {
     dropItem = (item, parent, newParent, callback, fromUndoRedo, undoPower) => {
         item.toggleHelpLines();
         parent.onChildLeave(item);
+
+        console.log("dropItem 1", item.props.id, parent.props.id, newParent.props.id);
+        console.log("dropItem 2", item.props.gridLine.hasGridLine(item.props.id),
+            item.props.gridLine.hasGridLine(parent.props.id),
+            item.props.gridLine.hasGridLine(newParent.props.id));
+
 
         let drop = () => {
             newParent.onChildDrop(item, undefined, undefined, (newItem) => {

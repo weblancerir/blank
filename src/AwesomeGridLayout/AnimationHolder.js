@@ -1,6 +1,7 @@
 import React from "react";
 export default class AnimationHolder extends React.Component {
     render () {
+        return this.props.children;
         if (!this.props.disabled)
             return this.props.children;
         else

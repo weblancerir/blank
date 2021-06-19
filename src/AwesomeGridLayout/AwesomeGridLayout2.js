@@ -22,7 +22,7 @@ import {
     getCachedScrollTop,
     getCachedClientWidth, getCachedScrollHeight, getCachedScrollWidth
 } from "./Test/WindowCache";
-import ChildHolder from "./AnimationHolder";
+import AnimationHolder from "./AnimationHolder";
 import VisibilitySensorWrapper from "./Test/VisibilitySensorWrapper";
 import AdjustmentHelpSize from "./Adjustment/AdjustmentHelpSize";
 
@@ -3361,6 +3361,7 @@ export default class AwesomeGridLayout2 extends React.Component{
         this.setState({forceKey: undefined, showAnimation: undefined});
         this.isEditor() && this.props.select.activateHover(true);
         this.isEditor() && this.props.select.activateResize(true);
+        this.invalidateSize(true,false,true);
     };
 
     getCompositeAnimationCss = (compositeAnimation = {}) => {
@@ -3387,6 +3388,16 @@ export default class AwesomeGridLayout2 extends React.Component{
     onDoubleClick = (e) => {
         if (this.callOverride("onDoubleClick", e))
             return;
+    }
+
+    animationRunning = debounce(() => {
+        this.onAnimationFrame();
+    }, 200);
+
+    onAnimationFrame = () => {
+        this.invalidateSize(false, false, true);
+        if (this.state.showAnimation)
+            window.requestAnimationFrame(this.onAnimationFrame);
     }
 
     render () {
@@ -3423,6 +3434,8 @@ export default class AwesomeGridLayout2 extends React.Component{
         );
 
         let TagAs = as || "div";
+
+        if (showAnimation) this.animationRunning();
 
         return (
             <Portal nodeId={portalNodeId} disabled={!portalNodeId}>
@@ -3492,9 +3505,9 @@ export default class AwesomeGridLayout2 extends React.Component{
                             }
 
                             {isPage && <div id={"top"}></div>}
-                            <ChildHolder
+                            <AnimationHolder
                                 className={holderClasses}
-                                key={forceKey || `${id}_container`}
+                                // key={forceKey || `${id}_container`}
                                 id={`${id}_child_holder`}
                                 disabled={Object.keys(compositeTransform).length > 0}
                                 transformRef={this.transformRef}
@@ -3527,7 +3540,7 @@ export default class AwesomeGridLayout2 extends React.Component{
                                     selectAsParent={selectAsParent}
                                     selected={selected}
                                 />
-                            </ChildHolder>
+                            </AnimationHolder>
                             {isPage && <div id={"bottom"}></div>}
 
                             <AGLAnchor

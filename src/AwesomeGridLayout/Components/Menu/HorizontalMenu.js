@@ -5,14 +5,11 @@ import '../../HelperStyle.css';
 import './HorizontalMenu.css';
 import {
     getCompositeDesignData,
-    getFromTempData,
     parseColor,
     resolveDesignData,
 } from "../../AwesomwGridLayoutHelper";
 import {EditorContext} from "../../Editor/EditorContext";
 import MenuButton from "../../Menus/MenuBase/MenuButton";
-import AnimationDesign from "../Containers/Menus/AnimationDesign";
-import ButtonDesign from "../Button/Menus/ButtonDesign";
 import {getFontDataByName, getRandomLinkId} from "../Text/TextHelper";
 import throttle from "lodash.throttle";
 import {cloneObject} from "../../AwesomeGridLayoutUtils";
@@ -21,7 +18,6 @@ import {debounce} from "@material-ui/core";
 import SelectMenu from "./SelectMenu";
 import StaticFonts from "../Text/Fonts/StaticFonts.json";
 import MenuItemDesign from "./Menus/MenuItemDesign";
-import TextDesign from "../Button/Menus/TextDesign";
 import MenuItemTextDesign from "./Menus/MenuItemTextDesign";
 import MenuLayoutDesign from "./Menus/MenuLayoutDesign";
 import MenuDropDownDesign from "./Menus/MenuDropDownDesign";
@@ -39,6 +35,8 @@ export default class HorizontalMenu extends AGLComponent{
         this.ulId = getRandomLinkId(6);
         this.navId = getRandomLinkId(6);
         this.moreId = getRandomLinkId(6);
+
+        console.log("HorizontalMenu constructor");
     }
 
     componentDidMount() {
@@ -213,19 +211,29 @@ export default class HorizontalMenu extends AGLComponent{
 
     getMenu = () => {
         let {menuId} = getCompositeDesignData(this).menuData;
-
         return this.context.siteData.menus.find(m => m.id === menuId);
     }
 
-    onInvalidateSize = throttle((runtimeStyle) => {
-        this.fitMenuItems(runtimeStyle);
+    onInvalidateSize = throttle((runtimeStyle, force) => {
+        if (!this.getAgl())
+            return;
+
+        let compRect = runtimeStyle? runtimeStyle: this.getAgl().getSize();
+        if (force ||!this.lastSize || compRect.width !== this.lastSize.width)
+            this.fitMenuItems(runtimeStyle);
     }, 100);
 
-    showItems = debounce(() => {
+    showItems = debounce((size) => {
         let ulNode = document.getElementById(this.ulId);
         if (!ulNode)
             return;
+
         ulNode.style.visibility = "visible";
+        // this.setState({ulVisibility: "visible"});
+
+        console.log("showItems")
+        if (!this.fitting)
+            this.lastSize = size;
     }, 200);
 
     fitMenuItems = (runtimeStyle, itemAddedInMore) => {
@@ -238,11 +246,11 @@ export default class HorizontalMenu extends AGLComponent{
         if (!navNode || !this.getAgl() || !ulNode)
             return;
 
-        // if (moreNode)
-        //     moreNode.style.display = "none";
+        this.fitting = true;
 
         navNode.style["justify-content"] = "flex-start";
         ulNode.style.visibility = "hidden";
+        // this.setState({ulVisibility: "hidden"});
 
         let maxLiNodeWidth = 0;
         ulNode.childNodes.forEach(liNode => {
@@ -258,17 +266,22 @@ export default class HorizontalMenu extends AGLComponent{
 
         let compareWidth = menuData.sameSize ? maxLiNodeWidth * ulNode.childNodes.length : ulRect.width;
         if (compareWidth > compRect.width) {
-            if (this.state.itemInMore === menu.menuItems.length)
+            if (this.state.itemInMore === menu.menuItems.length) {
+                this.fitting = false;
                 return;
+            }
             this.setState({itemInMore: this.state.itemInMore + 1}, () => {
                 this.fitMenuItems(runtimeStyle,true);
             })
         } else {
             if (this.state.itemInMore > 0 && !itemAddedInMore) {
                 this.setState({itemInMore: this.state.itemInMore - 1}, () => {
-                    this.onInvalidateSize(runtimeStyle);
+                    // this.onInvalidateSize(runtimeStyle);
+                    this.fitMenuItems(runtimeStyle);
                 })
                 return;
+            } else {
+                this.fitting = false;
             }
 
             if(menuData.fillNav) {
@@ -294,7 +307,8 @@ export default class HorizontalMenu extends AGLComponent{
         }
         navNode.style["justify-content"] = menuData.justifyContent || "center";
 
-        this.showItems();
+        console.log("fitMenuItems")
+        this.showItems(runtimeStyle || compRect);
     }
 
     getMenuItemStyle = (state) => {
@@ -410,6 +424,9 @@ export default class HorizontalMenu extends AGLComponent{
             <ul
                 className="HorizontalMenuUL"
                 id={this.ulId}
+                style={{
+                    // visibility: this.state.ulVisibility
+                }}
             >
                 {
                     this.state.itemInMore > 0 && menuData.rtl &&

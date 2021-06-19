@@ -39,12 +39,15 @@ export default class ComponentGrid extends React.Component {
         e.persist();
         this.setState({draggingItem});
 
+        console.log("setDraggingItem 1");
         clearTimeout(this.closingTimeOut);
+        e.preventDefault();
         this.closingTimeOut = setTimeout(() => {
             if (!this.mounted)
                 return;
 
             if (this.state.draggingItem) {
+                console.log("setDraggingItem 2", e.target);
                 this.props.closeMenu(true);
                 this.createItemAndDrag(this.state.draggingItem, e);
             }
@@ -62,15 +65,17 @@ export default class ComponentGrid extends React.Component {
             tagName: item.tagName,
             props: cloneObject(item.presetProps)
         }, undefined, undefined, undefined, (agl) => {
-            console.log("mouseDown", agl.props.input.mouseDown);
-            if (agl.props.input.mouseDown)
+            if (agl.props.input.mouseDown) {
                 window.requestAnimationFrame(() => {
                     agl.onMouseDown(e, true);
                 });
-            else
+            }
+            else {
+                console.log("createItemAndDrag 2");
                 window.requestAnimationFrame(() => {
                     this.changeItemParent(agl, selectedItem);
                 });
+            }
         });
     };
 
@@ -118,6 +123,7 @@ export default class ComponentGrid extends React.Component {
     };
 
     setDraggingEnd = () => {
+        console.log("setDraggingEnd");
         this.setState({draggingItem: undefined});
     };
 

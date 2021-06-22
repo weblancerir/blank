@@ -11,6 +11,8 @@ import {
 } from "../../AwesomwGridLayoutHelper";
 import TextWrapper from "./TextWrapper";
 import {EditorContext} from "../../Editor/EditorContext";
+import MenuButton from "../../Menus/MenuBase/MenuButton";
+import AnimationDesign from "../Containers/Menus/AnimationDesign";
 
 export default class Text extends AGLComponent{
     static contextType = EditorContext;
@@ -41,7 +43,43 @@ export default class Text extends AGLComponent{
     getPrimaryOptions = () => {
         this.resolveDesignData();
         return [
-
+            <MenuButton
+                key={4}
+                icon={<span className="MenuButtonLabelSpan">Edit Text</span>}
+                select={this.props.select}
+                onClick={(e) => {
+                    this.onDoubleClickOverride(this.getAgl(), e);
+                }}
+            />,
+            <MenuButton
+                key={2}
+                icon={ <img draggable={false} width={16} height={16}
+                            src={process.env.PUBLIC_URL + '/static/icon/animation.svg'} /> }
+                select={this.props.select}
+                title="Animation Design"
+                menu={(e) =>
+                    <AnimationDesign
+                        defaultPosition={{
+                            x: e.clientX + 48 || 48,
+                            y: e.clientY + 48 || 48
+                        }}
+                        onDesignChange={this.onDesignChange}
+                        select={this.props.select}
+                        item={this.getAgl()}
+                    />
+                }
+            />,
+            <MenuButton
+                key={33}
+                icon={ <img draggable={false} width={16} height={16}
+                            src={process.env.PUBLIC_URL + '/static/icon/savewhite.svg'} /> }
+                select={this.props.select}
+                hide={this.context.user.role === "user"}
+                title="Copy data"
+                onClick={(e) => {
+                    this.showComponentCode();
+                }}
+            />
         ]
     };
 

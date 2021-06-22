@@ -9,8 +9,9 @@
     justify-content: center;
     text-decoration: none !important;
     transition: 0.3s;
-    clip-path: inset(0 0 0 0);
-    -webkit-clip-path: inset(0 0 0 0);
+    overflow: hidden;
+    /*clip-path: inset(0 0 0 0);*/
+    /*-webkit-clip-path: inset(0 0 0 0);*/
 }
 
 .ImageBorderRoot:hover {

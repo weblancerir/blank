@@ -7,19 +7,23 @@ export default class IconButton extends React.Component {
         if (this.props.selected) {
             selectStyle.backgroundColor = this.props.selectedColor || "#8ae8f6"
         }
+
+        let buttonProps = Object.assign({}, this.props);
+        delete buttonProps.buttonBaseStyle;
+        delete buttonProps.imageContainerStyle;
+        delete buttonProps.icon;
+
         return (
             <ButtonBase
                 aria-label={this.props["aria-label"] || "aria-label"}
-                onClick={this.props.onClick}
                 style={{...{
                     marginLeft: 4,
                     borderRadius: 4,
                     boxSizing: "border-box",
                     ...selectStyle
                 }, ...this.props.buttonBaseStyle}}
-                className={this.props.className}
-                disabled={this.props.disabled}
                 ref={this.props.rootRef}
+                {...buttonProps}
             >
                 <div style={{...{
                     display: "flex",

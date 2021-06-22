@@ -40,6 +40,8 @@ import PageView from "./PageView";
 import classNames from "classnames";
 import LinkGenerator from "../Components/Text/Menus/components/LinkGenerator";
 import FileManager from "../Components/FileManager/FileManager";
+import MenuManagerUI from "../MenuManager/MenuManagerUI";
+import {getHomePage} from "../MenuManager/MenuManager";
 
 export default class EditorBoundary extends React.Component{
     static contextType = EditorContext;
@@ -133,6 +135,25 @@ export default class EditorBoundary extends React.Component{
                 themeManager: {
                     state: false,
                     toggle: this.toggleThemeManager
+                },
+                menuManager: {
+                    state: false,
+                    toggle: (force, open) => {
+                        if (open){
+                            this.context.showModal(
+                                <MenuManagerUI
+                                    open={true}
+                                    onClose={() => {
+                                        this.context.toggleRightMenu("menuManager", false);
+                                    }}
+                                />
+                            );
+                            return true;
+                        }
+
+                        this.hideModal();
+                        return false;
+                    }
                 }
             }
         });
@@ -198,7 +219,7 @@ export default class EditorBoundary extends React.Component{
         this.onSiteDataUpdated(siteData);
     };
 
-    onSiteDataUpdated = (siteData, websiteId) => {
+    onSiteDataUpdated = (siteData, websiteId, user) => {
         if (!siteData) {
             siteData = cloneObject(defaultSiteData);
         }
@@ -206,8 +227,11 @@ export default class EditorBoundary extends React.Component{
         if (websiteId)
             this.context.setWebsiteId(websiteId);
 
+        user && this.context.setUser(user);
+
         this.context.setSiteData(siteData, () => {
-            let pageData = siteData.allPages[Object.keys(siteData.allPages)[0]];
+            let pageData = getHomePage(siteData);
+            // let pageData = siteData.allPages[Object.keys(siteData.allPages)[0]];
             this.context.setPageData(pageData.props.pageId, false, this.onHeightChange);
         });
 

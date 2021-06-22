@@ -105,10 +105,28 @@ export default class HorizontalMenu extends AGLComponent{
 
         return [
             <MenuButton
+                key={2}
+                icon={<span className="MenuButtonLabelSpan">Change Menu</span>}
+                onClick={(e) => {
+                    let menuData = getCompositeDesignData(this).menuData;
+                    this.context.showModal(<
+                            SelectMenu
+                            open={true}
+                            onClose={() => {this.context.hideModal()}}
+                            onDone={(menuId) => {
+                                this.onDesignChange("design.menuData.menuId", menuId);
+                            }}
+                            menuId={menuData.menuId}
+                        />
+                    );
+                }}
+            />,
+            <MenuButton
                 key={1111}
                 icon={ <img draggable={false} width={16} height={16}
-                            src={require('../../icons/textwhite.svg')} /> }
+                            src={require('../../icons/dropdownwhite.svg')} /> }
                 select={this.props.select}
+                title="Drop Down Design"
                 menu={(e) =>
                     <MenuDropDownDesign
                         defaultPosition={{
@@ -125,8 +143,9 @@ export default class HorizontalMenu extends AGLComponent{
             <MenuButton
                 key={12}
                 icon={ <img draggable={false} width={16} height={16}
-                            src={require('../../icons/textwhite.svg')} /> }
+                            src={require('../../icons/layoutwhite.svg')} /> }
                 select={this.props.select}
+                title="Layout Design"
                 menu={(e) =>
                     <MenuLayoutDesign
                         defaultPosition={{
@@ -145,6 +164,7 @@ export default class HorizontalMenu extends AGLComponent{
                 icon={ <img draggable={false} width={16} height={16}
                             src={require('../../icons/textwhite.svg')} /> }
                 select={this.props.select}
+                title="Text Design"
                 menu={(e) =>
                     <MenuItemTextDesign
                         defaultPosition={{
@@ -163,6 +183,7 @@ export default class HorizontalMenu extends AGLComponent{
                 icon={ <img draggable={false} width={16} height={16}
                             src={require('../../icons/paint.svg')} /> }
                 select={this.props.select}
+                title="Buttons Design"
                 menu={(e) =>
                     <MenuItemDesign
                         defaultPosition={{
@@ -177,27 +198,12 @@ export default class HorizontalMenu extends AGLComponent{
                 }
             />,
             <MenuButton
-                key={2}
-                icon={ <span>Change Menu</span> }
-                onClick={(e) => {
-                    let menuData = getCompositeDesignData(this).menuData;
-                    this.context.showModal(<
-                        SelectMenu
-                            open={true}
-                            onClose={() => {this.context.hideModal()}}
-                            onDone={(menuId) => {
-                                this.onDesignChange("design.menuData.menuId", menuId);
-                            }}
-                            menuId={menuData.menuId}
-                        />
-                    );
-                }}
-            />,
-            <MenuButton
                 key={33}
                 icon={ <img draggable={false} width={16} height={16}
-                            src={process.env.PUBLIC_URL + '/static/icon/add.svg'} /> }
+                            src={process.env.PUBLIC_URL + '/static/icon/savewhite.svg'} /> }
                 select={this.props.select}
+                hide={this.context.user.role === "user"}
+                title="Copy Data"
                 onClick={(e) => {
                     this.showComponentCode();
                 }}
@@ -334,7 +340,7 @@ export default class HorizontalMenu extends AGLComponent{
         return {
             justifyContent: menuData.textAlign,
             border:
-                `${border.width || 0}px solid ${borderColor || 'rgba(186,218,85,0.63)'}`,
+                `${border.width || 0}px solid ${borderColor || 'rgba(0,0,0,0)'}`,
             backgroundColor: fillColor,
             borderRadius:
                 `${border.radius.topLeft || 0}px ${border.radius.topRight || 0}px ${border.radius.bottomRight || 0}px ${border.radius.bottomLeft || 0}px`,
@@ -384,11 +390,11 @@ export default class HorizontalMenu extends AGLComponent{
             borderColor = parseColor(borderColor, borderColor.alpha, this.context);
         return {
             border:
-                `${border.width || 0}px solid ${borderColor || 'rgba(186,218,85,0.63)'}`,
+                `${border.width || 0}px solid ${borderColor || 'rgba(0,0,0,0)'}`,
             backgroundColor: fillColor,
             borderRadius:
                 `${border.radius.topLeft || 0}px ${border.radius.topRight || 0}px ${border.radius.bottomRight || 0}px ${border.radius.bottomLeft || 0}px`,
-            boxShadow: `${(border.shadow.xOffset) * (border.shadow.distance)}px ${(border.shadow.yOffset) * (border.shadow.distance)}px ${border.shadow.blur}px ${border.shadow.size}px ${shadowColor || 'rgba(186,218,85,0.63)'}`,
+            boxShadow: `${(border.shadow.xOffset) * (border.shadow.distance)}px ${(border.shadow.yOffset) * (border.shadow.distance)}px ${border.shadow.blur}px ${border.shadow.size}px ${shadowColor || 'rgba(0,0,0,0)'}`,
         }
     }
     getStaticChildren = () => {

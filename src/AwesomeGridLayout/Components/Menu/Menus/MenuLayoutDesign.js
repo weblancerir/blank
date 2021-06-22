@@ -41,7 +41,7 @@ export default class MenuLayoutDesign extends React.Component {
             {
                 key: "Layout Appearance",
                 icon: <img draggable={false} width={16} height={16}
-                           src={process.env.PUBLIC_URL + '/static/icon/text.svg'} />
+                           src={process.env.PUBLIC_URL + '/static/icon/layout.svg'} />
             });
 
         return index;

@@ -60,6 +60,47 @@ export function resolveDefaultMenu (siteData) {
             pageMenuItem.name = page.props.pageName;
         }
     })
+
+    let deletePageMenuItem = [];
+    defaultMenu.menuItems.forEach((pageMenuItem, index) => {
+        if (!pageMenuItem.linkData || pageMenuItem.linkData.type !== "Page")
+            return;
+
+        let page = Object.values(siteData.allPages).find(p => {
+            return p.props.pageId === pageMenuItem.linkData.data.pageId;
+        });
+
+        if (!page) {
+            // Deleted Page
+            deletePageMenuItem.push(pageMenuItem);
+            // pageMenuItem.linkData.type = "None";
+            // delete pageMenuItem.linkData.data;
+        }
+    });
+    deletePageMenuItem.forEach(item => {
+        let index = defaultMenu.menuItems.find(p => {
+            return p === item;
+        });
+
+        defaultMenu.menuItems.splice(index, 1);
+    })
+
+    siteData.menus.forEach(menu => {
+        menu.menuItems.forEach((pageMenuItem, index) => {
+            if (!pageMenuItem.linkData || pageMenuItem.linkData.type !== "Page")
+                return;
+
+            let page = Object.values(siteData.allPages).find(p => {
+                return p.props.pageId === pageMenuItem.linkData.data.pageId;
+            });
+
+            if (!page) {
+                // Deleted Page
+                pageMenuItem.linkData.type = "None";
+                delete pageMenuItem.linkData.data;
+            }
+        });
+    })
 }
 
 export function getMenuById (siteData, id) {

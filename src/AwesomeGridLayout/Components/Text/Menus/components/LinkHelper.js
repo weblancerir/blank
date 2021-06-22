@@ -115,12 +115,12 @@ export function prepareLink (node, preview, production, editorContext, linkData)
             node.setAttribute("href", "#");
             break;
         case "Anchor":
-        // TODO
+            node.setAttribute("href", `#${linkData.data.anchorId}`);
             break;
         case "TopBottomThisPage":
-            console.log("TopBottomThisPage", linkData, node);
             node.setAttribute("href", `#${linkData.data.position}`);
             break;
+
         case "Document":
         // TODO
             break;

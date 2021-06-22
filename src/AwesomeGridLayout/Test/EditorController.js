@@ -11,6 +11,15 @@ EditorController.onMessage = (data, res, editor) => {
         editor[data.func](...data.inputs, res);
         return;
     }
+
+    if (data.type === 'Event') {
+        let jsonedEvent = data.inputs[0];
+        let event = new Event(jsonedEvent.type);
+        delete jsonedEvent.type;
+        Object.assign(event, jsonedEvent);
+        window.dispatchEvent(event);
+        return;
+    }
 };
 //
 // // TODO GET functions

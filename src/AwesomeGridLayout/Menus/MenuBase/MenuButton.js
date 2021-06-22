@@ -1,8 +1,15 @@
 import React from "react";
 import './MenuBase.css';
 import IconButton from "../../HelperComponents/IconButton";
+import LightTooltip from "../../Components/Containers/Menus/Components/LightTooltip";
+import Tooltip from '@material-ui/core/Tooltip';
 
 export default class MenuButton extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {openTooltip: false};
+    }
+
     componentDidMount(){
         this.mounted = true;
     }
@@ -21,18 +28,37 @@ export default class MenuButton extends React.Component {
         this.props.select.updateMenu((typeof menu === "function") ? menu(e) : menu);
     };
 
+    toggleTooltip = (openTooltip) => {
+        this.setState({openTooltip})
+    }
+
     render () {
+        let {hide, title} = this.props;
+        let {openTooltip} = this.state;
+
+        if (hide)
+            return null;
+
         return (
-            <IconButton
-                onClick={this.onClick}
+            <LightTooltip
+                open={openTooltip}
+                title={title || ""}
+                placement="top"
+                PopperProps={{style:{zIndex: 999999999999999}}}
             >
-                {
-                    this.props.icon
-                }
-                {
-                    this.props.children
-                }
-            </IconButton>
+                <IconButton
+                    onClick={this.onClick}
+                    onMouseEnter={() => this.toggleTooltip(true)}
+                    onMouseLeave={() => this.toggleTooltip(false)}
+                >
+                    {
+                        this.props.icon
+                    }
+                    {
+                        this.props.children
+                    }
+                </IconButton>
+            </LightTooltip>
         )
     }
 }

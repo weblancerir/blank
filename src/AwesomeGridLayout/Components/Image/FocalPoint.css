@@ -44,9 +44,10 @@
 }
 
 .FocalPointPoint {
-    width: 10px;
-    height: 10px;
-    background-color: brown;
+    width: 8px;
+    height: 8px;
+    border-radius: 20px;
+    background-color: #ff0000;
     position: absolute;
     transform: translateY(-50%) translateX(-50%);
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import BreakPointManager from "../BreakPointManager";
 import chroma from "chroma-js";
-import {addCSS, JSToCSS} from "../AwesomeGridLayoutUtils";
+import {addCSS} from "../AwesomeGridLayoutUtils";
 import {resolveDefaultMenu} from "../MenuManager/MenuManager";
 
 function getColorScheme (baseColor) {
@@ -55,6 +55,9 @@ export default class EditorContextProvider extends React.Component {
                 },
                 themeManager: {
                     state: false,
+                },
+                menuManager: {
+                    state: false,
                 }
             },
             setRightMenus: this.setRightMenus,
@@ -78,8 +81,13 @@ export default class EditorContextProvider extends React.Component {
             postMessageToHolder: this.postMessageToHolder,
             setWebsiteId: this.setWebsiteId,
             showModal: this.showModal,
-            hideModal: this.hideModal
+            hideModal: this.hideModal,
+            setUser: this.setUser
         };
+    }
+
+    setUser = (user, callback) => {
+        this.setState({user}, callback);
     }
 
     showModal = (modal, callback) => {
@@ -365,6 +373,9 @@ export default class EditorContextProvider extends React.Component {
 
     toggleRightMenu = (menuName, state) => {
         let {rightMenus} = this.state;
+
+        if (!state)
+            state = !rightMenus[menuName].state;
 
         if (state === rightMenus[menuName].state)
             return;

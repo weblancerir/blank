@@ -76,6 +76,7 @@ export default class Button extends AGLComponent{
                 icon={ <img draggable={false} width={16} height={16}
                             src={require('../../icons/textwhite.svg')} /> }
                 select={this.props.select}
+                title="Text Design"
                 menu={(e) =>
                     <TextDesign
                         defaultPosition={{
@@ -94,6 +95,7 @@ export default class Button extends AGLComponent{
                 icon={ <img draggable={false} width={16} height={16}
                             src={require('../../icons/paint.svg')} /> }
                 select={this.props.select}
+                title="Box Design"
                 menu={(e) =>
                     <ButtonDesign
                         defaultPosition={{
@@ -112,6 +114,7 @@ export default class Button extends AGLComponent{
                 icon={ <img draggable={false} width={16} height={16}
                             src={process.env.PUBLIC_URL + '/static/icon/animation.svg'} /> }
                 select={this.props.select}
+                title="Animation Design"
                 menu={(e) =>
                     <AnimationDesign
                         defaultPosition={{
@@ -129,6 +132,7 @@ export default class Button extends AGLComponent{
                 icon={ <img draggable={false} width={16} height={16}
                             src={process.env.PUBLIC_URL + '/static/icon/linkwhite.svg'} /> }
                 select={this.props.select}
+                title="Link"
                 onClick={(e) => {
                     this.context.showLinkGenerator(
                         linkData,
@@ -142,8 +146,10 @@ export default class Button extends AGLComponent{
             <MenuButton
                 key={33}
                 icon={ <img draggable={false} width={16} height={16}
-                            src={process.env.PUBLIC_URL + '/static/icon/add.svg'} /> }
+                            src={process.env.PUBLIC_URL + '/static/icon/savewhite.svg'} /> }
                 select={this.props.select}
+                hide={this.context.user.role === "user"}
+                title="Copy Data"
                 onClick={(e) => {
                     this.showComponentCode();
                 }}
@@ -199,11 +205,11 @@ export default class Button extends AGLComponent{
             linkData={linkData}
             style={{
                 border:
-                    `${border.width || 0}px solid ${borderColor || 'rgba(186,218,85,0.63)'}`,
+                    `${border.width || 0}px solid ${borderColor || 'rgba(0,0,0,0)'}`,
                 backgroundColor: fillColor,
                 borderRadius:
                     `${border.radius.topLeft || 0}px ${border.radius.topRight || 0}px ${border.radius.bottomRight || 0}px ${border.radius.bottomLeft || 0}px`,
-                boxShadow: `${(border.shadow.xOffset) * (border.shadow.distance)}px ${(border.shadow.yOffset) * (border.shadow.distance)}px ${border.shadow.blur}px ${border.shadow.size}px ${shadowColor || 'rgba(186,218,85,0.63)'}`,
+                boxShadow: `${(border.shadow.xOffset) * (border.shadow.distance)}px ${(border.shadow.yOffset) * (border.shadow.distance)}px ${border.shadow.blur}px ${border.shadow.size}px ${shadowColor || 'rgba(0,0,0,0)'}`,
                 justifyContent: spanData.textAlign || "center"
             }}
         >

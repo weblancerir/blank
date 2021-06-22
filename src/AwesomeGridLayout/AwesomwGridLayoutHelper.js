@@ -695,6 +695,7 @@ export function removeStackFromAGL(stackAgl, childIds, fromUndoRedo) {
 }
 
 export function createItem(parent, childData, fromUndoRedo, gridItemStyle, style, onChildMounted) {
+    console.log("createItem 1");
     childData.props = cloneObject(parent.getClearProps({...childData.props}, true));
     childData.zIndex = parent.getNextIndexData(0).lastZIndex + 1;
 
@@ -711,6 +712,8 @@ export function createItem(parent, childData, fromUndoRedo, gridItemStyle, style
 
     let child = parent.createChildByData(
         childData , DynamicComponents, undefined, (newItem) => {
+        console.log("createItem 2");
+
         newItem.onSelect(true);
 
         onChildMounted && onChildMounted(newItem);

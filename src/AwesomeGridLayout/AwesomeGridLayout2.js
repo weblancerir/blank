@@ -52,7 +52,7 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         this.onPropsChange = new EventTrigger(this);
 
-        props.id === "comp_ContainerBase_1_1_1_1_1_1" && console.log("AwesomeGridLayout2 constructor", props.griddata)
+        console.log("AwesomeGridLayout2 constructor", this.props.id)
 
     }
 
@@ -286,7 +286,11 @@ export default class AwesomeGridLayout2 extends React.Component{
             this.props.onPageResize(size.width, this, true);
         }
 
-        this.props.onChildMounted && this.props.onChildMounted(this);
+        if (!this.onChildMountedCalled) {
+            console.log("onChildMountedCalled")
+            this.onChildMountedCalled = true;
+            this.props.onChildMounted && this.props.onChildMounted(this);
+        }
         this.isEditor() && this.props.editor.updateLayout();
     };
 
@@ -439,6 +443,7 @@ export default class AwesomeGridLayout2 extends React.Component{
     };
 
     createChildByData = (childData, dynamicComponents, newId, onChildMounted, fixed) => {
+        console.log("createChildByData 1");
         if (this.callOverride("addToSnap", childData, dynamicComponents, newId, onChildMounted, fixed))
             return;
 
@@ -789,6 +794,7 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         let lastZIndex = this.getNextIndexData(0).lastZIndex;
         let props = newId? newProps: {...childElement.props};
+        console.log("addChild")
         let createdChild = this.createChildByData({
             tagName: childElement.props.tagName? childElement.props.tagName:
                 childElement.type.name? childElement.type.name: childElement.type,
@@ -843,9 +849,7 @@ export default class AwesomeGridLayout2 extends React.Component{
             return;
 
 
-        console.log("delete", this.props.onItemPreDelete);
         if (this.props.onItemPreDelete) {
-
             let allow = this.props.onItemPreDelete(this);
             if (!allow)
                 return;
@@ -909,6 +913,10 @@ export default class AwesomeGridLayout2 extends React.Component{
         this.props.idMan.removeId(this.props.id);
         this.props.gridLine.removeGridLine(this.props.id);
         this.props.snap.removeSnap(this.props.id);
+
+        let anchor = this.getFromTempData("anchor");
+        anchor && this.props.anchorMan.removeAnchor(anchor.id, this);
+
         this.state.selected && this.props.select.updateResizePanes();
         this.state.selected && this.props.select.updateHelpSizeLines();
         this.state.selected && this.props.select.setInspector();
@@ -1083,6 +1091,7 @@ export default class AwesomeGridLayout2 extends React.Component{
     };
 
     onChildDrop = (child, newId, fixed, onNewChildMounted) => {
+        console.log("onChildDrop")
         if (this.callOverride("onChildDrop", child, newId, fixed, onNewChildMounted))
             return;
 

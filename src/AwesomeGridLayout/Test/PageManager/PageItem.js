@@ -52,6 +52,8 @@ export default class PageItem extends React.Component {
         if (this.context.pageData === pageData)
             editor.onPageChange(Object.keys(this.context.siteData.allPages)[0], true);
 
+        resolveDefaultMenu(this.context.siteData);
+
         this.context.update();
     };
 

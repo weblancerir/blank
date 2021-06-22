@@ -40,6 +40,7 @@ export default class Footer extends AGLComponent{
                 icon={ <img draggable={false} width={16} height={16}
                             src={require('../../icons/paint.svg')} /> }
                 select={this.props.select}
+                title="Footer Design"
                 menu={(e) =>
                     <SectionDesign
                         menuTitle={"Footer Design"}

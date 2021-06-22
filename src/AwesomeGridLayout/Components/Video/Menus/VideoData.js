@@ -35,7 +35,7 @@ export default class VideoData extends React.Component {
         {
             key: "Video Source",
             icon: <img draggable={false} width={16} height={16}
-                       src={process.env.PUBLIC_URL + '/static/icon/water.svg'} />
+                       src={process.env.PUBLIC_URL + '/static/icon/text.svg'} />
         });
 
         return index;

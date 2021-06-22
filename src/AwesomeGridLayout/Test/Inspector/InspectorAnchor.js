@@ -3,8 +3,10 @@ import './Inspector.css';
 import Switch from "@material-ui/core/Switch/Switch";
 import TextInput from "../../Menus/CommonComponents/TextInput";
 import InspectorTitle from "./InspectorTitle";
+import {EditorContext} from "../../Editor/EditorContext";
 
 export default class InspectorAnchor extends React.Component {
+    static contextType = EditorContext;
     constructor(props) {
         super(props);
         this.state = {
@@ -37,17 +39,18 @@ export default class InspectorAnchor extends React.Component {
         let {item} = this.props;
         let anchor = item.getFromTempData("anchor");
         if (enable) {
-            item.props.anchorMan.addAnchor(item.props.id.replace("comp_", ''), item);
+            console.log("onEnableAnchor", this.context);
+            item.props.anchorMan.addAnchor(item.props.id.replace("comp_", ''), item, this.context.pageData);
         }
         else {
-            item.props.anchorMan.removeAnchor(anchor.id, item);
+            item.props.anchorMan.removeAnchor(anchor.id, item, this.context.pageData);
         }
     };
 
     onChangeName = (newName) => {
         let {item} = this.props;
         let anchor = item.getFromTempData("anchor");
-        item.props.anchorMan.modifyAnchor(anchor.id, newName, item);
+        item.props.anchorMan.modifyAnchor(anchor.id, newName, item, this.context.pageData);
     };
 
     render() {

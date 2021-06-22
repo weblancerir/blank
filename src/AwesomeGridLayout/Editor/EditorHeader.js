@@ -52,7 +52,8 @@ export default class EditorHeader extends React.Component {
             }}>
                 <div className="EditorHeaderRightShortcuts">
                     <IconButton
-                        buttonBaseStyle={{marginLeft: 0,
+                        buttonBaseStyle={{
+                            marginLeft: 0,
                             backgroundColor: this.context.rightMenus.addComponent.state && "#d2fffc",
                         }}
                         onClick={(e) => {
@@ -104,15 +105,11 @@ export default class EditorHeader extends React.Component {
                     </IconButton>
                     <IconButton
                         buttonBaseStyle={{marginLeft: 0,
-                            backgroundColor: this.context.rightMenus.themeManager.state && "#d2fffc",
+                            backgroundColor: this.context.rightMenus.menuManager.state && "#d2fffc",
                         }}
                         onClick={(e) => {
-                            this.context.showModal(
-                                <MenuManagerUI
-                                    open={true}
-                                    onClose={() => {this.context.hideModal();}}
-                                />
-                            );
+                            this.context.toggleRightMenu("menuManager", true);
+
                         }}
                     >
                         <img

@@ -42,6 +42,10 @@ export default class LinkGenerator extends React.Component {
         })
     };
 
+    getAnchorOptions = () => {
+        return Object.values(this.context.pageData.props.anchors || {});
+    };
+
     getFirstLightBoxId = () => {
         return "";
     }
@@ -61,7 +65,7 @@ export default class LinkGenerator extends React.Component {
                 break;
             case "Anchor":
                 this.setState({type, linkData: {type, data: {
-                    pageId: this.getHomePageId(), anchorId: "topOfPage"}}});
+                    anchorId: ""}}});
                 break;
             case "TopBottomThisPage":
                 this.setState({type, linkData: {type, data: {
@@ -132,7 +136,7 @@ export default class LinkGenerator extends React.Component {
             case "Page":
                 return true;
             case "Anchor":
-                // TODO
+                return linkData.data.anchorId;
             case "TopBottomThisPage":
                 return true;
             case "Document":
@@ -192,7 +196,7 @@ export default class LinkGenerator extends React.Component {
                                                   label={<p className="LinkGeneratorTypesLabel">Web Address</p>}/>
                                 <FormControlLabel value="Page" control={<SmallRadio />}
                                                   label={<p className="LinkGeneratorTypesLabel">Page</p>} />
-                                <FormControlLabel value="Anchor" disabled control={<SmallRadio />}
+                                <FormControlLabel value="Anchor" control={<SmallRadio />}
                                                   label={<p className="LinkGeneratorTypesLabel">Anchor</p>} />
                                 <FormControlLabel value="TopBottomThisPage" control={<SmallRadio />}
                                                   label={<p className="LinkGeneratorTypesLabel">Top / Bottom</p>} />
@@ -282,6 +286,51 @@ export default class LinkGenerator extends React.Component {
                                             You can only open this link from your published site.
                                         </div>
                                     }
+                                </div>
+                            }
+                            {
+                                (type === "Anchor") &&
+                                <div className="LinkGeneratorOptionWebAddress">
+                                    <span className="LinkGeneratorTypesLabel">
+                                        Which anchor linking to?
+                                    </span>
+                                    <DropDown
+                                        rootStyle={{
+                                            border: "1px solid #c6c6c6",
+                                            marginTop: 12,
+                                            borderRadius: 4
+                                        }}
+                                        menuItemStyle={{
+                                            padding: 0
+                                        }}
+                                        options={this.getAnchorOptions()}
+                                        onChange={(v) => {
+                                            linkData.data.anchorId = v.id;
+                                            this.setState({linkData});
+                                        }}
+                                        value={this.getAnchorOptions().find(a => a.id === linkData.data.anchorId) || {}}
+                                        spanStyle={{
+                                            width: 367,
+                                            fontSize: 14,
+                                            border: "0px solid #cfcfcf",
+                                        }}
+                                        renderer={(anchor) => {
+                                            return (
+                                                <div id={"TEst"} className="TextEditorThemeRendererRoot">
+                                                    <span className="TextEditorThemeRendererName">
+                                                        {anchor.name}
+                                                    </span>
+                                                </div>
+                                            )
+                                        }}
+                                        valueRenderer={(anchor) => {
+                                            return (
+                                                <span>
+                                                    {anchor.name}
+                                                </span>
+                                            )
+                                        }}
+                                    />
                                 </div>
                             }
                             {

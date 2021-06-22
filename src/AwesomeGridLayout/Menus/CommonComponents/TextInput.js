@@ -9,14 +9,17 @@ export default class TextInput extends React.Component {
     };
 
     render () {
+        let {inputStyle} = this.props;
+        let inputProps = Object.assign({}, this.props);
+        delete inputProps.inputStyle;
         return (
             <input
-                {...this.props}
+                {...inputProps}
                 className="NumberInput"
                 value={this.props.value || ""}
                 onChange={this.onChange}
                 type="text"
-                style={this.props.inputStyle}
+                style={inputStyle}
             />
         )
     }

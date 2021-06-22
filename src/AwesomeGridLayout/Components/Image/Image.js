@@ -13,7 +13,6 @@ import {
 import {EditorContext} from "../../Editor/EditorContext";
 import MenuButton from "../../Menus/MenuBase/MenuButton";
 import AnimationDesign from "../Containers/Menus/AnimationDesign";
-import {prepareLink} from "../Text/Menus/components/LinkHelper";
 import CropperModal from "./CropperModal";
 import FocalPointModal from "./FocalPointModal";
 import ImageDesign from "./Menus/ImageDesign";
@@ -144,7 +143,7 @@ export default class Image extends AGLComponent{
         return {
             bpData: {
                 overflowData: {
-                    state: "hide"
+                    state: "show"
                 }
             }
         };
@@ -157,76 +156,8 @@ export default class Image extends AGLComponent{
 
         return [
             <MenuButton
-                key={1}
-                icon={ <img draggable={false} width={16} height={16}
-                            src={require('../../icons/paint.svg')} /> }
-                select={this.props.select}
-                menu={(e) =>
-                    <ImageDesign
-                        defaultPosition={{
-                            x: e.clientX + 48 || 48,
-                            y: e.clientY + 48 || 48
-                        }}
-                        onDesignChange={this.onDesignChange}
-                        select={this.props.select}
-                        item={this.getAgl()}
-                        onStateChange={this.onStateChange}
-                    />
-                }
-            />,
-            <MenuButton
-                key={22}
-                icon={ <img draggable={false} width={16} height={16}
-                            src={require('../../icons/text.svg')} /> }
-                select={this.props.select}
-                menu={(e) =>
-                    <ImageBehaviorDesign
-                        defaultPosition={{
-                            x: e.clientX + 48 || 48,
-                            y: e.clientY + 48 || 48
-                        }}
-                        onDesignChange={this.onDesignChange}
-                        select={this.props.select}
-                        item={this.getAgl()}
-                    />
-                }
-            />,
-            <MenuButton
-                key={2}
-                icon={<img draggable={false} width={16} height={16}
-                           src={process.env.PUBLIC_URL + '/static/icon/animation.svg'}/>}
-                select={this.props.select}
-                menu={(e) =>
-                    <AnimationDesign
-                        defaultPosition={{
-                            x: e.clientX + 48 || 48,
-                            y: e.clientY + 48 || 48
-                        }}
-                        onDesignChange={this.onDesignChange}
-                        select={this.props.select}
-                        item={this.getAgl()}
-                    />
-                }
-            />,
-            <MenuButton
-                key={3}
-                icon={<img draggable={false} width={16} height={16}
-                           src={process.env.PUBLIC_URL + '/static/icon/linkwhite.svg'}/>}
-                select={this.props.select}
-                onClick={(e) => {
-                    this.context.showLinkGenerator(
-                        linkData,
-                        (linkData) => {
-                            console.log("Image Link OnDone", linkData)
-                            setTempData("linkData", linkData, this.getAgl(), true);
-                        }
-                    );
-                }}
-            />,
-            <MenuButton
                 key={4}
-                icon={<img draggable={false} width={16} height={16}
-                           src={process.env.PUBLIC_URL + '/static/icon/edit.svg'}/>}
+                icon={<span className="MenuButtonLabelSpan">Change Image</span>}
                 select={this.props.select}
                 onClick={(e) => {
                     this.context.showFileManager(
@@ -246,10 +177,82 @@ export default class Image extends AGLComponent{
                 }}
             />,
             <MenuButton
+                key={1}
+                icon={ <img draggable={false} width={16} height={16}
+                            src={require('../../icons/paint.svg')} /> }
+                select={this.props.select}
+                title="Border Design"
+                menu={(e) =>
+                    <ImageDesign
+                        defaultPosition={{
+                            x: e.clientX + 48 || 48,
+                            y: e.clientY + 48 || 48
+                        }}
+                        onDesignChange={this.onDesignChange}
+                        select={this.props.select}
+                        item={this.getAgl()}
+                        onStateChange={this.onStateChange}
+                    />
+                }
+            />,
+            <MenuButton
+                key={22}
+                icon={ <img draggable={false} width={16} height={16}
+                            src={require('../../icons/settingwhite.svg')} /> }
+                select={this.props.select}
+                title="Image Behavior"
+                menu={(e) =>
+                    <ImageBehaviorDesign
+                        defaultPosition={{
+                            x: e.clientX + 48 || 48,
+                            y: e.clientY + 48 || 48
+                        }}
+                        onDesignChange={this.onDesignChange}
+                        select={this.props.select}
+                        item={this.getAgl()}
+                    />
+                }
+            />,
+            <MenuButton
+                key={2}
+                icon={<img draggable={false} width={16} height={16}
+                           src={process.env.PUBLIC_URL + '/static/icon/animation.svg'}/>}
+                select={this.props.select}
+                title="Animation Design"
+                menu={(e) =>
+                    <AnimationDesign
+                        defaultPosition={{
+                            x: e.clientX + 48 || 48,
+                            y: e.clientY + 48 || 48
+                        }}
+                        onDesignChange={this.onDesignChange}
+                        select={this.props.select}
+                        item={this.getAgl()}
+                    />
+                }
+            />,
+            <MenuButton
+                key={3}
+                icon={<img draggable={false} width={16} height={16}
+                           src={process.env.PUBLIC_URL + '/static/icon/linkwhite.svg'}/>}
+                select={this.props.select}
+                title="Link"
+                onClick={(e) => {
+                    this.context.showLinkGenerator(
+                        linkData,
+                        (linkData) => {
+                            console.log("Image Link OnDone", linkData)
+                            setTempData("linkData", linkData, this.getAgl(), true);
+                        }
+                    );
+                }}
+            />,
+            <MenuButton
                 key={5}
                 icon={<img draggable={false} width={16} height={16}
-                           src={process.env.PUBLIC_URL + '/static/icon/close.svg'}/>}
+                           src={require('../../icons/cropwhite.svg')} /> }
                 select={this.props.select}
+                title="Crop Image"
                 onClick={(e) => {
                     let imageData = getCompositeDesignData(this).imageData;
                     let cropData = getFromTempData(this, "cropData") || {};
@@ -282,8 +285,9 @@ export default class Image extends AGLComponent{
             <MenuButton
                 key={6}
                 icon={<img draggable={false} width={16} height={16}
-                           src={process.env.PUBLIC_URL + '/static/icon/corner.svg'}/>}
+                           src={require('../../icons/focalwhite.svg')} /> }
                 select={this.props.select}
+                title="Focal Point"
                 onClick={(e) => {
                     let imageData = getCompositeDesignData(this).imageData;
 
@@ -305,8 +309,10 @@ export default class Image extends AGLComponent{
             <MenuButton
                 key={33}
                 icon={ <img draggable={false} width={16} height={16}
-                            src={process.env.PUBLIC_URL + '/static/icon/add.svg'} /> }
+                            src={process.env.PUBLIC_URL + '/static/icon/savewhite.svg'} /> }
                 select={this.props.select}
+                title="Copy Data"
+                hide={this.context.user.role === "user"}
                 onClick={(e) => {
                     this.showComponentCode();
                 }}
@@ -428,19 +434,19 @@ export default class Image extends AGLComponent{
             linkData={linkData}
             style={{
                 border:
-                    `${border.width || 0}px solid ${borderColor || 'rgba(186,218,85,0.63)'}`,
+                    `${border.width || 0}px solid ${borderColor || 'rgba(0,0,0,0)'}`,
                 backgroundColor: fillColor,
                 borderRadius:
                     `${border.radius.topLeft || 0}px ${border.radius.topRight || 0}px ${border.radius.bottomRight || 0}px ${border.radius.bottomLeft || 0}px`,
-                boxShadow: `${(border.shadow.xOffset) * (border.shadow.distance)}px ${(border.shadow.yOffset) * (border.shadow.distance)}px ${border.shadow.blur}px ${border.shadow.size}px ${shadowColor || 'rgba(186,218,85,0.63)'}`,
+                boxShadow: `${(border.shadow.xOffset) * (border.shadow.distance)}px ${(border.shadow.yOffset) * (border.shadow.distance)}px ${border.shadow.blur}px ${border.shadow.size}px ${shadowColor || 'rgba(0,0,0,0)'}`,
             }}
         >
             <div style={{
                 position: "relative", width: "100%", height: "100%",
                 clipPath: "inset(0 0 0 0)",
                 overflow: "hidden",
-                borderRadius:
-                    `${border.radius.topLeft || 0}px ${border.radius.topRight || 0}px ${border.radius.bottomRight || 0}px ${border.radius.bottomLeft || 0}px`,
+                // borderRadius:
+                //     `${border.radius.topLeft || 0}px ${border.radius.topRight || 0}px ${border.radius.bottomRight || 0}px ${border.radius.bottomLeft || 0}px`,
             }}>
                 <img
                     className="ImageImage"
@@ -484,6 +490,10 @@ export default class Image extends AGLComponent{
         this.setState({hover: false});
     };
 
+    onInvalidateSize = () => {
+        this.setState({reload: true});
+    }
+
     render() {
         return (
             <AGLWrapper
@@ -498,6 +508,7 @@ export default class Image extends AGLComponent{
                 getPrimaryOptions={this.getPrimaryOptions}
                 getInspector={this.getInspector}
                 getStaticChildren={this.getStaticChildren}
+                onInvalidateSize={this.onInvalidateSize}
             />
         )
     }

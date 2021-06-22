@@ -51,6 +51,9 @@ export default class TextEditor extends React.Component {
         window.requestAnimationFrame(() => {
             const selection = this.props.doc.getSelection();
 
+            if (!selection.anchorNode)
+                return;
+
             // set size
             const size = window.getComputedStyle(selection.anchorNode.parentElement, null).getPropertyValue('font-size');
             this.fontSizeSelectorRef.current.setForceValue(size);

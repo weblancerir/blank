@@ -2,8 +2,10 @@ import React from "react";
 import './AddComponent.css';
 import {createItem, sortBy} from "../../AwesomwGridLayoutHelper";
 import {cloneObject} from "../../AwesomeGridLayoutUtils";
+import {EditorContext} from "../../Editor/EditorContext";
 
 export default class ComponentGrid extends React.Component {
+    static contextType = EditorContext;
     constructor(props) {
         super(props);
 
@@ -37,21 +39,11 @@ export default class ComponentGrid extends React.Component {
 
     setDraggingItem = (draggingItem, e) => {
         e.persist();
-        this.setState({draggingItem});
 
-        console.log("setDraggingItem 1");
-        clearTimeout(this.closingTimeOut);
         e.preventDefault();
-        this.closingTimeOut = setTimeout(() => {
-            if (!this.mounted)
-                return;
-
-            if (this.state.draggingItem) {
-                console.log("setDraggingItem 2", e.target);
-                this.props.closeMenu(true);
-                this.createItemAndDrag(this.state.draggingItem, e);
-            }
-        }, 200);
+        // this.props.closeMenu(true);
+        this.context.toggleRightMenu("addComponent");
+        this.createItemAndDrag(draggingItem, e);
     };
 
     createItemAndDrag = (item, e) => {
@@ -70,12 +62,12 @@ export default class ComponentGrid extends React.Component {
                     agl.onMouseDown(e, true);
                 });
             }
-            else {
-                console.log("createItemAndDrag 2");
-                window.requestAnimationFrame(() => {
-                    this.changeItemParent(agl, selectedItem);
-                });
-            }
+            // else {
+            //     console.log("createItemAndDrag 2");
+            //     window.requestAnimationFrame(() => {
+            //         this.changeItemParent(agl, selectedItem);
+            //     });
+            // }
         });
     };
 
@@ -104,7 +96,10 @@ export default class ComponentGrid extends React.Component {
     };
 
     createItem = (item, e) => {
-        this.props.closeMenu(true);
+        // this.props.closeMenu(true);
+
+        this.context.toggleRightMenu("addComponent");
+
         let {pageRef, editor} = this.props;
         let selectedItem = editor.select.getSelected();
         if (!selectedItem)
@@ -128,16 +123,20 @@ export default class ComponentGrid extends React.Component {
     };
 
     render() {
-        let {allItems, id} = this.props;
+        let {allItems, id, rowHeight, categoryItem} = this.props;
         if (!allItems)
             return null;
 
+        console.log("AddComponentItemGrid", rowHeight);
         return (
             <React.Fragment key={id}>
                 <div
                     className="AddComponentItemGrid"
                     ref={this.rootRef}
                     key={id}
+                    style={{
+                        gridAutoRows: rowHeight
+                    }}
                 >
                     {
                         sortBy(allItems, "order").map((item, index) => {
@@ -188,6 +187,16 @@ export default class ComponentGrid extends React.Component {
                                             width={"100%"}
                                             draggable={false}
                                         />
+                                        {
+                                            item.icon &&
+                                            <img
+                                                className="AddComponentItemGridQAImage"
+                                                draggable={false}
+                                                width={20 * (item.iconSizeMultiplyer || 1)}
+                                                height="auto"
+                                                src={require(`../../icons/${item.icon}`)}
+                                            />
+                                        }
                                         {
                                             item.label &&
                                             <span

@@ -355,7 +355,7 @@
                   "style": {
                     "width": "auto",
                     "height": "auto",
-                    "minHeight": "100px",
+                    "minHeight": "100px"
                   },
                   "grid": {
                     "x": 1,

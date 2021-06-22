@@ -34,7 +34,7 @@ export default class VideoDesign extends React.Component {
             {
                 key: "Overlay Color & Opacity",
                 icon: <img draggable={false} width={16} height={16}
-                           src={process.env.PUBLIC_URL + '/static/icon/water.svg'} />
+                           src={process.env.PUBLIC_URL + '/static/icon/layer.svg'} />
             });
         index.push(
             {

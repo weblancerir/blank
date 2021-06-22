@@ -122,10 +122,18 @@ export default class AddComponent extends React.Component {
             return null;
 
         let allItems;
-        if (this.state.componentListItem && this.state.componentListItem.allItems)
+        let rowHeight;
+        let categoryItem;
+        if (this.state.componentListItem && this.state.componentListItem.allItems) {
             allItems = this.state.componentListItem.allItems;
-        if (this.state.componentSubListItem && this.state.componentSubListItem.allItems)
+            rowHeight = this.state.componentListItem.rowHeight;
+            categoryItem = this.state.componentListItem;
+        }
+        if (this.state.componentSubListItem && this.state.componentSubListItem.allItems) {
             allItems = this.state.componentSubListItem.allItems;
+            rowHeight = this.state.componentSubListItem.rowHeight;
+            categoryItem = this.state.componentSubListItem;
+        }
 
         if (!this.state.componentListItem)
             allItems = undefined;
@@ -275,6 +283,8 @@ export default class AddComponent extends React.Component {
                         closeMenu={this.close}
                         pageRef={this.props.pageRef}
                         editor={this.props.editor}
+                        rowHeight={rowHeight}
+                        categoryItem={categoryItem}
                     />
                 </div>
             </>

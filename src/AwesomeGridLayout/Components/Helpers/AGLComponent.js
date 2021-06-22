@@ -48,8 +48,34 @@ export default class AGLComponent extends React.Component{
             return;
 
         let cloneProps = Object.assign({}, this.getAgl().props);
-        console.log("showComponentCode" , JSON.stringify(this.getAgl().getClearProps(cloneProps)));;
-        console.log("innerHtml" , this.getAgl().rootDivRef.current.innerHTML);
+        // console.log("showComponentCode" , JSON.stringify(this.getAgl().getClearProps(cloneProps)));;
+        // console.log("innerHtml" , this.getAgl().rootDivRef.current.innerHTML);
+
+        let componentData =
+            {
+                "tagName": this.props.tagName,
+                "width": 3,
+                "height": 2,
+                "innerHtml": this.getAgl().rootDivRef.current.innerHTML,
+                "presetProps": this.getAgl().getClearProps(cloneProps)
+            }
+
+        // Create new element
+        var el = document.createElement('textarea');
+        // Set value (string to be copied)
+        el.value = JSON.stringify(componentData);
+        // Set non-editable to avoid focus and move outside of view
+        el.setAttribute('readonly', '');
+        el.style = {position: 'absolute', left: '-9999px'};
+        document.body.appendChild(el);
+        // Select text inside element
+        el.select();
+        // Copy text to clipboard
+        document.execCommand('copy');
+        // Remove temporary element
+        document.body.removeChild(el);
+
+        console.log("componentData" , componentData);
     }
 
     onDesignChange = (designKey, value) => {

@@ -1,21 +1,23 @@
 import {v4 as uuidv4} from 'uuid';
 import { goToAnchor } from 'react-scrollable-anchor'
+import {EditorContext} from "./Editor/EditorContext";
 
 export default class AnchorManager {
-    constructor(siteData) {
-        // TODO init all anchors
-        this.allAnchors = {};
+    constructor() {
     }
 
     addAnchor = (name, item) => {
         let pageId = item.props.viewRef.current.props.pageId;
+        let page = item.props.viewRef.current;
+        if (!page.props.anchors) page.props.anchors = {};
         let id = uuidv4();
-        this.allAnchors[id] = {pageId, name, id};
-        item.setAnchor(this.allAnchors[id]);
+        page.props.anchors[id] = {pageId, name, id};
+        item.setAnchor(page.props.anchors[id]);
     };
 
     modifyAnchor = (id, newName, item) => {
-        let anchor = this.allAnchors[id];
+        let page = item.props.viewRef.current;
+        let anchor = page.props.anchors[id];
         if (!anchor) {
             this.addAnchor(newName, item);
             return;
@@ -27,11 +29,12 @@ export default class AnchorManager {
     };
 
     removeAnchor = (id, item) => {
-        delete this.allAnchors[id];
+        let page = item.props.viewRef.current;
+        delete page.props.anchors[id];
         item.setAnchor();
     };
 
-    goToAnchor = (id, saveToHistory) => {
-        goToAnchor(id, saveToHistory);
+    getAnchors = (pageData) => {
+        return pageData.props.anchors || {};
     };
 }

@@ -8,27 +8,28 @@ export default class CopyManager {
         this.pageRef = pageRef;
         this.dragdrop = dragdrop;
 
-        window.addEventListener("keydown",(e) =>{
-            e = e || window.event;
-            let key = e.which || e.keyCode; // keyCode detection
-            let ctrl = e.ctrlKey ? e.ctrlKey : (key === 17); // ctrl detection
+        window.addEventListener("keydown",this.handleKeyCodeEvent);
+    }
 
-            if ( key === 86 && ctrl ) {
-                console.log("ctrl + V");
-                this.paste();
-            } else if ( key === 67 && ctrl ) {
-                console.log("ctrl + C");
-                this.copy();
-            } else if ( key === 68 && ctrl ) {
-                e.preventDefault();
-                console.log("ctrl + D");
-                this.duplicate();
-            } else if ( key === 46 ) {
-                console.log("delete");
-                this.delete();
-            }
+    handleKeyCodeEvent = (e) => {
+        e = e || window.event;
+        let key = e.which || e.keyCode; // keyCode detection
+        let ctrl = e.ctrlKey ? e.ctrlKey : (key === 17); // ctrl detection
 
-        });
+        if ( key === 86 && ctrl ) {
+            console.log("ctrl + V");
+            this.paste();
+        } else if ( key === 67 && ctrl ) {
+            console.log("ctrl + C");
+            this.copy();
+        } else if ( key === 68 && ctrl ) {
+            e.preventDefault && e.preventDefault();
+            console.log("ctrl + D");
+            this.duplicate();
+        } else if ( key === 46 ) {
+            console.log("delete");
+            this.delete();
+        }
     }
 
     copy = (item) => {

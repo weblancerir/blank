@@ -1,0 +1,54 @@
+.DashboardRoot {
+    display: flex;
+    align-items: stretch;
+    height: 100vh;
+    color: white;
+}
+
+.DashboardMenuRoot {
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    background-color: #23263b;
+}
+
+.DashboardContentRoot {
+    flex: 1;
+    background-color: #f0f4f7;
+}
+
+.DashboardListContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding-top: 12px;
+    overflow: auto;
+}
+
+.DashboardListItem {
+    padding: 12px 24px !important;
+    justify-content: flex-start !important;
+    font-weight: bold !important;
+}
+
+.DashboardListItemSelected {
+    background-color: #3b3f57 !important;
+    color: #3899ec !important;
+}
+
+.DashboardEditButton {
+    border-top: 1px solid #727272 !important;
+    height: 64px;
+    font-weight: bold !important;
+}
+
+.DashboardContentFilesRoot {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    overflow: auto;
+}

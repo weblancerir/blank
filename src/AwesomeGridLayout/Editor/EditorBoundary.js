@@ -42,6 +42,8 @@ import LinkGenerator from "../Components/Text/Menus/components/LinkGenerator";
 import FileManager from "../Components/FileManager/FileManager";
 import MenuManagerUI from "../MenuManager/MenuManagerUI";
 import {getHomePage} from "../MenuManager/MenuManager";
+import Dashboard from "./Dashboard/Dashboard";
+import FileManagerModal from "../Components/FileManager/FileManagerModal";
 
 export default class EditorBoundary extends React.Component{
     static contextType = EditorContext;
@@ -219,20 +221,23 @@ export default class EditorBoundary extends React.Component{
         this.onSiteDataUpdated(siteData);
     };
 
-    onSiteDataUpdated = (siteData, websiteId, user) => {
+    onSiteDataUpdated = (siteData, website, user, isDashboard) => {
         if (!siteData) {
             siteData = cloneObject(defaultSiteData);
         }
 
-        if (websiteId)
-            this.context.setWebsiteId(websiteId);
+        if (website)
+            this.context.setWebsite(website);
 
         user && this.context.setUser(user);
 
         this.context.setSiteData(siteData, () => {
-            let pageData = getHomePage(siteData);
-            // let pageData = siteData.allPages[Object.keys(siteData.allPages)[0]];
-            this.context.setPageData(pageData.props.pageId, false, this.onHeightChange);
+            if (isDashboard) {
+                this.setState({isDashboard});
+            } else {
+                let pageData = getHomePage(siteData);
+                this.context.setPageData(pageData.props.pageId, false, this.onHeightChange);
+            }
         });
 
         // TODO Test
@@ -537,181 +542,188 @@ export default class EditorBoundary extends React.Component{
             "PageBaseWhiteBackground",
             this.context.production ? "PageBaseWhiteBackgroundHeightProduction" : "PageBaseWhiteBackgroundHeightEditor",
         );
-        if (this.context.pageData) {
-            return (
-                <div className="EditorBoundaryRoot" onContextMenu={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }}>
-                    {
-                        !this.isPreview() && !this.isProduction() &&
-                        <div className="EditorBoundaryHeader">
-                            <EditorHeader
-                                onAddComponentClick={this.toggleAddComponent}
-                                onInspectorClick={this.toggleInspector}
-                                onThemeManagerClick={this.toggleThemeManager}
-                                onPageManagerClick={this.togglePageManager}
-                                onPageZoomChange={this.onPageZoomChange}
-                            />
-                        </div>
-                    }
-                    {
-                        this.isPreview() && !this.isProduction() &&
-                        <div className="EditorBoundaryHeader">
-                            <PreviewHeader
-                                onAddComponentClick={this.toggleAddComponent}
-                                onInspectorClick={this.toggleInspector}
-                                onThemeManagerClick={this.toggleThemeManager}
-                                onPageManagerClick={this.togglePageManager}
-                                onPageZoomChange={this.onPageZoomChange}
-                            />
-                        </div>
-                    }
-                    <div className="EditorBoundaryContent">
+        if (!this.state.isDashboard) {
+            if (this.context.pageData) {
+                return (
+                    <div className="EditorBoundaryRoot" onContextMenu={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }}>
                         {
                             !this.isPreview() && !this.isProduction() &&
-                            <>
-                                <AdjustmentGrid
-                                    ref={this.gridEditorRef}
+                            <div className="EditorBoundaryHeader">
+                                <EditorHeader
+                                    onAddComponentClick={this.toggleAddComponent}
+                                    onInspectorClick={this.toggleInspector}
+                                    onThemeManagerClick={this.toggleThemeManager}
+                                    onPageManagerClick={this.togglePageManager}
+                                    onPageZoomChange={this.onPageZoomChange}
                                 />
-                                <AdjustmentSnap
-                                    ref={this.snapSvgRef}
-                                />
-                                <AdjustmentGridLines
-                                    ref={this.gridContainerRef}
-                                />
-                                <AdjustmentGroupRect
-                                    ref={this.groupSelectRef}
-                                />
-
-                                <PageManager
-                                    ref={this.pageManagerRef}
-                                    editor={this}
-                                    onPageChange={this.onPageChange}
-                                />
-                            </>
+                            </div>
                         }
-
                         {
-                            this.context.pageData &&
-                            <PageView
-                                onScrollBoundary={this.onScrollBoundary}
-                                rootLayoutRef={this.rootLayoutRef}
-                            >
-                                <div className={borderClassess} style={{
-                                    marginTop: this.context.production? 0 : `${8*this.context.zoomScale}vh`
-                                }}>
-                                    <PageBase
-                                        key={this.context.pageData.props.pageId}
-                                        id="page"
-                                        aglRef={this.rootLayoutRef}
-                                        viewRef={this.rootLayoutRef}
-                                        breakpointmanager={this.breakpointmanager}
-                                        undoredo={this.undoredo}
-                                        dragdrop={this.dragdrop}
-                                        select={this.select}
-                                        snap={this.snap}
-                                        input={this.inputManager}
-                                        idMan={this.idMan}
-                                        gridLine={this.gridLine}
-                                        gridEditorRef={this.gridEditorRef}
-                                        anchorMan={this.anchorMan}
-                                        copyMan={this.copyMan}
-                                        editorData={this.editorData}
-                                        onPageResize={this.onPageResize}
-                                        onPageResizeStart={this.onPageResizeStart}
-                                        onPageResizeStop={this.onPageResizeStop}
-                                        editor={!this.isPreview() && this}
-                                        devicePixelRatio={this.state.devicePixelRatio}
-                                        {...this.context.pageData.props}
-                                        pageSize={this.context.pageSize}
+                            this.isPreview() && !this.isProduction() &&
+                            <div className="EditorBoundaryHeader">
+                                <PreviewHeader
+                                    onAddComponentClick={this.toggleAddComponent}
+                                    onInspectorClick={this.toggleInspector}
+                                    onThemeManagerClick={this.toggleThemeManager}
+                                    onPageManagerClick={this.togglePageManager}
+                                    onPageZoomChange={this.onPageZoomChange}
+                                />
+                            </div>
+                        }
+                        <div className="EditorBoundaryContent">
+                            {
+                                !this.isPreview() && !this.isProduction() &&
+                                <>
+                                    <AdjustmentGrid
+                                        ref={this.gridEditorRef}
                                     />
-                                </div>
-                            </PageView>
-                        }
+                                    <AdjustmentSnap
+                                        ref={this.snapSvgRef}
+                                    />
+                                    <AdjustmentGridLines
+                                        ref={this.gridContainerRef}
+                                    />
+                                    <AdjustmentGroupRect
+                                        ref={this.groupSelectRef}
+                                    />
 
-                        {
-                            !this.isPreview() && !this.isProduction() &&
-                            <>
-                                {
-                                    !this.context.pageData &&
-                                    <div>
-                                        {/*Loading...*/}
+                                    <PageManager
+                                        ref={this.pageManagerRef}
+                                        editor={this}
+                                        onPageChange={this.onPageChange}
+                                    />
+                                </>
+                            }
+
+                            {
+                                this.context.pageData &&
+                                <PageView
+                                    onScrollBoundary={this.onScrollBoundary}
+                                    rootLayoutRef={this.rootLayoutRef}
+                                >
+                                    <div className={borderClassess} style={{
+                                        marginTop: this.context.production? 0 : `${8*this.context.zoomScale}vh`
+                                    }}>
+                                        <PageBase
+                                            key={this.context.pageData.props.pageId}
+                                            id="page"
+                                            aglRef={this.rootLayoutRef}
+                                            viewRef={this.rootLayoutRef}
+                                            breakpointmanager={this.breakpointmanager}
+                                            undoredo={this.undoredo}
+                                            dragdrop={this.dragdrop}
+                                            select={this.select}
+                                            snap={this.snap}
+                                            input={this.inputManager}
+                                            idMan={this.idMan}
+                                            gridLine={this.gridLine}
+                                            gridEditorRef={this.gridEditorRef}
+                                            anchorMan={this.anchorMan}
+                                            copyMan={this.copyMan}
+                                            editorData={this.editorData}
+                                            onPageResize={this.onPageResize}
+                                            onPageResizeStart={this.onPageResizeStart}
+                                            onPageResizeStop={this.onPageResizeStop}
+                                            editor={!this.isPreview() && this}
+                                            devicePixelRatio={this.state.devicePixelRatio}
+                                            {...this.context.pageData.props}
+                                            pageSize={this.context.pageSize}
+                                        />
                                     </div>
-                                }
+                                </PageView>
+                            }
 
-                                <AdjustmentHover
-                                    ref={this.hoverRef}
-                                />
+                            {
+                                !this.isPreview() && !this.isProduction() &&
+                                <>
+                                    {
+                                        !this.context.pageData &&
+                                        <div>
+                                            {/*Loading...*/}
+                                        </div>
+                                    }
 
-                                <AdjustmentHelpLinesWrapper
-                                    ref={this.helpLinesRef}
-                                />
-
-                                <AdjustmentResizeWrapper
-                                    ref={this.resizeRef}
-                                />
-
-                                {
-                                    this.context.pageData &&
-                                    <Layout
-                                        ref={this.layoutRef}
-                                        idMan={this.idMan}
+                                    <AdjustmentHover
+                                        ref={this.hoverRef}
                                     />
-                                }
 
-                                {
-                                    this.context.siteData &&
-                                    this.context.pageData &&
-                                    <ThemeManager
-                                        ref={this.themeManagerRef}
+                                    <AdjustmentHelpLinesWrapper
+                                        ref={this.helpLinesRef}
+                                    />
+
+                                    <AdjustmentResizeWrapper
+                                        ref={this.resizeRef}
+                                    />
+
+                                    {
+                                        this.context.pageData &&
+                                        <Layout
+                                            ref={this.layoutRef}
+                                            idMan={this.idMan}
+                                        />
+                                    }
+
+                                    {
+                                        this.context.siteData &&
+                                        this.context.pageData &&
+                                        <ThemeManager
+                                            ref={this.themeManagerRef}
+                                            editor={this}
+                                        />
+                                    }
+
+                                    {
+                                        this.state.linkGenerator &&
+                                        <LinkGenerator
+                                            open={true}
+                                            linkData={this.state.linkGenerator.linkData}
+                                            onClose={() => {this.setState({linkGenerator: undefined})}}
+                                            onDone={this.state.linkGenerator.onDone}
+                                        />
+                                    }
+
+                                    {
+                                        this.state.fileManager &&
+                                        <FileManagerModal
+                                            open={true}
+                                            options={this.state.fileManager.options}
+                                            onClose={() => {this.setState({fileManager: undefined})}}
+                                            onDone={this.state.fileManager.onDone}
+                                        />
+                                    }
+
+                                    {
+                                        this.state.modal
+                                    }
+
+                                    <AddComponent
+                                        ref={this.addComponentRef}
+                                        allComponentData={this.state.allComponentData}
+                                        pageRef={this.rootLayoutRef}
                                         editor={this}
                                     />
-                                }
 
-                                {
-                                    this.state.linkGenerator &&
-                                    <LinkGenerator
-                                        open={true}
-                                        linkData={this.state.linkGenerator.linkData}
-                                        onClose={() => {this.setState({linkGenerator: undefined})}}
-                                        onDone={this.state.linkGenerator.onDone}
+                                    <Inspector
+                                        ref={this.inspectorRef}
+                                        pinInspector={this.pinInspector}
                                     />
-                                }
-
-                                {
-                                    this.state.fileManager &&
-                                    <FileManager
-                                        open={true}
-                                        options={this.state.fileManager.options}
-                                        onClose={() => {this.setState({fileManager: undefined})}}
-                                        onDone={this.state.fileManager.onDone}
+                                    <MenuHolder
+                                        ref={this.miniMenuHolderRef}
                                     />
-                                }
-
-                                {
-                                    this.state.modal
-                                }
-
-                                <AddComponent
-                                    ref={this.addComponentRef}
-                                    allComponentData={this.state.allComponentData}
-                                    pageRef={this.rootLayoutRef}
-                                    editor={this}
-                                />
-
-                                <Inspector
-                                    ref={this.inspectorRef}
-                                    pinInspector={this.pinInspector}
-                                />
-                                <MenuHolder
-                                    ref={this.miniMenuHolderRef}
-                                />
-                            </>
-                        }
+                                </>
+                            }
+                        </div>
                     </div>
-                </div>
-            )
+                )
+            }
+        }
+        else
+        {
+            console.log("Dashboard2 ");
+            return <Dashboard/>;
         }
 
         return null;

@@ -1,7 +1,6 @@
 import React from "react";
 import {EditorContext} from "../../Editor/EditorContext";
 import IconButton from "../../HelperComponents/IconButton";
-import Modal from "@material-ui/core/Modal";
 import './FileManager.css';
 import ButtonBase from "@material-ui/core/ButtonBase/ButtonBase";
 import UploadButton from "./Components/UploadButton";
@@ -43,6 +42,7 @@ export default class FileManager extends React.Component {
         this.setState({list: undefined, selectedFile: undefined, selectedFiles: []});
 
         this.loadingPrefix = this.getCurrentPrefix();
+        console.log("loadRoute", this.loadingPrefix)
         FileManagerHelper.list(this.context, this.loadingPrefix, continuationToken, (list, prefix) => {
             if (this.loadingPrefix !== prefix)
                 return;
@@ -74,7 +74,7 @@ export default class FileManager extends React.Component {
         if (options.type) {
             route.push(options.type);
         }
-
+        console.log("getFirstRoute", route)
         return route;
     }
 
@@ -111,7 +111,7 @@ export default class FileManager extends React.Component {
     getValidFileExt = () => {
         let {type} = this.props.options;
 
-        type = type.toLowerCase();
+        type = (type || "").toLowerCase();
         switch (type) {
             case "images":
                 return [
@@ -348,37 +348,44 @@ export default class FileManager extends React.Component {
     render () {
         let {options, onDone, onClose} = this.props;
         let {list, usageData, selectedMenu, selectedFiles, route, uploadingData} = this.state;
-        return <Modal
-            open={this.props.open}
-            onClose={this.props.onClose}
-            aria-labelledby="simple-modal-title2"
-            aria-describedby="simple-modal-description2"
-            className="FileManagerModal"
-            disableBackdropClick
-        >
+        // return <Modal
+        //     open={this.props.open}
+        //     onClose={this.props.onClose}
+        //     aria-labelledby="simple-modal-title2"
+        //     aria-describedby="simple-modal-description2"
+        //     className="FileManagerModal"
+        //     disableBackdropClick
+        // >
+        return (
             <>
-            <div className="FileManagerRoot">
+            <div className="FileManagerRoot" style={this.props.rootStyle}>
                 {/*Header*/}
-                <div className="FileManagerHeader">
-                    <div
-                        className="PageManagerHeaderContainer"
-                    >
+                {
+                    !options.noHeader &&
+                    <div className="FileManagerHeader">
+                        <div
+                            className="PageManagerHeaderContainer"
+                        >
                             <span className="PageManagerHeaderTitle">
                                 File Manager
                             </span>
 
-                        <IconButton
-                            onClick={this.props.onClose}
-                        >
-                            <img
-                                draggable={false}
-                                width={12}
-                                height={12}
-                                src={require('../../icons/close.svg')}
-                            />
-                        </IconButton>
+                            {
+                                this.props.onClose &&
+                                <IconButton
+                                    onClick={this.props.onClose}
+                                >
+                                    <img
+                                        draggable={false}
+                                        width={12}
+                                        height={12}
+                                        src={require('../../icons/close.svg')}
+                                    />
+                                </IconButton>
+                            }
+                        </div>
                     </div>
-                </div>
+                }
 
                 <div className="FileManagerContainer">
                     <div className="FileManagerMenu">
@@ -432,7 +439,8 @@ export default class FileManager extends React.Component {
                                             }}
                                         >
                                             {
-                                                this.state.route[0] + " > " + options.type || ""
+                                                this.state.route[0] +
+                                                (options.type ? " > " + options.type || "": "")
                                             }
                                         </ButtonBase>
                                         {
@@ -444,31 +452,35 @@ export default class FileManager extends React.Component {
                                                     return null;
 
                                                 return (
-                                                    <ButtonBase
+                                                    <React.Fragment
                                                         key={name}
-                                                        style={{
-                                                            padding: 4,
-                                                            borderRadius: 4,
-                                                        }}
-                                                        onClick={(e) => {
-                                                            let newRoute = this.getFirstRoute();
-                                                            let currentRoute = [...route];
-                                                            currentRoute.shift()
-                                                            if (options.type)
-                                                                currentRoute.shift();
-
-                                                            let next = currentRoute.shift();
-                                                            while (next !== name) {
-                                                                newRoute.push(next);
-                                                                next = currentRoute.shift();
-                                                            }
-                                                            newRoute.push(name);
-
-                                                            this.changeRoute(newRoute);
-                                                        }}
                                                     >
-                                                        {" > " + name}
-                                                    </ButtonBase>
+                                                        >
+                                                        <ButtonBase
+                                                            style={{
+                                                                padding: 4,
+                                                                borderRadius: 4,
+                                                            }}
+                                                            onClick={(e) => {
+                                                                let newRoute = this.getFirstRoute();
+                                                                let currentRoute = [...route];
+                                                                currentRoute.shift()
+                                                                if (options.type)
+                                                                    currentRoute.shift();
+
+                                                                let next = currentRoute.shift();
+                                                                while (next !== name) {
+                                                                    newRoute.push(next);
+                                                                    next = currentRoute.shift();
+                                                                }
+                                                                newRoute.push(name);
+
+                                                                this.changeRoute(newRoute);
+                                                            }}
+                                                        >
+                                                            {name}
+                                                        </ButtonBase>
+                                                    </React.Fragment>
                                                 )
                                             })
                                         }
@@ -746,6 +758,7 @@ export default class FileManager extends React.Component {
                 />
             }
             </>
-        </Modal>
+        )
+        // </Modal>
     }
 }

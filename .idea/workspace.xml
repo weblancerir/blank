@@ -5,7 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ee3df027-738a-4634-bc4a-d7b9163847a2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManagerModal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteDashboard.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteDashboard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteSetting.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteSetting.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Dashboard.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Dashboard.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManagerHelper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManagerHelper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorContext.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +73,7 @@
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://H:/Weblancer/WeblancerEditor/test-project/node_modules/react-sortable-tree/dist/index.esm.js&#10;adjustmentPa&#9;FILE&#9;file://E:/BussinesProjects/AwesomeGridLayout/awesomegridlayout/src/AwesomeGridLayout/Adjustment/AdjustmentResizePage.js&#10;stack&#9;FILE&#9;file://E:/BussinesProjects/AwesomeGridLayout/awesomegridlayout/src/AwesomeGridLayout/Test/Stack.js&#10; =&gt; {&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/AwesomeGridLayout/icons" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -78,11 +89,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Editor\Dashboard\Content" />
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Components\FileManager" />
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Editor\Dashboard" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\icons" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\icon" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\image" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Components\Menu\Menus" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Components\Menu" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\image" />
@@ -248,6 +259,12 @@
       <workItem from="1624391765150" duration="29000" />
       <workItem from="1624434183367" duration="931000" />
       <workItem from="1624441558566" duration="3260000" />
+      <workItem from="1624538543048" duration="82000" />
+      <workItem from="1624560696448" duration="16000" />
+      <workItem from="1624629077101" duration="2552000" />
+      <workItem from="1624643149659" duration="20000" />
+      <workItem from="1624648148091" duration="3038000" />
+      <workItem from="1624726129817" duration="11712000" />
     </task>
     <servers />
   </component>

@@ -79,7 +79,7 @@ export default class EditorContextProvider extends React.Component {
             showFileManager: this.showFileManager,
             isEditor: this.isEditor,
             postMessageToHolder: this.postMessageToHolder,
-            setWebsiteId: this.setWebsiteId,
+            setWebsite: this.setWebsite,
             showModal: this.showModal,
             hideModal: this.hideModal,
             setUser: this.setUser
@@ -98,8 +98,8 @@ export default class EditorContextProvider extends React.Component {
         this.state.editor.hideModal(callback);
     }
 
-    setWebsiteId = (websiteId) => {
-        this.setState({websiteId});
+    setWebsite = (website) => {
+        this.setState({website});
     }
 
     getThemeColorClass = (color) => {

@@ -5,7 +5,7 @@ FileManagerHelper.list = (editorContext, prefix, continuationToken, onSuccess, o
     {
         type: "Server",
         route: "/file/list",
-        input: {websiteId: editorContext.websiteId, prefix, continuationToken},
+        input: {websiteId: editorContext.website.id, prefix, continuationToken},
         method: "post"
     },
     ({result}) => {
@@ -23,7 +23,7 @@ FileManagerHelper.upload = (editorContext, objectPath, file, onSuccess, onError)
         {
             type: "Server",
             route: "/file/upload",
-            input: {websiteId: editorContext.websiteId, objectPath, objectSizeInMb: file.size / 1024 / 1024},
+            input: {websiteId: editorContext.website.id, objectPath, objectSizeInMb: file.size / 1024 / 1024},
             method: "post"
         },
         ({result}) => {
@@ -40,7 +40,7 @@ FileManagerHelper.folder = (editorContext, folderPath, onSuccess, onError) => {
         {
             type: "Server",
             route: "/file/folder",
-            input: {websiteId: editorContext.websiteId, folderPath},
+            input: {websiteId: editorContext.website.id, folderPath},
             method: "post"
         },
         ({result}) => {
@@ -57,7 +57,7 @@ FileManagerHelper.usage = (editorContext, onSuccess, onError) => {
         {
             type: "Server",
             route: "/file/usage",
-            input: {websiteId: editorContext.websiteId},
+            input: {websiteId: editorContext.website.id},
             method: "post"
         },
         ({result}) => {
@@ -81,7 +81,7 @@ FileManagerHelper.delete = (editorContext, deleteObjects, onSuccess, onError) =>
         {
             type: "Server",
             route: "/file/delete",
-            input: {websiteId: editorContext.websiteId, deleteObjects},
+            input: {websiteId: editorContext.website.id, deleteObjects},
             method: "post"
         },
         ({result}) => {
@@ -98,7 +98,7 @@ FileManagerHelper.storage = (editorContext, onSuccess, onError) => {
         {
             type: "Server",
             route: "/file/storage",
-            input: {websiteId: editorContext.websiteId},
+            input: {websiteId: editorContext.website.id},
             method: "get"
         },
         ({result}) => {

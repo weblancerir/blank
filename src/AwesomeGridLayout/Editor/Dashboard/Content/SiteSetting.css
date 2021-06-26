@@ -1,0 +1,8 @@
+.SitSettingRoot {
+    padding: 48px;
+    width: 100%;
+    box-sizing: border-box;
+    color: black;
+    overflow: auto;
+    height: 100%;
+}

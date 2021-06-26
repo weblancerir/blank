@@ -1,0 +1,94 @@
+.SiteDashboardRoot {
+    padding: 48px;
+    width: 100%;
+    box-sizing: border-box;
+    color: black;
+    overflow: auto;
+    height: 100%;
+}
+
+.SiteDashboardMainRoot {
+    background-color: white;
+    height: auto;
+    min-height: 100px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 32px;
+}
+
+.SiteDashboardMainTop {
+    display: flex;
+    column-gap: 32px;
+    border-bottom: 1px solid #c6c6c6;
+    padding-bottom: 32px;
+}
+
+.SiteDashboardMainTopImageRoot {
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.14);
+    border-radius: 4px;
+    width: 300px;
+    height: 200px;
+}
+
+.SiteDashboardMainTopRight {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.SiteDashboardMainTopTitle {
+    font-size: 1.6em;
+    font-weight: bold;
+    font-family: Arial;
+    margin-bottom: 8px;
+    margin-top: 8px;
+}
+
+.SiteDashboardMainTopLink {
+    font-size: 0.8em;
+    pointer-events: auto;
+    text-decoration: none;
+    color: black !important;
+    margin-bottom: 8px;
+}
+
+.SiteDashboardMainTopDesc {
+    font-size: 1em;
+    margin-bottom: 8px;
+}
+
+.SiteDashboardMainTopActions {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+}
+
+.SiteDashboardMainTopActionsButton {
+    height: fit-content;
+    text-transform: none !important;
+    border-radius: 100px !important;
+}
+
+.SiteDashboardMainBottom {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.SiteDashboardMainBottomShortcutRoot {
+
+}
+
+.SiteDashboardShortcutTitle {
+    font-size: 1em;
+}
+
+.SiteDashboardShortcutLink {
+    font-size: 0.9em;
+    pointer-events: auto;
+    text-decoration: none;
+    color: #3899ec !important;
+}

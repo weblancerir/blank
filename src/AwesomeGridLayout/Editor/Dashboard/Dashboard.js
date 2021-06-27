@@ -6,6 +6,8 @@ import SiteDashboard from "./Content/SiteDashboard";
 import FileManager from "../../Components/FileManager/FileManager";
 import FileManagerModal from "../../Components/FileManager/FileManagerModal";
 import MenuItem from "@material-ui/core/MenuItem/MenuItem";
+import SiteSetting from "./Content/SiteSetting";
+import SitePlans from "./Content/SitePlans";
 
 export default class Dashboard extends React.Component {
     static contextType = EditorContext;
@@ -25,8 +27,8 @@ export default class Dashboard extends React.Component {
         this.mounted = false;
     }
 
-    setSelectedMenu = (selectedMenu) => {
-        this.setState({selectedMenu});
+    setSelectedMenu = (selectedMenu, menuOptions) => {
+        this.setState({selectedMenu, menuOptions});
     }
 
     onEditWebsiteClicked = () => {
@@ -41,7 +43,7 @@ export default class Dashboard extends React.Component {
 
     render() {
         let {siteData} = this.context;
-        let {selectedMenu} = this.state;
+        let {selectedMenu, menuOptions} = this.state;
         return (
             <div className="DashboardRoot">
                 <div className="DashboardMenuRoot">
@@ -97,12 +99,16 @@ export default class Dashboard extends React.Component {
                 <div className="DashboardContentRoot">
                     {
                         selectedMenu === "Dashboard" &&
-                        <SiteDashboard/>
+                        <SiteDashboard
+                            menuOptions={menuOptions}
+                            setSelectedMenu={this.setSelectedMenu}
+                        />
                     }
                     {
                         selectedMenu === "Files" &&
                         <div className="DashboardContentFilesRoot">
                             <FileManager
+                                menuOptions={menuOptions}
                                 options={{
                                     noHeader: true
                                 }}
@@ -112,6 +118,18 @@ export default class Dashboard extends React.Component {
                                 }}
                             />
                         </div>
+                    }
+                    {
+                        selectedMenu === "Settings" &&
+                        <SiteSetting
+                            menuOptions={menuOptions}
+                        />
+                    }
+                    {
+                        selectedMenu === "Plans" &&
+                        <SitePlans
+                            menuOptions={menuOptions}
+                        />
                     }
                 </div>
             </div>

@@ -2,7 +2,6 @@ import React from "react";
 import {EditorContext} from "../../EditorContext";
 import './SiteDashboard.css';
 import Button from "@material-ui/core/Button/Button";
-import MenuList from "@material-ui/core/MenuList/MenuList";
 import FreeDropDownMenu from "../../../Components/Menu/FreeDropDownMenu";
 import MenuItem from "@material-ui/core/MenuItem/MenuItem";
 
@@ -67,14 +66,25 @@ export default class SiteDashboard extends React.Component {
     render() {
         let {siteData, website} = this.context;
         let {actionAnchorEl} = this.state;
+        let {setSelectedMenu} = this.props;
         let isPublished = website.metadata.isPublished;
-        console.log("SiteDashboard siteData", siteData, website)
         return (
             <div className="SiteDashboardRoot">
                 <div className="SiteDashboardMainRoot">
                     <div className="SiteDashboardMainTop">
                         <div className="SiteDashboardMainTopImageRoot">
-
+                            {
+                                isPublished &&
+                                    <iframe
+                                        className="SiteDashboardMainTopImageIframe"
+                                        src={this.getUrl()}
+                                    />
+                            }
+                            {
+                                !isPublished &&
+                                <img draggable={false} className="SiteDashboardMainTopImage"
+                                     src={process.env.PUBLIC_URL + '/static/image/tempwebsite.jpg'} />
+                            }
                         </div>
                         <div className="SiteDashboardMainTopRight">
                             <div className="SiteDashboardMainTopTitle">
@@ -110,6 +120,9 @@ export default class SiteDashboard extends React.Component {
                             {/* TODO set link*/}
                             <a
                                 className="SiteDashboardShortcutLink"
+                                onClick={() => {
+                                    setSelectedMenu("Domains");
+                                }}
                             >
                                 Connect Domain
                             </a>
@@ -121,6 +134,9 @@ export default class SiteDashboard extends React.Component {
                             {/* TODO set link*/}
                             <a
                                 className="SiteDashboardShortcutLink"
+                                onClick={() => {
+                                    setSelectedMenu("Plans");
+                                }}
                             >
                                 Plan Usage
                             </a>
@@ -132,6 +148,9 @@ export default class SiteDashboard extends React.Component {
                             {/* TODO set link*/}
                             <a
                                 className="SiteDashboardShortcutLink"
+                                onClick={() => {
+                                    setSelectedMenu("Plans");
+                                }}
                             >
                                 Plan Usage
                             </a>

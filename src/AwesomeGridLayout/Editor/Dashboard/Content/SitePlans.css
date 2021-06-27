@@ -1,0 +1,110 @@
+.SitePlansRoot {
+    padding: 48px;
+    width: 100%;
+    box-sizing: border-box;
+    color: black;
+    overflow: auto;
+    height: 100%;
+}
+
+.SitePlansCurrentRoot {
+    height: auto;
+    min-height: 100px;
+    display: flex;
+    column-gap: 32px;
+}
+
+.SitePlansMainRoot {
+    background-color: white;
+    border-radius: 12px;
+    min-height: 100px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.SitePlansTitle {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.SitePlansPlanName {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: purple;
+    margin-bottom: 24px;
+}
+
+.SitePlansDataRow {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.SitePlansDataRowTitle {
+    flex: 1;
+    font-weight: bold;
+}
+
+.SitePlansDataRowData {
+    width: fit-content;
+    font-weight: bold;
+}
+
+.SitePlansFeatureRowTitle {
+    flex: 1;
+}
+
+.SitePlansFeatureRowData {
+    width: fit-content;
+}
+
+.SitePlansResourceUsageRoot {
+    display: flex;
+    width: 100%;
+    column-gap: 12px;
+    margin-bottom: 8px;
+    align-items: center;
+}
+
+.SitePlansResourceUsageText {
+    width: fit-content;
+    font-size: 0.8em;
+}
+
+.SitePlansUpgradeRoot {
+    margin-top: 24px;
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    align-items: center;
+}
+
+.SitePlansUpgradeButton {
+    border-radius: 100px !important;
+    background-color: purple !important;
+    text-transform: none !important;
+}
+
+.SitePlansUpgradeButtonDisabled {
+    border-radius: 100px !important;
+    text-transform: none !important;
+}
+
+.SitePlansUpgradeTip {
+    font-size: 0.8em;
+    margin-bottom: 8px;
+    color: #a20000;
+}
+
+.SitePlansRemaining {
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 8px;
+}

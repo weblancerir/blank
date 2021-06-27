@@ -24,14 +24,25 @@ export default class AGLComponent extends React.Component{
     };
 
     getData = () => {
-        let componentData = this.getDefaultData && this.getDefaultData();
-        let componentBpData = componentData.bpData;
+        let componentData = (this.getDefaultData && this.getDefaultData()) || {};
+        let componentBpData = componentData.bpData || {};
+
         componentData = assignData(componentData, cloneObject(this.props.data));
+
         if (componentBpData) {
             let tempBpData = componentData.bpData;
             componentData.bpData = assignData(componentBpData, tempBpData);
         }
 
+        let componentStaticData = (this.getStaticData && this.getStaticData()) || {};
+        let componentStaticBpData = componentStaticData.bpData || {};
+        delete componentStaticData.bpData;
+        componentData = assignData(componentData, cloneObject(componentStaticData));
+        if (componentStaticBpData) {
+            componentData.bpData = assignData(componentData.bpData, componentStaticBpData);
+        }
+
+        console.log("componentData", componentData);
         return componentData;
     };
 

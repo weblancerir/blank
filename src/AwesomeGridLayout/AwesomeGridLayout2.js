@@ -52,7 +52,8 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         this.onPropsChange = new EventTrigger(this);
 
-        console.log("AwesomeGridLayout2 constructor", this.props.id)
+        if (this.props.id === "page")
+            console.log("AwesomeGridLayout2 constructor", props.griddata)
 
     }
 
@@ -953,7 +954,7 @@ export default class AwesomeGridLayout2 extends React.Component{
         delete props.page;
         delete props.gridEditorRef;
         delete props.onChildMounted;
-        delete props.filDataOnMount;
+        delete props.griddata.filDataOnMount;
 
         Object.keys(this.getAllOverrideProps(props)).forEach(key => {
             delete props[key];
@@ -3422,6 +3423,9 @@ export default class AwesomeGridLayout2 extends React.Component{
         let compositeTransform = this.getCompositeFromData("transform") || {};
         let compositeStyle = this.getCompositeFromData("style");
         let overflowData = this.getCompositeFromData("overflowData");
+        if (isPage) {
+            console.log("overflowData", overflowData);
+        }
         let anchor = this.getFromTempData("anchor");
         let customStyle = this.getFromTempData("customStyle") || {};
         let selectAsParent = this.props.gridLine.hasGridLine(this.props.id, "B") !== undefined;

@@ -1,3 +1,5 @@
+import axios from "axios";
+
 let FileManagerHelper = {};
 
 FileManagerHelper.list = (editorContext, prefix, continuationToken, onSuccess, onError) => {
@@ -33,6 +35,38 @@ FileManagerHelper.upload = (editorContext, objectPath, file, onSuccess, onError)
             else
                 onError(result.error);
         });
+}
+
+FileManagerHelper.fullUpload = (editorContext, objectPath, file, onSuccess, onUploadProgress, onError) => {
+    FileManagerHelper.upload(editorContext, objectPath, file, (signUrl) =>
+    {
+        let formData = new FormData();
+        formData.append("file", file);
+        const cancelTokenSource = axios.CancelToken.source();
+
+        axios.put(signUrl, file, {
+            headers: {
+                "x-amz-acl": "public-read",
+                "Content-Type": file.type
+            },
+            onUploadProgress: (e) => {onUploadProgress(e, cancelTokenSource)},
+            cancelToken: cancelTokenSource.token
+        })
+            .then((response) => {
+                console.log("upload response", response);
+                onSuccess();
+            }).then(() => {
+            console.log("upload finish");
+            })
+            .catch(() => {
+                console.log("upload Error ...");
+                onError("Cant Upload !!!");
+            });
+    },
+    (errorMessage) => {
+        console.log("fullUpload error", errorMessage);
+        onError(errorMessage);
+    });
 }
 
 FileManagerHelper.folder = (editorContext, folderPath, onSuccess, onError) => {

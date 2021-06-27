@@ -15,6 +15,7 @@ export default class AGLWrapper extends React.Component{
                 griddata.filDataOnMount = true;
                 // griddata.fillWithData = true;
                 let bpData = this.props.data.bpData;
+                console.log("griddata.componentData1", bpData)
                 Object.keys(this.props.data).forEach(key => {
                     if (key !== "bpData") {
                         console.log("key", key)
@@ -22,6 +23,7 @@ export default class AGLWrapper extends React.Component{
                     }
                 });
                 assignData(griddata.bpData["laptop"], bpData);
+                console.log("griddata.componentData2", griddata.bpData)
                 console.log("griddata.customStyle5", griddata.customStyle)
             }
         } else {

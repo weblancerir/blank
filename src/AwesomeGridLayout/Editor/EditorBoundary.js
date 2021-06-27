@@ -39,19 +39,23 @@ import PreviewHeader from "./PreviewHeader";
 import PageView from "./PageView";
 import classNames from "classnames";
 import LinkGenerator from "../Components/Text/Menus/components/LinkGenerator";
-import FileManager from "../Components/FileManager/FileManager";
 import MenuManagerUI from "../MenuManager/MenuManagerUI";
 import {getHomePage} from "../MenuManager/MenuManager";
 import Dashboard from "./Dashboard/Dashboard";
 import FileManagerModal from "../Components/FileManager/FileManagerModal";
+import qs from 'qs';
 
 export default class EditorBoundary extends React.Component{
     static contextType = EditorContext;
 
     constructor(props) {
         super(props);
+
+        let querryString = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+
         this.state = {
-            preview: true
+            preview: true,
+            noScroll: querryString.noScroll
         };
 
         this.init(props);
@@ -221,6 +225,13 @@ export default class EditorBoundary extends React.Component{
         this.onSiteDataUpdated(siteData);
     };
 
+    doStaticChanges = (siteData, website, user) => {
+        if (siteData.setting.favIconLink) {
+            let favIconLink = document.getElementById("favIconLink");
+            if (favIconLink) favIconLink.href = siteData.setting.favIconLink;
+        }
+    }
+
     onSiteDataUpdated = (siteData, website, user, isDashboard) => {
         if (!siteData) {
             siteData = cloneObject(defaultSiteData);
@@ -230,6 +241,8 @@ export default class EditorBoundary extends React.Component{
             this.context.setWebsite(website);
 
         user && this.context.setUser(user);
+
+        this.doStaticChanges(siteData, website, user);
 
         this.context.setSiteData(siteData, () => {
             if (isDashboard) {
@@ -631,6 +644,7 @@ export default class EditorBoundary extends React.Component{
                                             devicePixelRatio={this.state.devicePixelRatio}
                                             {...this.context.pageData.props}
                                             pageSize={this.context.pageSize}
+                                            noScroll={this.state.noScroll}
                                         />
                                     </div>
                                 </PageView>

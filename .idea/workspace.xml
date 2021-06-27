@@ -5,18 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ee3df027-738a-4634-bc4a-d7b9163847a2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManagerModal.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteDashboard.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteDashboard.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteSetting.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteSetting.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Dashboard.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Dashboard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/static/image/tempwebsite.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SitePlans.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SitePlans.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/AwesomeGridLayout2.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/AwesomeGridLayout2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/Components/MultiColorProgressBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/Components/MultiColorProgressBar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManager.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManagerHelper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManagerHelper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Helpers/AGLComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Helpers/AGLComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Helpers/AGLWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Helpers/AGLWrapper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Pages/PageBase.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Pages/PageBase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteDashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteDashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteDashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteSetting.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteSetting.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteSetting.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteSetting.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorContext.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/allComponentData.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/allComponentData.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,10 +99,10 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Editor\Dashboard\Content" />
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\image" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Components\FileManager" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Editor\Dashboard" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\icons" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\icon" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\image" />
@@ -264,7 +273,9 @@
       <workItem from="1624629077101" duration="2552000" />
       <workItem from="1624643149659" duration="20000" />
       <workItem from="1624648148091" duration="3038000" />
-      <workItem from="1624726129817" duration="11712000" />
+      <workItem from="1624726129817" duration="11796000" />
+      <workItem from="1624786514596" duration="4278000" />
+      <workItem from="1624801481211" duration="19142000" />
     </task>
     <servers />
   </component>

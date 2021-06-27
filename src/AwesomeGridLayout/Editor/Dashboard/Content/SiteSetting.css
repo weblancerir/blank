@@ -6,3 +6,85 @@
     overflow: auto;
     height: 100%;
 }
+
+.SitSettingMainRoot {
+    background-color: white;
+    height: auto;
+    min-height: 100px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 32px;
+}
+
+.SitSettingNameRoot {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.SitSettingLastRoot {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    border-bottom: none !important;
+}
+
+.SitSettingNameTitle {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.SitSettingNameDesc {
+    font-size: 0.9em;
+}
+
+.SitSettingNameInput {
+    width: 50%;
+}
+
+.SitSettingNameButton {
+    margin-top: 16px !important;
+    text-transform: none !important;
+    width: fit-content;
+}
+
+.SitSettingFavIconUploader {
+    margin-top: 12px !important;
+    color: #fff !important;
+    background-color: #3f51b5  !important;
+    box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12) !important;
+    padding: 6px 16px !important;
+    font-size: 0.875rem !important;
+    min-width: 64px !important;
+    box-sizing: border-box !important;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms !important;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
+    font-weight: 500 !important;
+    line-height: 1.75 !important;
+    border-radius: 4px !important;
+    letter-spacing: 0.02857em !important;
+}
+
+.SitSettingFavRoot {
+    display: flex;
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.SitSettingFavLeft {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.SitSettingFavRight {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+}

@@ -110,6 +110,7 @@ export default class PageBase extends AGLComponent {
     }
 
     getDefaultData = () => {
+        console.log("this.props.noScroll", this.props.noScroll);
         return {
             isContainer: true,
             draggable: false,
@@ -117,7 +118,7 @@ export default class PageBase extends AGLComponent {
             pageResize: true,
             bpData: {
                 overflowData: {
-                    state: "scroll",
+                    state: this.props.noScroll? "hide": "scroll",
                     overflowY: "scroll",
                     auto: true
                 },
@@ -1279,9 +1280,22 @@ export default class PageBase extends AGLComponent {
         />
     };
 
+    getStaticData = () => {
+        return {
+            bpData: {
+                overflowData: {
+                    state: this.props.noScroll? "hide": "scroll",
+                    overflowY: "scroll",
+                    auto: true
+                }
+            }
+        }
+    }
+
     render() {
         // let fullWidth = (this.getAgl() && this.getAgl().getSize(false)) || (1002);
         let fullWidth = this.props.pageSize;
+        console.log("PageRender", this.getData())
         return (
             <AGLWrapper tagName="PageBase"
                         aglRef={!this.props.aglRef ? this.root : this.root = this.props.aglRef}

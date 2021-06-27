@@ -50,6 +50,11 @@ export default class FileManager extends React.Component {
             list.contents = list.contents.filter(item => {
                 return !item.Key.endsWith('/');
             });
+
+            list.folders = list.folders.filter(folder => {
+                return folder !== "favIcons";
+            });
+
             this.setState({list});
         }, (errorMessage) => {
             this.setState({errorMessage});
@@ -342,7 +347,7 @@ export default class FileManager extends React.Component {
 
     getUsagePercent = () => {
         let {usageData} = this.state;
-        return usageData.usage / 500 / 1024 / 1024 * 100;;
+        return usageData.usage / 500 / 1024 / 1024 * 100;
     }
 
     render () {

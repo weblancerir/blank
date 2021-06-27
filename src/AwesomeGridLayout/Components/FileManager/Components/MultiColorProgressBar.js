@@ -32,7 +32,9 @@ export default class MultiColorProgressBar extends React.Component {
         let bars = parent.readings && parent.readings.length && parent.readings.map(function(item, i) {
             if(item.value > 0) {
                 return (
-                    <div className="bar" style={{'backgroundColor': item.color, 'width': item.value + '%'}}  key={i}>
+                    <div className="bar"
+                         style={{'backgroundColor': item.color, 'width': item.value + '%', ...(this.props.barStyle || {})}}
+                         key={i}>
 
                     </div>
                 )
@@ -51,14 +53,14 @@ export default class MultiColorProgressBar extends React.Component {
         }, this);
 
         return (
-            <div className="multicolor-bar">
+            <div className="multicolor-bar" style={this.props.rootStyle}>
                 {/*<div className="values">*/}
                 {/*    {values == ''?'':values}*/}
                 {/*</div>*/}
                 {/*<div className="scale">*/}
                 {/*    {calibrations == ''?'':calibrations}*/}
                 {/*</div>*/}
-                <div className="bars">
+                <div className="bars" style={this.props.barsStyle}>
                     {bars == ''?'':bars}
                 </div>
                 {/*<div className="legends">*/}

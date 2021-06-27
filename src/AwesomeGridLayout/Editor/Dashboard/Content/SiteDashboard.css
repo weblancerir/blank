@@ -89,6 +89,27 @@
 .SiteDashboardShortcutLink {
     font-size: 0.9em;
     pointer-events: auto;
+    cursor: pointer;
     text-decoration: none;
     color: #3899ec !important;
+}
+
+.SiteDashboardMainTopImageIframe {
+    border: none;
+    width: 400%;
+    height: 400%;
+    box-sizing: border-box;
+    -ms-zoom: 0.333;
+    -moz-transform: scale(0.25);
+    -moz-transform-origin: 0 0;
+    -o-transform: scale(0.25);
+    -o-transform-origin: 0 0;
+    -webkit-transform: scale(0.25);
+    -webkit-transform-origin: 0 0;
+    pointer-events: none;
+}
+
+.SiteDashboardMainTopImage {
+    width: 100%;
+    height: 100%;
 }

@@ -954,7 +954,8 @@ export default class AwesomeGridLayout2 extends React.Component{
         delete props.page;
         delete props.gridEditorRef;
         delete props.onChildMounted;
-        delete props.griddata.filDataOnMount;
+        if (props.griddata)
+            delete props.griddata.filDataOnMount;
 
         Object.keys(this.getAllOverrideProps(props)).forEach(key => {
             delete props[key];

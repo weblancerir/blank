@@ -26,6 +26,7 @@ class PageRouterComponent extends React.Component {
                 e.preventDefault();
                 e.stopPropagation();
                 console.log("Back", e)
+                this.props.history.goBack(1);
             }
         }
     }
@@ -118,16 +119,23 @@ class PageRouterComponent extends React.Component {
         console.log("RouterPath final", this.props.location);
         return (
             <Switch>
-                {
-                    siteData && Object.values(siteData.allPages).map(page => {
-                        console.log("Routes", `/${page.props.pageName.toLowerCase()}`)
-                        return (
-                            <Route exact path={`/${page.props.pageName.toLowerCase()}`} key={page.props.pageName}>
-                                {pageData && this.props.children}
-                            </Route>
-                        )
-                    })
-                }
+                {/*{*/}
+                {/*    siteData && Object.values(siteData.allPages).map(page => {*/}
+                {/*        console.log("Routes", `/${page.props.pageName.toLowerCase()}`)*/}
+                {/*        return (*/}
+                {/*            <Route exact path={`/${page.props.pageName.toLowerCase()}`} key={page.props.pageName}>*/}
+                {/*                {this.props.children}*/}
+                {/*            </Route>*/}
+                {/*        )*/}
+                {/*    })*/}
+                {/*}*/}
+
+                <Route exact path={`/Test`}>
+                    {this.props.children}
+                </Route>
+                <Route exact path={`/Test2`}>
+                    {this.props.children}
+                </Route>
 
                 {
                     siteData &&

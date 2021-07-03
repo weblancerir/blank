@@ -78,6 +78,8 @@ class PageRouterComponent extends React.Component {
                 this.forceUpdate();
             });
 
+            this.changingPage = true;
+
             return {
                 changed: true,
                 newPath: currentPath

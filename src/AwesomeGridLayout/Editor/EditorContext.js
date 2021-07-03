@@ -243,6 +243,7 @@ export default class EditorContextProvider extends React.Component {
     }
 
     update = (callback) => {
+        console.log("EditorContext Update");
         this.setState({reload: true}, callback);
     };
 

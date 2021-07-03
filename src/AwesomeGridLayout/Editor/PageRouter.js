@@ -50,7 +50,7 @@ class PageRouterComponent extends React.Component {
             this.firstLoad = false;
 
             let page = Object.values(siteData.allPages).find(pageData => {
-                return pageData.props.pageId;
+                return `/${pageData.props.pageName.toLowerCase()}` === currentPath.toLowerCase();
             });
             if (!page)
                 page = getHomePage(siteData);

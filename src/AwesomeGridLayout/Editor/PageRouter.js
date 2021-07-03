@@ -25,9 +25,11 @@ class PageRouterComponent extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         if (!shallowEqual(JSON.stringify(this.props.location), JSON.stringify(nextProps.location))) {
+            console.log("Router shouldComponentUpdate", true);
             return true;
         }
 
+        console.log("Router shouldComponentUpdate", false);
         return false;
     }
 

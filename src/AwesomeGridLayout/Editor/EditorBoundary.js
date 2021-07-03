@@ -566,6 +566,8 @@ export default class EditorBoundary extends React.Component{
 
     render() {
         // TODO if this.context.siteData not loaded, show loading component
+        console.log("EditorBoundry Render");
+
         let borderClassess = classNames(
             "PageBaseWhiteBackground",
             this.context.production ? "PageBaseWhiteBackgroundHeightProduction" : "PageBaseWhiteBackgroundHeightEditor",

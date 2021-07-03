@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import {BrowserRouter as Router, withRouter} from 'react-router-dom';
 import {getHomePage} from "../MenuManager/MenuManager";
+import {shallowEqual} from "../AwesomeGridLayoutUtils";
 
 class PageRouterComponent extends React.Component {
     static contextType = EditorContext;
@@ -20,6 +21,14 @@ class PageRouterComponent extends React.Component {
 
     componentWillUnmount () {
         this.mounted = false;
+    }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        if (!shallowEqual(JSON.stringify(this.props.location), JSON.stringify(nextProps.location))) {
+            return true;
+        }
+
+        return false;
     }
 
     isPageChanged = () => {

@@ -25,7 +25,7 @@ class PageRouterComponent extends React.Component {
             if(this.mounted) {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log("Back", this.props.location)
+                console.log("Back", this.props.location, this.changingPage)
                 if (this.changingPage) {
                     this.changingPage = false;
                     this.props.history.goBack(1);
@@ -78,8 +78,6 @@ class PageRouterComponent extends React.Component {
                 this.forceUpdate();
             });
 
-            this.changingPage = true;
-
             return {
                 changed: true,
                 newPath: currentPath
@@ -91,8 +89,7 @@ class PageRouterComponent extends React.Component {
         let changed = (newPath !== currentPath.toLowerCase());
 
         if (changed) {
-            // this.props.history.push(currentPath);
-            console.log("Router changed history", this.props.history, this.props.history.entries, currentPath);
+            this.changingPage = true;
         }
 
         this.oldPath = currentPath.toLowerCase();
@@ -113,7 +110,7 @@ class PageRouterComponent extends React.Component {
             if (newPath){
                 return (
                     <Redirect to={{ pathname: newPath}}
-                              push={false} />
+                              push={true} />
                 )
             } else {
                 return null;

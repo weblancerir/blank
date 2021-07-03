@@ -111,7 +111,7 @@ export function prepareLink (node, preview, production, editorContext, linkData)
 
             // node.addEventListener('click', () => {pageLinkHandle(editorContext, linkData)})
             node.onclick = () => {pageLinkHandle(editorContext, linkData)};
-            node.setAttribute("href", "");
+            // node.setAttribute("href", "");
             break;
         case "Anchor":
             node.setAttribute("href", `#${linkData.data.anchorId}`);

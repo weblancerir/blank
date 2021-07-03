@@ -88,6 +88,7 @@ class PageRouterComponent extends React.Component {
                 pathname: redirectPath,
                 state: { from: this.props.location.pathname }
             }}
+                             push
             />
         }
 

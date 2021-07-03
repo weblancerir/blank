@@ -75,7 +75,7 @@ class PageRouterComponent extends React.Component {
         let changed = (newPath !== currentPath.toLowerCase());
 
         if (changed) {
-            this.props.history.push(newPath);
+            this.props.history.push(currentPath);
             console.log("Router changed history", newPath);
         }
 

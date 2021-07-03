@@ -123,7 +123,7 @@ const MainRouter = withRouter(props =>
 
 const PageRouter = (props) => {
     return (
-        <Router basename={'application'} forceRefresh={false}>
+        <Router basename={'application'}>
             <MainRouter {...props}/>
         </Router>
     )

@@ -6,66 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ee3df027-738a-4634-bc4a-d7b9163847a2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/asset-manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/precache-manifest.9189f11e07889b0c37cf477a86807f57.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/service-worker.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/css/2.ed590494.chunk.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/css/2.ed590494.chunk.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/css/main.f0983279.chunk.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/css/main.f0983279.chunk.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/js/2.fcce0ec4.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/js/2.fcce0ec4.chunk.js.LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/js/2.fcce0ec4.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/js/main.8419181f.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/js/main.8419181f.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/js/runtime-main.92da5602.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/js/runtime-main.92da5602.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/align-bottom.b15149df.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/align-center.c06baa72.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/align-left.0a5b083d.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/align-middle.18bded08.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/align-right.47dacf61.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/align-top.a4e81be5.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/bin.df49cd2e.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/bindisable.b2b248e2.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/chain.91ca2215.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/close.ebf2f3f4.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/cloudupload.dbdbbcac.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/cropwhite.913a034c.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/dropdown.ca82bc74.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/dropdownwhite.437cf3b9.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/errorred.b7152f66.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/file.4fc544fb.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/focalwhite.81ca7e87.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/folder.45405b61.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/folderback.ec1620e4.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/layout.a0ffa87b.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/layoutwhite.d4502e9e.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/link.3473cffc.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/linkblue.34eb0e55.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/linkdisable.b12d5832.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/linkwhite.765c23ec.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/maximize.c16a073e.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/minimize.d1b14794.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/more.7e1c1c4d.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/notparent.ac631e5c.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/paint.b4611be4.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/parent.e5c6057a.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/plus.4ffb5b5d.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/qabutton.624fbf94.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/qacontainer.428b6d61.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/qaimage.b6c0c0a0.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/qamenu.6e932cb5.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/qaparagraph.1202e5ce.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/qatext.800211fe.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/qavideo.4f0d0683.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/question.910508a9.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/refresh.3c352ac3.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/settingwhite.5f59bbc7.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/text.cd9d5184.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/textwhite.0dd5b9bc.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/media/unlink.91af3919.svg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/PageRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/PageRouter.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -321,7 +261,7 @@
       <workItem from="1624902939153" duration="282000" />
       <workItem from="1624906692445" duration="2810000" />
       <workItem from="1625129256107" duration="13871000" />
-      <workItem from="1625293537672" duration="26282000" />
+      <workItem from="1625293537672" duration="27192000" />
     </task>
     <servers />
   </component>

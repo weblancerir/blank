@@ -5,8 +5,8 @@ import {
     Route, Redirect
 } from "react-router-dom";
 import {BrowserRouter as Router, withRouter} from 'react-router-dom';
+// import {Router, withRouter} from 'react-router-dom';
 import {getHomePage} from "../MenuManager/MenuManager";
-import {shallowEqual} from "../AwesomeGridLayoutUtils";
 
 class PageRouterComponent extends React.Component {
     static contextType = EditorContext;
@@ -27,24 +27,10 @@ class PageRouterComponent extends React.Component {
         this.mounted = false;
     }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        if (!shallowEqual(JSON.stringify(this.props.location), JSON.stringify(nextProps.location))) {
-            console.log("Router shouldComponentUpdate", true);
-            return true;
-        }
-
-        // if (this.changingPage) {
-        //     this.changingPage = false;
-        //     return true;
-        // }
-
-        console.log("Router shouldComponentUpdate", false);
-        return false;
-    }
-
     isPageChanged = () => {
         let {pageData, siteData} = this.context;
-        let currentPath = this.props.location.pathname;
+        console.log("Router isPageChanged", this.props.location);
+        let currentPath = (this.props.location.location || this.props.location).pathname;
 
         if (this.firstLoad) {
             this.firstLoad = false;
@@ -76,7 +62,7 @@ class PageRouterComponent extends React.Component {
 
         // if (changed) {
         //     this.props.history.push(currentPath);
-        //     console.log("Router changed history", newPath);
+        //     console.log("Router changed history", this.props.history, currentPath);
         // }
 
         return {changed, newPath, oldPath: currentPath.toLowerCase()}
@@ -88,7 +74,7 @@ class PageRouterComponent extends React.Component {
         if (!pageData)
             return null;
 
-        console.log("RouterPath", this.props.location.pathname, pageData.props.pageName);
+        console.log("RouterPath", this.props.location, pageData.props.pageName);
 
         let {changed, newPath, oldPath} = this.isPageChanged();
         if (changed) {
@@ -96,7 +82,8 @@ class PageRouterComponent extends React.Component {
             if (newPath){
                 return <Redirect to={{
                     pathname: newPath,
-                    state: { from: oldPath }
+                    push: true
+                    // state: { from: oldPath }
                 }}
                 />
             } else {
@@ -107,9 +94,9 @@ class PageRouterComponent extends React.Component {
             <Switch>
                 {
                     Object.values(siteData.allPages).map(page => {
-                        console.log("Routes", `/${page.props.pageName}`)
+                        console.log("Routes", `/${page.props.pageName.toLowerCase()}`)
                         return (
-                            <Route path={`/${page.props.pageName}`} key={page.props.pageName}>
+                            <Route path={`/${page.props.pageName.toLowerCase()}`} key={page.props.pageName}>
                                 {this.props.children}
                             </Route>
                         )
@@ -119,7 +106,7 @@ class PageRouterComponent extends React.Component {
                 <Route path={`/`}>
                     <Redirect
                         to={{
-                            pathname: `/${getHomePage(siteData).props.pageName}`,
+                            pathname: `/${getHomePage(siteData).props.pageName.toLowerCase()}`,
                             // state: { from: "/" }
                         }}
                     />

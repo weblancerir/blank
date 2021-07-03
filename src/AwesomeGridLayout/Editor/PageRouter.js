@@ -56,7 +56,8 @@ class PageRouterComponent extends React.Component {
                 page = getHomePage(siteData);
 
             console.log("Router firstLoad");
-            this.context.editor.onPageChange(page.props.pageId, true, () => {
+
+            this.context.setPageData(page.props.pageId, true, () => {
                 console.log("Router firstLoad forceUpdate");
                 this.forceUpdate();
             });
@@ -65,6 +66,7 @@ class PageRouterComponent extends React.Component {
 
             return {
                 changed: true,
+                newPath: currentPath
             }
         }
 
@@ -89,7 +91,7 @@ class PageRouterComponent extends React.Component {
         let {changed, newPath} = this.isPageChanged();
         if (changed) {
             console.log("RouterPath changed", newPath);
-            if (newPath ){
+            if (newPath){
                 return <Redirect to={{
                     pathname: newPath,
                     // state: { from: this.props.location.pathname }

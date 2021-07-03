@@ -305,7 +305,7 @@ export default class EditorContextProvider extends React.Component {
         }
 
         if (!this.state.preview) {
-            this.state.editor.rootLayoutRef.current.onSelect(true, () => {
+            let todo = () => {
                 this.state.editor.idMan.clear();
                 this.state.editor.snap.clearSnaps();
 
@@ -320,7 +320,12 @@ export default class EditorContextProvider extends React.Component {
                     console.log("EditorContext setPageData3");
                     this.setState({pageData}, callback);
                 });
-            });
+            }
+            if (this.state.editor.rootLayoutRef.current) {
+                this.state.editor.rootLayoutRef.current.onSelect(true, todo);
+            } else {
+                todo();
+            }
         }
         else
         {

@@ -287,14 +287,18 @@ export default class EditorBoundary extends React.Component{
             return;
         }
 
-        this.rootLayoutRef.current.onSelect(true, () => {
+        let todo = () => {
             this.idMan.clear();
             this.snap.clearSnaps();
 
             this.context.setPageData(undefined ,force, () => {
                 this.context.setPageData(pageId, false, callback);
             });
-        });
+        };
+        if (this.rootLayoutRef.current)
+            this.rootLayoutRef.current.onSelect(true, todo);
+        else
+            todo();
     };
 
     togglePreview = (preview) => {

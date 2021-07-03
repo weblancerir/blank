@@ -408,7 +408,7 @@ export default class EditorBoundary extends React.Component{
 
         document.documentElement.style.setProperty('--vw-ratio', width / window.innerWidth);
 
-        if (this.context.production && fromOnPageResize) {
+        if (this.context.production && !fromOnPageResize) {
             console.log("EditorBoundary handleResize");
             this.onPageResize(width);
         }

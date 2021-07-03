@@ -29,6 +29,8 @@ class PageRouterComponent extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
+        console.log("PageRouterComponent shouldComponentUpdate", this.props.location.pathname,
+            this.props.location.search, nextProps.location.pathname, nextProps.location.search);
         if (this.props.location.pathname !== nextProps.location.pathname ||
             this.props.location.search !== nextProps.location.search)
         {

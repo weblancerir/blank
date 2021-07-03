@@ -53,7 +53,7 @@ class PageRouterComponent extends React.Component {
 
         if (this.isPageChanged()) {
             return <Redirect to={{
-                pathname: `${process.env.PUBLIC_URL}/${pageData.props.pageName}`,
+                pathname: `/${pageData.props.pageName}`,
                 // state: { from: this.props.location.pathname }
             }}
             />
@@ -62,8 +62,9 @@ class PageRouterComponent extends React.Component {
             <Switch>
                 {
                     Object.values(siteData.allPages).map(page => {
+                        console.log("Routes", `/${page.props.pageName}`)
                         return (
-                            <Route path={`${process.env.PUBLIC_URL}/${page.props.pageName}`} key={page.props.pageName}>
+                            <Route path={`/${page.props.pageName}`} key={page.props.pageName}>
                                 {this.props.children}
                             </Route>
                         )
@@ -76,10 +77,10 @@ class PageRouterComponent extends React.Component {
                 {/*}}>*/}
                 {/*</Route>*/}
 
-                <Route path={`${process.env.PUBLIC_URL}/`}>
+                <Route path={`/`}>
                     <Redirect
                         to={{
-                            pathname: `${process.env.PUBLIC_URL}/${getHomePage(siteData).props.pageName}`,
+                            pathname: `/${getHomePage(siteData).props.pageName}`,
                             state: { from: "/" }
                         }}
                     />

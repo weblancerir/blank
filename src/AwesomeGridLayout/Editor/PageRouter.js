@@ -23,7 +23,8 @@ class PageRouterComponent extends React.Component {
         this.mounted = true;
         this.props.history.listen((newLocation, action) => {
             console.log("listen", newLocation, action);
-            if (action === "POP") {
+            if (action === "PUSH" && this.oldPath) {
+                this.oldPath = undefined;
                 this.props.history.push({
                     pathname: this.oldPath,
                 });
@@ -76,7 +77,6 @@ class PageRouterComponent extends React.Component {
         if (changed) {
             // this.props.history.push(currentPath);
             console.log("Router changed history", this.props.history, this.props.history.entries, currentPath);
-            this.props.history.replace(currentPath.toLowerCase(), {state: { deleted : true }}) // false
         }
 
         this.oldPath = currentPath.toLowerCase();

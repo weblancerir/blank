@@ -92,8 +92,8 @@ class PageRouterComponent extends React.Component {
             />
         }
 
-        if (`/${pageName.toLowerCase()}` !== this.props.location) {
-
+        if (pageName && `/${pageName.toLowerCase()}` !== this.props.location.pathname) {
+            console.log("HERE", `/${pageName.toLowerCase()}`, this.props.location.pathname)
         }
 
         return (

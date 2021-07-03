@@ -29,6 +29,8 @@ class PageRouterComponent extends React.Component {
                 if (this.changingPage) {
                     this.changingPage = false;
                     this.props.history.goBack(1);
+                } else {
+                    this.backClicked = true;
                 }
             }
         }
@@ -86,16 +88,30 @@ class PageRouterComponent extends React.Component {
             }
         }
 
-        let newPath = `/${pageData.props.pageName.toLowerCase()}`;
+        let newPath;
+        let oldPath
+        if (this.backClicked) {
+            this.backClicked = false;
+            newPath = currentPath.toLowerCase();
+            let page = Object.values(siteData.allPages).find(pageData => {
+                return `/${pageData.props.pageName.toLowerCase()}` === newPath;
+            });
+            this.props.setPageData(page.props.pageId, true);
+            return {changed: false}
+        }
+        else
+        {
+            newPath = `/${pageData.props.pageName.toLowerCase()}`;
+            oldPath = currentPath.toLowerCase();
+        }
 
-        let changed = (newPath !== currentPath.toLowerCase());
+        let changed = (newPath !== oldPath);
 
         if (changed) {
             this.changingPage = true;
         }
 
-        this.oldPath = currentPath.toLowerCase();
-        return {changed, newPath, oldPath: currentPath.toLowerCase()}
+        return {changed, newPath, oldPath}
     }
 
     render () {

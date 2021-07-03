@@ -88,6 +88,7 @@ export default class EditorContextProvider extends React.Component {
     }
 
     setUser = (user, callback) => {
+        console.log("EditorContext setUser");
         this.setState({user}, callback);
     }
 
@@ -101,16 +102,19 @@ export default class EditorContextProvider extends React.Component {
     }
 
     showModal = (modal, callback) => {
+        console.log("EditorContext showModal");
         this.setState({inModal: true});
         this.state.editor.showModal(modal, callback);
     }
 
     hideModal = (callback) => {
+        console.log("EditorContext hideModal");
         this.setState({inModal: false});
         this.state.editor.hideModal(callback);
     }
 
     setWebsite = (website) => {
+        console.log("EditorContext setWebsite");
         this.setState({website});
     }
 
@@ -201,6 +205,7 @@ export default class EditorContextProvider extends React.Component {
     }
 
     setProduction = (callback) => {
+        console.log("EditorContext setProduction");
         this.setState({production:true, preview:true}, callback);
     }
 
@@ -236,6 +241,7 @@ export default class EditorContextProvider extends React.Component {
         this.setPageData(undefined, false, () => {
             this.state.editor.idMan.clear();
             this.state.editor.snap.clearSnaps();
+            console.log("EditorContext setPreview");
             this.setState({preview}, () => {
                 this.setPageData(pageData.props.pageId, false, callback);
             });
@@ -243,11 +249,12 @@ export default class EditorContextProvider extends React.Component {
     }
 
     update = (callback) => {
-        console.log("EditorContext Update");
+        console.log("EditorContext update");
         this.setState({reload: true}, callback);
     };
 
     initContext = (state, callback) => {
+        console.log("EditorContext initContext");
         this.setState(state, callback);
     };
 
@@ -256,10 +263,12 @@ export default class EditorContextProvider extends React.Component {
     };
 
     setZoomScale = (zoomScale, callback) => {
+        console.log("EditorContext setZoomScale");
         this.setState({zoomScale}, callback);
     };
 
     setSiteData = (siteData, callback) => {
+        console.log("EditorContext setSiteData");
         this.setState({siteData}, () => {
             this.postSiteData();
             resolveDefaultMenu(siteData);
@@ -277,6 +286,7 @@ export default class EditorContextProvider extends React.Component {
         }
 
         if (!pageId) {
+            console.log("EditorContext setPageData1");
             this.setState({pageData: undefined}, callback);
             return;
         }
@@ -289,6 +299,7 @@ export default class EditorContextProvider extends React.Component {
             }
 
             this.state.editor.setBreakpoints(pageData.breakpoints);
+            console.log("EditorContext setPageData2");
             this.setState({pageData}, callback);
             return;
         }
@@ -306,6 +317,7 @@ export default class EditorContextProvider extends React.Component {
                     }
 
                     this.state.editor.setBreakpoints(pageData.breakpoints);
+                    console.log("EditorContext setPageData3");
                     this.setState({pageData}, callback);
                 });
             });
@@ -323,6 +335,7 @@ export default class EditorContextProvider extends React.Component {
                 }
 
                 this.state.editor.setBreakpoints(pageData.breakpoints);
+                console.log("EditorContext setPageData4");
                 this.setState({pageData}, callback);
             });
         }
@@ -363,18 +376,22 @@ export default class EditorContextProvider extends React.Component {
     }
 
     setInspectorPinned = (inspectorPinned, callback) => {
+        console.log("EditorContext setInspectorPinned");
         this.setState({inspectorPinned}, callback);
     };
 
     setInspectorWidth = (inspectorWidth, callback) => {
+        console.log("EditorContext setInspectorWidth");
         this.setState({inspectorWidth}, callback);
     };
 
     setDevicePixelRatio = (devicePixelRatio, callback) => {
+        console.log("EditorContext setDevicePixelRatio");
         this.setState({devicePixelRatio}, callback);
     };
 
     setAllComponentData = (allComponentData, callback) => {
+        console.log("EditorContext setAllComponentData");
         this.setState({allComponentData}, callback);
     };
 
@@ -396,20 +413,24 @@ export default class EditorContextProvider extends React.Component {
 
         rightMenus[menuName].state = rightMenus[menuName].toggle(false, state);
 
+        console.log("EditorContext toggleRightMenu");
         this.setState({rightMenus: {...rightMenus}});
     };
 
     setPageSizeWidth = (width) => {
         this.state.editor.rootLayoutRef.current.setPageSizeWidth(width);
         this.state.editor.breakpointmanager.setWindowWidth(width);
+        console.log("EditorContext setPageSizeWidth");
         this.setState({pageSize: width});
     };
 
     setPageSize = (pageSize) => {
+        console.log("EditorContext setPageSize");
         this.setState({pageSize});
     };
 
     setRightMenus = (rightMenus, callback) => {
+        console.log("EditorContext setRightMenus");
         this.setState({rightMenus}, callback);
     };
 

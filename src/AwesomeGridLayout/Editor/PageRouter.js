@@ -21,20 +21,11 @@ class PageRouterComponent extends React.Component {
 
     componentDidMount () {
         this.mounted = true;
-        this.props.history.listen((newLocation, action) => {
-            console.log("listen", newLocation, action);
-            if (action === "PUSH" && this.oldPath) {
-                this.oldPath = undefined;
-                this.props.history.push({
-                    pathname: this.oldPath,
-                });
+        window.onpopstate = ()=> {
+            if(this.mounted) {
+                console.log("Back")
             }
-            // } else {
-            //     // If a "POP" action event occurs,
-            //     // Send user back to the originating location
-            //     history.go(1);
-            // }
-        });
+        }
     }
 
     componentWillUnmount () {

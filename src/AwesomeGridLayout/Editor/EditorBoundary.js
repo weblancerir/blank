@@ -323,6 +323,7 @@ export default class EditorBoundary extends React.Component{
         if (this.rootLayoutRef.current)
             width = this.rootLayoutRef.current.getSize(false).width;
 
+        console.log("EditorBoundary onBreakpointChange");
         this.onPageResize(width, this.rootLayoutRef.current);
     };
 
@@ -403,6 +404,7 @@ export default class EditorBoundary extends React.Component{
         document.documentElement.style.setProperty('--vw-ratio', width / window.innerWidth);
 
         if (this.context.production) {
+            console.log("EditorBoundary handleResize");
             this.onPageResize(width);
         }
     }

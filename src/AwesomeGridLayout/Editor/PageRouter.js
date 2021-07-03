@@ -91,6 +91,10 @@ class PageRouterComponent extends React.Component {
             />
         }
 
+        if (`/${pageName.toLowerCase()}` !== this.props.location) {
+
+        }
+
         return (
             <Switch>
                 {

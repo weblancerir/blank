@@ -15,6 +15,7 @@ export default class PageView extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log("PageView constructor");
     }
 
     componentDidMount () {
@@ -55,7 +56,7 @@ export default class PageView extends React.Component {
                             this.props.rootLayoutRef.current.onSelect(true);
                         }}
                     />
-                    {/*{this.props.children}*/}
+
                     <PageRouter>
                         {this.props.children}
                     </PageRouter>

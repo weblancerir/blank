@@ -575,14 +575,14 @@ export default class EditorBoundary extends React.Component{
             this.context.production ? "PageBaseWhiteBackgroundHeightProduction" : "PageBaseWhiteBackgroundHeightEditor",
         );
         if (!this.state.isDashboard) {
-            if (this.context.pageData) {
+            // if (this.context.pageData) {
                 return (
                     <div className="EditorBoundaryRoot" onContextMenu={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
                     }}>
                         {
-                            !this.isPreview() && !this.isProduction() &&
+                            this.context.pageData && !this.isPreview() && !this.isProduction() &&
                             <div className="EditorBoundaryHeader">
                                 <EditorHeader
                                     onAddComponentClick={this.toggleAddComponent}
@@ -594,7 +594,7 @@ export default class EditorBoundary extends React.Component{
                             </div>
                         }
                         {
-                            this.isPreview() && !this.isProduction() &&
+                            this.context.pageData && this.isPreview() && !this.isProduction() &&
                             <div className="EditorBoundaryHeader">
                                 <PreviewHeader
                                     onAddComponentClick={this.toggleAddComponent}
@@ -607,7 +607,7 @@ export default class EditorBoundary extends React.Component{
                         }
                         <div className="EditorBoundaryContent">
                             {
-                                !this.isPreview() && !this.isProduction() &&
+                                this.context.pageData && !this.isPreview() && !this.isProduction() &&
                                 <>
                                     <AdjustmentGrid
                                         ref={this.gridEditorRef}
@@ -631,46 +631,49 @@ export default class EditorBoundary extends React.Component{
                             }
 
                             {
-                                this.context.pageData &&
                                 <PageView
                                     onScrollBoundary={this.onScrollBoundary}
                                     rootLayoutRef={this.rootLayoutRef}
                                 >
-                                    <div className={borderClassess} style={{
-                                        marginTop: this.context.production? 0 : `${8*this.context.zoomScale}vh`
-                                    }}>
-                                        <PageBase
-                                            key={this.context.pageData.props.pageId}
-                                            id="page"
-                                            aglRef={this.rootLayoutRef}
-                                            viewRef={this.rootLayoutRef}
-                                            breakpointmanager={this.breakpointmanager}
-                                            undoredo={this.undoredo}
-                                            dragdrop={this.dragdrop}
-                                            select={this.select}
-                                            snap={this.snap}
-                                            input={this.inputManager}
-                                            idMan={this.idMan}
-                                            gridLine={this.gridLine}
-                                            gridEditorRef={this.gridEditorRef}
-                                            anchorMan={this.anchorMan}
-                                            copyMan={this.copyMan}
-                                            editorData={this.editorData}
-                                            onPageResize={this.onPageResize}
-                                            onPageResizeStart={this.onPageResizeStart}
-                                            onPageResizeStop={this.onPageResizeStop}
-                                            editor={!this.isPreview() && this}
-                                            devicePixelRatio={this.state.devicePixelRatio}
-                                            {...this.context.pageData.props}
-                                            pageSize={this.context.pageSize}
-                                            noScroll={this.state.noScroll}
-                                        />
-                                    </div>
+                                    {
+                                        this.context.pageData &&
+                                        <div className={borderClassess} style={{
+                                            marginTop: this.context.production? 0 : `${8*this.context.zoomScale}vh`
+                                        }}
+                                        >
+                                            <PageBase
+                                                key={this.context.pageData.props.pageId}
+                                                id="page"
+                                                aglRef={this.rootLayoutRef}
+                                                viewRef={this.rootLayoutRef}
+                                                breakpointmanager={this.breakpointmanager}
+                                                undoredo={this.undoredo}
+                                                dragdrop={this.dragdrop}
+                                                select={this.select}
+                                                snap={this.snap}
+                                                input={this.inputManager}
+                                                idMan={this.idMan}
+                                                gridLine={this.gridLine}
+                                                gridEditorRef={this.gridEditorRef}
+                                                anchorMan={this.anchorMan}
+                                                copyMan={this.copyMan}
+                                                editorData={this.editorData}
+                                                onPageResize={this.onPageResize}
+                                                onPageResizeStart={this.onPageResizeStart}
+                                                onPageResizeStop={this.onPageResizeStop}
+                                                editor={!this.isPreview() && this}
+                                                devicePixelRatio={this.state.devicePixelRatio}
+                                                {...this.context.pageData.props}
+                                                pageSize={this.context.pageSize}
+                                                noScroll={this.state.noScroll}
+                                            />
+                                        </div>
+                                    }
                                 </PageView>
                             }
 
                             {
-                                !this.isPreview() && !this.isProduction() &&
+                                this.context.pageData && !this.isPreview() && !this.isProduction() &&
                                 <>
                                     {
                                         !this.context.pageData &&
@@ -751,7 +754,7 @@ export default class EditorBoundary extends React.Component{
                         </div>
                     </div>
                 )
-            }
+            // }
         }
         else
         {

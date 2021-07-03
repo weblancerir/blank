@@ -13,6 +13,9 @@ class PageRouterComponent extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.firstLoad = true;
+
         console.log("PageRouterComponent constructor");
     }
 
@@ -35,25 +38,51 @@ class PageRouterComponent extends React.Component {
     }
 
     isPageChanged = () => {
-        let {pageData} = this.context;
+        let {pageData, siteData} = this.context;
         let currentPath = this.props.location.pathname;
-        let oldPath = `/${pageData.props.pageName.toLowerCase()}`;
 
-        let changed = (oldPath !== currentPath.toLowerCase());
+        if (this.firstLoad) {
+            this.firstLoad = false;
+
+            let page = Object.values(siteData.allPages).find(pageData => {
+                return pageData.props.pageId;
+            });
+            if (!page)
+                page = getHomePage(siteData);
+
+            window.requestAnimationFrame(() => {
+                this.context.setPageData(page.props.pageId);
+            })
+
+            return {
+                changed: true,
+                newPath: currentPath
+            }
+        }
+
+        let newPath = `/${pageData.props.pageName.toLowerCase()}`;
+
+        let changed = (newPath !== currentPath.toLowerCase());
 
         if (changed)
-            this.props.history.push(oldPath);
+            this.props.history.push(newPath);
 
-        return changed
+        return {changed, newPath}
     }
 
     render () {
         let {siteData, pageData} = this.context;
-        console.log("RouterPath", this.props.location.pathname);
 
-        if (this.isPageChanged()) {
+        if (!pageData)
+            return null;
+
+        console.log("RouterPath", this.props.location.pathname, pageData.props.pageName);
+
+        let {changed, newPath} = this.isPageChanged();
+        if (changed) {
+            console.log("RouterPath changed", newPath);
             return <Redirect to={{
-                pathname: `/${pageData.props.pageName}`,
+                pathname: newPath,
                 // state: { from: this.props.location.pathname }
             }}
             />
@@ -70,12 +99,6 @@ class PageRouterComponent extends React.Component {
                         )
                     })
                 }
-                {/*<Route path={`/Test`} render={(props) => {*/}
-                {/*    return (*/}
-                {/*        this.props.children*/}
-                {/*    )*/}
-                {/*}}>*/}
-                {/*</Route>*/}
 
                 <Route path={`/`}>
                     <Redirect

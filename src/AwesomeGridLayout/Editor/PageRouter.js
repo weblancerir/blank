@@ -9,7 +9,7 @@ import {BrowserRouter as Router, withRouter} from 'react-router-dom';
 import {getHomePage} from "../MenuManager/MenuManager";
 
 class PageRouterComponent extends React.Component {
-    static contextType = EditorContext;
+    // static contextType = EditorContext;
 
     constructor(props) {
         super(props);
@@ -30,9 +30,10 @@ class PageRouterComponent extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         console.log("PageRouterComponent shouldComponentUpdate", this.props.location.pathname,
-            this.props.location.search, nextProps.location.pathname, nextProps.location.search);
+            this.props.location.search, this.props.pageName, nextProps.pageName);
         if (this.props.location.pathname !== nextProps.location.pathname ||
-            this.props.location.search !== nextProps.location.search)
+            this.props.location.search !== nextProps.location.search ||
+            this.props.pageName !== nextProps.pageName)
         {
             console.log("PageRouterComponent shouldComponentUpdate", true);
             return true;
@@ -47,7 +48,7 @@ class PageRouterComponent extends React.Component {
     }
 
     isPageChanged = () => {
-        let {pageData, siteData} = this.context;
+        let {pageData, siteData} = this.props;
         console.log("Router isPageChanged", this.props.location);
         let currentPath = (this.props.location.location || this.props.location).pathname;
 
@@ -62,7 +63,7 @@ class PageRouterComponent extends React.Component {
 
             console.log("Router firstLoad");
 
-            this.context.setPageData(page.props.pageId, true, () => {
+            this.props.setPageData(page.props.pageId, true, () => {
                 console.log("Router firstLoad forceUpdate");
                 this.forceUpdate();
             });
@@ -89,7 +90,8 @@ class PageRouterComponent extends React.Component {
     }
 
     render () {
-        let {siteData, pageData} = this.context;
+        // let {siteData, pageData} = this.context;
+        let {siteData, pageData} = this.props;
 
         if (!pageData)
             return null;

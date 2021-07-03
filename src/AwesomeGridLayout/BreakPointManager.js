@@ -17,14 +17,23 @@ export default class BreakPointManager {
         this.onBreakpointChange = onBreakpointChange || (() => {});
         this.onZoomLevelChange = onZoomLevelChange || (() => {});
         this.onHeightChange = onHeightChange || (() => {});
+        this.onResize = onResize;
 
-        window.addEventListener("resize", onResize);
+        if (onResize)
+            window.addEventListener("resize", this.onResize);
         if (onBreakpointChange)
             window.addEventListener("resize", this.onWindowResize);
         if (onZoomLevelChange)
             window.addEventListener("resize", this.onDevicePixelRatioChange);
         if (onHeightChange)
             window.addEventListener("resize", this.onHeightResize);
+    }
+
+    dispose = () => {
+        window.removeEventListener("resize", this.onResize);
+        window.removeEventListener("resize", this.onWindowResize);
+        window.removeEventListener("resize", this.onDevicePixelRatioChange);
+        window.removeEventListener("resize", this.onHeightResize);
     }
 
     fixBreakpointRules = (breakpoints) => {

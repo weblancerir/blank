@@ -270,6 +270,9 @@ export default class EditorBoundary extends React.Component{
     };
 
     setBreakpoints = (breakpoints) => {
+        if (this.breakpointmanager)
+            this.breakpointmanager.dispose();
+
         this.breakpointmanager = new BreakPointManager(breakpoints, this,
             undefined, this.onZoomLevelChange,
             this.onHeightChange, this.onResize);
@@ -398,12 +401,14 @@ export default class EditorBoundary extends React.Component{
         if (!this.rootLayoutRef.current)
             return;
 
+        let fromOnPageResize = !!width;
+
         if (!width)
             width = this.rootLayoutRef.current.getSize(false, true).width;
 
         document.documentElement.style.setProperty('--vw-ratio', width / window.innerWidth);
 
-        if (this.context.production) {
+        if (this.context.production && fromOnPageResize) {
             console.log("EditorBoundary handleResize");
             this.onPageResize(width);
         }

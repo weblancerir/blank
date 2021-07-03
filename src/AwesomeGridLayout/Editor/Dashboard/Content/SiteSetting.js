@@ -179,12 +179,9 @@ export default class SiteSetting extends React.Component {
                 FileManagerHelper.fullUpload(
                     this.context, "favIcons/favIcon" + postHash, file, () => {
 
-                        console.log("uploadFavIcon success")
-
                         let {siteData, website} = this.context;
 
                         siteData.setting.favIconLink = `${baseUrl}/${basePrefix}/favIcons/favIcon` + postHash;
-                        console.log("favIconLink",  siteData.setting.favIconLink);
 
                         this.context.postMessageToHolder(
                             {

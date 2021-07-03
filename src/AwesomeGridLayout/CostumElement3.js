@@ -4,7 +4,6 @@ import CustomElement2 from "./CostumElement2";
 
 export default class CustomElement3 extends AwesomeGridLayout{
     onElementResize = (newSize) => {
-        // console.log("OnElementResize", newSize);
     };
 
     getChilds = () => {

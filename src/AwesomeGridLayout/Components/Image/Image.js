@@ -89,7 +89,6 @@ export default class Image extends AGLComponent{
             }});
         }
 
-        console.log("onImageLoaded !!!")
         this.crop((cropping) => {
             if (!cropping && !this.context.isEditor()) {
                 if (!this.animated) {
@@ -166,7 +165,6 @@ export default class Image extends AGLComponent{
                             select: "single"
                         },
                         (filesData) => {
-                            console.log("Image FIle Pick OnDone", filesData);
                             let fileData = filesData[0];
                             setTempData("cropData", undefined, this.getAgl(), true);
                             this.onDesignChange('design.imageData.focalPoint', {x: 50, y: 50});
@@ -241,7 +239,6 @@ export default class Image extends AGLComponent{
                     this.context.showLinkGenerator(
                         linkData,
                         (linkData) => {
-                            console.log("Image Link OnDone", linkData)
                             setTempData("linkData", linkData, this.getAgl(), true);
                         }
                     );
@@ -367,7 +364,6 @@ export default class Image extends AGLComponent{
                 imageStyle.height = "auto";
                 imageStyle.width = "100%";
             } else {
-                console.log("imageExactDimension 2")
                 // Horizontal
                 imageStyle.height = "100%";
                 imageStyle.width = "auto";
@@ -476,7 +472,6 @@ export default class Image extends AGLComponent{
     };
 
     onMouseOver = () => {
-        console.log("onMouseOver")
         if (this.context.isEditor())
             return;
 

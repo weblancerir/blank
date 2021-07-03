@@ -23,9 +23,6 @@ export default class AGLWrapper extends React.Component{
             initGriddata(griddata, this.props.breakpointmanager);
         }
 
-        if (this.props.id === "page")
-            console.log("AGLWrapper", griddata.bpData.laptop.grid);
-
         return (
             <AwesomeGridLayout2
                 className={this.props.className}

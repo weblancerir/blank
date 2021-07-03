@@ -59,7 +59,6 @@ export function getSelectedLinkData (doc) {
 export function getSelectedLinkId (doc) {
     let selection = doc.getSelection();
 
-    console.log("getSelectedLinkId");
     if (selection.rangeCount < 1)
         return false;
 
@@ -75,7 +74,6 @@ export function getSelectedLinkId (doc) {
             node = node.parentNode;
         }
     });
-    console.log("getSelectedLinkId", "return false");
     return linkId;
 }
 

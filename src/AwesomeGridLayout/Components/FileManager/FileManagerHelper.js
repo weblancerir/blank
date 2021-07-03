@@ -11,7 +11,6 @@ FileManagerHelper.list = (editorContext, prefix, continuationToken, onSuccess, o
         method: "post"
     },
     ({result}) => {
-        console.log("FileManagerHelper.list callback", result);
         if (result.success)
             onSuccess(result.data, prefix);
         else
@@ -20,7 +19,6 @@ FileManagerHelper.list = (editorContext, prefix, continuationToken, onSuccess, o
 }
 
 FileManagerHelper.upload = (editorContext, objectPath, file, onSuccess, onError) => {
-    console.log("FileManagerHelper.upload 1" , file.size / 1024 / 1024)
     editorContext.postMessageToHolder(
         {
             type: "Server",
@@ -29,7 +27,6 @@ FileManagerHelper.upload = (editorContext, objectPath, file, onSuccess, onError)
             method: "post"
         },
         ({result}) => {
-            console.log("FileManagerHelper.list callback", result);
             if (result.success)
                 onSuccess(result.data);
             else
@@ -53,7 +50,6 @@ FileManagerHelper.fullUpload = (editorContext, objectPath, file, onSuccess, onUp
             cancelToken: cancelTokenSource.token
         })
             .then((response) => {
-                console.log("upload response", response);
                 onSuccess();
             }).then(() => {
             console.log("upload finish");
@@ -78,7 +74,6 @@ FileManagerHelper.folder = (editorContext, folderPath, onSuccess, onError) => {
             method: "post"
         },
         ({result}) => {
-            console.log("FileManagerHelper.list callback", result);
             if (result.success)
                 onSuccess(result.data);
             else
@@ -95,7 +90,6 @@ FileManagerHelper.usage = (editorContext, onSuccess, onError) => {
             method: "post"
         },
         ({result}) => {
-            console.log("FileManagerHelper.list callback", result);
             if (result.success)
                 onSuccess(result.data);
             else
@@ -119,7 +113,6 @@ FileManagerHelper.delete = (editorContext, deleteObjects, onSuccess, onError) =>
             method: "post"
         },
         ({result}) => {
-            console.log("FileManagerHelper.list callback", result);
             if (result.success)
                 onSuccess(result.data);
             else
@@ -136,7 +129,6 @@ FileManagerHelper.storage = (editorContext, onSuccess, onError) => {
             method: "get"
         },
         ({result}) => {
-            console.log("FileManagerHelper.list callback", result);
             if (result.success)
                 onSuccess(result.data);
             else

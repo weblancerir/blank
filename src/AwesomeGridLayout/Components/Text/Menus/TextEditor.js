@@ -68,7 +68,6 @@ export default class TextEditor extends React.Component {
 
             // set underline
             const decoration = window.getComputedStyle(selection.anchorNode.parentElement, null).getPropertyValue('text-decoration');
-            console.log("decoration", decoration)
             let underline = (decoration.includes("underline"));
 
             // set font name
@@ -102,7 +101,6 @@ export default class TextEditor extends React.Component {
         }
 
         this.mounted = true;
-        console.log("TextEditorIFrame", document.getElementById("TextEditorIFrame"))
         return (
             <>
             <Popper
@@ -248,7 +246,6 @@ export default class TextEditor extends React.Component {
                                 textStaticData={textStaticData}
                                 textDesignData={textDesignData}
                                 onChange={(value) => {
-                                    console.log("this.isTextSelcted()", this.isTextSelcted())
                                     if (this.isTextSelcted()) {
                                         this.props.doc.execCommand('fontSize', false, 1);
 
@@ -406,7 +403,6 @@ export default class TextEditor extends React.Component {
                                     this.context.showLinkGenerator(
                                         getSelectedLinkData(this.props.doc),
                                         (linkData) => {
-                                            console.log("OnDone", linkData)
                                             addLinkData(this.props.doc, linkData);
                                             this.refreshState();
                                             this.props.inputWrapperRef.current.onInput();
@@ -489,7 +485,6 @@ export default class TextEditor extends React.Component {
                             <TextEditorButton
                                 onClick={(e) => {
                                     // let sel = this.props.doc.getSelection();
-                                    // console.log("Selected Lines", getLineSelected(sel))
                                     if (this.getTextDir() === "ltr")
                                         textStaticData.dir = "rtl";
                                     else

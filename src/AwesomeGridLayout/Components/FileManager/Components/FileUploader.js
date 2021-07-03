@@ -77,7 +77,6 @@ export default class FileUploader extends React.Component {
             `${currentUploading.prefix}/${currentUploading.file.name}`,
             currentUploading.file,
             (signUrl) => {
-                console.log("upload success", signUrl);
                 this.upload(signUrl);
             },
             (errorMessage) => {
@@ -108,9 +107,7 @@ export default class FileUploader extends React.Component {
             cancelToken: cancelTokenSource.token
         })
         .then((response) => {
-            console.log("upload response", response)
             this.props.onSingleFileUploaded(currentUploading);
-            console.log("upload response2")
             this.next();
         }).then(() => {
             console.log("upload finish");
@@ -123,7 +120,6 @@ export default class FileUploader extends React.Component {
     onUploadProgress = (e) => {
         let {currentUploading} = this.state;
         currentUploading.progress = Math.round((100 * e.loaded) / e.total);
-        console.log("upload progress", currentUploading.progress)
         this.setState({currentUploading});
     }
 
@@ -164,7 +160,6 @@ export default class FileUploader extends React.Component {
 
     render () {
         let {currentUploading, files} = this.state;
-        console.log("files", files)
         return (
             <>
                 <div className="FileUploaderRoot">

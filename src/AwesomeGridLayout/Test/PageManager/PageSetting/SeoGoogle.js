@@ -18,7 +18,6 @@ export default class SeoGoogle extends React.Component {
         let {pageData} = this.props;
 
         value = value || e.target.value;
-        console.log("onChangeSeoSetting", value, param);
         if (param === "endUrl") {
             if (!this.newEndUrl)
                 return;
@@ -27,7 +26,6 @@ export default class SeoGoogle extends React.Component {
             let siteData = this.context.siteData;
             let same = Object.values(siteData.allPages).find(p => p.props.pageSetting.seoGoogle.endUrl === value);
             if (same) {
-                console.log("onChangeSeoSetting2");
                 this.setState({endUrlError: true});
                 delete this.newEndUrl;
                 return;

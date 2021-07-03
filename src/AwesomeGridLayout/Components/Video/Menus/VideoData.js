@@ -45,7 +45,6 @@ export default class VideoData extends React.Component {
         let design = getCompositeDesignData(this.props.item);
         let options = [];
 
-        console.log("Video Source", design.videoData)
         options.push({
             key: "Video Source",
             render: <VideoSource

@@ -13,7 +13,6 @@ export default class LinkedTag extends React.Component {
     }
 
     // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     console.log("LinkedTag componentDidUpdate", this.linkRef);
     //     this.prepareLink();
     // }
 
@@ -29,7 +28,6 @@ export default class LinkedTag extends React.Component {
         let {linkData} = this.props;
 
         if (this.linkRef && linkData && linkData.type !== "None") {
-            console.log("LinkedTag prepareLink", this.linkRef);
             prepareLink(this.linkRef, this.context.preview, this.context.production, this.context, linkData);
         }
     }

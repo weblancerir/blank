@@ -162,7 +162,6 @@ export default class TextWrapper extends React.PureComponent {
                             </>}
                             documentRef={(doc) => {
                                 this.doc = doc;
-                                console.log("Listen !!!!!!!")
                                 this.doc.addEventListener("click", (e) => {
                                     this.onIframeTextClicked(e);
                                 })

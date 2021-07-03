@@ -42,7 +42,6 @@ export default class FileManager extends React.Component {
         this.setState({list: undefined, selectedFile: undefined, selectedFiles: []});
 
         this.loadingPrefix = this.getCurrentPrefix();
-        console.log("loadRoute", this.loadingPrefix)
         FileManagerHelper.list(this.context, this.loadingPrefix, continuationToken, (list, prefix) => {
             if (this.loadingPrefix !== prefix)
                 return;
@@ -79,7 +78,6 @@ export default class FileManager extends React.Component {
         if (options.type) {
             route.push(options.type);
         }
-        console.log("getFirstRoute", route)
         return route;
     }
 
@@ -317,14 +315,11 @@ export default class FileManager extends React.Component {
             Key: `${list.basePrefix}/${fileData.prefix}/${fileData.file.name}`
         })
 
-        console.log("addFileManually 4");
         this.forceUpdate();
-        console.log("addFileManually 5");
     }
 
     loadUserUsage = () => {
         FileManagerHelper.usage(this.context, (usageData) => {
-            console.log("loadUserUsage", usageData);
             this.setState({usageData})
         }, (errorMessage) => {
             this.setState({errorMessage});

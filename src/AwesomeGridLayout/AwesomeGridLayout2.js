@@ -251,8 +251,6 @@ export default class AwesomeGridLayout2 extends React.Component{
         this.setStyle(style, undefined,
             this.props.breakpointmanager.getHighestBpName());
 
-        if (this.props.isPage) console.log("initLayout", this.getCompositeFromData("grid"), this.props.defaultGrid);
-
         this.setGrid(this.getCompositeFromData("grid") || this.props.defaultGrid, undefined,
             this.props.breakpointmanager.getHighestBpName());
     };
@@ -2873,7 +2871,6 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         this.setDataInBreakpoint("grid", grid, undefined, breakpointName);
 
-        if (this.props.id === "page") console.log("WGL setGrid", grid, this.props.griddata.bpData.laptop.grid);
         this.setState({grid: grid}, () => {
             if (this.props.gridLine.hasGridLine(this.props.id)) {
                 let size = this.getSize(false);
@@ -3419,9 +3416,6 @@ export default class AwesomeGridLayout2 extends React.Component{
         let compositeStyle = this.getCompositeFromData("style");
         // let grid = this.getCompositeFromData("grid");
         let overflowData = this.getCompositeFromData("overflowData");
-        if (isPage) {
-            console.log("Page Render", this.props.griddata.bpData.laptop.grid);
-        }
         let anchor = this.getFromTempData("anchor");
         let customStyle = this.getFromTempData("customStyle") || {};
         let selectAsParent = this.props.gridLine.hasGridLine(this.props.id, "B") !== undefined;

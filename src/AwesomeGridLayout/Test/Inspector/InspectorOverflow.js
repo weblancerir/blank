@@ -47,7 +47,6 @@ export default class InspectorOverflow extends React.Component {
             let newOverflowData = cloneObject(thisBpOverflowData || {});
             newOverflowData.state = 'scroll';
             newOverflowData.overflowY = 'scroll';
-            console.log("onChangeState", JSON.stringify(newOverflowData));
             setDataInBreakpoint("overflowData", newOverflowData, item, true, undefined, true);
             return;
         }

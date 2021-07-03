@@ -71,8 +71,6 @@ export default class ImageDesign extends React.Component {
         let design = getCompositeDesignData(this.props.item);
         let options = [];
 
-        console.log("design", design)
-
         options.push({
             key: "Overlay Color & Opacity",
             render: <Background

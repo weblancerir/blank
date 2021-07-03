@@ -23,7 +23,6 @@ export default class MenuTree extends React.Component {
     }
 
     onDragStart = (e, mi) => {
-        console.log("onDragStart", mi.name);
         this.draggingMenuItem = mi;
     }
 
@@ -35,7 +34,6 @@ export default class MenuTree extends React.Component {
         e.preventDefault();
 
         if (mi !== this.draggingMenuItem) {
-            console.log("onDragOver", mi.name);
         }
     }
 
@@ -47,7 +45,6 @@ export default class MenuTree extends React.Component {
         e.target.click();
 
         if (mi !== this.draggingMenuItem) {
-            console.log("onDrop", mi.name, this.draggingMenuItem);
 
             changeMenuItemParent(menu, this.draggingMenuItem, mi.id);
             this.forceUpdate();
@@ -58,7 +55,6 @@ export default class MenuTree extends React.Component {
         if (!this.draggingMenuItem)
             return;
 
-        console.log("onOrderOver", parentMI.id);
         e.stopPropagation();
         e.preventDefault();
     }
@@ -69,7 +65,6 @@ export default class MenuTree extends React.Component {
 
         let {menu} = this.props;
 
-        console.log("onOrderDrop", parentMI.id);
         e.target.click();
 
         if (findParent(menu, this.draggingMenuItem.id) === parentMI) {
@@ -129,7 +124,6 @@ export default class MenuTree extends React.Component {
 
                             <IconButton
                                 onClick={(e) => {
-                                    console.log("showLinkGenerator", mi)
                                     this.context.showLinkGenerator(mi.linkData, (linkData) => {
                                         mi.linkData = linkData;
                                         this.forceUpdate();

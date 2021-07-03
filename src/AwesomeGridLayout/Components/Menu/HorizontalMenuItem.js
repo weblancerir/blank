@@ -59,7 +59,6 @@ export default class HorizontalMenuItem extends React.Component {
         let {menuItem} = this.props;
         let state = this.props.state || this.state.state;
 
-        console.log("getMenuItemStyle", this.context.pageData.props,menuItem.linkData )
         if (!this.props.state &&
             menuItem.linkData && menuItem.linkData.type === "Page" &&
             menuItem.linkData.data.pageId === this.context.pageData.props.pageId

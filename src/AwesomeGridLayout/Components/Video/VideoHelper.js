@@ -1,7 +1,6 @@
 import React from "react";
 
 export function getVideoObject (videoType, data) {
-    console.log("getVideoObject", data)
     switch (videoType.toLowerCase()) {
         case "aparat":
             return(

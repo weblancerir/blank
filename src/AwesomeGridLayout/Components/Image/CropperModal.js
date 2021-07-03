@@ -23,7 +23,6 @@ export default class CropperModal extends React.Component {
     }
 
     onCropComplete = (croppedArea, croppedAreaPixels) => {
-        console.log(croppedArea, croppedAreaPixels)
         this.setState({croppedArea, croppedAreaPixels})
     }
 

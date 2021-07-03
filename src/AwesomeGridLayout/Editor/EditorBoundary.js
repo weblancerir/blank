@@ -124,7 +124,6 @@ export default class EditorBoundary extends React.Component{
             if ( key === 66 && ctrl ) {
                 e.preventDefault();
                 console.log("ctrl + B");
-                console.log("isInMenu", this.context.isInMenu());
             }
         });
 
@@ -195,7 +194,6 @@ export default class EditorBoundary extends React.Component{
                     func: "onEditorMounted",
                     inputs: []
                 }, (data) => {
-                    console.log("componentDidMount initFromHolder", data);
                     this.initFromHolder(data.result);
                 });
             } else {
@@ -222,7 +220,6 @@ export default class EditorBoundary extends React.Component{
     };
 
     postMessage = (data, callback) => {
-        console.log("EditorBoundry.postMessage");
         this.iFrameCommunicator.post(data, callback);
     };
 
@@ -287,13 +284,11 @@ export default class EditorBoundary extends React.Component{
             return;
         }
 
-        console.log("onPageChange");
         this.rootLayoutRef.current.onSelect(true, () => {
             this.idMan.clear();
             this.snap.clearSnaps();
 
             this.context.setPageData(undefined ,force, () => {
-                console.log("onPageChange2");
                 this.context.setPageData(pageId);
             });
         });
@@ -565,7 +560,6 @@ export default class EditorBoundary extends React.Component{
     }
 
     render() {
-        // TODO if this.context.siteData not loaded, show loading component
         console.log("EditorBoundry Render");
 
         let borderClassess = classNames(
@@ -753,7 +747,6 @@ export default class EditorBoundary extends React.Component{
         }
         else
         {
-            console.log("Dashboard2 ");
             return <Dashboard/>;
         }
 

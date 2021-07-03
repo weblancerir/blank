@@ -76,8 +76,6 @@ export default class InputWrapper extends React.Component {
 
             let html = getSelectionHtmlRemoveProperty(this.props.doc, this.props.iframeNode.contentWindow);
 
-            console.log("html", html, text)
-
             range.deleteContents();
 
             range.setStartAfter(line);
@@ -88,11 +86,9 @@ export default class InputWrapper extends React.Component {
             // this.props.doc.execCommand('selectAll');
                 // let text = getSelectionText(this.props.doc, this.props.iframeNode.contentWindow);
 
-            console.log("text", this.textareaRef.current.innerText)
             if (!this.textareaRef.current.innerText.trim()) {
                 this.textareaRef.current.innerHTML = '';
 
-                console.log("this.props.tag", this.props.tag)
                 let div = this.props.doc.createElement(this.props.tag);
                 div.setAttribute("title", "line");
                 div.setAttribute("style", JSToCSS({...getInheritTextStyle(), ...{margin: "0px"}}))

@@ -268,7 +268,6 @@ export default class Permissions extends React.Component {
 
                                 <MenuItem dense onClick={(e) => {
                                     // TODO connect to member manager
-                                    console.log("Soon")
                                 }}
                                 >
                                     <span className="PermissionsNewRole">

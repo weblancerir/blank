@@ -51,7 +51,6 @@ export default class PageBase extends AGLComponent {
         let grid = this.props.breakpointmanager
             .getCompositeFromData(this.props.griddata, "grid", undefined);
         if (grid) {
-            console.log("initDataFromPageData", grid, this.props.griddata.bpData.laptop.grid);
             this.gridX = grid.x;
             this.gridY = grid.y;
             this.gridTemplateRows = grid.gridTemplateRows;

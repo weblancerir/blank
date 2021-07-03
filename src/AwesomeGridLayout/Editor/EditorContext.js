@@ -173,7 +173,6 @@ export default class EditorContextProvider extends React.Component {
         let {siteData} = this.state;
         let theme = siteData.theme;
         let colorsCSS = [];
-        console.log("calculateColorCSS", doc, theme.Colors.items);
         Object.values(theme.Colors.items).forEach(item => {
             colorKeys.forEach(key => {
                 let id = this.getThemeColorClass({
@@ -260,7 +259,6 @@ export default class EditorContextProvider extends React.Component {
     };
 
     setSiteData = (siteData, callback) => {
-        console.log("setSiteData", siteData)
         this.setState({siteData}, () => {
             this.postSiteData();
             resolveDefaultMenu(siteData);
@@ -316,7 +314,6 @@ export default class EditorContextProvider extends React.Component {
             this.state.editor.idMan.clear();
             this.state.editor.snap.clearSnaps();
 
-            console.log("setPageData", 62)
             this.state.setPageData(undefined, false , () => {
                 let pageData = this.state.siteData.allPages[pageId];
 
@@ -324,7 +321,6 @@ export default class EditorContextProvider extends React.Component {
                     pageData.breakpoints = BreakPointManager.getDefault();
                 }
 
-                console.log("setPageData", 72)
                 this.state.editor.setBreakpoints(pageData.breakpoints);
                 this.setState({pageData}, callback);
             });
@@ -336,8 +332,6 @@ export default class EditorContextProvider extends React.Component {
             this.update();
             return;
         }
-
-        console.log("newBpData", newBpData.name, prevBpData.name)
 
         let changeGriddata = (item, childData) => {
             if (!item || !item.mounted)

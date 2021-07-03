@@ -29,7 +29,6 @@ CSSManager.updateAll = () => {
     let cssRules = CSSManager.styleNode.sheet.cssRules;
     let allRules = [];
 
-    console.log("updateAll", cssRules.length);
     for (let i = 0; i < cssRules.length; i++) {
         let rule = cssRules[i];
         if (CSSManager.pendingUpdates[rule.selectorText]) {
@@ -42,7 +41,6 @@ CSSManager.updateAll = () => {
             allRules.push({cssText: rule.cssText});
         }
     }
-    console.log("updateAll allRules.length", allRules.length);
 
     Object.values(CSSManager.pendingUpdates).forEach(styleData => {
         allRules.push({
@@ -52,13 +50,9 @@ CSSManager.updateAll = () => {
 
     CSSManager.pendingUpdates = {};
 
-    console.log("allRules", allRules);
-
     let css = allRules.map(rule => {
         return rule.cssText;
     }).join(' ');
-
-    console.log("css", css);
 
     CSSManager.styleNode.innerHTML = "";
     if (CSSManager.styleNode.styleSheet) { // IE

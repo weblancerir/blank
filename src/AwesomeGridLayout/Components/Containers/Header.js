@@ -60,7 +60,6 @@ export default class Header extends AGLComponent{
     updateDesign = (compositeDesign) => {
         let fillColor;
 
-        console.log("updateDesign", compositeDesign.fillColor)
         if (compositeDesign.fillColor)
             fillColor = parseColor(compositeDesign.fillColor, compositeDesign.fillColor.alpha, this.context);
 

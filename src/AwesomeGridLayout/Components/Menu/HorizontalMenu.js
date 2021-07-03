@@ -35,8 +35,6 @@ export default class HorizontalMenu extends AGLComponent{
         this.ulId = getRandomLinkId(6);
         this.navId = getRandomLinkId(6);
         this.moreId = getRandomLinkId(6);
-
-        console.log("HorizontalMenu constructor");
     }
 
     componentDidMount() {
@@ -237,7 +235,6 @@ export default class HorizontalMenu extends AGLComponent{
         ulNode.style.visibility = "visible";
         // this.setState({ulVisibility: "visible"});
 
-        console.log("showItems")
         if (!this.fitting)
             this.lastSize = size;
     }, 200);
@@ -304,7 +301,6 @@ export default class HorizontalMenu extends AGLComponent{
 
                 childNodes.forEach(liNodeData => {
                     let newWidth = liNodeData.width * compRect.width / sum;
-                    console.log("SetNewWidth", newWidth, liNodeData.width, sum, compRect.width)
                     liNodeData.liNode.style["width"] = newWidth + "px";
                 });
 
@@ -313,7 +309,6 @@ export default class HorizontalMenu extends AGLComponent{
         }
         navNode.style["justify-content"] = menuData.justifyContent || "center";
 
-        console.log("fitMenuItems")
         this.showItems(runtimeStyle || compRect);
     }
 

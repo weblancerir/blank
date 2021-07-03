@@ -25,7 +25,6 @@ export default class EditorHeaderBreakpoints extends React.Component {
 
     onChangeTab = (editorContext) => (e, bpName) => {
         this.setState({tabValue: bpName});
-        console.log("bpName", bpName, editorContext.editor.breakpointmanager.current())
 
         if (editorContext.editor.breakpointmanager.current() === bpName)
             return;

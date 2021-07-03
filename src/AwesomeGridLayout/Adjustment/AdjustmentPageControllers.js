@@ -55,7 +55,6 @@ export default class AdjustmentPageControllers extends React.Component {
 
     render () {
         let {grid} = this.props;
-        console.log("grid render", grid);
         return (
                 [
                     new Array(this.getYCount() + 1).fill(0).map((a, index) => {

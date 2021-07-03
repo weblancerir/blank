@@ -23,15 +23,11 @@ export default class FontSizeSelector2 extends React.Component {
     }
 
     onFontSizeChange = (e, value, reason) => {
-        console.log("onFontSizeChange value reason", value, reason);
         if (reason === "input") {
-            console.log("onFontSizeChange input", value);
             this.setState({tempFontSize: value});
         } else if (reason === "select-option") {
-            console.log("onFontSizeChange select-option", value);
             this.setFontSize(value);
         } else if (reason === "enter") {
-            console.log("onFontSizeChange enter", value, this.getAllowableFontSize());
             if (this.getAllowableFontSize().includes(value))
                 this.setFontSize(value);
             else

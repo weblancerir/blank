@@ -39,7 +39,6 @@ export default class InspectorAnchor extends React.Component {
         let {item} = this.props;
         let anchor = item.getFromTempData("anchor");
         if (enable) {
-            console.log("onEnableAnchor", this.context);
             item.props.anchorMan.addAnchor(item.props.id.replace("comp_", ''), item, this.context.pageData);
         }
         else {

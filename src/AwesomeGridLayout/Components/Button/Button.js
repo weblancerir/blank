@@ -137,7 +137,6 @@ export default class Button extends AGLComponent{
                     this.context.showLinkGenerator(
                         linkData,
                         (linkData) => {
-                            console.log("Image Link OnDone", linkData)
                             setTempData("linkData", linkData, this.getAgl(), true);
                         }
                     );
@@ -172,7 +171,6 @@ export default class Button extends AGLComponent{
             data = getCompositeDesignData(this).normal;
 
         let textColor = data.textColor;
-        console.log("Button Text Color", textColor)
         if (textColor)
             textColor = parseColor(textColor, textColor.alpha, this.context);
 

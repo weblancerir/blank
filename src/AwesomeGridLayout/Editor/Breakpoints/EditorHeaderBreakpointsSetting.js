@@ -22,9 +22,7 @@ export default class EditorHeaderBreakpointsSetting extends React.Component {
     }
 
     clearEditMode = () => {
-        console.log("clearEditMode")
         Object.values(this.bpItemrRefs).forEach(bpItemRef => {
-            console.log("clearEditMode1", bpItemRef)
             if (bpItemRef.current)
                 bpItemRef.current.cancelEditMode();
         });

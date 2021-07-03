@@ -43,7 +43,6 @@ export default class SitePlans extends React.Component {
 
     loadUserUsage = () => {
         FileManagerHelper.usage(this.context, (usageData) => {
-            console.log("loadUserUsage", usageData);
             this.setState({usageData})
         }, (errorMessage) => {
             this.setState({errorMessage});

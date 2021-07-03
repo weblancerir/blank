@@ -19,7 +19,6 @@ export default class CopyManager{
         let key = e.which || e.keyCode; // keyCode detection
         let ctrl = e.ctrlKey ? e.ctrlKey : (key === 17); // ctrl detection
 
-        console.log("handleKeyCodeEvent", this.getContext().isInMenu())
         if (this.getContext().isInMenu())
             return;
 

@@ -417,7 +417,6 @@ export function copyDesign(item, fromAll) {
         });
     }
 
-    console.log("copyDesign", designDatas);
     if (designDatas.length > 0)
         item.props.breakpointmanager.copyDesign(designDatas, item);
 }
@@ -434,16 +433,13 @@ export function pasteDesign(item, fromUndoRedo) {
         }));
         item.props.undoredo.add((idMan) => {
             let item = idMan.getItem(itemId);
-            console.log(111);
             let temp = cloneObject(item.props.breakpointmanager.getCopyDesign().designDatas);
             let sourceItemTemp = item.props.breakpointmanager.getCopyDesign().sourceItem;
-            console.log(222);
             item.props.breakpointmanager.cloneDesignDatas = {
                 designDatas: copyDesign,
                 sourceItem: item
             };
             item.props.breakpointmanager.pasteDesign(item);
-            console.log(333);
             item.props.breakpointmanager.cloneDesignDatas = {
                 designDatas: temp,
                 sourceItem: sourceItemTemp
@@ -457,7 +453,6 @@ export function pasteDesign(item, fromUndoRedo) {
                 item.props.aglComponent.updateDesign(item.getCompositeFromData("design"));
 
             item.updateLayout();
-            console.log(444);
         }, (idMan) => {
             let item = idMan.getItem(itemId);
             allOldDesign.forEach(designData => {
@@ -687,7 +682,6 @@ export function removeStackFromAGL(stackAgl, childIds, fromUndoRedo) {
     removeChilds(sorted);
     /*sorted.forEach(item => {
         if (item && item.current) {
-            console.log("onChildDrop", item.current.props.id);
             item.current.props.parent.onChildLeave(item.current);
             newParent.onChildDrop(item.current);
         }
@@ -695,7 +689,6 @@ export function removeStackFromAGL(stackAgl, childIds, fromUndoRedo) {
 }
 
 export function createItem(parent, childData, fromUndoRedo, gridItemStyle, style, onChildMounted) {
-    console.log("createItem 1");
     childData.props = cloneObject(parent.getClearProps({...childData.props}, true));
     childData.zIndex = parent.getNextIndexData(0).lastZIndex + 1;
 
@@ -712,7 +705,6 @@ export function createItem(parent, childData, fromUndoRedo, gridItemStyle, style
 
     let child = parent.createChildByData(
         childData , DynamicComponents, undefined, (newItem) => {
-        console.log("createItem 2");
 
         newItem.onSelect(true);
 
@@ -1367,7 +1359,6 @@ export function getResizeDelta (degree, dir, delta) {
         finalDelta.left -= ((Dw - dxW) / 2);
     }
 
-    console.log("finalDelta", finalDelta, Dw, dyW, dxW);
     return finalDelta;
 }
 

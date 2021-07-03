@@ -28,8 +28,6 @@ export default class AGLComponent extends React.Component{
 
         componentData = assignData(componentData, cloneObject(this.props.data));
 
-        if (this.props.id === "page")
-            console.log("componentData1", componentData.bpData.grid);
         if (componentBpData) {
             let tempBpData = componentData.bpData;
             componentData.bpData = assignData(componentBpData, tempBpData);
@@ -43,8 +41,6 @@ export default class AGLComponent extends React.Component{
             componentData.bpData = assignData(componentData.bpData, componentStaticBpData);
         }
 
-        if (this.props.id === "page")
-            console.log("componentData2", componentData.bpData.grid);
         return componentData;
     };
 
@@ -61,8 +57,6 @@ export default class AGLComponent extends React.Component{
             return;
 
         let cloneProps = Object.assign({}, this.getAgl().props);
-        // console.log("showComponentCode" , JSON.stringify(this.getAgl().getClearProps(cloneProps)));;
-        // console.log("innerHtml" , this.getAgl().rootDivRef.current.innerHTML);
 
         let componentData =
             {
@@ -87,12 +81,9 @@ export default class AGLComponent extends React.Component{
         document.execCommand('copy');
         // Remove temporary element
         document.body.removeChild(el);
-
-        console.log("componentData" , componentData);
     }
 
     onDesignChange = (designKey, value) => {
-        console.log("onDesignChange", designKey, value)
         setDataInBreakpoint(designKey, value, this.getAgl(), true, undefined, true);
         this.updateDesign(getCompositeDesignData(this.getAgl()));
     };

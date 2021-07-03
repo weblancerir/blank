@@ -33,7 +33,6 @@ export default class EditorHeader extends React.Component {
             "onPageManagerClick"
         ].forEach(name => {
             if (this.state[`${name}State`] && `${name}State` !== openMenu) {
-                console.log("setRightMenuOpen", name);
                 this.props[name](true);
             }
 

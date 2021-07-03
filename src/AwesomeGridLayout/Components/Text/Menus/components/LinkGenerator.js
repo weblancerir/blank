@@ -20,8 +20,6 @@ export default class LinkGenerator extends React.Component {
             type: props.linkData? props.linkData.type: "None",
             linkData: props.linkData || {type: "None", data: {}}
         };
-
-        console.log("LinkGenerator", props.linkData)
     }
 
 
@@ -113,7 +111,6 @@ export default class LinkGenerator extends React.Component {
         if (!str || str.length < 3)
             return false;
 
-        console.log("validPhone", !!/^\d+$/.test(str))
         return !!/^\d+$/.test(str);
     }
 

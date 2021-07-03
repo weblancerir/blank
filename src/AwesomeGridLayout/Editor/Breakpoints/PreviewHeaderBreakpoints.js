@@ -28,7 +28,6 @@ export default class PreviewHeaderBreakpoints extends React.Component {
         let width = editorContext.editor.rootLayoutRef.current.getSize(false).width;
 
         let bpData = this.getOptions(editorContext).filter(bpData => {
-            console.log("getCurrentValue", bpData.name, bpData.type, bpData.start, width, bpData.type === 'device' && bpData.start === width)
             return bpData.type === 'device' && bpData.start === width;
         })[0];
 

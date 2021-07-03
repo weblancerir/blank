@@ -63,7 +63,6 @@ export default class ComponentGrid extends React.Component {
                 });
             }
             // else {
-            //     console.log("createItemAndDrag 2");
             //     window.requestAnimationFrame(() => {
             //         this.changeItemParent(agl, selectedItem);
             //     });
@@ -118,7 +117,6 @@ export default class ComponentGrid extends React.Component {
     };
 
     setDraggingEnd = () => {
-        console.log("setDraggingEnd");
         this.setState({draggingItem: undefined});
     };
 
@@ -127,7 +125,6 @@ export default class ComponentGrid extends React.Component {
         if (!allItems)
             return null;
 
-        console.log("AddComponentItemGrid", rowHeight);
         return (
             <React.Fragment key={id}>
                 <div

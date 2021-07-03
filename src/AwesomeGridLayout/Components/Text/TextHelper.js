@@ -14,7 +14,6 @@ export function getTextStyle (textTheme, textStaticData, textDesignData) {
 }
 
 export function getFontDataByFamily (allFonts, fontFamily) {
-    console.log("getFontDataByFamily", fontFamily)
     let fontData = Object.values(allFonts).find(fontData => {
         return fontFamily === fontData.fontFamily;
     })

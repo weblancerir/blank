@@ -32,7 +32,6 @@ export default class FocalPointModal extends React.Component {
 
     isLeftClick = (e) => {
         e.persist();
-        console.log("isLeftClick", e.pointerType, e.button, e)
         if (e.pointerType === "mouse" && e.button === 0)
             return true;
 

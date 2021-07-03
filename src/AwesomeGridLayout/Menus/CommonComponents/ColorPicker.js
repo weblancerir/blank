@@ -48,16 +48,13 @@ export default class ColorPicker extends React.Component {
 
     handleChangeComplete = (color) => {
         if (color instanceof Object) {
-            console.log("handlehangeComplete1 this.lastValue", this.lastValue, parseColor(this.lastValue, this.lastValue.alpha, this.context));
             color.alpha = chroma(parseColor(this.lastValue, this.lastValue.alpha, this.context)).alpha();
-            console.log("handlehangeComplete1 alpha", color.alpha);
             this.lastValue = color;
             // color.alpha = chroma(parseColor(color, undefined, this.context)).alpha();
             this.props.onDesignChange(this.props.designKey, color);
             return;
         }
 
-        console.log("handleChangeComplete", this.getColorAndAlpha().alpha)
         let alpha = this.getColorAndAlpha().alpha || 100;
 
         let value = this.lastValue = chroma(color).alpha(alpha / 100).css();

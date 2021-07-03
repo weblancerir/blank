@@ -385,7 +385,6 @@ export default class BreakPointManager {
                 return bp.end >= minSize;
             });
         }
-        // console.log("breakpoints.length", breakpoints.length, minSize)
         return breakpoints.sort((a,b) => {
             if (a.start > b.start) {
                 return -1;

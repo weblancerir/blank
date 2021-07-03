@@ -67,12 +67,10 @@ class PageRouterComponent extends React.Component {
                     })
                 }
                 {/*<Route path={`/Test`} render={(props) => {*/}
-                {/*    console.log("render", props)*/}
                 {/*    return (*/}
                 {/*        this.props.children*/}
                 {/*    )*/}
                 {/*}}>*/}
-                {/*    {console.log("child", this.props.children)}*/}
                 {/*</Route>*/}
 
                 <Route path={"/"}>

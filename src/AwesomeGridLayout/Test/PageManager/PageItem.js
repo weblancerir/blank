@@ -48,7 +48,6 @@ export default class PageItem extends React.Component {
 
         this.setState({pageMenuAnchorEl: undefined});
 
-        console.log("delete", Object.keys(this.context.siteData.allPages)[0])
         if (this.context.pageData === pageData)
             editor.onPageChange(Object.keys(this.context.siteData.allPages)[0], true);
 

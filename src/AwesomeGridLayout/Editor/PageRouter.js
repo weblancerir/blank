@@ -79,7 +79,7 @@ class PageRouterComponent extends React.Component {
         //     console.log("Router changed history", newPath);
         // }
 
-        return {changed, newPath}
+        return {changed, newPath, oldPath: currentPath.toLowerCase()}
     }
 
     render () {
@@ -90,13 +90,13 @@ class PageRouterComponent extends React.Component {
 
         console.log("RouterPath", this.props.location.pathname, pageData.props.pageName);
 
-        let {changed, newPath} = this.isPageChanged();
+        let {changed, newPath, oldPath} = this.isPageChanged();
         if (changed) {
-            console.log("RouterPath changed", newPath);
+            console.log("RouterPath changed", newPath, oldPath);
             if (newPath){
                 return <Redirect to={{
                     pathname: newPath,
-                    // state: { from: this.props.location.pathname }
+                    state: { from: oldPath }
                 }}
                 />
             } else {

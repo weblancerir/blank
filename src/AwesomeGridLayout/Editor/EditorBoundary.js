@@ -260,8 +260,9 @@ export default class EditorBoundary extends React.Component{
             if (isDashboard) {
                 this.setState({isDashboard});
             } else {
-                let pageData = getHomePage(siteData);
-                this.context.setPageData(pageData.props.pageId, false, this.onHeightChange);
+                this.redirect(undefined, undefined, this.onHeightChange);
+                // let pageData = getHomePage(siteData);
+                // this.context.setPageData(pageData.props.pageId, false, this.onHeightChange);
             }
         });
 

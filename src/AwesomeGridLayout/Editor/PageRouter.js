@@ -53,10 +53,13 @@ class PageRouterComponent extends React.Component {
         let {siteData, pageData, setPageData} = this.props;
         console.log("redirect 1", redirectPath, redirectProps);
 
-        if (`/${pageData.props.pageName.toLowerCase()}` === redirectPath) {
+        if (!redirectPath)
+            redirectPath = this.props.location.pathname;
+
+        if (pageData && `/${pageData.props.pageName.toLowerCase()}` === redirectPath) {
             this.redirectPath = redirectPath;
             console.log("redirect 2", redirectPath, redirectProps);
-            this.setState({reload: getRandomLinkId(5), redirectProps});
+            this.setState({reload: getRandomLinkId(5), redirectProps}, callback);
         } else {
             let page = Object.values(siteData.allPages).find(pageData => {
                 return `/${pageData.props.pageName.toLowerCase()}` === redirectPath;
@@ -68,7 +71,7 @@ class PageRouterComponent extends React.Component {
             this.redirectPath = redirectPath;
             setPageData(page.props.pageId, false, () => {
                 console.log("redirect 3", redirectPath, page.props.pageName);
-                this.setState({reload: getRandomLinkId(5), redirectProps});
+                this.setState({reload: getRandomLinkId(5), redirectProps}, callback);
             })
         }
     };

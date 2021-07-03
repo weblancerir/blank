@@ -29,7 +29,7 @@ class PageRouterComponent extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         console.log("PageRouterComponent shouldComponentUpdate", this.props.location.pathname,
-            this.props.location.search, this.props.pageName, nextProps.pageName);
+            nextProps.location.pathname, this.props.pageName, nextProps.pageName);
         if (this.props.location.pathname !== nextProps.location.pathname ||
             this.props.location.search !== nextProps.location.search ||
             this.props.pageName !== nextProps.pageName)
@@ -67,9 +67,9 @@ class PageRouterComponent extends React.Component {
     };
 
     render () {
-        let {siteData, pageData} = this.props;
+        let {siteData, pageData, pageName} = this.props;
 
-        console.log("RouterPath", this.props.location, !!pageData);
+        console.log("RouterPath", this.props.location, !!pageData, pageName);
 
         if (this.redirectPath) {
             let redirectPath = this.redirectPath;
@@ -80,6 +80,12 @@ class PageRouterComponent extends React.Component {
             }}
             />
         }
+
+        // if (pageName && (`/${pageName.toLowerCase()}` !== this.props.location.pathname)) {
+        //     window.requestAnimationFrame(() => {
+        //         this.redirect(this.props.location.pathname);
+        //     })
+        // }
 
         return (
             <Switch>

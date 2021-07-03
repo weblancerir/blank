@@ -82,12 +82,14 @@ class PageRouterComponent extends React.Component {
             console.log("RouterPath changed", newPath, oldPath);
             if (newPath){
                 return (
-                    <Redirect to={{ pathname: newPath}} push />
+                    <Redirect to={{ pathname: newPath}}
+                              push={false} />
                 )
             } else {
                 return null;
             }
         }
+        console.log("RouterPath final", this.props.location);
         return (
             <Switch>
                 {
@@ -107,6 +109,7 @@ class PageRouterComponent extends React.Component {
                             pathname: `/${getHomePage(siteData).props.pageName.toLowerCase()}`,
                             // state: { from: "/" }
                         }}
+                        push={false}
                     />
                 </Route>
             </Switch>

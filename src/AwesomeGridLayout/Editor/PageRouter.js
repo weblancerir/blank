@@ -25,8 +25,11 @@ class PageRouterComponent extends React.Component {
             if(this.mounted) {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log("Back", e)
-                this.props.history.goBack(1);
+                console.log("Back", this.props.location)
+                if (this.changingPage) {
+                    this.changingPage = false;
+                    this.props.history.goBack(1);
+                }
             }
         }
     }
@@ -75,7 +78,7 @@ class PageRouterComponent extends React.Component {
                 this.forceUpdate();
             });
 
-            // this.changingPage = true;
+            this.changingPage = true;
 
             return {
                 changed: true,
@@ -119,23 +122,16 @@ class PageRouterComponent extends React.Component {
         console.log("RouterPath final", this.props.location);
         return (
             <Switch>
-                {/*{*/}
-                {/*    siteData && Object.values(siteData.allPages).map(page => {*/}
-                {/*        console.log("Routes", `/${page.props.pageName.toLowerCase()}`)*/}
-                {/*        return (*/}
-                {/*            <Route exact path={`/${page.props.pageName.toLowerCase()}`} key={page.props.pageName}>*/}
-                {/*                {this.props.children}*/}
-                {/*            </Route>*/}
-                {/*        )*/}
-                {/*    })*/}
-                {/*}*/}
-
-                <Route exact path={`/Test`}>
-                    {this.props.children}
-                </Route>
-                <Route exact path={`/Test2`}>
-                    {this.props.children}
-                </Route>
+                {
+                    siteData && Object.values(siteData.allPages).map(page => {
+                        console.log("Routes", `/${page.props.pageName.toLowerCase()}`)
+                        return (
+                            <Route exact path={`/${page.props.pageName.toLowerCase()}`} key={page.props.pageName}>
+                                {this.props.children}
+                            </Route>
+                        )
+                    })
+                }
 
                 {
                     siteData &&

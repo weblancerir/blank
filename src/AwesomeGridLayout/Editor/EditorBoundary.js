@@ -372,6 +372,7 @@ export default class EditorBoundary extends React.Component{
     };
 
     onPageResize = (width, pageAgl, force) => {
+        console.log("EditorBoundary onPageResize");
         let result = this.breakpointmanager.checkBreakPointChange(width);
 
         this.onResize(undefined, width);

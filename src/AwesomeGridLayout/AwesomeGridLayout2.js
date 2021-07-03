@@ -282,6 +282,7 @@ export default class AwesomeGridLayout2 extends React.Component{
             this.props.breakpointmanager.getHighestBpName(), true);
 
         if (this.props.onPageResize) {
+            console.log("AGL lateMounted");
             this.props.onPageResize(size.width, this, true);
         }
 
@@ -2226,6 +2227,7 @@ export default class AwesomeGridLayout2 extends React.Component{
         this.setRuntimeStyle(runtimeStyle);
 
         if (this.props.onPageResize) {
+            console.log("AGL pageResizeCalculate");
             this.props.onPageResize(runtimeStyle.width, this);
         }
 

@@ -28,7 +28,9 @@ export default class PageView extends React.Component {
     render () {
         if (this.context.production) {
             return (
-                this.props.children
+                <PageRouter>
+                    {this.props.children}
+                </PageRouter>
             )
         } else {
             return (

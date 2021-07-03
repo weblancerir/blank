@@ -13,6 +13,7 @@ class PageRouterComponent extends React.Component {
 
     constructor(props) {
         super(props);
+        console.log("PageRouterComponent constructor");
     }
 
     componentDidMount () {

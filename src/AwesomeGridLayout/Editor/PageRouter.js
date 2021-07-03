@@ -84,16 +84,19 @@ class PageRouterComponent extends React.Component {
         if (this.redirectPath) {
             let redirectPath = this.redirectPath;
             delete this.redirectPath;
+            let dontPush = this.dontPush;
+            delete this.dontPush;
             return <Redirect to={{
                 pathname: redirectPath,
                 state: { from: this.props.location.pathname }
             }}
-                             push
+                             push={!dontPush}
             />
         }
 
         if (pageName && this.props.location.pathname !== "/" && `/${pageName.toLowerCase()}` !== this.props.location.pathname) {
             window.requestAnimationFrame(() => {
+                this.dontPush = true;
                 this.redirect(this.props.location.pathname);
             })
             return null;

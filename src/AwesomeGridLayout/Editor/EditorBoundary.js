@@ -282,7 +282,7 @@ export default class EditorBoundary extends React.Component{
         this.setState({allComponentData});
     };
 
-    onPageChange = (pageId, force) => {
+    onPageChange = (pageId, force, callback) => {
         if (!force && this.context.pageData.props.pageId === pageId) {
             return;
         }
@@ -292,7 +292,7 @@ export default class EditorBoundary extends React.Component{
             this.snap.clearSnaps();
 
             this.context.setPageData(undefined ,force, () => {
-                this.context.setPageData(pageId);
+                this.context.setPageData(pageId, false, callback);
             });
         });
     };

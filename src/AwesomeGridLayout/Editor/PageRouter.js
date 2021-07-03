@@ -56,7 +56,10 @@ class PageRouterComponent extends React.Component {
                 page = getHomePage(siteData);
 
             console.log("Router firstLoad");
-            this.context.editor.onPageChange(page.props.pageId);
+            this.context.editor.onPageChange(page.props.pageId, true, () => {
+                console.log("Router firstLoad forceUpdate");
+                this.forceUpdate();
+            });
 
             this.changingPage = true;
 

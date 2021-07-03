@@ -51,6 +51,10 @@ class PageRouterComponent extends React.Component {
 
     isPageChanged = () => {
         let {pageData, siteData} = this.props;
+
+        if (!pageData)
+            return {changed: false};
+
         console.log("Router isPageChanged", this.props.location);
         let currentPath = (this.props.location.location || this.props.location).pathname;
 
@@ -95,10 +99,9 @@ class PageRouterComponent extends React.Component {
         // let {siteData, pageData} = this.context;
         let {siteData, pageData} = this.props;
 
-        if (!pageData)
-            return null;
-
-        console.log("RouterPath", this.props.location, pageData.props.pageName);
+        console.log("RouterPath", this.props.location, !!pageData);
+        // if (!pageData)
+        //     return null;
 
         let {changed, newPath, oldPath} = this.isPageChanged();
         if (changed) {
@@ -116,25 +119,28 @@ class PageRouterComponent extends React.Component {
         return (
             <Switch>
                 {
-                    Object.values(siteData.allPages).map(page => {
+                    siteData && Object.values(siteData.allPages).map(page => {
                         console.log("Routes", `/${page.props.pageName.toLowerCase()}`)
                         return (
-                            <Route path={`/${page.props.pageName.toLowerCase()}`} key={page.props.pageName}>
-                                {this.props.children}
+                            <Route exact path={`/${page.props.pageName.toLowerCase()}`} key={page.props.pageName}>
+                                {pageData && this.props.children}
                             </Route>
                         )
                     })
                 }
 
-                <Route path={`/`}>
-                    <Redirect
-                        to={{
-                            pathname: `/${getHomePage(siteData).props.pageName.toLowerCase()}`,
-                            // state: { from: "/" }
-                        }}
-                        push={false}
-                    />
-                </Route>
+                {
+                    siteData &&
+                    <Route exact path={`/`}>
+                        <Redirect
+                            to={{
+                                pathname: `/${getHomePage(siteData).props.pageName.toLowerCase()}`,
+                                // state: { from: "/" }
+                            }}
+                            push={false}
+                        />
+                    </Route>
+                }
             </Switch>
         )
     }

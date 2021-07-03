@@ -21,9 +21,11 @@ class PageRouterComponent extends React.Component {
 
     componentDidMount () {
         this.mounted = true;
-        window.onpopstate = ()=> {
+        window.onpopstate = (e)=> {
             if(this.mounted) {
-                console.log("Back")
+                e.preventDefault();
+                e.stopPropagation();
+                console.log("Back", e)
             }
         }
     }

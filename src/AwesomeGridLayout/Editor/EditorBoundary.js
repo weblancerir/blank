@@ -582,11 +582,12 @@ export default class EditorBoundary extends React.Component{
         this.setState({modal: undefined}, callback);
     }
 
-    redirect = (redirectPath, redirectProps) => {
+    redirect = (redirectPath, redirectProps, callback) => {
+        console.log("redirect0222 " , this.routerRef.current);
         if (!this.routerRef.current)
             return;
 
-        this.routerRef.current.redirect(redirectPath, redirectProps);
+        this.routerRef.current.redirect(redirectPath, redirectProps, callback);
     };
 
     render() {

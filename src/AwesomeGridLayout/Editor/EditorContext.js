@@ -2,7 +2,7 @@ import React from 'react';
 import BreakPointManager from "../BreakPointManager";
 import chroma from "chroma-js";
 import {addCSS} from "../AwesomeGridLayoutUtils";
-import {resolveDefaultMenu} from "../MenuManager/MenuManager";
+import {getHomePage, resolveDefaultMenu} from "../MenuManager/MenuManager";
 
 function getColorScheme (baseColor) {
     return {
@@ -83,7 +83,8 @@ export default class EditorContextProvider extends React.Component {
             showModal: this.showModal,
             hideModal: this.hideModal,
             setUser: this.setUser,
-            isInMenu: this.isInMenu
+            isInMenu: this.isInMenu,
+            redirect: this.redirect
         };
     }
 
@@ -278,6 +279,14 @@ export default class EditorContextProvider extends React.Component {
 
     postSiteData = () => {
         this.calculateColorCSS();
+    }
+
+    redirect = (pageId, force, callback) => {
+        let pageData = this.state.siteData.allPages[pageId];
+        if (!pageData) pageData = getHomePage(this.state.pageData);
+        console.log("redirect000 ");
+
+        this.state.editor.redirect(`/${pageData.props.pageName.toLowerCase()}`, undefined, callback);
     }
 
     setPageData = (pageId, force, callback) => {

@@ -109,7 +109,8 @@ export function prepareLink (node, preview, production, editorContext, linkData)
             if (linkData.data.window === "new" && !production)
                 return;
 
-            node.addEventListener('click', () => {pageLinkHandle(editorContext, linkData)})
+            // node.addEventListener('click', () => {pageLinkHandle(editorContext, linkData)})
+            node.onclick = () => {pageLinkHandle(editorContext, linkData)};
             node.setAttribute("href", "#");
             break;
         case "Anchor":
@@ -140,7 +141,9 @@ export function prepareLink (node, preview, production, editorContext, linkData)
 
 function pageLinkHandle (editorContext, linkData) {
     if (linkData.data.window === 'current') {
-        editorContext.setPageData(linkData.data.pageId);
+        console.log("pageLinkHandle");
+        // editorContext.setPageData(linkData.data.pageId);
+        editorContext.redirect(linkData.data.pageId);
     } else {
         // TODO open page in other window !Important
     }

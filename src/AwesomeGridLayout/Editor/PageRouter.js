@@ -7,6 +7,7 @@ import {
 import {BrowserRouter as Router, withRouter} from 'react-router-dom';
 // import {Router, withRouter} from 'react-router-dom';
 import {getHomePage} from "../MenuManager/MenuManager";
+import {getRandomLinkId} from "../Components/Text/TextHelper";
 
 class PageRouterComponent extends React.Component {
     // static contextType = EditorContext;
@@ -15,6 +16,8 @@ class PageRouterComponent extends React.Component {
         super(props);
 
         this.firstLoad = true;
+
+        this.state = {}
 
         console.log("PageRouterComponent constructor");
     }
@@ -27,41 +30,45 @@ class PageRouterComponent extends React.Component {
         this.mounted = false;
     }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        console.log("PageRouterComponent shouldComponentUpdate", this.props.location.pathname,
-            nextProps.location.pathname, this.props.pageName, nextProps.pageName);
-        if (this.props.location.pathname !== nextProps.location.pathname ||
-            this.props.location.search !== nextProps.location.search ||
-            this.props.pageName !== nextProps.pageName)
-        {
-            console.log("PageRouterComponent shouldComponentUpdate", true);
-            return true;
-        }
+    // shouldComponentUpdate(nextProps, nextState, nextContext) {
+    //     if (this.state.reload !== nextState.reload) {
+    //         return true;
+    //     }
+    //
+    //     console.log("PageRouterComponent shouldComponentUpdate", this.props.location.pathname,
+    //         nextProps.location.pathname, this.props.pageName, nextProps.pageName);
+    //     if (this.props.location.pathname !== nextProps.location.pathname ||
+    //         this.props.location.search !== nextProps.location.search ||
+    //         this.props.pageName !== nextProps.pageName)
+    //     {
+    //         console.log("PageRouterComponent shouldComponentUpdate", true);
+    //         return true;
+    //     }
+    //
+    //     console.log("PageRouterComponent shouldComponentUpdate", false);
+    //     return false;
+    // }
 
-        console.log("PageRouterComponent shouldComponentUpdate", false);
-        return false;
-    }
-
-    redirect = (redirectPath, redirectProps) => {
+    redirect = (redirectPath, redirectProps, callback) => {
         let {siteData, pageData, setPageData} = this.props;
         console.log("redirect 1", redirectPath, redirectProps);
 
         if (`/${pageData.props.pageName.toLowerCase()}` === redirectPath) {
             this.redirectPath = redirectPath;
             console.log("redirect 2", redirectPath, redirectProps);
-            this.setState({reload: true, redirectProps});
+            this.setState({reload: getRandomLinkId(5), redirectProps});
         } else {
             let page = Object.values(siteData.allPages).find(pageData => {
-                return pageData.props.isHome;
+                return `/${pageData.props.pageName.toLowerCase()}` === redirectPath;
             });
 
             if (!page)
                 page = getHomePage(siteData);
 
+            this.redirectPath = redirectPath;
             setPageData(page.props.pageId, false, () => {
-                this.redirectPath = redirectPath;
-                console.log("redirect 3", redirectPath, redirectProps);
-                this.setState({reload: true, redirectProps});
+                console.log("redirect 3", redirectPath, page.props.pageName);
+                this.setState({reload: getRandomLinkId(5), redirectProps});
             })
         }
     };
@@ -80,12 +87,6 @@ class PageRouterComponent extends React.Component {
             }}
             />
         }
-
-        // if (pageName && (`/${pageName.toLowerCase()}` !== this.props.location.pathname)) {
-        //     window.requestAnimationFrame(() => {
-        //         this.redirect(this.props.location.pathname);
-        //     })
-        // }
 
         return (
             <Switch>
@@ -117,10 +118,14 @@ class PageRouterComponent extends React.Component {
 }
 
 const MainRouter = withRouter(props =>
-    <PageRouterComponent ref={props.routerRef} {...props}/>
+    {
+        console.log("MainRouter", props.routerRef);
+        return <PageRouterComponent ref={props.routerRef} {...props}/>
+    }
 );
 
 const PageRouter = (props) => {
+    console.log("PageRouter", props.routerRef);
     return (
         <Router basename={'application'}>
             <MainRouter {...props}/>

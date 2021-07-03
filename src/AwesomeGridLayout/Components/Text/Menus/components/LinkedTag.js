@@ -10,15 +10,16 @@ export default class LinkedTag extends React.Component {
         super(props);
 
         this.state = {};
-    }
 
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     this.prepareLink();
-    // }
+        this.lastRef = undefined;
+    }
 
     onRefChange = (ref) => {
         this.linkRef = ref;
-        window.requestAnimationFrame(this.prepareLink);
+        if (this.lastRef !== this.linkRef) {
+            this.lastRef = this.linkRef;
+            window.requestAnimationFrame(this.prepareLink);
+        }
     }
 
     prepareLink = () => {
@@ -40,6 +41,7 @@ export default class LinkedTag extends React.Component {
 
         let aTagProps = Object.assign({}, this.props);
         delete aTagProps.linkData;
+
         return (
             <a
                 className={aClassName}

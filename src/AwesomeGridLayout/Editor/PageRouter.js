@@ -80,12 +80,9 @@ class PageRouterComponent extends React.Component {
         if (changed) {
             console.log("RouterPath changed", newPath, oldPath);
             if (newPath){
-                return <Redirect to={{
-                    pathname: newPath,
-                    push: true
-                    // state: { from: oldPath }
-                }}
-                />
+                return (
+                    <Redirect to={{ pathname: newPath}} push />
+                )
             } else {
                 return null;
             }

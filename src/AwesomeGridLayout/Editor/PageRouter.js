@@ -33,10 +33,10 @@ class PageRouterComponent extends React.Component {
             return true;
         }
 
-        if (this.changingPage) {
-            this.changingPage = false;
-            return true;
-        }
+        // if (this.changingPage) {
+        //     this.changingPage = false;
+        //     return true;
+        // }
 
         console.log("Router shouldComponentUpdate", false);
         return false;
@@ -62,7 +62,7 @@ class PageRouterComponent extends React.Component {
                 this.forceUpdate();
             });
 
-            this.changingPage = true;
+            // this.changingPage = true;
 
             return {
                 changed: true,

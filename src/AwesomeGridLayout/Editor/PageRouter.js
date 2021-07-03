@@ -23,14 +23,11 @@ class PageRouterComponent extends React.Component {
         this.mounted = true;
         this.props.history.listen((newLocation, action) => {
             console.log("listen", newLocation, action);
-            // if (action === "PUSH") {
-            //     if (locationChanges) {
-            //         // Clone location object and push it to history
-            //         history.push({
-            //             pathname: newLocation.pathname,
-            //             search: newLocation.search
-            //         });
-            //     }
+            if (action === "POP") {
+                this.props.history.push({
+                    pathname: this.oldPath,
+                });
+            }
             // } else {
             //     // If a "POP" action event occurs,
             //     // Send user back to the originating location
@@ -82,6 +79,7 @@ class PageRouterComponent extends React.Component {
             this.props.history.replace(currentPath.toLowerCase(), {state: { deleted : true }}) // false
         }
 
+        this.oldPath = currentPath.toLowerCase();
         return {changed, newPath, oldPath: currentPath.toLowerCase()}
     }
 

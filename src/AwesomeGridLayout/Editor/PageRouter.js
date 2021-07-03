@@ -28,6 +28,13 @@ class PageRouterComponent extends React.Component {
         }
     }
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        if (JSON.stringify(this.props.location) !== JSON.stringify(nextProps.location))
+            return true;
+
+        return false;
+    }
+
     componentWillUnmount () {
         this.mounted = false;
     }

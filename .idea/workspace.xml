@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ee3df027-738a-4634-bc4a-d7b9163847a2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/PageRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/PageRouter.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -260,7 +261,7 @@
       <workItem from="1624902939153" duration="282000" />
       <workItem from="1624906692445" duration="2810000" />
       <workItem from="1625129256107" duration="13871000" />
-      <workItem from="1625293537672" duration="28498000" />
+      <workItem from="1625293537672" duration="29265000" />
     </task>
     <servers />
   </component>

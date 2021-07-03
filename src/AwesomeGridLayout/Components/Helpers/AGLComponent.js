@@ -16,7 +16,6 @@ export default class AGLComponent extends React.Component{
     static contextType = EditorContext;
     constructor (props) {
         super(props);
-        console.log("AGLComponent constructor");
     }
 
     resolveDesignData = () => {
@@ -29,6 +28,8 @@ export default class AGLComponent extends React.Component{
 
         componentData = assignData(componentData, cloneObject(this.props.data));
 
+        if (this.props.id === "page")
+            console.log("componentData1", componentData.bpData.grid);
         if (componentBpData) {
             let tempBpData = componentData.bpData;
             componentData.bpData = assignData(componentBpData, tempBpData);
@@ -42,7 +43,8 @@ export default class AGLComponent extends React.Component{
             componentData.bpData = assignData(componentData.bpData, componentStaticBpData);
         }
 
-        console.log("componentData", componentData);
+        if (this.props.id === "page")
+            console.log("componentData2", componentData.bpData.grid);
         return componentData;
     };
 

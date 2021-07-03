@@ -5,8 +5,6 @@ export default class NumberInputEnterToChange extends React.Component {
     constructor(props) {
         super(props);
 
-        console.log("props.min", props.min)
-
         this.state = {};
     }
 

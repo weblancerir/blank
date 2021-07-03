@@ -7,17 +7,23 @@ export default class UndoRedo {
         this.max = max || 20;
         this.idMan = idMan;
 
-        document.addEventListener('keydown', (event) => {
-            if (event.ctrlKey && event.key === 'z') {
+        document.addEventListener('keydown', (e) => {
+            let key = e.which || e.keyCode; // keyCode detection
+            let ctrl = e.ctrlKey ? e.ctrlKey : (key === 17); // ctrl detection
+            let shift = e.shiftKey ? e.shiftKey : (key === 16); // ctrl detection
+            if (key === 90 && ctrl && !shift) {
                 this.undo();
             }
-        });
-
-        document.addEventListener('keydown', (event) => {
-            if (event.ctrlKey && event.key === 'Z') {
+            if (key === 90 && ctrl && shift) {
                 this.redo();
             }
         });
+
+        // document.addEventListener('keydown', (event) => {
+        //     // if (event.ctrlKey && event.key === 'Z') {
+        //     //     this.redo();
+        //     // }
+        // });
     }
 
     getQueueObject = (func, undo, power) => {

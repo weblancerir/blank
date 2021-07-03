@@ -1,15 +1,13 @@
 import React from "react";
-import './EditorBoundary.css';
-import IconButton from "../HelperComponents/IconButton";
-import DropDown from "../Menus/CommonComponents/DropDown";
-import EditorHeaderZoom from "./Zoom/EditorHeaderZoom";
 import {EditorContext} from "./EditorContext";
-import EditorHeaderPageSelect from "./PageSelect/EditorHeaderPageSelect";
-import EditorHeaderBreakpoints from "./Breakpoints/EditorHeaderBreakpoints";
-import {getScrollbarWidth} from "../AwesomeGridLayoutUtils";
-import PageBase from "../Components/Pages/PageBase";
+import {
+    Switch,
+    Route, Redirect
+} from "react-router-dom";
+import {BrowserRouter as Router, withRouter} from 'react-router-dom';
+import {getHomePage} from "../MenuManager/MenuManager";
 
-export default class PageView extends React.Component {
+class PageRouterComponent extends React.Component {
     static contextType = EditorContext;
 
     constructor(props) {
@@ -24,37 +22,73 @@ export default class PageView extends React.Component {
         this.mounted = false;
     }
 
+    isPageChanged = () => {
+        let {pageData} = this.context;
+        let currentPath = this.props.location.pathname;
+        let oldPath = `/${pageData.props.pageName.toLowerCase()}`;
+
+        let changed = (oldPath !== currentPath.toLowerCase());
+
+        if (changed)
+            this.props.history.push(oldPath);
+
+        return changed
+    }
+
     render () {
-        if (this.context.production) {
-            return (
-                this.props.children
-            )
-        } else {
-            return (
-                <div
-                    className="EditorBoundaryPageHolder"
-                    style={{
-                        // TODO add scale support
-                        padding: "0 50px"
-                    }}
-                    onScroll={this.props.onScrollBoundary}
-                    onContextMenu={(e) => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                    }}
-                >
-                    <div
-                        className="EditorBoundaryPageHolderHover"
-                        style={{
-                            bottom: getScrollbarWidth()
-                        }}
-                        onClick={() => {
-                            this.props.rootLayoutRef.current.onSelect(true);
+        let {siteData, pageData} = this.context;
+        console.log("RouterPath", this.props.location.pathname);
+
+        if (this.isPageChanged()) {
+            return <Redirect to={{
+                pathname: `/${pageData.props.pageName}`,
+                state: { from: this.props.location.pathname }
+            }}
+            />
+        }
+        return (
+            <Switch>
+                {
+                    Object.values(siteData.allPages).map(page => {
+                        return (
+                            <Route path={`/${page.props.pageName}`} key={page.props.pageName}>
+                                {this.props.children}
+                            </Route>
+                        )
+                    })
+                }
+                {/*<Route path={`/Test`} render={(props) => {*/}
+                {/*    console.log("render", props)*/}
+                {/*    return (*/}
+                {/*        this.props.children*/}
+                {/*    )*/}
+                {/*}}>*/}
+                {/*    {console.log("child", this.props.children)}*/}
+                {/*</Route>*/}
+
+                <Route path={"/"}>
+                    <Redirect
+                        to={{
+                            pathname: `/${getHomePage(siteData).props.pageName}`,
+                            state: { from: "/" }
                         }}
                     />
-                    {this.props.children}
-                </div>
-            )
-        }
+                </Route>
+            </Switch>
+        )
     }
 }
+
+const MainRouter = withRouter(props =>
+    <PageRouterComponent {...props}/>
+);
+
+const PageRouter = (props) => {
+    return (
+        <Router>
+            <MainRouter {...props}/>
+        </Router>
+    )
+}
+
+export default PageRouter;

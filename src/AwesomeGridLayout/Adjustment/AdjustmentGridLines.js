@@ -125,7 +125,6 @@ export default class AdjustmentGridLines extends React.Component {
             else return;
         }
 
-        console.log("getYlineRef",id, gridType)
         return this[`yLineRef${gridType}`].slice(0, this.idCache[gridType].y + 1);
     };
 

@@ -295,3 +295,25 @@ export function getHomePage (siteData) {
 
     return homePage;
 }
+
+export function getPageFromPath (website, siteData) {
+    let parts = window.location.pathname.split("/");
+
+    let pathName;
+    for (let i = 0; i < parts.length; i++) {
+        if (parts[i] === website.name)
+            continue;
+
+        pathName = parts[i];
+        break;
+    }
+
+    let page = Object.values(siteData.allPages).find(page => {
+        return page.props.pathName = pathName;
+    });
+
+    if (!page)
+        page = getHomePage(siteData);
+
+    return page;
+}

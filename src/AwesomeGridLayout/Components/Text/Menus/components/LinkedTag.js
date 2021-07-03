@@ -19,7 +19,6 @@ export default class LinkedTag extends React.Component {
 
     onRefChange = (ref) => {
         this.linkRef = ref;
-        console.log("LinkedTag onRefChange", this.linkRef);
         window.requestAnimationFrame(this.prepareLink);
     }
 

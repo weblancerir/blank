@@ -399,12 +399,6 @@
           "overflowY": "scroll",
           "auto": true
         },
-        "grid": {
-          "x": 0,
-          "y": 1,
-          "gridTemplateRows": "auto",
-          "gridTemplateColumns": "minmax(0px,1fr)"
-        },
         "containerHeight": "max-content"
       }
     },

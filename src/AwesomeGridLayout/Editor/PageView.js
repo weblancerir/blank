@@ -8,6 +8,7 @@ import EditorHeaderPageSelect from "./PageSelect/EditorHeaderPageSelect";
 import EditorHeaderBreakpoints from "./Breakpoints/EditorHeaderBreakpoints";
 import {getScrollbarWidth} from "../AwesomeGridLayoutUtils";
 import PageBase from "../Components/Pages/PageBase";
+import PageRouter from "./PageRouter";
 
 export default class PageView extends React.Component {
     static contextType = EditorContext;
@@ -52,7 +53,10 @@ export default class PageView extends React.Component {
                             this.props.rootLayoutRef.current.onSelect(true);
                         }}
                     />
-                    {this.props.children}
+                    {/*{this.props.children}*/}
+                    <PageRouter>
+                        {this.props.children}
+                    </PageRouter>
                 </div>
             )
         }

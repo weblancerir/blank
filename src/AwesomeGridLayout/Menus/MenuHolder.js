@@ -54,6 +54,17 @@ export default class MenuHolder extends React.Component {
         this.setState({active});
     };
 
+    isInMenu = () => {
+        if (!this.state.active)
+            return false;
+        if (this.state.menu)
+            return true;
+        if (this.state.contextMenu)
+            return true;
+
+        return false;
+    }
+
     render () {
         if (!this.state.active)
             return null;

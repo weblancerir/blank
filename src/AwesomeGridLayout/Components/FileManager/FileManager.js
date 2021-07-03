@@ -665,9 +665,11 @@ export default class FileManager extends React.Component {
                                                                         {this.getFileIconPreview(fileData)}
                                                                     </div>
                                                                 </div>
-                                                                <span className="FileManagerFileName">
-                                                                    {shortName}
-                                                                </span>
+                                                                <div className="FileManagerFileNameHolder">
+                                                                    <span className="FileManagerFileName">
+                                                                        {shortName}
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                         )
                                                     })

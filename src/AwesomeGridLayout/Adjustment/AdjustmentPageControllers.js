@@ -4,6 +4,7 @@ import classNames from "classnames";
 import DynamicComponents from "../Dynamic/DynamicComponents";
 import Popper from "@material-ui/core/Popper/Popper";
 import '../HelperStyle.css';
+import {EditorContext} from "../Editor/EditorContext";
 
 export default class AdjustmentPageControllers extends React.Component {
     constructor(props) {
@@ -42,11 +43,22 @@ export default class AdjustmentPageControllers extends React.Component {
         }, 500);
     };
 
+    getXCount = () => {
+        let {grid} = this.props;
+        return grid.gridTemplateRows.split(" ").length;
+    }
+
+    getYCount = () => {
+        let {grid} = this.props;
+        return grid.gridTemplateColumns.split(" ").length;
+    }
+
     render () {
         let {grid} = this.props;
+        console.log("grid render", grid);
         return (
                 [
-                    new Array(grid.y + 1).fill(0).map((a, index) => {
+                    new Array(this.getYCount() + 1).fill(0).map((a, index) => {
                         let style = {
                             gridArea: `1/${index}/2/${index + 1}`
                         };
@@ -72,7 +84,7 @@ export default class AdjustmentPageControllers extends React.Component {
                             </div>
                         </div>
                     }),
-                    new Array(grid.x + 1).fill(0).map((a, index) => {
+                    new Array(this.getXCount() + 1).fill(0).map((a, index) => {
                         let style = {
                             gridArea: `${index}/1/${index + 1}/2`,
                             pointerEvents: "auto"

@@ -82,7 +82,8 @@ export default class EditorContextProvider extends React.Component {
             setWebsite: this.setWebsite,
             showModal: this.showModal,
             hideModal: this.hideModal,
-            setUser: this.setUser
+            setUser: this.setUser,
+            isInMenu: this.isInMenu
         };
     }
 
@@ -90,11 +91,22 @@ export default class EditorContextProvider extends React.Component {
         this.setState({user}, callback);
     }
 
+    isInMenu = () => {
+        if (this.state.inModal)
+            return true;
+
+        if (this.state.menuHolderRef.current && this.state.menuHolderRef.current.isInMenu())
+            return true;
+        return false;
+    }
+
     showModal = (modal, callback) => {
+        this.setState({inModal: true});
         this.state.editor.showModal(modal, callback);
     }
 
     hideModal = (callback) => {
+        this.setState({inModal: false});
         this.state.editor.hideModal(callback);
     }
 
@@ -161,7 +173,7 @@ export default class EditorContextProvider extends React.Component {
         let {siteData} = this.state;
         let theme = siteData.theme;
         let colorsCSS = [];
-        console.log("calculateColorCSS", doc);
+        console.log("calculateColorCSS", doc, theme.Colors.items);
         Object.values(theme.Colors.items).forEach(item => {
             colorKeys.forEach(key => {
                 let id = this.getThemeColorClass({

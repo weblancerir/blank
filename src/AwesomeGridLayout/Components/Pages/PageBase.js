@@ -7,7 +7,7 @@ import InspectorBreadcrumbs from "../../Test/Inspector/InspectorBreadcrumbs";
 import InspectorPadding from "../../Test/Inspector/InspectorPadding";
 import InspectorBackground from "../../Test/Inspector/InspectorBackground";
 import './PageBase.css';
-import {isHideInBreakpoint, parseColor, setStyleParam} from "../../AwesomwGridLayoutHelper";
+import {getCompositeDesignData, isHideInBreakpoint, parseColor, setStyleParam} from "../../AwesomwGridLayoutHelper";
 import {EditorContext} from "../../Editor/EditorContext";
 
 const mainColTemplate = "minmax(0px,1fr)";
@@ -47,8 +47,11 @@ export default class PageBase extends AGLComponent {
 
         this.allSectionsH = props.griddata.allSectionsH;
         this.allSectionsV = props.griddata.allSectionsV;
-        let grid = this.props.breakpointmanager.getFromData(props.griddata, "grid");
+        // let grid = this.props.breakpointmanager.getFromData(props.griddata, "grid");
+        let grid = this.props.breakpointmanager
+            .getCompositeFromData(this.props.griddata, "grid", undefined);
         if (grid) {
+            console.log("initDataFromPageData", grid, this.props.griddata.bpData.laptop.grid);
             this.gridX = grid.x;
             this.gridY = grid.y;
             this.gridTemplateRows = grid.gridTemplateRows;
@@ -73,7 +76,6 @@ export default class PageBase extends AGLComponent {
 
             if (key === 40 && ctrl) {
                 e.preventDefault();
-                console.log("ctrl + Down");
                 let selectedItem = this.props.select.getSelected();
                 if (this.getHorizontalSection(selectedItem.props.id))
                     this.moveDown(selectedItem.props.id);
@@ -92,7 +94,6 @@ export default class PageBase extends AGLComponent {
 
             if (key === 39 && ctrl) {
                 e.preventDefault();
-                console.log("ctrl + Right");
                 let selectedItem = this.props.select.getSelected();
                 if (this.getVerticalSection(selectedItem.props.id))
                     this.moveRight(selectedItem.props.id);
@@ -110,7 +111,6 @@ export default class PageBase extends AGLComponent {
     }
 
     getDefaultData = () => {
-        console.log("this.props.noScroll", this.props.noScroll);
         return {
             isContainer: true,
             draggable: false,
@@ -122,12 +122,12 @@ export default class PageBase extends AGLComponent {
                     overflowY: "scroll",
                     auto: true
                 },
-                grid: {
-                    x: this.gridX,
-                    y: this.gridY,
-                    gridTemplateRows: this.gridTemplateRows,
-                    gridTemplateColumns: this.gridTemplateColumns
-                },
+                // grid: {
+                //     x: this.gridX,
+                //     y: this.gridY,
+                //     gridTemplateRows: this.gridTemplateRows,
+                //     gridTemplateColumns: this.gridTemplateColumns
+                // },
                 containerHeight: "max-content"
             },
             customStyle: {
@@ -143,20 +143,15 @@ export default class PageBase extends AGLComponent {
     };
 
     deleteHorizontalSection = (id) => {
-        console.log("deleteHorizontalSection 0", id);
-
         let index = this.allSectionsH.findIndex(h => {
             return h === id;
         });
-        console.log("deleteHorizontalSection 01", index);
         if (index < 0)
             return false;
 
-        console.log("deleteHorizontalSection 02", this.allSectionsH);
         if (this.allSectionsH.length === 1)
             return false;
 
-        console.log("deleteHorizontalSection 03");
         this.gridX--;
 
         let currentSection = this.allSectionsH[index];
@@ -214,11 +209,9 @@ export default class PageBase extends AGLComponent {
 
         index >= 0 && this.allSectionsH.splice(index, 1);
 
-        console.log("deleteHorizontalSection 1", index, this.allSectionsH);
         this.gridTemplateRows = new Array(this.allSectionsH.length).fill(0).map(a => {
             return "auto";
         }).join(' ');
-        console.log("deleteHorizontalSection 2", this.gridTemplateRows);
 
         this.root.current.setGrid({
             x: this.gridX,
@@ -296,7 +289,6 @@ export default class PageBase extends AGLComponent {
             let x23 = parseInt(areas[2]);
             let y23 = parseInt(areas[3]);
 
-            console.log("Check Resize", horizontalSection.props.id, y13, y23, lastCol)
             if (y13 >= lastCol) {
                 // fully right
                 y13--;
@@ -374,7 +366,6 @@ export default class PageBase extends AGLComponent {
     };
 
     onItemPreDelete = (item) => {
-        console.log("onItemPreDelete 0", item.props.id);
         let allow = this.deleteHorizontalSection(item.props.id);
         if (!allow)
             allow = this.deleteVerticalSection(item.props.id);
@@ -384,8 +375,6 @@ export default class PageBase extends AGLComponent {
 
     // Just for vertical items
     onItemPreResizeStop = (item, e, dir, delta, runtimeStyle) => {
-        console.log("small from top0", this.allSectionsH, this.allSectionsV);
-
         let index = this.allSectionsH.findIndex(h => {
             return h === item.props.id;
         });
@@ -407,7 +396,6 @@ export default class PageBase extends AGLComponent {
         let firstLineTop =
             this.root.current.getGridLineRect(yLineRefs[0], 0, 'y', this.root.current).top;
 
-        console.log("small from top1", this.allSectionsH, this.allSectionsV)
         if (dir === 'n') {
             if (delta.y > 0) { // small from top
                 let targetTop = runtimeStyle.top - firstLineTop;
@@ -423,8 +411,6 @@ export default class PageBase extends AGLComponent {
                         break;
                     }
                 }
-
-                console.log("small from top", this.allSectionsH, this.allSectionsV)
 
                 this.allSectionsH.forEach(horizontalSection => {
                     horizontalSection = this.props.idMan.getItem(horizontalSection);
@@ -730,7 +716,8 @@ export default class PageBase extends AGLComponent {
                 },
                 isSection: true,
             }}
-            resizeSides={['s', 'n']}
+            // resizeSides={['s', 'n']}
+            resizeSides={['s']}
             // onItemPreDelete={this.onItemPreDelete}
         />;
 
@@ -853,7 +840,6 @@ export default class PageBase extends AGLComponent {
             // onItemPreResizeStop={this.onItemPreResizeStop}
         />;
 
-        console.log("this.allSectionsH", this.allSectionsH)
         this.allSectionsH.forEach(horizontalSection => {
             horizontalSection = this.props.idMan.getItem(horizontalSection);
             let gridArea = horizontalSection.getGridArea();
@@ -865,7 +851,6 @@ export default class PageBase extends AGLComponent {
 
             let firstCol = index + 1;
 
-            console.log("Check", horizontalSection.props.id, y1, y2, firstCol)
             if (y1 >= firstCol)
                 y1++;
             if (y2 > firstCol)
@@ -1056,9 +1041,7 @@ export default class PageBase extends AGLComponent {
                 let firstRow = x1;
                 let lastRow = x2;
 
-                console.log("moveRight firstRow:", firstRow, "lastRow:", lastRow, "x13:", x13, "x23:", x23);
                 if (x13 >= firstRow && x23 <= lastRow) {
-                    console.log("moveRight yes");
                     y13--;
                     y23--;
 
@@ -1262,7 +1245,6 @@ export default class PageBase extends AGLComponent {
     updateDesign = (compositeDesign) => {
         let fillColor;
 
-        console.log("updateDesign", compositeDesign.fillColor)
         if (compositeDesign.fillColor)
             fillColor = parseColor(compositeDesign.fillColor, compositeDesign.fillColor.alpha, this.context);
 
@@ -1295,7 +1277,6 @@ export default class PageBase extends AGLComponent {
     render() {
         // let fullWidth = (this.getAgl() && this.getAgl().getSize(false)) || (1002);
         let fullWidth = this.props.pageSize;
-        console.log("PageRender", this.getData())
         return (
             <AGLWrapper tagName="PageBase"
                         aglRef={!this.props.aglRef ? this.root : this.root = this.props.aglRef}

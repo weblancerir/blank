@@ -7,8 +7,10 @@ import AdjustmentPageControllers from "./Adjustment/AdjustmentPageControllers";
 import GridChildContainerFixedHolder from "./GridChildContainerFixedHolder";
 import PaddingInterface from "./Test/PaddingInterface";
 import ParentSelectInterface from "./Test/ParentSelectInterface";
+import {EditorContext} from "./Editor/EditorContext";
 
 export default class GridChildContainer extends React.Component {
+    static contextType = EditorContext;
     constructor(props) {
         super(props);
         this.controllerRef = React.createRef();
@@ -329,7 +331,7 @@ export default class GridChildContainer extends React.Component {
                         />
 
                         {
-                            editor &&
+                            editor && !this.context.production &&
                             <AdjustmentPageControllers
                                 grid={grid}
                                 page={page}

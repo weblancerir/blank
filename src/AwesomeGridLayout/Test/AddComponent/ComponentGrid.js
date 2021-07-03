@@ -181,12 +181,18 @@ export default class ComponentGrid extends React.Component {
                                         }}
                                         draggable
                                     >
-                                        <img
-                                            className="AddComponentItemGridItemImage"
-                                            src={item.imageUrl || '/static/image/box.webp'}
-                                            width={"100%"}
-                                            draggable={false}
-                                        />
+                                        {
+                                            item.imageUrl ?
+                                            <img
+                                                className="AddComponentItemGridItemImage"
+                                                src={item.imageUrl}
+                                                width={"100%"}
+                                                draggable={false}
+                                            />
+                                            :
+                                            <div
+                                                className="AddComponentItemGridItemBorder"/>
+                                        }
                                         {
                                             item.icon &&
                                             <img

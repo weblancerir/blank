@@ -1,14 +1,19 @@
 import React from "react";
 import './Adjustment.css'
 import ResizePanePage from "./ResizePanePage";
+import {EditorContext} from "../Editor/EditorContext";
 
 export default class AdjustmentResizePage extends React.Component {
+    static contextType = EditorContext;
     constructor(props) {
         super(props);
     }
     render () {
         let {top, left, width, height} = this.props;
         if (top === undefined || left === undefined || width === undefined || height === undefined)
+            return null;
+
+        if (this.context.production)
             return null;
 
         return (

@@ -112,7 +112,7 @@ export default class SitePlans extends React.Component {
 
                         <div className="SitePlansUpgradeRoot">
                             <span className="SitePlansRemaining">
-                                {`${moment().diff(moment(lastWebsitePlan.expireDate), "d")} days remaining`}
+                                {`${moment(lastWebsitePlan.expireDate).diff(moment(), "d")} days remaining`}
                             </span>
                             <Button className="SitePlansUpgradeButton" color="primary" variant="contained">
                                 Upgrade Website Plan

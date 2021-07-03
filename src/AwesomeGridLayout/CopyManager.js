@@ -1,12 +1,15 @@
+import React from "react";
 import {createItem} from "./AwesomwGridLayoutHelper";
 import {cloneObject} from "./AwesomeGridLayoutUtils";
 import throttle from "lodash.throttle";
+import {EditorContext} from "./Editor/EditorContext";
 
-export default class CopyManager {
-    constructor(selectManager, pageRef, dragdrop) {
+export default class CopyManager{
+    constructor(selectManager, pageRef, dragdrop, getContext) {
         this.selectManager = selectManager;
         this.pageRef = pageRef;
         this.dragdrop = dragdrop;
+        this.getContext = getContext;
 
         window.addEventListener("keydown",this.handleKeyCodeEvent);
     }
@@ -15,6 +18,10 @@ export default class CopyManager {
         e = e || window.event;
         let key = e.which || e.keyCode; // keyCode detection
         let ctrl = e.ctrlKey ? e.ctrlKey : (key === 17); // ctrl detection
+
+        console.log("handleKeyCodeEvent", this.getContext().isInMenu())
+        if (this.getContext().isInMenu())
+            return;
 
         if ( key === 86 && ctrl ) {
             console.log("ctrl + V");
@@ -52,13 +59,10 @@ export default class CopyManager {
         if (!selectedItem)
             selectedItem = this.selectManager.getSelected() || this.pageRef.current;
 
-        while (!destinationItem)  {
-            if (selectedItem.getFromTempData("isContainer")) {
-                destinationItem = selectedItem;
-            } else {
-                selectedItem = selectedItem.props.parent;
-            }
-        }
+        destinationItem = selectedItem.getContainerParent();
+
+        if (destinationItem.props.isPage)
+            destinationItem = this.copyItem.props.parent;
 
         let style = cloneObject(this.getCopyItem().getFromData("style"));
         let gridItemStyle = cloneObject(this.getCopyItem().getFromData("gridItemStyle"));

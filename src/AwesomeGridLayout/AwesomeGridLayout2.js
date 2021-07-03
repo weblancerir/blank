@@ -53,7 +53,7 @@ export default class AwesomeGridLayout2 extends React.Component{
         this.onPropsChange = new EventTrigger(this);
 
         if (this.props.id === "page")
-            console.log("AwesomeGridLayout2 constructor", props.griddata)
+            console.log("AwesomeGridLayout2 constructor", props.griddata.bpData.laptop.grid)
 
     }
 
@@ -62,7 +62,6 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         if (this.props.isPage) {
             let el = this.rootDivRef.current;
-            console.log("--page-scroll", el.scrollTop, el.scrollHeight, el.clientHeight)
             if (el.scrollHeight - el.clientHeight === 0)
                 document.documentElement.style.setProperty('--page-scroll', 0);
             else
@@ -251,6 +250,9 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         this.setStyle(style, undefined,
             this.props.breakpointmanager.getHighestBpName());
+
+        if (this.props.isPage) console.log("initLayout", this.getCompositeFromData("grid"), this.props.defaultGrid);
+
         this.setGrid(this.getCompositeFromData("grid") || this.props.defaultGrid, undefined,
             this.props.breakpointmanager.getHighestBpName());
     };
@@ -281,14 +283,11 @@ export default class AwesomeGridLayout2 extends React.Component{
             this.getFromTempData("autoDock"),
             this.props.breakpointmanager.getHighestBpName(), true);
 
-        console.log("AwesomeGridLayout2 lateMounted", this.props.id)
         if (this.props.onPageResize) {
-            console.log("AwesomeGridLayout2 lateMounted.onPageResize", this.props.id)
             this.props.onPageResize(size.width, this, true);
         }
 
         if (!this.onChildMountedCalled) {
-            console.log("onChildMountedCalled")
             this.onChildMountedCalled = true;
             this.props.onChildMounted && this.props.onChildMounted(this);
         }
@@ -444,7 +443,6 @@ export default class AwesomeGridLayout2 extends React.Component{
     };
 
     createChildByData = (childData, dynamicComponents, newId, onChildMounted, fixed) => {
-        console.log("createChildByData 1");
         if (this.callOverride("addToSnap", childData, dynamicComponents, newId, onChildMounted, fixed))
             return;
 
@@ -471,7 +469,6 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         let AGLProps = {};
         if (tagName[0] == tagName[0].toUpperCase()) {
-            console.log("createChildByData portalNodeId",props.portalNodeId, (fixed && `${this.props.id}_fixed_holder`))
             AGLProps = {
                 aglRef: this.allChildRefs[props.id],
                 viewRef: this.props.viewRef,
@@ -795,7 +792,6 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         let lastZIndex = this.getNextIndexData(0).lastZIndex;
         let props = newId? newProps: {...childElement.props};
-        console.log("addChild")
         let createdChild = this.createChildByData({
             tagName: childElement.props.tagName? childElement.props.tagName:
                 childElement.type.name? childElement.type.name: childElement.type,
@@ -1093,7 +1089,6 @@ export default class AwesomeGridLayout2 extends React.Component{
     };
 
     onChildDrop = (child, newId, fixed, onNewChildMounted) => {
-        console.log("onChildDrop")
         if (this.callOverride("onChildDrop", child, newId, fixed, onNewChildMounted))
             return;
 
@@ -2877,6 +2872,8 @@ export default class AwesomeGridLayout2 extends React.Component{
             return;
 
         this.setDataInBreakpoint("grid", grid, undefined, breakpointName);
+
+        if (this.props.id === "page") console.log("WGL setGrid", grid, this.props.griddata.bpData.laptop.grid);
         this.setState({grid: grid}, () => {
             if (this.props.gridLine.hasGridLine(this.props.id)) {
                 let size = this.getSize(false);
@@ -3254,7 +3251,6 @@ export default class AwesomeGridLayout2 extends React.Component{
     };
 
     onScroll = (e) => {
-        console.log("onScroll", this.props.id);
         if (this.callOverride("onScroll", e))
             return;
 
@@ -3282,8 +3278,6 @@ export default class AwesomeGridLayout2 extends React.Component{
     };
 
     forceScroll = (e) => {
-        console.log("forceScroll", this.props.id, this.rootDivRef.current.scrollTop, e.deltaY);
-
         clearTimeout(this.scrollReset);
 
         if (!this.targetScroll) this.targetScroll = {
@@ -3423,9 +3417,10 @@ export default class AwesomeGridLayout2 extends React.Component{
         let compositeDesign = getCompositeDesignData(this);
         let compositeTransform = this.getCompositeFromData("transform") || {};
         let compositeStyle = this.getCompositeFromData("style");
+        // let grid = this.getCompositeFromData("grid");
         let overflowData = this.getCompositeFromData("overflowData");
         if (isPage) {
-            console.log("overflowData", overflowData);
+            console.log("Page Render", this.props.griddata.bpData.laptop.grid);
         }
         let anchor = this.getFromTempData("anchor");
         let customStyle = this.getFromTempData("customStyle") || {};

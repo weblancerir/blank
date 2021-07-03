@@ -104,6 +104,11 @@
     height: 100%;
 }
 
+.AddComponentItemGridItemBorder {
+    border: 2px solid black;
+    border-radius: 4px;
+}
+
 .AddComponentItemGridQAImage{
     position: absolute;
     top: 50%;

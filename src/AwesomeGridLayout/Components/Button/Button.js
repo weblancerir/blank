@@ -172,6 +172,7 @@ export default class Button extends AGLComponent{
             data = getCompositeDesignData(this).normal;
 
         let textColor = data.textColor;
+        console.log("Button Text Color", textColor)
         if (textColor)
             textColor = parseColor(textColor, textColor.alpha, this.context);
 

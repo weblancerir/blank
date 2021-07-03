@@ -83,7 +83,7 @@ export default class EditorBoundary extends React.Component{
             this.rootLayoutRef, this.miniMenuHolderRef, this.inspectorRef, this.resizeRef,
             this.helpLinesRef, this.hoverRef);
         this.snap = new SnapManager(5, this.snapSvgRef);
-        this.copyMan = new CopyManager(this.select, this.rootLayoutRef);
+        this.copyMan = new CopyManager(this.select, this.rootLayoutRef, undefined, this.getContext);
         this.idMan = new IdManager('comp');
         this.undoredo = new UndoRedo(100, document, this.idMan);
         this.gridLine = new GridLineManager(this.gridContainerRef);
@@ -121,14 +121,24 @@ export default class EditorBoundary extends React.Component{
                 console.log("ctrl + E");
                 this.exportSiteData();
             }
+            if ( key === 66 && ctrl ) {
+                e.preventDefault();
+                console.log("ctrl + B");
+                console.log("isInMenu", this.context.isInMenu());
+            }
         });
 
 
     };
 
+    getContext = () => {
+        return this.context;
+    }
+
     initContext = () => {
         this.context.initContext({
             editor: this,
+            menuHolderRef: this.miniMenuHolderRef,
             rightMenus: {
                 addComponent: {
                     state: false,
@@ -170,6 +180,10 @@ export default class EditorBoundary extends React.Component{
     componentDidMount(){
         this.initContext();
         this.loadSiteData();
+    }
+
+    componentWillUnmount(){
+        this.breakpointmanager.dispose();
     }
 
     loadSiteData = () => {
@@ -293,10 +307,6 @@ export default class EditorBoundary extends React.Component{
         this.setState({zoomLevel: zoomLevel || 100});
     };
 
-    componentWillUnmount(){
-        this.breakpointmanager.dispose();
-    }
-
     onPageZoomChange = (zoomScale) => {
         this.postMessage({
             type: "Holder",
@@ -371,7 +381,6 @@ export default class EditorBoundary extends React.Component{
 
         this.onResize(undefined, width);
 
-        console.log("onPageResize", width)
         this.context.setPageSizeWidth(width);
 
         if (result.changed || force) {
@@ -388,20 +397,26 @@ export default class EditorBoundary extends React.Component{
         this.onResizeT(e, width);
     };
 
-    onResizeD = debounce((e, width) => {
+    handleResize = (e, width) => {
         if (!this.rootLayoutRef.current)
             return;
 
         if (!width)
             width = this.rootLayoutRef.current.getSize(false, true).width;
+
         document.documentElement.style.setProperty('--vw-ratio', width / window.innerWidth);
+
+        if (this.context.production) {
+            this.onPageResize(width);
+        }
+    }
+
+    onResizeD = debounce((e, width) => {
+        this.handleResize(e, width);
     }, 100);
 
     onResizeT = throttle((e, width) => {
-        if (!width)
-            width = this.rootLayoutRef.current.getSize(false, true).width;
-
-        document.documentElement.style.setProperty('--vw-ratio', width / window.innerWidth);
+        this.handleResize(e, width);
     }, 100);
 
     onPageResizeStart = () => {

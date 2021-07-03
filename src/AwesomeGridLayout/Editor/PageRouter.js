@@ -50,10 +50,8 @@ class PageRouterComponent extends React.Component {
             if (!page)
                 page = getHomePage(siteData);
 
-            window.requestAnimationFrame(() => {
-                console.log("Router isPageChanged");
-                this.context.setPageData(page.props.pageId);
-            })
+            console.log("Router firstLoad");
+            this.context.setPageData(page.props.pageId);
 
             return {
                 changed: true,

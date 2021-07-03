@@ -282,6 +282,7 @@ export default class EditorContextProvider extends React.Component {
 
     setPageData = (pageId, force, callback) => {
         if (this.state.pageData && !force && this.state.pageData.props.pageId === pageId) {
+            callback && callback();
             return;
         }
 

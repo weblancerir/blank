@@ -64,6 +64,7 @@ export default class EditorBoundary extends React.Component{
     // Declare all managers & refs
     init = (props) => {
         this.rootLayoutRef = React.createRef();
+        this.routerRef = React.createRef();
         this.snapSvgRef = React.createRef();
         this.gridContainerRef = React.createRef();
         this.gridEditorRef = React.createRef();
@@ -291,9 +292,19 @@ export default class EditorBoundary extends React.Component{
             this.idMan.clear();
             this.snap.clearSnaps();
 
-            this.context.setPageData(undefined ,force, () => {
-                this.context.setPageData(pageId, false, callback);
-            });
+            if (!this.context.production) {
+                this.context.setPageData(undefined ,force, () => {
+                    this.context.setPageData(pageId, false, callback);
+                });
+            } else {
+                let page = Object.values(this.context.siteData.allPages).find(pageData => {
+                    return pageData.props.pageId === pageId;
+                });
+                if (!page)
+                    page = getHomePage(this.context.siteData);
+
+                this.redirect(`/${page.props.pageName.toLowerCase()}`);
+            }
         };
         if (this.rootLayoutRef.current)
             this.rootLayoutRef.current.onSelect(true, todo);
@@ -571,6 +582,13 @@ export default class EditorBoundary extends React.Component{
         this.setState({modal: undefined}, callback);
     }
 
+    redirect = (redirectPath, redirectProps) => {
+        if (!this.routerRef.current)
+            return;
+
+        this.routerRef.current.redirect(redirectPath, redirectProps);
+    };
+
     render() {
         console.log("EditorBoundry Render");
 
@@ -638,6 +656,7 @@ export default class EditorBoundary extends React.Component{
                                 <PageView
                                     onScrollBoundary={this.onScrollBoundary}
                                     rootLayoutRef={this.rootLayoutRef}
+                                    routerRef={this.routerRef}
                                 >
                                     {
                                         this.context.pageData &&

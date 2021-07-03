@@ -21,19 +21,10 @@ class PageRouterComponent extends React.Component {
 
     componentDidMount () {
         this.mounted = true;
-        window.onpopstate = (e)=> {
-            if(this.mounted) {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log("Back", this.props.location, this.changingPage)
-                if (this.changingPage) {
-                    this.changingPage = false;
-                    this.props.history.goBack(1);
-                } else {
-                    this.backClicked = true;
-                }
-            }
-        }
+    }
+
+    componentWillUnmount () {
+        this.mounted = false;
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -51,90 +42,45 @@ class PageRouterComponent extends React.Component {
         return false;
     }
 
-    componentWillUnmount () {
-        this.mounted = false;
-    }
+    redirect = (redirectPath, redirectProps) => {
+        let {siteData, pageData, setPageData} = this.props;
+        console.log("redirect 1", redirectPath, redirectProps);
 
-    isPageChanged = () => {
-        let {pageData, siteData} = this.props;
-
-        if (!pageData)
-            return {changed: false};
-
-        console.log("Router isPageChanged", this.props.location);
-        let currentPath = (this.props.location.location || this.props.location).pathname;
-
-        if (this.firstLoad) {
-            this.firstLoad = false;
-
+        if (`/${pageData.props.pageName.toLowerCase()}` === redirectPath) {
+            this.redirectPath = redirectPath;
+            console.log("redirect 2", redirectPath, redirectProps);
+            this.setState({reload: true, redirectProps});
+        } else {
             let page = Object.values(siteData.allPages).find(pageData => {
-                return `/${pageData.props.pageName.toLowerCase()}` === currentPath.toLowerCase();
+                return pageData.props.isHome;
             });
+
             if (!page)
                 page = getHomePage(siteData);
 
-            console.log("Router firstLoad");
-
-            this.props.setPageData(page.props.pageId, true, () => {
-                console.log("Router firstLoad forceUpdate");
-                this.forceUpdate();
-            });
-
-            this.changingPage = true;
-
-            return {
-                changed: true,
-                newPath: currentPath
-            }
+            setPageData(page.props.pageId, false, () => {
+                this.redirectPath = redirectPath;
+                console.log("redirect 3", redirectPath, redirectProps);
+                this.setState({reload: true, redirectProps});
+            })
         }
-
-        let newPath;
-        let oldPath
-        if (this.backClicked) {
-            this.backClicked = false;
-            newPath = currentPath.toLowerCase();
-            let page = Object.values(siteData.allPages).find(pageData => {
-                return `/${pageData.props.pageName.toLowerCase()}` === newPath;
-            });
-            this.props.setPageData(page.props.pageId, true);
-            return {changed: false}
-        }
-        else
-        {
-            newPath = `/${pageData.props.pageName.toLowerCase()}`;
-            oldPath = currentPath.toLowerCase();
-        }
-
-        let changed = (newPath !== oldPath);
-
-        if (changed) {
-            this.changingPage = true;
-        }
-
-        return {changed, newPath, oldPath}
-    }
+    };
 
     render () {
-        // let {siteData, pageData} = this.context;
         let {siteData, pageData} = this.props;
 
         console.log("RouterPath", this.props.location, !!pageData);
-        // if (!pageData)
-        //     return null;
 
-        let {changed, newPath, oldPath} = this.isPageChanged();
-        if (changed) {
-            console.log("RouterPath changed", newPath, oldPath);
-            if (newPath){
-                return (
-                    <Redirect to={{ pathname: newPath}}
-                              push={true} />
-                )
-            } else {
-                return null;
-            }
+        if (this.redirectPath) {
+            let redirectPath = this.redirectPath;
+            delete this.redirectPath;
+            return <Redirect to={{
+                pathname: redirectPath,
+                state: { from: this.props.location.pathname }
+            }}
+            />
         }
-        console.log("RouterPath final", this.props.location);
+
         return (
             <Switch>
                 {
@@ -154,9 +100,8 @@ class PageRouterComponent extends React.Component {
                         <Redirect
                             to={{
                                 pathname: `/${getHomePage(siteData).props.pageName.toLowerCase()}`,
-                                // state: { from: "/" }
+                                state: { from: "/" }
                             }}
-                            push={false}
                         />
                     </Route>
                 }
@@ -166,7 +111,7 @@ class PageRouterComponent extends React.Component {
 }
 
 const MainRouter = withRouter(props =>
-    <PageRouterComponent {...props}/>
+    <PageRouterComponent ref={props.routerRef} {...props}/>
 );
 
 const PageRouter = (props) => {

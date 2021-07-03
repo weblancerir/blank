@@ -95,7 +95,7 @@ const MainRouter = withRouter(props =>
 
 const PageRouter = (props) => {
     return (
-        <Router>
+        <Router basename={'application'}>
             <MainRouter {...props}/>
         </Router>
     )

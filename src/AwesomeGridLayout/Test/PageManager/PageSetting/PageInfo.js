@@ -34,7 +34,9 @@ export default class PageInfo extends React.Component {
         pageData.props.pageName = this.newPageName;
         this.newPageName = undefined;
 
-        this.context.update();
+        this.context.update(() => {
+            this.context.redirect(pageData.props.pageId, true);
+        });
 
         resolveDefaultMenu(this.context.siteData);
     };

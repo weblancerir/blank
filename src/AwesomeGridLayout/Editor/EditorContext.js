@@ -290,6 +290,7 @@ export default class EditorContextProvider extends React.Component {
     }
 
     setPageData = (pageId, force, callback) => {
+        console.log("EditorContext setPageData0");
         if (this.state.pageData && !force && this.state.pageData.props.pageId === pageId) {
             callback && callback();
             return;
@@ -301,6 +302,7 @@ export default class EditorContextProvider extends React.Component {
             return;
         }
 
+        console.log("EditorContext setPageData1.5");
         if (!this.state.pageData) {
             let pageData = this.state.siteData.allPages[pageId];
 
@@ -314,6 +316,7 @@ export default class EditorContextProvider extends React.Component {
             return;
         }
 
+        console.log("EditorContext setPageData2.5");
         if (!this.state.preview) {
             let todo = () => {
                 this.state.editor.idMan.clear();
@@ -331,6 +334,7 @@ export default class EditorContextProvider extends React.Component {
                     this.setState({pageData}, callback);
                 });
             }
+            console.log("EditorContext setPageData3.5");
             if (this.state.editor.rootLayoutRef.current) {
                 this.state.editor.rootLayoutRef.current.onSelect(true, todo);
             } else {
@@ -339,6 +343,7 @@ export default class EditorContextProvider extends React.Component {
         }
         else
         {
+            console.log("EditorContext setPageData4.5");
             this.state.editor.idMan.clear();
             this.state.editor.snap.clearSnaps();
 

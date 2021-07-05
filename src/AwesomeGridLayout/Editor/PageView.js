@@ -38,11 +38,13 @@ export default class PageView extends React.Component {
                     setPageData={setPageData}
                     pageName={pageName}
                     routerRef={routerRef}
+                    isProduction
                 >
                     {this.props.children}
                 </PageRouter>
             )
         } else {
+            console.log("PageView",  this.context.editor ? this.context.editor.idMan.allId : "No Editor")
             return (
                 <div
                     className="EditorBoundaryPageHolder"

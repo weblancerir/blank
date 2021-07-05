@@ -92,7 +92,10 @@ export default class PageItem extends React.Component {
             pageData.props.pageName = this.newPageName;
             this.newPageName = undefined;
 
-            editor.setState({reload: true});
+            console.log("rename page 1");
+            editor.setState({reload: true}, () => {
+                this.context.redirect(pageData.props.pageId, true);
+            });
         }
 
         resolveDefaultMenu(this.context.siteData);

@@ -84,8 +84,8 @@ export default class HorizontalMenuItem extends React.Component {
                 <LinkedTag
                     linkData={menuItem.linkData}
                     style={{
-                        width: "unset",
-                        height: "unset"
+                        // width: "unset",
+                        // height: "unset"
                     }}
                 >
                     {menuItem.name}

@@ -33,7 +33,7 @@
     "react-dropzone": "^11.3.2",
     "react-easy-crop": "^3.5.1",
     "react-loading": "^2.0.3",
-    "react-router-dom": "5.1.7",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-scrollable-anchor": "0.6.1",
     "react-visibility-sensor": "5.1.1",

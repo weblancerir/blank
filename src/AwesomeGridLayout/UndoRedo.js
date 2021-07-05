@@ -7,7 +7,7 @@ export default class UndoRedo {
         this.max = max || 20;
         this.idMan = idMan;
 
-        document.addEventListener('keydown', (e) => {
+        window.addEventListener('keydown', (e) => {
             let key = e.which || e.keyCode; // keyCode detection
             let ctrl = e.ctrlKey ? e.ctrlKey : (key === 17); // ctrl detection
             let shift = e.shiftKey ? e.shiftKey : (key === 16); // ctrl detection
@@ -18,12 +18,6 @@ export default class UndoRedo {
                 this.redo();
             }
         });
-
-        // document.addEventListener('keydown', (event) => {
-        //     // if (event.ctrlKey && event.key === 'Z') {
-        //     //     this.redo();
-        //     // }
-        // });
     }
 
     getQueueObject = (func, undo, power) => {
@@ -35,6 +29,7 @@ export default class UndoRedo {
     };
 
     add = (func, undo, power) => {
+        console.log("ADD")
         this.undoQueue.unshift(this.getQueueObject(func, undo, power));
         if (this.undoQueue.length > this.max)
             this.undoQueue.pop();
@@ -58,8 +53,24 @@ export default class UndoRedo {
 
         while (power > 0) {
             power--;
-            this.undoFunc();
+            let backObject = this.undoFunc();
+            if (backObject) {
+                let tempPower = backObject.power;
+                backObject.power = object.power;
+                object.power = tempPower;
+            }
         }
+
+        if (this.undoQueue[0] && this.undoQueue[0].power === 0) {
+            let backObject = this.undoFunc();
+            if (backObject) {
+                let tempPower = backObject.power;
+                backObject.power = object.power;
+                object.power = tempPower;
+            }
+        }
+
+        return object;
     };
 
     hasUndo = () => {
@@ -67,13 +78,41 @@ export default class UndoRedo {
     };
 
     redo = throttle(() => {
+        this.redoFunc();
+    }, 100);
+
+    redoFunc = () => {
         if (this.redoQueue.length === 0)
             return;
 
         let object = this.redoQueue.shift();
+        let power = object.power || 1;
+
+        power--;
         object.redo(this.idMan);
         this.undoQueue.unshift(object);
-    }, 100);
+
+        while (power > 0) {
+            power--;
+            let backObject = this.redoFunc();
+            if (backObject) {
+                let tempPower = backObject.power;
+                backObject.power = object.power;
+                object.power = tempPower;
+            }
+        }
+
+        if (this.redoQueue[0] && this.redoQueue[0].power === 0) {
+            let backObject = this.redoFunc();
+            if (backObject) {
+                let tempPower = backObject.power;
+                backObject.power = object.power;
+                object.power = tempPower;
+            }
+        }
+
+        return object;
+    }
 
     hasRedo = () => {
         return this.redoQueue.length > 0;

@@ -6,6 +6,7 @@ import ReactLoading from "react-loading";
 import UploadButton from "../../../Components/FileManager/Components/UploadButton";
 import FileManagerHelper from "../../../Components/FileManager/FileManagerHelper";
 import {getRandomLinkId} from "../../../Components/Text/TextHelper";
+import Confirm from "../Components/Confirm";
 
 export default class SiteSetting extends React.Component {
     static contextType = EditorContext;
@@ -75,6 +76,9 @@ export default class SiteSetting extends React.Component {
     }
 
     checkValidation = (type) => {
+        if (!type)
+            return true;
+
         switch (type.toLowerCase()) {
             case "name": {
                 let {website} = this.context;
@@ -215,6 +219,16 @@ export default class SiteSetting extends React.Component {
         });
     }
 
+    deleteWebsite = () => {
+        this.onWebsiteChange(undefined, {archive: "hidden"}, () => {
+            this.context.postMessageToHolder({
+                type: "Holder",
+                func: "closeHolder",
+                inputs: []
+            });
+        });
+    }
+
     render() {
         let {siteData, website} = this.context;
         let isPublished = website.metadata.isPublished;
@@ -287,7 +301,7 @@ export default class SiteSetting extends React.Component {
                             Change Description
                         </Button>
                     </div>
-                    <div className="SitSettingFavRoot SitSettingLastRoot">
+                    <div className="SitSettingFavRoot">
                         <div className="SitSettingFavLeft">
                              <span className="SitSettingNameTitle">
                             Website Fav Icon
@@ -327,6 +341,22 @@ export default class SiteSetting extends React.Component {
                             />
                         }
                     </div>
+                    <div className="SitSettingNameRoot SitSettingLastRoot">
+                        <span className="SitSettingNameTitle">
+                            Delete Website
+                        </span>
+                        <span className="SitSettingNameDesc">
+                            Delete your website to hide from your dashboard. you can't rollback this action without calling weblancer operator
+                        </span>
+
+                        <Button className="SitSettingNameButton" variant="contained" color="primary"
+                                onClick={() => {
+                                    this.setState({deleteConfirm: true})
+                                }}
+                        >
+                            Delete Website
+                        </Button>
+                    </div>
                 </div>
 
                 {
@@ -338,6 +368,16 @@ export default class SiteSetting extends React.Component {
                                       width={'85px'}
                         />
                     </div>
+                }
+
+                {
+                    this.state.deleteConfirm &&
+                    <Confirm
+                        onClose={() => {this.setState({deleteConfirm: false})}}
+                        title={"Alert !!!"}
+                        message={"Are you sure about deleting this website ?!"}
+                        onYes={this.deleteWebsite}
+                    />
                 }
             </div>
         )

@@ -1,0 +1,18 @@
+.ConfirmYes {
+    margin-top: 16px !important;
+    width: 50% ;
+    background-color: #21c11b !important;
+    text-transform: none !important;
+}
+
+.ConfirmNo {
+    margin-top: 16px !important;
+    width: 50% ;
+    background-color: #c11b1b !important;
+    text-transform: none !important;
+}
+
+.ConfirmButtonRoot {
+    display: flex;
+    column-gap: 16px;
+}

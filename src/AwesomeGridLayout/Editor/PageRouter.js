@@ -77,9 +77,9 @@ class PageRouterComponent extends React.Component {
     };
 
     render () {
-        let {siteData, pageData, pageName} = this.props;
+        let {siteData, pageData, pageName, isProduction} = this.props;
 
-        console.log("RouterPath", this.props.location, !!pageData, pageName);
+        console.log("RouterPath", this.redirectPath, this.props.location, !!pageData, pageName);
 
         if (this.redirectPath) {
             let redirectPath = this.redirectPath;
@@ -95,11 +95,14 @@ class PageRouterComponent extends React.Component {
         }
 
         if (pageName && this.props.location.pathname !== "/" && `/${pageName.toLowerCase()}` !== this.props.location.pathname) {
-            window.requestAnimationFrame(() => {
-                this.dontPush = true;
-                this.redirect(this.props.location.pathname);
-            })
-            return null;
+            if (isProduction) {
+                console.log("Here");
+                window.requestAnimationFrame(() => {
+                    this.dontPush = true;
+                    this.redirect(this.props.location.pathname);
+                })
+                return null;
+            }
         }
 
         return (

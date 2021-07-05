@@ -48,13 +48,17 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         initGriddata(props.griddata, this.props.breakpointmanager);
 
+        if (this.props.id === "page") {
+            this.props.idMan.clear();
+            this.props.snap.clearSnaps();
+        }
+
         this.props.idMan.setItem(this.props.id, this);
 
         this.onPropsChange = new EventTrigger(this);
 
         if (this.props.id === "page")
             console.log("AwesomeGridLayout2 constructor", props.griddata.bpData.laptop.grid)
-
     }
 
     componentDidMount () {
@@ -106,6 +110,7 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         let lastZIndex = this.getNextIndexData(0).lastZIndex;
         let savedChildren = this.props.griddata.savedChildren;
+        console.log("init", savedChildren)
         if (!savedChildren) {
             this.props.griddata.savedChildren = {};
             savedChildren = this.props.griddata.savedChildren;
@@ -205,6 +210,7 @@ export default class AwesomeGridLayout2 extends React.Component{
                 });
             }
         } else {
+            console.log("render savedChildren", savedChildren)
             let savedChildrenArray = Object.values(savedChildren);
             savedChildrenArray.sort((a, b) => {
                 if (a.zIndex > b.zIndex) {
@@ -832,9 +838,9 @@ export default class AwesomeGridLayout2 extends React.Component{
         this.updateLayout();
     };
 
-    onDeletingChild = (item) => {
+    onDeletingChild = (item, fromUndoRedo) => {
         if (this.props.onDeletingChild)
-            this.props.onDeletingChild(item);
+            this.props.onDeletingChild(item, fromUndoRedo);
     }
 
     delete = (fromUndoRedo) => {
@@ -851,9 +857,10 @@ export default class AwesomeGridLayout2 extends React.Component{
                 return;
         }
 
-        this.props.parent.onDeletingChild(this);
+        console.log("delete", fromUndoRedo)
+        this.props.parent.onDeletingChild(this, fromUndoRedo);
 
-        if (!fromUndoRedo) {
+        if (!fromUndoRedo && !this.props.isSection) {
             let itemId = this.props.id;
             let parentId = this.props.parent.props.id;
             let childData = cloneObject(this.props.parent.getChildData(itemId));
@@ -2891,7 +2898,7 @@ export default class AwesomeGridLayout2 extends React.Component{
     };
 
     getGridLineRect = (ref, index, dir, item) => {
-        if (ref.current) {
+        if (ref.current && ref.current.rect) {
             return ref.current.rect;
         }
 

@@ -250,7 +250,7 @@ export default class Button extends AGLComponent{
     render() {
         return (
             <AGLWrapper
-                tagName="Image"
+                tagName="Button"
                 aglComponent={this}
                 {...this.props}
                 style={{

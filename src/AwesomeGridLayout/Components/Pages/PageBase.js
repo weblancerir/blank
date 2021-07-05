@@ -2,13 +2,14 @@ import React from "react";
 import AGLWrapper from "../Helpers/AGLWrapper";
 import Section from "../Containers/Section";
 import AGLComponent from "../Helpers/AGLComponent";
-import {initGriddata, swapArrayElements} from "../../AwesomeGridLayoutUtils";
+import {cloneObject, initGriddata, swapArrayElements} from "../../AwesomeGridLayoutUtils";
 import InspectorBreadcrumbs from "../../Test/Inspector/InspectorBreadcrumbs";
 import InspectorPadding from "../../Test/Inspector/InspectorPadding";
 import InspectorBackground from "../../Test/Inspector/InspectorBackground";
 import './PageBase.css';
 import {getCompositeDesignData, isHideInBreakpoint, parseColor, setStyleParam} from "../../AwesomwGridLayoutHelper";
 import {EditorContext} from "../../Editor/EditorContext";
+import DynamicComponents from "../../Dynamic/DynamicComponents";
 
 const mainColTemplate = "minmax(0px,1fr)";
 
@@ -141,7 +142,8 @@ export default class PageBase extends AGLComponent {
         }));
     };
 
-    deleteHorizontalSection = (id) => {
+    deleteHorizontalSection = (id, fromUndoRedo) => {
+        console.log("deleteHorizontalSection");
         let index = this.allSectionsH.findIndex(h => {
             return h === id;
         });
@@ -221,6 +223,21 @@ export default class PageBase extends AGLComponent {
 
         this.getAgl().invalidateSize();
         this.props.select.onScrollItem();
+
+        let sectionProps = cloneObject(this.getAgl().getChildData(id)).props;
+        let newAglId;
+        console.log("Why", fromUndoRedo)
+        if (!fromUndoRedo) {
+            this.props.undoredo.add((idMan) => {
+                let item = idMan.getItem(newAglId);
+                item.delete(true);
+            }, (idMan) => {
+                this.addHorizontalSection(index, sectionProps.tagName, DynamicComponents, sectionProps.as, (agl) => {
+                    newAglId = agl.props.id;
+                }, sectionProps, sectionProps.id, true);
+            });
+        }
+
         return true;
     };
 
@@ -233,7 +250,8 @@ export default class PageBase extends AGLComponent {
         })) || null;
     };
 
-    deleteVerticalSection = (id) => {
+    deleteVerticalSection = (id, fromUndoRedo) => {
+        console.log("deleteVerticalSection");
         let index = this.allSectionsV.findIndex(h => {
             if (h === null)
                 return false;
@@ -289,12 +307,9 @@ export default class PageBase extends AGLComponent {
             let y23 = parseInt(areas[3]);
 
             if (y13 >= lastCol) {
-                // fully right
                 y13--;
                 y23--;
-            // } else if (y23 >= lastRow) {
-            } else if (y23 >= lastCol) { // TODO Check
-                // partially right
+            } else if (y23 >= lastCol) {
                 y23--;
             }
 
@@ -320,6 +335,20 @@ export default class PageBase extends AGLComponent {
 
         this.getAgl().invalidateSize();
         this.props.select.onScrollItem();
+
+        let sectionProps = cloneObject(this.getAgl().getChildData(id)).props;
+        let newAglId;
+        if (!fromUndoRedo) {
+            this.props.undoredo.add((idMan) => {
+                let item = idMan.getItem(newAglId);
+                item.delete(true);
+            }, (idMan) => {
+                this.addVerticalSection(index, sectionProps.tagName, DynamicComponents, sectionProps.as, (agl) => {
+                    newAglId = agl.props.id;
+                }, sectionProps, sectionProps.id, true);
+            });
+        }
+
         return true;
     };
 
@@ -364,10 +393,11 @@ export default class PageBase extends AGLComponent {
         }
     };
 
-    onItemPreDelete = (item) => {
-        let allow = this.deleteHorizontalSection(item.props.id);
+    onItemPreDelete = (item, fromUndoRedo) => {
+        console.log("onItemPreDelete", fromUndoRedo)
+        let allow = this.deleteHorizontalSection(item.props.id, fromUndoRedo);
         if (!allow)
-            allow = this.deleteVerticalSection(item.props.id);
+            allow = this.deleteVerticalSection(item.props.id, fromUndoRedo);
 
         return allow;
     };
@@ -675,7 +705,8 @@ export default class PageBase extends AGLComponent {
             , this.props.breakpointmanager.getHighestBpName());
     };
 
-    addHorizontalSection = (index, tagName, dynamicComponents, as, callback) => {
+    addHorizontalSection = (index, tagName, dynamicComponents, as, callback, props, forceNewId, fromUndoRedo) => {
+        console.log("addHorizontalSection");
         this.gridX++;
         this.gridTemplateRows = new Array(this.allSectionsH.length + 1).fill(0).map(a => {
             return "auto";
@@ -744,6 +775,7 @@ export default class PageBase extends AGLComponent {
             verticalSection.setGridArea(gridArea, this.props.breakpointmanager.getHighestBpName());
         });
         this.allSectionsH.forEach(horizontalSection => {
+            console.log("horizontalSection 1", this.props.idMan.allId)
             horizontalSection = this.props.idMan.getItem(horizontalSection);
             let gridArea = horizontalSection.getGridArea();
             let areas = gridArea.split('/');
@@ -769,11 +801,30 @@ export default class PageBase extends AGLComponent {
             gridTemplateRows: this.gridTemplateRows,
             gridTemplateColumns: this.gridTemplateColumns
         }, undefined, this.props.breakpointmanager.getHighestBpName());
-        this.root.current.addChild(section, undefined, undefined, undefined, (agl) => {
+
+        let newId = forceNewId || (props && this.props.idMan.getId(undefined, props.id));
+        let newProps = props || (forceNewId && section.props);
+        let newAglId;
+
+        this.root.current.addChild(section, newId, newProps, undefined, (agl) => {
             this.allSectionsH.splice(index, 0, agl.props.id);
+            newAglId = agl.props.id;
             if (callback)
                 callback(agl);
         }, undefined, true);
+
+        let sectionProps;
+        if (!fromUndoRedo) {
+            this.props.undoredo.add((idMan) => {
+                this.addHorizontalSection(index, tagName, dynamicComponents, as, (agl) => {
+                    newAglId = agl.props.id;
+                }, sectionProps, forceNewId, true);
+            }, (idMan) => {
+                sectionProps = cloneObject(this.getAgl().getChildData(newAglId)).props;
+                let item = idMan.getItem(newAglId);
+                item.delete(true);
+            });
+        }
     };
 
     getMainColIndex = (insertIndex) => {
@@ -787,7 +838,8 @@ export default class PageBase extends AGLComponent {
         return index;
     };
 
-    addVerticalSection = (index, tagName, dynamicComponents, as, callback) => {
+    addVerticalSection = (index, tagName, dynamicComponents, as, callback, props, forceNewId, fromUndoRedo) => {
+        console.log("addVerticalSection");
         this.gridY++;
 
         let currentSectionIndex = index !== 0 ? index - 1 : 0;
@@ -835,8 +887,6 @@ export default class PageBase extends AGLComponent {
                 minHeight: "auto",
             }}
             resizeSides={['e', 'w', 'n', 's']}
-            // onItemPreDelete={this.onItemPreDelete}
-            // onItemPreResizeStop={this.onItemPreResizeStop}
         />;
 
         this.allSectionsH.forEach(horizontalSection => {
@@ -894,12 +944,30 @@ export default class PageBase extends AGLComponent {
             gridTemplateRows: this.gridTemplateRows,
             gridTemplateColumns: this.gridTemplateColumns
         }, undefined, this.props.breakpointmanager.getHighestBpName());
-        this.root.current.addChild(section, undefined, undefined, undefined, (agl) => {
+
+        let newId = forceNewId || (props && this.props.idMan.getId(undefined, props.id));
+        let newProps = props || (forceNewId && section.props);
+        let newAglId;
+        this.root.current.addChild(section, newId, newProps, undefined, (agl) => {
             this.allSectionsV.splice(index, 0, agl.props.id);
             this.props.select.onScrollItem();
+            newAglId = agl.props.id;
             if (callback)
                 callback(agl);
         }, undefined, true);
+
+        let sectionProps;
+        if (!fromUndoRedo) {
+            this.props.undoredo.add((idMan) => {
+                this.addVerticalSection(index, tagName, dynamicComponents, as, (agl) => {
+                    newAglId = agl.props.id;
+                }, sectionProps, forceNewId, true);
+            }, (idMan) => {
+                sectionProps = cloneObject(this.getAgl().getChildData(newAglId)).props;
+                let item = idMan.getItem(newAglId);
+                item.delete(true);
+            });
+        }
     };
 
     moveUp = (id) => {

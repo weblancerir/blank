@@ -743,7 +743,7 @@ export function setDataInBreakpoint(prop, value, item, addToUndo, breakpointName
             setDataInBreakpoint(prop, saveValue, idMan.getItem(itemId), false, breakpointName, updateLayout);
         }, (idMan) => {
             setDataInBreakpoint(prop, oldValue, idMan.getItem(itemId), false, breakpointName, updateLayout);
-        }, addToUndo);
+        });
     }
     item.setDataInBreakpoint(prop, value, undefined, breakpointName);
 
@@ -790,7 +790,7 @@ export function setStyleParam (param, value, item, addToUndo, breakpointName, do
             setStyleParam(param, value, idMan.getItem(itemId), false, breakpointName, dontAddToSnap);
         }, (idMan) => {
             setStyle(oldStyle, idMan.getItem(itemId));
-        }, addToUndo);
+        });
     }
 
     let style = item.hasDataInBreakPoint("style", undefined, breakpointName) || {};

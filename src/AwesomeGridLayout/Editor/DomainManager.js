@@ -40,7 +40,7 @@ DomainManager.getWebsiteName = (website, siteData) => {
     if (website)
         return website.name;
 
-    return siteData.websiteName;
+    return siteData ? siteData.websiteName : "";
 }
 
 export default DomainManager;

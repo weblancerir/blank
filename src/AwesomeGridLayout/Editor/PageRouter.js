@@ -142,6 +142,7 @@ const MainRouter = withRouter(props =>
 );
 
 const PageRouter = (props) => {
+    console.log("props.siteData", props.siteData)
     let websiteName = DomainManager.getWebsiteName(props.website, props.siteData);
     return (
         <Router basename={websiteName}>

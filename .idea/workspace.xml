@@ -5,26 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ee3df027-738a-4634-bc4a-d7b9163847a2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/static/icon/fileicon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Image/Menus/ScaleProportionallyInspectorSize.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/DomainManager.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/AwesomeGridLayout2.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/AwesomeGridLayout2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Button/Button.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Button/Button.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Button/Menus/ButtonTextAppearance.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Button/Menus/ButtonTextAppearance.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManager.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManager.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Image/Image.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Image/Image.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Image/Image.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Image/Image.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Video/Video.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Video/Video.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteDashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteSetting.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteSetting.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/DomainManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/DomainManager.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/PageRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/PageRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/PageView.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/PageView.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/MenuBase/MenuBase.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/MenuBase/MenuBase.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Inspector/InspectorSize.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Inspector/InspectorSize.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/SeoGoogle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/SeoGoogle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/SocialShare.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/SocialShare.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -283,7 +266,7 @@
       <workItem from="1625495182100" duration="18311000" />
       <workItem from="1625636597220" duration="596000" />
       <workItem from="1625752549206" duration="9960000" />
-      <workItem from="1625820733437" duration="6432000" />
+      <workItem from="1625820733437" duration="6963000" />
     </task>
     <servers />
   </component>

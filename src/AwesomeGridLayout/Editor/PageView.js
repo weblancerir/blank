@@ -31,18 +31,22 @@ export default class PageView extends React.Component {
         let {routerRef} = this.props;
         let pageName = pageData? pageData.props.pageName: "";
         if (this.context.production) {
-            return (
-                <PageRouter
-                    siteData={siteData}
-                    pageData={pageData}
-                    setPageData={setPageData}
-                    pageName={pageName}
-                    routerRef={routerRef}
-                    isProduction
-                >
-                    {this.props.children}
-                </PageRouter>
-            )
+            if (siteData) {
+                return (
+                    <PageRouter
+                        siteData={siteData}
+                        pageData={pageData}
+                        setPageData={setPageData}
+                        pageName={pageName}
+                        routerRef={routerRef}
+                        isProduction
+                    >
+                        {this.props.children}
+                    </PageRouter>
+                )
+            } else {
+                return null;
+            }
         } else {
             console.log("PageView",  this.context.editor ? this.context.editor.idMan.allId : "No Editor")
             return (

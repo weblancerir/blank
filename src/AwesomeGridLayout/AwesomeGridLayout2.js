@@ -2450,6 +2450,10 @@ export default class AwesomeGridLayout2 extends React.Component{
             });
         }
 
+        this.callPre("setSize",
+            dir, delta, group, relativeX, relativeY, height, width, firstRelativeX,
+            firstRelativeY, firstWidth, firstHeight, parentRect, fromUndoRedo);
+
         if (this.hasOverride("setSize"))
             return this.callOverride("setSize",
                 dir, delta, group, relativeX, relativeY, height, width, firstRelativeX,
@@ -3410,6 +3414,21 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (this.state.showAnimation)
             window.requestAnimationFrame(this.onAnimationFrame);
     }
+
+    getPreProp = (funcName) => {
+        let key = Object.keys(this.props).find(key => {
+            return key === `${funcName}Pre`;
+        });
+
+        return this.props[key];
+    };
+
+    callPre = (funcName, ...args) => {
+        let pre = this.getPreProp(funcName);
+        if (pre) {
+            return pre(this, ...args);
+        }
+    };
 
     render () {
         let {className, animationCss, as, editor, select, id, getStaticChildren,

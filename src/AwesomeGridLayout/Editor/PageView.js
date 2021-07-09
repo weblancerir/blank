@@ -27,7 +27,7 @@ export default class PageView extends React.Component {
     }
 
     render () {
-        let {siteData, pageData, setPageData} = this.context;
+        let {siteData, pageData, setPageData, website} = this.context;
         let {routerRef} = this.props;
         let pageName = pageData? pageData.props.pageName: "";
         if (this.context.production) {
@@ -74,6 +74,7 @@ export default class PageView extends React.Component {
                         setPageData={setPageData}
                         pageName={pageName}
                         routerRef={routerRef}
+                        website={website}
                     >
                         {this.props.children}
                     </PageRouter>

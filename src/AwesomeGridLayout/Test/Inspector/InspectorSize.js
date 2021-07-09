@@ -7,6 +7,7 @@ import {
 } from "../../AwesomwGridLayoutHelper";
 import NumberInputWithUnit from "../../Menus/CommonComponents/NumberInputWithUnit";
 import InspectorTitle from "./InspectorTitle";
+import Switch from "@material-ui/core/Switch/Switch";
 
 export default class InspectorSize extends React.Component {
     constructor(props) {
@@ -132,7 +133,7 @@ export default class InspectorSize extends React.Component {
     };
 
     render() {
-        let {item} = this.props;
+        let {item, scaleProportionally, onDesignChange, designKey} = this.props;
         let style = item.getCompositeFromData("style");
         let runtimeStyle = item.state.runtimeStyle;
         let runtimeGridItemStyle = item.getRuntimeGridItemStyle() || {

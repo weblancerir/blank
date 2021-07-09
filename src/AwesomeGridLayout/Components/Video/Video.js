@@ -17,6 +17,16 @@ import VideoDesign from "./Menus/VideoDesign";
 import {getFontDataByName} from "../Text/TextHelper";
 import StaticFonts from "../Text/Fonts/StaticFonts.json";
 import VideoData from "./Menus/VideoData";
+import InspectorBreadcrumbs from "../../Test/Inspector/InspectorBreadcrumbs";
+import InspectorAligns from "../../Test/Inspector/InspectorAligns";
+import ScaleProportionallyInspectorSize from "../Image/Menus/ScaleProportionallyInspectorSize";
+import InspectorOverflow from "../../Test/Inspector/InspectorOverflow";
+import InspectorPosition from "../../Test/Inspector/InspectorPosition";
+import InspectorScroll from "../../Test/Inspector/InspectorScroll";
+import InspectorPadding from "../../Test/Inspector/InspectorPadding";
+import InspectorAdjustment from "../../Test/Inspector/InspectorAdjustment";
+import InspectorAnchor from "../../Test/Inspector/InspectorAnchor";
+import LinkedTag from "../Text/Menus/components/LinkedTag";
 
 export default class Video extends AGLComponent{
     static contextType = EditorContext;
@@ -35,6 +45,9 @@ export default class Video extends AGLComponent{
         resolveDesignData(this, "videoData", {
             videoType: "aparat",
             data: {
+            },
+            scaleProportionally: {
+                enable: false
             }
         });
         resolveDesignData(this, "borderData", {border: {shadow: {
@@ -133,6 +146,63 @@ export default class Video extends AGLComponent{
     updateDesign = (compositeDesign) => {
     };
 
+    getInspectorOverride = () => {
+        return (
+            <>
+                <InspectorBreadcrumbs
+                    item={this.getAgl()}
+                />
+                <InspectorAligns
+                    item={this.getAgl()}
+                />
+                <ScaleProportionallyInspectorSize
+                    item={this.getAgl()}
+                    getScaleProportionally={this.getScaleProportionally}
+                    setScaleProportionally={this.setScaleProportionally}
+                />
+                <InspectorOverflow
+                    item={this.getAgl()}
+                />
+                <InspectorPosition
+                    item={this.getAgl()}
+                />
+                <InspectorScroll
+                    item={this.getAgl()}
+                />
+                <InspectorPadding
+                    item={this.getAgl()}
+                />
+                <InspectorAdjustment
+                    item={this.getAgl()}
+                />
+                <InspectorAnchor
+                    item={this.getAgl()}
+                />
+            </>
+        )
+    }
+
+    setScaleProportionally = (ratio, enable) => {
+        if (enable === undefined)
+            enable = this.getScaleProportionally().enable;
+        if (ratio === undefined) {
+            let agl = this.getAgl();
+            let rect = agl.getSize(false, true);
+            ratio = rect.height / rect.width;
+        }
+        this.onDesignChange(`design.videoData.scaleProportionally`, {enable, ratio});
+    }
+
+    getScaleProportionally = () => {
+        return getCompositeDesignData(this).videoData.scaleProportionally || {enable: false};
+    }
+
+    setSizePre = (agl, dir, delta, group, relativeX, relativeY, width, height, firstRelativeX,
+                  firstRelativeY, firstWidth, firstHeight, parentRect, fromUndoRedo) =>
+    {
+        this.setScaleProportionally(width / height);
+    }
+
     getStaticChildren = () => {
         this.resolveDesignData();
 
@@ -154,27 +224,36 @@ export default class Video extends AGLComponent{
         if (borderColor)
             borderColor = parseColor(borderColor, borderColor.alpha, this.context);
 
-        return <div
-            className="VideoBorderRoot"
-            ref={this.rootBorderRef}
-            style={{
-                border:
-                    `${border.width || 0}px solid ${borderColor || 'rgba(0,0,0,0)'}`,
-                // backgroundColor: fillColor,
-                borderRadius:
-                    `${border.radius.topLeft || 0}px ${border.radius.topRight || 0}px ${border.radius.bottomRight || 0}px ${border.radius.bottomLeft || 0}px`,
-                boxShadow: `${(border.shadow.xOffset) * (border.shadow.distance)}px ${(border.shadow.yOffset) * (border.shadow.distance)}px ${border.shadow.blur}px ${border.shadow.size}px ${shadowColor || 'rgba(0,0,0,0)'}`,
-                pointerEvents: this.context.isEditor() ? "none" : "auto"
-            }}
-        >
-            {getVideoObject(videoData.videoType, videoData.data)}
+        return <>
             <div
-                className="VideoOverlay"
+                className="VideoBorderRoot"
+                ref={this.rootBorderRef}
                 style={{
-                    backgroundColor: overlay,
+                    border:
+                        `${border.width || 0}px solid ${borderColor || 'rgba(0,0,0,0)'}`,
+                    // backgroundColor: fillColor,
+                    borderRadius:
+                        `${border.radius.topLeft || 0}px ${border.radius.topRight || 0}px ${border.radius.bottomRight || 0}px ${border.radius.bottomLeft || 0}px`,
+                    boxShadow: `${(border.shadow.xOffset) * (border.shadow.distance)}px ${(border.shadow.yOffset) * (border.shadow.distance)}px ${border.shadow.blur}px ${border.shadow.size}px ${shadowColor || 'rgba(0,0,0,0)'}`,
+                    pointerEvents: this.context.isEditor() ? "none" : "auto"
+                }}
+            >
+                {getVideoObject(videoData.videoType, videoData.data)}
+                <div
+                    className="VideoOverlay"
+                    style={{
+                        backgroundColor: overlay,
+                    }}
+                />
+            </div>
+            <div
+                className="ImageScaler"
+                style={{
+                    paddingTop: (videoData.scaleProportionally && videoData.scaleProportionally.enable) ?
+                        `${videoData.scaleProportionally.ratio * 100}%` : "unset"
                 }}
             />
-        </div>
+        </>
     };
 
     render() {
@@ -191,6 +270,7 @@ export default class Video extends AGLComponent{
                 getPrimaryOptions={this.getPrimaryOptions}
                 getInspector={this.getInspector}
                 getStaticChildren={this.getStaticChildren}
+                setSizePre={this.setSizePre}
             />
         )
     }

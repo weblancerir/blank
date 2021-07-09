@@ -124,6 +124,9 @@ export default class SiteSetting extends React.Component {
     }
 
     getSuccessMessage = (type) => {
+        if (!type)
+            return true;
+
         switch (type.toLowerCase()) {
             case "name":
                 return "Name changed successfully"

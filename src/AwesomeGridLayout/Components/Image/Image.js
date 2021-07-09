@@ -18,6 +18,17 @@ import FocalPointModal from "./FocalPointModal";
 import ImageDesign from "./Menus/ImageDesign";
 import ImageBehaviorDesign from "./Menus/ImageBehaviorDesign";
 import LinkedTag from "../Text/Menus/components/LinkedTag";
+import InspectorBreadcrumbs from "../../Test/Inspector/InspectorBreadcrumbs";
+import InspectorAligns from "../../Test/Inspector/InspectorAligns";
+import InspectorSize from "../../Test/Inspector/InspectorSize";
+import InspectorOverflow from "../../Test/Inspector/InspectorOverflow";
+import InspectorPosition from "../../Test/Inspector/InspectorPosition";
+import InspectorScroll from "../../Test/Inspector/InspectorScroll";
+import InspectorPadding from "../../Test/Inspector/InspectorPadding";
+import InspectorAdjustment from "../../Test/Inspector/InspectorAdjustment";
+import InspectorAnchor from "../../Test/Inspector/InspectorAnchor";
+import ScaleProportionallyInspectorSize from "./Menus/ScaleProportionallyInspectorSize";
+import DomainManager from "../../Editor/DomainManager";
 
 export default class Image extends AGLComponent{
     static contextType = EditorContext;
@@ -120,7 +131,10 @@ export default class Image extends AGLComponent{
             scrollType: "none"
         });
         resolveDesignData(this, "imageBehavior", {
-            scrollType: "None"
+            scrollType: "None",
+            scaleProportionally: {
+                enable: false
+            }
         });
         resolveDesignData(this, "normal", {border: {shadow: {
                     xOffset: -1,
@@ -170,6 +184,7 @@ export default class Image extends AGLComponent{
                             this.onDesignChange('design.imageData.focalPoint', {x: 50, y: 50});
                             this.setState({imageLoaded: false, imageExactDimension: undefined, altSrc: undefined});
                             this.onDesignChange('design.imageData.src', fileData.url);
+                            this.onDesignChange('design.imageData.pathname', fileData.pathname);
                         }
                     );
                 }}
@@ -320,6 +335,97 @@ export default class Image extends AGLComponent{
     updateDesign = (compositeDesign) => {
     };
 
+    onStateChange = (stateName) => {
+        if (stateName === "hover")
+            this.setState({hover:true});
+        else
+            this.setState({hover:false});
+    };
+
+    onMouseOver = () => {
+        if (this.context.isEditor())
+            return;
+
+        this.setState({hover: true});
+    };
+
+    onMouseOut = () => {
+        if (this.context.isEditor())
+            return;
+
+        this.setState({hover: false});
+    };
+
+    onInvalidateSize = () => {
+        this.setState({reload: true});
+    }
+
+    getInspectorOverride = () => {
+        return (
+            <>
+                <InspectorBreadcrumbs
+                    item={this.getAgl()}
+                />
+                <InspectorAligns
+                    item={this.getAgl()}
+                />
+                <ScaleProportionallyInspectorSize
+                    item={this.getAgl()}
+                    getScaleProportionally={this.getScaleProportionally}
+                    setScaleProportionally={this.setScaleProportionally}
+                />
+                <InspectorOverflow
+                    item={this.getAgl()}
+                />
+                <InspectorPosition
+                    item={this.getAgl()}
+                />
+                <InspectorScroll
+                    item={this.getAgl()}
+                />
+                <InspectorPadding
+                    item={this.getAgl()}
+                />
+                <InspectorAdjustment
+                    item={this.getAgl()}
+                />
+                <InspectorAnchor
+                    item={this.getAgl()}
+                />
+            </>
+        )
+    }
+
+    setScaleProportionally = (ratio, enable) => {
+        if (enable === undefined)
+            enable = this.getScaleProportionally().enable;
+        if (ratio === undefined) {
+            let agl = this.getAgl();
+            let rect = agl.getSize(false, true);
+            ratio = rect.height / rect.width;
+        }
+        this.onDesignChange(`design.imageBehavior.scaleProportionally`, {enable, ratio});
+    }
+
+    getScaleProportionally = () => {
+        return getCompositeDesignData(this).imageBehavior.scaleProportionally || {enable: false};
+    }
+
+    setSizePre = (agl, dir, delta, group, relativeX, relativeY, width, height, firstRelativeX,
+               firstRelativeY, firstWidth, firstHeight, parentRect, fromUndoRedo) =>
+    {
+        this.setScaleProportionally(width / height);
+    }
+
+    getImageSrc = () => {
+        let {website, siteData} = this.context;
+        let imageData = getCompositeDesignData(this).imageData;
+        // return imageData.src;
+
+        let dom
+        return DomainManager.getStorageBaseUrl()
+    }
+
     getStaticChildren = () => {
         let {imageDimension, imageExactDimension, imageLoaded} = this.state;
         this.resolveDesignData();
@@ -422,72 +528,53 @@ export default class Image extends AGLComponent{
 
         let linkData = getFromTempData(this, "linkData");
 
-        return <LinkedTag
-            key="ImageBorderRoot"
-            onMouseOver={this.onMouseOver}
-            onMouseOut={this.onMouseOut}
-            className="ImageBorderRoot"
-            linkData={linkData}
-            style={{
-                border:
-                    `${border.width || 0}px solid ${borderColor || 'rgba(0,0,0,0)'}`,
-                backgroundColor: fillColor,
-                borderRadius:
-                    `${border.radius.topLeft || 0}px ${border.radius.topRight || 0}px ${border.radius.bottomRight || 0}px ${border.radius.bottomLeft || 0}px`,
-                boxShadow: `${(border.shadow.xOffset) * (border.shadow.distance)}px ${(border.shadow.yOffset) * (border.shadow.distance)}px ${border.shadow.blur}px ${border.shadow.size}px ${shadowColor || 'rgba(0,0,0,0)'}`,
-            }}
-        >
-            <div style={{
-                position: "relative", width: "100%", height: "100%",
-                clipPath: "inset(0 0 0 0)",
-                overflow: "hidden",
-                // borderRadius:
-                //     `${border.radius.topLeft || 0}px ${border.radius.topRight || 0}px ${border.radius.bottomRight || 0}px ${border.radius.bottomLeft || 0}px`,
-            }}>
-                <img
-                    className="ImageImage"
-                    onMouseOver={this.onMouseOver}
-                    onMouseOut={this.onMouseOut}
-                    src={this.state.altSrc || imageData.src}
-                    style={imageStyle}
-                    // ref={this.imgRef}
-                    ref={(ref) => {this.setImageNode(ref)}}
-                    onLoad={this.onImageLoaded}
-                    crossOrigin="anonymous"
-                    alt={imageBehavior.altText || ""}
-                />
-                <div
-                    className="ImageOverlay"
-                    style={overlayStyle}
-                />
-            </div>
-        </LinkedTag>
+        return <>
+            <LinkedTag
+                key="ImageBorderRoot"
+                onMouseOver={this.onMouseOver}
+                onMouseOut={this.onMouseOut}
+                className="ImageBorderRoot"
+                linkData={linkData}
+                style={{
+                    border:
+                        `${border.width || 0}px solid ${borderColor || 'rgba(0,0,0,0)'}`,
+                    backgroundColor: fillColor,
+                    borderRadius:
+                        `${border.radius.topLeft || 0}px ${border.radius.topRight || 0}px ${border.radius.bottomRight || 0}px ${border.radius.bottomLeft || 0}px`,
+                    boxShadow: `${(border.shadow.xOffset) * (border.shadow.distance)}px ${(border.shadow.yOffset) * (border.shadow.distance)}px ${border.shadow.blur}px ${border.shadow.size}px ${shadowColor || 'rgba(0,0,0,0)'}`,
+                }}
+            >
+                <div style={{
+                    position: "relative", width: "100%", height: "100%",
+                    clipPath: "inset(0 0 0 0)",
+                    overflow: "hidden",
+                }}>
+                    <img
+                        className="ImageImage"
+                        onMouseOver={this.onMouseOver}
+                        onMouseOut={this.onMouseOut}
+                        src={this.state.altSrc || imageData.src}
+                        style={imageStyle}
+                        ref={(ref) => {this.setImageNode(ref)}}
+                        onLoad={this.onImageLoaded}
+                        crossOrigin="anonymous"
+                        alt={imageBehavior.altText || ""}
+                    />
+                    <div
+                        className="ImageOverlay"
+                        style={overlayStyle}
+                    />
+                </div>
+            </LinkedTag>
+            <div
+                className="ImageScaler"
+                style={{
+                    paddingTop: (imageBehavior.scaleProportionally && imageBehavior.scaleProportionally.enable) ?
+                        `${imageBehavior.scaleProportionally.ratio * 100}%` : "unset"
+                }}
+            />
+            </>
     };
-
-    onStateChange = (stateName) => {
-        if (stateName === "hover")
-            this.setState({hover:true});
-        else
-            this.setState({hover:false});
-    };
-
-    onMouseOver = () => {
-        if (this.context.isEditor())
-            return;
-
-        this.setState({hover: true});
-    };
-
-    onMouseOut = () => {
-        if (this.context.isEditor())
-            return;
-
-        this.setState({hover: false});
-    };
-
-    onInvalidateSize = () => {
-        this.setState({reload: true});
-    }
 
     render() {
         return (
@@ -504,6 +591,7 @@ export default class Image extends AGLComponent{
                 getInspector={this.getInspector}
                 getStaticChildren={this.getStaticChildren}
                 onInvalidateSize={this.onInvalidateSize}
+                setSizePre={this.setSizePre}
             />
         )
     }

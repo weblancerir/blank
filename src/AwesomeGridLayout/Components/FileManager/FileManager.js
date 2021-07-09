@@ -11,6 +11,7 @@ import {cloneObject} from "../../AwesomeGridLayoutUtils";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FileUploader from "./Components/FileUploader";
 import MultiColorProgressBar from "./Components/MultiColorProgressBar";
+import MenuButton from "../../Menus/MenuBase/MenuButton";
 
 export default class FileManager extends React.Component {
     static contextType = EditorContext;
@@ -111,12 +112,15 @@ export default class FileManager extends React.Component {
             })
     }
 
-    getValidFileExt = () => {
-        let {type} = this.props.options;
+    getValidFileExt = (type) => {
+        if (!type)
+            type = this.props.options.type;
 
         type = (type || "").toLowerCase();
+        console.log("getValidFileExt", type)
         switch (type) {
             case "images":
+                console.log("getValidFileExt", "here")
                 return [
                     "jpg", "jpeg", "png",
                     "gif", "jpe", "jfif",
@@ -151,6 +155,7 @@ export default class FileManager extends React.Component {
                 break;
         }
 
+        console.log("getValidFileExt", "here2")
         return [
             "all"
         ];
@@ -235,18 +240,39 @@ export default class FileManager extends React.Component {
     }
 
     getFileIconPreview = (fileData) => {
-        return (
-            <img draggable={false}
-                 className="FileManagerImageIcon"
-                 src={
-                     `${this.baseUrl}/${fileData.Key}`
-                 }
-                 style={{
-                     userDrag: "none",
-                     userSelect: "none"
-                 }}
-            />
-        )
+        let filename = fileData.Key.split('/')[fileData.Key.split('/').length - 1];
+        let extention = filename.split('.').pop();
+        console.log("getFileIconPreview", this.getValidFileExt("images"), extention)
+        if (this.getValidFileExt("images").includes(extention)) {
+            return (
+                <img draggable={false}
+                     className="FileManagerImageIcon"
+                     src={
+                         `${this.baseUrl}/${fileData.Key}`
+                     }
+                     style={{
+                         userDrag: "none",
+                         userSelect: "none"
+                     }}
+                />
+            )
+        } else {
+            return (
+                <div className="FileManagerNonImageRoot">
+                    <img draggable={false}
+                         className="FileManagerNonImageIcon"
+                         src={process.env.PUBLIC_URL + '/static/icon/fileicon.png'}
+                            style={{
+                                     userDrag: "none",
+                                     userSelect: "none"
+                                 }}
+                    />
+                    <span className="FileManagerNonImageText">
+                        {extention}
+                    </span>
+                </div>
+            )
+        }
     }
 
     deleteFiles = () => {
@@ -636,6 +662,7 @@ export default class FileManager extends React.Component {
 
                                                         let shortName = filename.split('.').slice(0, -1).join('.');
 
+                                                        let extention = filename.split('.').pop();
                                                         return (
                                                             <div key={filename} className="FileManagerFileRoot">
                                                                 <div>
@@ -732,7 +759,8 @@ export default class FileManager extends React.Component {
                                                     onClose();
                                                     onDone(selectedFiles.map(filename => {
                                                         return {
-                                                            url: `${this.baseUrl}/${list.basePrefix}/${this.getCurrentPrefix()}/${filename}`
+                                                            url: `${this.baseUrl}/${list.basePrefix}/${this.getCurrentPrefix()}/${filename}`,
+                                                            pathname: `${list.basePrefix}/${this.getCurrentPrefix()}/${filename}`
                                                         }
                                                     }));
                                                 }}

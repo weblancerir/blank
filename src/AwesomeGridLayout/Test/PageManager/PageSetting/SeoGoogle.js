@@ -41,7 +41,7 @@ export default class SeoGoogle extends React.Component {
 
     render () {
         let {pageData} = this.props;
-        let siteData = this.context.siteData;
+        let {siteData, website} = this.context;
         return (
             <div className="PageSettingTabPanelRoot">
                 <div className="PageInfoBox">
@@ -58,7 +58,9 @@ export default class SeoGoogle extends React.Component {
                         </span>
                         <span className="SeoGooglePreviewUrl">
                             {
-                                siteData.setting.baseUrl + (
+                                ((website.data && website.data.domainConfig && website.data.domainConfig.tempDomain) ?
+                                    website.data.domainConfig.tempDomain.targetUrl : siteData.setting.baseUrl)
+                                + (
                                     pageData.props.pageSetting.seoGoogle.endUrl ||
                                     pageData.props.pageName.toLowerCase()
                                 )

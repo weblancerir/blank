@@ -5,6 +5,7 @@ import StaticFonts from "../../Text/Fonts/StaticFonts.json";
 import {getFontDataByFamily, getFontDataByName} from "../../Text/TextHelper";
 import DropDown from "../../../Menus/CommonComponents/DropDown";
 import FontSizeSelector2 from "./FontSizeSelector2";
+import TextEditorButton from "../../Text/Menus/TextEditorButton";
 
 export default class ButtonTextAppearance extends React.Component {
     changeText = () => {
@@ -99,6 +100,29 @@ export default class ButtonTextAppearance extends React.Component {
                             this.props.onDesignChange(this.props.designKey + '.fontSize', value);
                         }}
                     />
+                </div>
+
+                <Divider/>
+
+                <div className="MenuOptionSection">
+                    <TextEditorButton
+                        onClick={(e) => {
+                            this.props.onDesignChange(this.props.designKey + '.bold', !this.props.data.bold);
+                        }}
+                        selected={!!this.props.data.bold}
+                    >
+                        <img draggable={false} width={16} height={16}
+                             src={process.env.PUBLIC_URL + '/static/icon/texteditor/bold.svg'} />
+                    </TextEditorButton>
+                    <TextEditorButton
+                        onClick={(e) => {
+                            this.props.onDesignChange(this.props.designKey + '.italic', !this.props.data.italic);
+                        }}
+                        selected={!!this.props.data.italic}
+                    >
+                        <img draggable={false} width={16} height={16}
+                             src={process.env.PUBLIC_URL + '/static/icon/texteditor/italic.svg'} />
+                    </TextEditorButton>
                 </div>
             </>
         )

@@ -8,6 +8,7 @@ import {BrowserRouter as Router, withRouter} from 'react-router-dom';
 // import {Router, withRouter} from 'react-router-dom';
 import {getHomePage} from "../MenuManager/MenuManager";
 import {getRandomLinkId} from "../Components/Text/TextHelper";
+import DomainManager from "./DomainManager";
 
 class PageRouterComponent extends React.Component {
     // static contextType = EditorContext;
@@ -136,15 +137,14 @@ class PageRouterComponent extends React.Component {
 
 const MainRouter = withRouter(props =>
     {
-        console.log("MainRouter", props.routerRef);
         return <PageRouterComponent ref={props.routerRef} {...props}/>
     }
 );
 
 const PageRouter = (props) => {
-    console.log("PageRouter", props.routerRef);
+    let websiteName = DomainManager.getWebsiteName(props.website, props.siteData);
     return (
-        <Router basename={'application'}>
+        <Router basename={websiteName}>
             <MainRouter {...props}/>
         </Router>
     )

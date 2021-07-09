@@ -31,6 +31,10 @@ export default class SiteDashboard extends React.Component {
         if (website.url)
             return website.url;
 
+        if (website.data && website.data.domainConfig && website.data.domainConfig.tempDomain) {
+            return website.data.domainConfig.tempDomain.targetUrl;
+        }
+
         let baseUrl = siteData.setting.baseUrl.replace("http:", "https:");
         let url = new URL(baseUrl);
         url.hostname = `${user.username}.${url.hostname}`;

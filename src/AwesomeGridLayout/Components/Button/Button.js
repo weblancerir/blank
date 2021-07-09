@@ -218,6 +218,8 @@ export default class Button extends AGLComponent{
                     color: textColor || "#000000",
                     fontFamily: spanData.fontFamily || getFontDataByName(StaticFonts, "Yekan").fontFamily,
                     fontSize: `${spanData.fontSize}px`,
+                    fontWeight: `${spanData.bold ? "bold": "normal"}`,
+                    fontStyle: `${spanData.italic ? "italic": "normal"}`,
                     ...spanMarginStyle
                 }}
             >

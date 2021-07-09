@@ -26,7 +26,7 @@ export default class SocialShare extends React.Component {
 
     render () {
         let {pageData} = this.props;
-        let siteData = this.context.siteData;
+        let {siteData, website} = this.context;
         return (
             <div className="PageSettingTabPanelRoot">
                 <div className="PageInfoBox">
@@ -62,9 +62,10 @@ export default class SocialShare extends React.Component {
                             <div className="SocialPreviewDetailBox">
                                 <span className="SocialPreviewUrl">
                                     {
-                                        siteData.setting.baseUrl.substring(0, siteData.setting.baseUrl.lastIndexOf('/'))
+                                        ((website.data && website.data.domainConfig && website.data.domainConfig.tempDomain) ?
+                                            website.data.domainConfig.tempDomain.targetUrl : siteData.setting.baseUrl)
+                                            .substring(0, siteData.setting.baseUrl.lastIndexOf('/'))
                                             .replace(/(^\w+:|^)\/\//, '')
-
                                     }
                                 </span>
                                 <span className="SocialPreviewTitle">

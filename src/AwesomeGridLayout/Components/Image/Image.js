@@ -273,7 +273,7 @@ export default class Image extends AGLComponent{
                     this.context.showModal(
                         <CropperModal
                             open={true}
-                            imageSrc={imageData.src}
+                            imageSrc={this.getImageSrc()}
                             crop={cropData.crop || {x: 0, y: 0}}
                             zoom={cropData.zoom || 1}
                             aspect={totalSize ? totalSize.width / totalSize.height : 1}
@@ -306,7 +306,7 @@ export default class Image extends AGLComponent{
                     this.context.showModal(
                         <FocalPointModal
                             open={true}
-                            src={this.state.altSrc || imageData.src}
+                            src={this.state.altSrc || this.getImageSrc()}
                             focalPoint={imageData.focalPoint || {x: 50, y: 50}}
                             onClose={() => {
                                 this.context.hideModal();
@@ -420,10 +420,7 @@ export default class Image extends AGLComponent{
     getImageSrc = () => {
         let {website, siteData} = this.context;
         let imageData = getCompositeDesignData(this).imageData;
-        // return imageData.src;
-
-        let dom
-        return DomainManager.getStorageBaseUrl()
+        return `${DomainManager.getStorageBaseUrl(siteData)}${imageData.pathname}`;
     }
 
     getStaticChildren = () => {
@@ -553,7 +550,7 @@ export default class Image extends AGLComponent{
                         className="ImageImage"
                         onMouseOver={this.onMouseOver}
                         onMouseOut={this.onMouseOut}
-                        src={this.state.altSrc || imageData.src}
+                        src={this.state.altSrc || this.getImageSrc()}
                         style={imageStyle}
                         ref={(ref) => {this.setImageNode(ref)}}
                         onLoad={this.onImageLoaded}

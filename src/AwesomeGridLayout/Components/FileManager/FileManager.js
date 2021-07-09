@@ -12,6 +12,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import FileUploader from "./Components/FileUploader";
 import MultiColorProgressBar from "./Components/MultiColorProgressBar";
 import MenuButton from "../../Menus/MenuBase/MenuButton";
+import DomainManager from "../../Editor/DomainManager";
 
 export default class FileManager extends React.Component {
     static contextType = EditorContext;
@@ -240,6 +241,7 @@ export default class FileManager extends React.Component {
     }
 
     getFileIconPreview = (fileData) => {
+        let {siteData} = this.context;
         let filename = fileData.Key.split('/')[fileData.Key.split('/').length - 1];
         let extention = filename.split('.').pop();
         console.log("getFileIconPreview", this.getValidFileExt("images"), extention)
@@ -248,7 +250,7 @@ export default class FileManager extends React.Component {
                 <img draggable={false}
                      className="FileManagerImageIcon"
                      src={
-                         `${this.baseUrl}/${fileData.Key}`
+                         `${DomainManager.getStorageBaseUrl(siteData)}${fileData.Key}`
                      }
                      style={{
                          userDrag: "none",

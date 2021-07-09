@@ -48,6 +48,7 @@
     height: 8px;
     border-radius: 20px;
     background-color: #ff0000;
+    box-shadow: 0 0 3pt 4pt white;
     position: absolute;
     transform: translateY(-50%) translateX(-50%);
 }

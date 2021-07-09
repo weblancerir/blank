@@ -1,9 +1,9 @@
 let DomainManager = {};
 
 DomainManager.getStorageBaseUrl = (siteData) => {
-    let {domainConfig} = siteData.metadata;
+    let {domainConfig} = siteData;
 
-    if (window.location.hostname.includes("weblancer.ir")) {
+    if (window.location.hostname.includes("weblancer.ir") || window.location.hostname.includes("localhost")) {
         return domainConfig.tempDomain.storageBaseUrl;
     } else {
         for(let i = 0; i < domainConfig.domainData.length; i++) {
@@ -19,7 +19,7 @@ DomainManager.getStorageBaseUrl = (siteData) => {
 }
 
 DomainManager.getWebsiteBaseUrl = (siteData) => {
-    let {domainConfig} = siteData.metadata;
+    let {domainConfig} = siteData;
 
     if (window.location.hostname.includes("weblancer.ir")) {
         return domainConfig.tempDomain.targetUrl;

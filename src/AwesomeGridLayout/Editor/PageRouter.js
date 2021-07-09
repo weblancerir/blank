@@ -132,6 +132,16 @@ class PageRouterComponent extends React.Component {
                         />
                     </Route>
                 }
+
+                {
+                    siteData &&
+                    <Redirect
+                        to={{
+                            pathname: `/${getHomePage(siteData).props.pageName.toLowerCase()}`,
+                            state: { from: "/" }
+                        }}
+                    />
+                }
             </Switch>
         )
     }

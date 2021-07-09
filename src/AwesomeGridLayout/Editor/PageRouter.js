@@ -95,7 +95,9 @@ class PageRouterComponent extends React.Component {
             />
         }
 
-        if (pageName && this.props.location.pathname !== "/" && `/${pageName.toLowerCase()}` !== this.props.location.pathname) {
+        if (pageName && this.props.location.pathname !== "/" &&
+            this.props.location.pathname !== `/${DomainManager.getWebsiteName(undefined, siteData)}/` &&
+            `/${pageName.toLowerCase()}` !== this.props.location.pathname) {
             if (isProduction) {
                 console.log("Here");
                 window.requestAnimationFrame(() => {

@@ -5,11 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ee3df027-738a-4634-bc4a-d7b9163847a2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/Domains.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManager.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManager.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Image/FocalPoint.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Image/FocalPoint.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Image/Image.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Image/Image.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/DomainManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/DomainManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteSetting.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteSetting.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeColorPicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeColorPicker.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +68,7 @@
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://H:/Weblancer/WeblancerEditor/test-project/node_modules/react-sortable-tree/dist/index.esm.js&#10;adjustmentPa&#9;FILE&#9;file://E:/BussinesProjects/AwesomeGridLayout/awesomegridlayout/src/AwesomeGridLayout/Adjustment/AdjustmentResizePage.js&#10;stack&#9;FILE&#9;file://E:/BussinesProjects/AwesomeGridLayout/awesomegridlayout/src/AwesomeGridLayout/Test/Stack.js&#10; =&gt; {&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/static/image" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -82,10 +84,10 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Editor\Dashboard\Content" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\image" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Editor\Dashboard\Components" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Editor" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Editor\Dashboard\Content" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Components\FileManager" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -268,7 +270,7 @@
       <workItem from="1625495182100" duration="18311000" />
       <workItem from="1625636597220" duration="596000" />
       <workItem from="1625752549206" duration="9960000" />
-      <workItem from="1625820733437" duration="12101000" />
+      <workItem from="1625820733437" duration="18754000" />
     </task>
     <servers />
   </component>

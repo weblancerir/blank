@@ -120,6 +120,7 @@ export default class ThemeColorPicker extends React.Component {
                                     colorKeys.map(key => {
                                         return (
                                             Object.values(themeColorCategoryItems).map(item => {
+                                                console.log("themeColorCategoryItems", this.state.color);
                                                return (
                                                    <div
                                                        key={item.name + key}

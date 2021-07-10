@@ -325,7 +325,7 @@ export default class SiteSetting extends React.Component {
                                         "jpg", "jpeg", "png",
                                         "gif", "jpe", "jfif",
                                         "bmp", "heic", "heif",
-                                        "tiff", "tif", "png",
+                                        "tiff", "tif", "svg",
                                         "tiff", "tif", "png",
                                         "tiff", "tif", "webp"
                                     ]

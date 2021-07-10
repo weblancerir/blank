@@ -420,6 +420,8 @@ export default class Image extends AGLComponent{
     getImageSrc = () => {
         let {website, siteData} = this.context;
         let imageData = getCompositeDesignData(this).imageData;
+        if (!imageData.pathname)
+            return imageData.src;
         return `${DomainManager.getStorageBaseUrl(siteData)}${imageData.pathname}`;
     }
 

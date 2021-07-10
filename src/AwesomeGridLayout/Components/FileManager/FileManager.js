@@ -118,16 +118,14 @@ export default class FileManager extends React.Component {
             type = this.props.options.type;
 
         type = (type || "").toLowerCase();
-        console.log("getValidFileExt", type)
         switch (type) {
             case "images":
-                console.log("getValidFileExt", "here")
                 return [
                     "jpg", "jpeg", "png",
                     "gif", "jpe", "jfif",
                     "bmp", "heic", "heif",
                     "tiff", "tif", "png",
-                    "tiff", "tif", "png",
+                    "tiff", "tif", "svg",
                     "tiff", "tif", "webp"
                 ]
                 break;

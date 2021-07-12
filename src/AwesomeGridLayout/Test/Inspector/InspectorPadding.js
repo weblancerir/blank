@@ -138,7 +138,7 @@ export default class InspectorPadding extends React.Component {
                         <div className="InspectorOverflowMarginRoot">
                             <NumberInputWithUnit
                                 className="InspectorOverflowMargin"
-                                min={0}
+                                min={-Infinity}
                                 max={Infinity}
                                 value={padding.top || "0px"}
                                 onChange={(value) => {
@@ -161,7 +161,7 @@ export default class InspectorPadding extends React.Component {
                             />
                             <NumberInputWithUnit
                                 className="InspectorOverflowMargin"
-                                min={0}
+                                min={-Infinity}
                                 max={Infinity}
                                 value={padding.left || "0px"}
                                 onChange={(value) => {
@@ -184,7 +184,7 @@ export default class InspectorPadding extends React.Component {
                             />
                             <NumberInputWithUnit
                                 className="InspectorOverflowMargin"
-                                min={0}
+                                min={-Infinity}
                                 max={Infinity}
                                 value={padding.bottom || "0px"}
                                 onChange={(value) => {
@@ -207,7 +207,7 @@ export default class InspectorPadding extends React.Component {
                             />
                             <NumberInputWithUnit
                                 className="InspectorOverflowMargin"
-                                min={0}
+                                min={-Infinity}
                                 max={Infinity}
                                 value={padding.right || "0px"}
                                 onChange={(value) => {

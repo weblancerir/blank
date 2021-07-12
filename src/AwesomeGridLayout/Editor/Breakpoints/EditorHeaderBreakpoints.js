@@ -13,6 +13,8 @@ export default class EditorHeaderBreakpoints extends React.Component {
         super(props);
         this.state = {
         };
+
+        this.inputRef = React.createRef();
     }
 
     componentDidMount () {
@@ -24,23 +26,25 @@ export default class EditorHeaderBreakpoints extends React.Component {
     }
 
     onChangeTab = (editorContext) => (e, bpName) => {
-        this.setState({tabValue: bpName});
+        window.requestAnimationFrame(() => {
+            this.setState({tabValue: bpName});
 
-        if (editorContext.editor.breakpointmanager.current() === bpName)
-            return;
+            if (editorContext.editor.breakpointmanager.current() === bpName)
+                return;
 
-        let bpData = editorContext.editor.breakpointmanager.getBpData(bpName);
+            let bpData = editorContext.editor.breakpointmanager.getBpData(bpName);
 
-        if (!bpData)
-            return;
+            if (!bpData)
+                return;
 
-        let width;
-        if (bpData.prefer >= bpData.start && bpData.prefer <= bpData.end)
-            width = bpData.prefer;
-        else
-            width = bpData.start;
+            let width;
+            if (bpData.prefer >= bpData.start && bpData.prefer <= bpData.end)
+                width = bpData.prefer;
+            else
+                width = bpData.start;
 
-        editorContext.editor.onPageResize(width);
+            editorContext.editor.onPageResize(width);
+        })
     };
 
     getTabValue = (editorContext) => {
@@ -130,8 +134,9 @@ export default class EditorHeaderBreakpoints extends React.Component {
                                     max={9999}
                                     value={editorContext.editor.rootLayoutRef.current.getSize(false).width}
                                     onChange={(width) => {
-                                        editorContext.setPageSizeWidth(width);
+                                        editorContext.editor.onPageResize(width);
                                     }}
+                                    inputRef={this.inputRef}
                                 />
                             </>
                         }

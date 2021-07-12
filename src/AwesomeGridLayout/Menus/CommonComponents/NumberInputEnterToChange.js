@@ -1,5 +1,6 @@
 import React from "react";
 import './CommonMenu.css';
+import {inputCopyPasteHandler} from "../../AwesomwGridLayoutHelper";
 
 export default class NumberInputEnterToChange extends React.Component {
     constructor(props) {
@@ -45,15 +46,17 @@ export default class NumberInputEnterToChange extends React.Component {
                 value={this.state.tempValue || this.props.value || 0}
                 onChange={this.onTempChange}
                 onBlur={this.onChange}
-                onKeyPress={(e) => {
+                onKeyDown={(e) => {
                     if((e.keyCode || e.which) === 13) {
                         this.onChange();
-                        if (this.props.onKeyPress)
-                            this.props.onKeyPress();
+                        if (this.props.onKeyDown)
+                            this.props.onKeyDown();
                     }
+                    inputCopyPasteHandler(e)
                 }}
                 type="text"
                 style={this.props.inputStyle}
+                ref={this.props.inputRef}
             />
         )
     }

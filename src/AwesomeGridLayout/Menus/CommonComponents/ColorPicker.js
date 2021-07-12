@@ -57,7 +57,7 @@ export default class ColorPicker extends React.Component {
 
         let alpha = this.getColorAndAlpha().alpha || 100;
 
-        let value = this.lastValue = chroma(color).alpha(alpha / 100).css();
+        let value = this.lastValue = chroma(parseColor(color, undefined, this.context)).alpha(alpha / 100).css();
 
         this.props.onDesignChange(this.props.designKey, value);
     };
@@ -75,7 +75,7 @@ export default class ColorPicker extends React.Component {
         if (this.lastValue instanceof Object) {
             this.lastValue.alpha = alpha / 100;
         } else {
-            this.lastValue = chroma(this.lastValue).alpha(alpha / 100).css();
+            this.lastValue = chroma(parseColor(this.lastValue, undefined, this.context)).alpha(alpha / 100).css();
         }
         this.props.onDesignChange(this.props.designKey, this.lastValue);
     };

@@ -1,3 +1,5 @@
+import EventTrigger from "./Test/EventTrigger";
+
 export default class IdManager {
     constructor(prefix) {
         this.prefix = prefix + '_';
@@ -6,6 +8,7 @@ export default class IdManager {
 
     clear = () => {
         this.allId = {};
+        EventTrigger.clear();
     };
 
     getId = (preferName, fixName) => {

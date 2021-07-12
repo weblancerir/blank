@@ -2,6 +2,7 @@ import React from "react";
 import '../../../Menus/Menu.css';
 import Divider from "../../../Menus/CommonComponents/Divider";
 import DropDown from "../../../Menus/CommonComponents/DropDown";
+import {inputCopyPasteHandler} from "../../../AwesomwGridLayoutHelper";
 
 export default class ImageBehavior extends React.Component {
     changeAltText = () => {
@@ -20,10 +21,11 @@ export default class ImageBehavior extends React.Component {
                         type="text"
                         onChange={(e) => {this.tempAltText = e.target.value;}}
                         onBlur={this.changeAltText}
-                        onKeyPress={(e) => {
+                        onKeyDown={(e) => {
                             if((e.keyCode || e.which) === 13) {
                                 this.changeAltText()
                             }
+                            inputCopyPasteHandler(e);
                         }}
                     >
                     </input>

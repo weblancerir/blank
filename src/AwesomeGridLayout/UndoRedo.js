@@ -10,7 +10,7 @@ export default class UndoRedo {
         window.addEventListener('keydown', (e) => {
             let key = e.which || e.keyCode; // keyCode detection
             let ctrl = e.ctrlKey ? e.ctrlKey : (key === 17); // ctrl detection
-            let shift = e.shiftKey ? e.shiftKey : (key === 16); // ctrl detection
+            let shift = e.shiftKey ? e.shiftKey : (key === 16); // shift detection
             if (key === 90 && ctrl && !shift) {
                 this.undo();
             }
@@ -29,7 +29,6 @@ export default class UndoRedo {
     };
 
     add = (func, undo, power) => {
-        console.log("ADD")
         this.undoQueue.unshift(this.getQueueObject(func, undo, power));
         if (this.undoQueue.length > this.max)
             this.undoQueue.pop();
@@ -38,7 +37,7 @@ export default class UndoRedo {
 
     undo = throttle(() => {
         this.undoFunc();
-    }, 200);
+    }, 500);
 
     undoFunc = () => {
         if (this.undoQueue.length === 0)
@@ -79,7 +78,7 @@ export default class UndoRedo {
 
     redo = throttle(() => {
         this.redoFunc();
-    }, 100);
+    }, 500);
 
     redoFunc = () => {
         if (this.redoQueue.length === 0)

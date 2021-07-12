@@ -8,6 +8,7 @@ import DynamicComponents from "./Dynamic/DynamicComponents";
 import {getCompositeFromData, getFromData, setData} from "./BreakPointManager";
 import ContextMenu from "./Test/ContextMenu";
 import chroma from "chroma-js";
+import Stack2 from "./Components/Stack/Stack2";
 
 let deepEqual = require('fast-deep-equal/es6');
 
@@ -618,12 +619,140 @@ export function createStack(items, fromUndoRedo) {
     });
 }
 
+export function hasSameParent(items) {
+    if (!items || items.length < 2)
+        return;
+
+    let itemsParent = items[0].getContainerParent(true);
+
+    let same = true;
+    items.forEach(item => {
+        if (item.getContainerParent(true) !== itemsParent)
+            same = false;
+    });
+    return same;
+}
+
+export function createStack2(items, fromUndoRedo) {
+    if (!items || items.length < 2)
+        return;
+
+    let itemsParent = items[0].getContainerParent(true);
+
+    if (!itemsParent)
+        return;
+
+    let top = 99999999;
+    let left = 99999999;
+    let rightFromLeft = 0;
+    let allSpacerData = [];
+    let lastBottom;
+
+    items.sort((a,b) => {
+        if (a && b){
+            let topA = a.getSize(true, true).top;
+            let topB = b.getSize(true, true).top;
+            if (topA < topB) {
+                return -1;
+            } else if (topA === topB) {
+                // Without this, we can get different sort results in IE vs. Chrome/FF
+                return 0;
+            }
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+
+    items.forEach((item) => {
+        let rect = item.getSize(false);
+        top = Math.min(rect.top, top);
+        left = Math.min(rect.left, left);
+        rightFromLeft = Math.max(rect.left + rect.width, rightFromLeft);
+
+        if (lastBottom) {
+            allSpacerData.push({
+                height: Math.max(0, rect.top - lastBottom)
+            });
+        }
+
+        lastBottom = rect.top + rect.height;
+    });
+
+    let stack;
+    let stackNode =
+        <Stack2
+            style={{
+                width: `${rightFromLeft - left}px`,
+            }}
+            lateMountedComplete={(_stack) => {
+                stack = _stack;
+            }}
+            allSpacerData={allSpacerData}
+            document={items[0].props.document}
+        />;
+
+    let parentRect = itemsParent.prepareRects();
+    itemsParent.addChild(stackNode, undefined, undefined, undefined, (agl) => {
+        if (!fromUndoRedo) {
+            let stackId = agl.props.id;
+            let itemIds = items.map(item => {
+                return item.props.id;
+            });
+            agl.props.undoredo.add((idMan) => {
+                let newItems = itemIds.map(id => {
+                    return idMan.getItem(id);
+                });
+                newItems.forEach(item => {
+                    item.onSelect(true);
+                });
+                createStack2(newItems, true);
+            }, (idMan) => {
+                removeStackFromAGL(idMan.getItem(stackId), undefined, true);
+            });
+        }
+
+        agl.onSelect(true);
+        let {gridItemStyle} =
+            agl.calculateGridItem(left - parentRect.left, top - parentRect.top,
+                itemsParent, undefined, undefined, itemsParent.getSize(false));
+        agl.setGridItemStyle(gridItemStyle);
+        agl.prepareRects();
+        // agl.prepareRects(true);
+        setTimeout(() => {
+            items = items.filter(item => {
+                return item.props.id !== agl.props.id;
+            });
+
+            let addToStack = (items) => {
+                let item = items.shift();
+                if (!item)
+                    return;
+
+                item.props.parent.onChildLeave(item);
+                agl.onChildDrop(item, undefined, undefined, () => {
+                    addToStack(items);
+                });
+            };
+            addToStack(items);
+            setTimeout(() => {
+                agl.props.aglComponent.resolveOrders();
+                setTimeout(() => {
+                    let width = agl.getSize(false, true).width;
+                    let parentWidth = agl.props.parent.getSize(false).width;
+                    agl.setProps("width", `${width / parentWidth * 100}%`);
+                    agl.onSelect(true);
+                }, 0);
+            }, 0);
+        }, 0);
+    });
+}
+
 export function removeStack(stack, childIds, fromUndoRedo) {
     removeStackFromAGL (stack.aglRef.current, childIds, fromUndoRedo);
 }
 
 export function removeStackFromAGL(stackAgl, childIds, fromUndoRedo) {
-    stackAgl.removing = true;
     if (!stackAgl || !stackAgl.props.isStack)
         return;
 
@@ -635,7 +764,8 @@ export function removeStackFromAGL(stackAgl, childIds, fromUndoRedo) {
             let newItems = childIds.map(id => {
                 return idMan.getItem(id);
             });
-            createStack(newItems, true);
+            console.log("removeStackFromAGL Back", childIds, newItems);
+            createStack2(newItems, true);
         });
     }
 
@@ -660,13 +790,13 @@ export function removeStackFromAGL(stackAgl, childIds, fromUndoRedo) {
 
     newParent.onSelect(true);
     newParent.prepareRects();
-    // newParent.prepareRects(true);
     let removeChilds = (sorted) => {
         let item = sorted.shift();
 
         if (!item) {
             setTimeout(() => {
-                newParent.onChildLeave(stackAgl);
+                // newParent.onChildLeave(stackAgl);
+                stackAgl.delete(true);
             }, 0);
             return;
         }
@@ -675,17 +805,11 @@ export function removeStackFromAGL(stackAgl, childIds, fromUndoRedo) {
                 item.current.props.parent.onChildLeave(item.current);
                 newParent.onChildDrop(item.current);
             }
-            removeChilds(sorted, newParent);
+            removeChilds(sorted);
         }, 0);
     };
 
     removeChilds(sorted);
-    /*sorted.forEach(item => {
-        if (item && item.current) {
-            item.current.props.parent.onChildLeave(item.current);
-            newParent.onChildDrop(item.current);
-        }
-    });*/
 }
 
 export function createItem(parent, childData, fromUndoRedo, gridItemStyle, style, onChildMounted) {
@@ -1399,10 +1523,46 @@ export function parseColor (color, alpha, editorContext) {
 
         return chromaColor.css();
     } else {
+        try{
+            chroma(color);
+        }catch (e) {
+            color = "rgba(0,0,0,0)"
+        }
         let chromaColor = chroma(color);
-        // chromaColor = chromaColor.alpha(alpha || 1);
         if (alpha !== undefined)
             chromaColor = chromaColor.alpha(alpha);
         return chromaColor.css();
     }
 }
+
+export function inputCopyPasteHandler (e) {
+    e = e || window.event;
+    let key = e.which || e.keyCode; // keyCode detection
+    let ctrl = e.ctrlKey ? e.ctrlKey : (key === 17); // ctrl detection
+    let shift = e.shiftKey ? e.shiftKey : (key === 16); // shift detection
+
+    let stopPropagation = (e) => {
+        e.stopPropagation();
+    }
+
+    if ( key === 86 && ctrl ) {
+        console.log("ctrl + V");
+        stopPropagation(e);
+    } else if ( key === 67 && ctrl ) {
+        console.log("ctrl + C");
+        stopPropagation(e);
+    } else if ( key === 68 && ctrl ) {
+        console.log("ctrl + D");
+        stopPropagation(e);
+    } else if ( key === 46 ) {
+        console.log("delete");
+        stopPropagation(e);
+    } else if (key === 90 && ctrl && !shift) {
+        console.log("ctrl + z");
+        stopPropagation(e);
+    } else if (key === 90 && ctrl && shift) {
+        console.log("ctrl + shift + z");
+        stopPropagation(e);
+    }
+}
+

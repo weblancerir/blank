@@ -13,6 +13,7 @@ import FileUploader from "./Components/FileUploader";
 import MultiColorProgressBar from "./Components/MultiColorProgressBar";
 import MenuButton from "../../Menus/MenuBase/MenuButton";
 import DomainManager from "../../Editor/DomainManager";
+import {inputCopyPasteHandler} from "../../AwesomwGridLayoutHelper";
 
 export default class FileManager extends React.Component {
     static contextType = EditorContext;
@@ -601,7 +602,9 @@ export default class FileManager extends React.Component {
                                                 }
                                             })}
                                         >
-                                            <input {...getInputProps()} />
+                                            <input {...getInputProps()}
+                                                   onKeyDown={inputCopyPasteHandler}
+                                            />
                                             {
                                                 !list &&
                                                 <div className="FileManagerLoadingContainer">

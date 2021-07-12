@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import {inputCopyPasteHandler} from "../../../../AwesomwGridLayoutHelper";
 
 const useStyles = makeStyles({
     popper: {
@@ -39,8 +40,8 @@ export function RoughInput(props) {
             onBlur={
                 props.onBlur
             }
-            onKeyPress={
-                props.onKeyPress
+            onKeyDown={
+                props.onKeyDown
             }
             renderInput={(params) => (
                 // <div ref={params.InputProps.ref}>
@@ -48,6 +49,7 @@ export function RoughInput(props) {
                         {...params.inputProps}
                         className="NumberInput PageManagerRenameInput PageInfoNameInput LinkGeneratorOptionWebAddressInput"
                         type="text"
+                        onKeyDown={inputCopyPasteHandler}
                     >
                     </input>
                 // </div>

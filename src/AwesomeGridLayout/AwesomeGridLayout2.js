@@ -55,7 +55,7 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         this.props.idMan.setItem(this.props.id, this);
 
-        this.onPropsChange = new EventTrigger(this);
+        this.onPropsChange = EventTrigger.getEventTrigger(this);
 
         if (this.props.id === "page")
             console.log("AwesomeGridLayout2 constructor", props.griddata.bpData.laptop.grid)
@@ -266,8 +266,8 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         if ((this.props.defaultGridItemStyle).justifySelf === "stretch" &&
             (this.getFromTempData("resizable") &&
-                (!this.props.resizeSides || (!this.props.resizeSides.includes("w") &&
-                    !this.props.resizeSides.includes("e"))))) {
+                (!this.getResizeSides() || (!this.getResizeSides().includes("w") &&
+                    !this.getResizeSides().includes("e"))))) {
             style.width = "auto";
         }
 
@@ -297,6 +297,8 @@ export default class AwesomeGridLayout2 extends React.Component{
             this.props.onChildMounted && this.props.onChildMounted(this);
         }
         this.isEditor() && this.props.editor.updateLayout();
+
+        this.callPost("lateMounted");
     };
 
     getPrimaryOptions = () => {
@@ -386,8 +388,8 @@ export default class AwesomeGridLayout2 extends React.Component{
         return parentsId;
     };
 
-    getContainerParent = () => {
-        if (this.getFromTempData("isContainer"))
+    getContainerParent = (exludeSelf) => {
+        if (!exludeSelf && this.getFromTempData("isContainer"))
             return this;
 
         let containerParent;
@@ -836,6 +838,10 @@ export default class AwesomeGridLayout2 extends React.Component{
         });
 
         this.updateLayout();
+
+        this.onPropsChange.trigger();
+
+        this.callPost("onBreakpointChange", width, newBreakpointName, devicePixelRatio);
     };
 
     onDeletingChild = (item, fromUndoRedo) => {
@@ -984,6 +990,9 @@ export default class AwesomeGridLayout2 extends React.Component{
                 return;
             this.updateLayout(callback);
         }, 0);
+
+        this.callPost("removeChildElement",
+            childElement);
     };
 
     // Can be remove carefully
@@ -1202,10 +1211,13 @@ export default class AwesomeGridLayout2 extends React.Component{
 
     onChildLeave = (child, callback) => {
         if (this.hasOverride("onChildLeave"))
-            return this.callOverride("onChildLeave", child);
+            return this.callOverride("onChildLeave", child, callback);
 
         this.removeChildElement(child, callback);
         child.removeIdAndChildrenId();
+
+        this.callPost("onChildLeave",
+            child);
     };
 
     removeIdAndChildrenId = () => {
@@ -1236,6 +1248,11 @@ export default class AwesomeGridLayout2 extends React.Component{
         this.setRuntimeStyle(runtimeStyle);
     };
 
+    onChildDragStart = (child, e, group, callGroup) => {
+        if (this.callOverride("onChildDragStart", child, e, group, callGroup))
+            return;
+    }
+
     onDragStart = (e, group, callGroup) => {
         if (this.callOverride("onDragStart", e, group, callGroup))
             return;
@@ -1243,8 +1260,10 @@ export default class AwesomeGridLayout2 extends React.Component{
         if (this.getFromTempData("dontMove") || this.resizing || !this.props.parent.children[this.props.id])
             return;
 
-        if (this.props.parent)
+        if (this.props.parent) {
             this.props.parent.prepareRects();
+            this.props.parent.onChildDragStart(this, e, group, callGroup);
+        }
 
         if (!group)
             this.props.dragdrop.setDragging(this);
@@ -1316,6 +1335,11 @@ export default class AwesomeGridLayout2 extends React.Component{
         return this.props.dragdrop.setMouseOver(item, positionData, callback);
     };
 
+    onChildDrag = (child, e, group, callGroup) => {
+        if (this.callOverride("onChildDrag", child, e, group, callGroup))
+            return;
+    }
+
     onDrag = (e, group, callGroup) => {
         if (this.callOverride("onDrag", e, group, callGroup))
             return;
@@ -1329,6 +1353,9 @@ export default class AwesomeGridLayout2 extends React.Component{
             }
             return;
         }
+
+        if (this.props.parent)
+            this.props.parent.onChildDrag(this, e, group, callGroup);
 
         this.dragData.x += (e.clientX - this.dragData.lastMouseX);
         this.dragData.y += (e.clientY - this.dragData.lastMouseY);
@@ -1647,6 +1674,14 @@ export default class AwesomeGridLayout2 extends React.Component{
     };
 
     calculateGridItem = (relativeX, relativeY, parent, width, height, parentRect, fromState, dontAutoDock) => {
+        this.callPre("calculateGridItem",
+            relativeX, relativeY, parent, width, height, parentRect, fromState, dontAutoDock);
+
+        if (this.props.parent.props.calculateGridItemForChildren) {
+            return this.props.parent.calculateChildGridItem(
+                this, relativeX, relativeY, parent, width, height, parentRect, fromState, dontAutoDock);
+        }
+
         if (this.hasOverride("calculateGridItem"))
             return this.callOverride(
                 "calculateGridItem", relativeX, relativeY, parent, width, height, parentRect, fromState, dontAutoDock);
@@ -1792,50 +1827,12 @@ export default class AwesomeGridLayout2 extends React.Component{
         gridItemStyle.widthForPercent = widthForPercent;
         gridItemStyle.heightForPercent = heightForPercent;
 
-        /*if (gridItemStyle.justifySelf !== "stretch") {
-            if (centerX < parentCenterPlusX && centerX > parentCenterMinusX) {
-                // this is center
-                let centerDiff = (centerX - (coordinates.cx2 - coordinates.cx1) / 2);
-                gridItemStyle.justifySelf = "center";
-                gridItemStyle.marginRight = `0${this.getUnit(gridItemStyle.marginRight)}`;
-                gridItemStyle.marginLeft =
-                    `${(centerDiff * 2).toFixed(0).toString()}${this.getUnit(gridItemStyle.marginLeft)}`;
-            } else if (centerX > parentCenterPlusX) {
-                gridItemStyle.justifySelf = "end";
-                gridItemStyle.marginRight =
-                    `${(coordinates.cx2 - (relativeX + width)).toFixed(0).toString()}${this.getUnit(gridItemStyle.marginRight)}`;
-                gridItemStyle.marginLeft = `0${this.getUnit(gridItemStyle.marginLeft)}`;
-            } else {
-                gridItemStyle.justifySelf = "start";
-                gridItemStyle.marginRight = `0${this.getUnit(gridItemStyle.marginRight)}`;
-                gridItemStyle.marginLeft =
-                    `${(relativeX - coordinates.cx1).toFixed(0).toString()}${this.getUnit(gridItemStyle.marginLeft)}`;
-            }
+        let result = {gridItemStyle, gridArea, coordinates, coordinatesAbs};
 
-            if (cy2IsLastLine && (relativeY + height >= coordinates.cy2)) {
-                gridItemStyle.alignSelf = "end";
-                gridItemStyle.marginBottom =
-                    `${(coordinates.cy2 - relativeY - height).toFixed(0).toString()}${this.getUnit(gridItemStyle.marginBottom)}`;
-                gridItemStyle.marginTop =`0${this.getUnit(gridItemStyle.marginBottom)}`;
-            } else {
-                gridItemStyle.alignSelf = "start";
-                gridItemStyle.marginBottom = `0${this.getUnit(gridItemStyle.marginBottom)}`;
-                gridItemStyle.marginTop =
-                    `${(relativeY - coordinates.cy1).toFixed(0).toString()}${this.getUnit(gridItemStyle.marginTop)}`;
-            }
-        } else {
-            gridItemStyle.marginRight =
-                `${(coordinates.cx2 - (relativeX + width)).toFixed(0).toString()}${this.getUnit(gridItemStyle.marginRight)}`;
-            gridItemStyle.marginLeft =
-                `${(relativeX - coordinates.cx1).toFixed(0).toString()}${this.getUnit(gridItemStyle.marginLeft)}`;
+        this.callPost("calculateGridItem",
+            relativeX, relativeY, parent, width, height, parentRect, fromState, dontAutoDock, result);
 
-            gridItemStyle.marginBottom =
-                `${(coordinates.cy2 - relativeY - height).toFixed(0).toString()}${this.getUnit(gridItemStyle.marginBottom)}`;
-            gridItemStyle.marginTop =
-            `${(relativeY - coordinates.cy1).toFixed(0).toString()}${this.getUnit(gridItemStyle.marginTop)}`;
-        }*/
-
-        return {gridItemStyle, gridArea, coordinates, coordinatesAbs};
+        return result;
     };
 
     getPxOrPcOrValue = (value, parentValue, unit) => {
@@ -1849,6 +1846,9 @@ export default class AwesomeGridLayout2 extends React.Component{
     };
 
     calculateChildGridItem = (child, relativeX, relativeY, parent, width, height, parentRect, fromState, dontAutoDock) => {
+        this.callPre("calculateChildGridItem",
+            child, relativeX, relativeY, parent, width, height, parentRect, fromState, dontAutoDock);
+
         if (this.hasOverride("calculateChildGridItem"))
             return this.callOverride(
                 "calculateChildGridItem",child, relativeX, relativeY, parent, width, height, parentRect, fromState, dontAutoDock);
@@ -2003,57 +2003,12 @@ export default class AwesomeGridLayout2 extends React.Component{
         gridItemStyle.widthForPercent = widthForPercent;
         gridItemStyle.heightForPercent = heightForPercent;
 
-        /*
-        let parentCenterMinusX = (coordinates.cx2 - coordinates.cx1) / 2 * (1 - 0.1);
-        let parentCenterPlusX = (coordinates.cx2 - coordinates.cx1) / 2 * (1 + 0.1);
+        let result = {gridItemStyle, gridArea, coordinates, coordinatesAbs};
 
-        let yLineRef = child.props.gridLine.getYlineRef(parent.props.id);
-        let cy2IsLastLine = gridArea.y2 === yLineRef.length || isFixed(child);
+        this.callPost("calculateChildGridItem",
+            child, relativeX, relativeY, parent, width, height, parentRect, fromState, dontAutoDock, result);
 
-        if (gridItemStyle.justifySelf !== "stretch") {
-            if (centerX < parentCenterPlusX && centerX > parentCenterMinusX) {
-                // child is center
-                let centerDiff = (centerX - (coordinates.cx2 - coordinates.cx1) / 2);
-                gridItemStyle.justifySelf = "center";
-                gridItemStyle.marginRight = `0${child.getUnit(gridItemStyle.marginRight)}`;
-                gridItemStyle.marginLeft =
-                    `${(centerDiff * 2).toFixed(0).toString()}${child.getUnit(gridItemStyle.marginLeft)}`;
-            } else if (centerX > parentCenterPlusX) {
-                gridItemStyle.justifySelf = "end";
-                gridItemStyle.marginRight =
-                    `${(coordinates.cx2 - (relativeX + width)).toFixed(0).toString()}${child.getUnit(gridItemStyle.marginRight)}`;
-                gridItemStyle.marginLeft = `0${child.getUnit(gridItemStyle.marginLeft)}`;
-            } else {
-                gridItemStyle.justifySelf = "start";
-                gridItemStyle.marginRight = `0${child.getUnit(gridItemStyle.marginRight)}`;
-                gridItemStyle.marginLeft =
-                    `${(relativeX - coordinates.cx1).toFixed(0).toString()}${child.getUnit(gridItemStyle.marginLeft)}`;
-            }
-
-            if (cy2IsLastLine && (relativeY + height >= coordinates.cy2)) {
-                gridItemStyle.alignSelf = "end";
-                gridItemStyle.marginBottom =
-                    `${(coordinates.cy2 - relativeY - height).toFixed(0).toString()}${child.getUnit(gridItemStyle.marginBottom)}`;
-                gridItemStyle.marginTop =`0${child.getUnit(gridItemStyle.marginBottom)}`;
-            } else {
-                gridItemStyle.alignSelf = "start";
-                gridItemStyle.marginBottom = `0${child.getUnit(gridItemStyle.marginBottom)}`;
-                gridItemStyle.marginTop =
-                    `${(relativeY - coordinates.cy1).toFixed(0).toString()}${child.getUnit(gridItemStyle.marginTop)}`;
-            }
-        } else {
-            gridItemStyle.marginRight =
-                `${(coordinates.cx2 - (relativeX + width)).toFixed(0).toString()}${child.getUnit(gridItemStyle.marginRight)}`;
-            gridItemStyle.marginLeft =
-                `${(relativeX - coordinates.cx1).toFixed(0).toString()}${child.getUnit(gridItemStyle.marginLeft)}`;
-
-            gridItemStyle.marginBottom =
-                `${(coordinates.cy2 - relativeY - height).toFixed(0).toString()}${child.getUnit(gridItemStyle.marginBottom)}`;
-            gridItemStyle.marginTop =
-                `${(relativeY - coordinates.cy1).toFixed(0).toString()}${child.getUnit(gridItemStyle.marginTop)}`;
-        }*/
-
-        return {gridItemStyle, gridArea, coordinates, coordinatesAbs};
+        return result;
     };
 
     coordinateToRelative = (coordinates, parentRect) => {
@@ -3050,11 +3005,11 @@ export default class AwesomeGridLayout2 extends React.Component{
         };
     };
 
-    onMouseDown = (e, moveWithMouse) => {
+    onMouseDown = (e, moveWithMouse, isLeft) => {
         if (!this.isEditor())
             return;
 
-        if (this.isLeftClick(e)) {
+        if (isLeft || this.isLeftClick(e)) {
             e.stopPropagation();
             e.preventDefault();
             this.mouseDown = true;
@@ -3083,7 +3038,7 @@ export default class AwesomeGridLayout2 extends React.Component{
         return false;
     };
 
-    onMouseMove = (e) => {
+    onMouseMove = (e, delta) => {
         if (!this.mouseDown)
             return;
 
@@ -3094,8 +3049,8 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         if (!this.moving) {
             let currentMillis = new Date().getTime();
-            if (Math.abs(this.mouseMoved.deltaX) > 10 ||
-                Math.abs(this.mouseMoved.deltaY) > 10 ||
+            if (Math.abs(this.mouseMoved.deltaX) > (delta || 10) ||
+                Math.abs(this.mouseMoved.deltaY) > (delta || 10) ||
                 currentMillis - this.mouseMoved.startMillis > 500)
             {
                 if (!this.state.groupSelected && this.getFromTempData("draggable") && !this.state.selected) {
@@ -3415,6 +3370,10 @@ export default class AwesomeGridLayout2 extends React.Component{
             window.requestAnimationFrame(this.onAnimationFrame);
     }
 
+    getResizeSides = () => {
+        return this.props.resizeSides;
+    }
+
     getPreProp = (funcName) => {
         let key = Object.keys(this.props).find(key => {
             return key === `${funcName}Pre`;
@@ -3427,6 +3386,21 @@ export default class AwesomeGridLayout2 extends React.Component{
         let pre = this.getPreProp(funcName);
         if (pre) {
             return pre(this, ...args);
+        }
+    };
+
+    getPostProp = (funcName) => {
+        let key = Object.keys(this.props).find(key => {
+            return key === `${funcName}Post`;
+        });
+
+        return this.props[key];
+    };
+
+    callPost = (funcName, ...args) => {
+        let post = this.getPostProp(funcName);
+        if (post) {
+            return post(this, ...args);
         }
     };
 
@@ -3446,6 +3420,7 @@ export default class AwesomeGridLayout2 extends React.Component{
         let overflowData = this.getCompositeFromData("overflowData");
         let anchor = this.getFromTempData("anchor");
         let customStyle = this.getFromTempData("customStyle") || {};
+        let containerStyle = this.getFromTempData("containerStyle") || {};
         let selectAsParent = this.props.gridLine.hasGridLine(this.props.id, "B") !== undefined;
 
         let classes = classNames(
@@ -3468,6 +3443,7 @@ export default class AwesomeGridLayout2 extends React.Component{
 
         if (showAnimation) this.animationRunning();
 
+        console.log("Render", this.props.id)
         return (
             <Portal nodeId={portalNodeId} disabled={!portalNodeId}>
                 <VisibilitySensorWrapper
@@ -3570,6 +3546,7 @@ export default class AwesomeGridLayout2 extends React.Component{
                                     modifyContainerStyleOverride={modifyContainerStyleOverride}
                                     selectAsParent={selectAsParent}
                                     selected={selected}
+                                    containerStyle={containerStyle}
                                 />
                             </AnimationHolder>
                             {isPage && <div id={"bottom"}></div>}
@@ -3579,12 +3556,12 @@ export default class AwesomeGridLayout2 extends React.Component{
                             />
 
                             {
-                                this.state.dragging && this.props.parent &&
+                                this.state.dragging && this.props.parent && !this.props.parent.props.isStack &&
                                 <Portal nodeId={this.state.portalNodeId ||
                                     `${this.props.parent.props.id}_container`}
                                 >
                                     <div
-                                        className={this.state.fakeStyle}
+                                        // className={this.state.fakeStyle}
                                         style={{
                                             opacity: 0,
                                             pointerEvents: "none",

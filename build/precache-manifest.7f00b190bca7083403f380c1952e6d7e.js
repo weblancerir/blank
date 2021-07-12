@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e21804501b1821d3b55c9fb5fa0cad87",
+    "revision": "4c257d6a9a8a45978d8c4a9f36b7fc50",
     "url": "./index.html"
   },
   {
-    "revision": "571e295f8b16cb9f0510",
+    "revision": "80c67b43460da8f5a6fd",
     "url": "./static/css/2.ed590494.chunk.css"
   },
   {
-    "revision": "bf3072f014aba4ead7d0",
-    "url": "./static/css/main.06414239.chunk.css"
+    "revision": "6fccc5f3efb2ea689ca6",
+    "url": "./static/css/main.aa7f3e53.chunk.css"
   },
   {
-    "revision": "571e295f8b16cb9f0510",
-    "url": "./static/js/2.233223a6.chunk.js"
+    "revision": "80c67b43460da8f5a6fd",
+    "url": "./static/js/2.ab50f711.chunk.js"
   },
   {
     "revision": "d87714d17c04700a7a5b11435a21d371",
-    "url": "./static/js/2.233223a6.chunk.js.LICENSE.txt"
+    "url": "./static/js/2.ab50f711.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "bf3072f014aba4ead7d0",
-    "url": "./static/js/main.876195b1.chunk.js"
+    "revision": "6fccc5f3efb2ea689ca6",
+    "url": "./static/js/main.d84b7068.chunk.js"
   },
   {
     "revision": "6ca68c72ade5283eb48f",
@@ -140,6 +140,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "./static/media/more.7e1c1c4d.svg"
   },
   {
+    "revision": "eea11ec083ace3de7bfd984623410666",
+    "url": "./static/media/move-arrows.eea11ec0.svg"
+  },
+  {
     "revision": "ac631e5cd939b250fd361a42bc88f4f7",
     "url": "./static/media/notparent.ac631e5c.svg"
   },
@@ -196,6 +200,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "./static/media/settingwhite.5f59bbc7.svg"
   },
   {
+    "revision": "2de9e6c74247a4037ae367397c483e22",
+    "url": "./static/media/stackwhite.2de9e6c7.svg"
+  },
+  {
     "revision": "cd9d51844909ec61fba4190bb5451670",
     "url": "./static/media/text.cd9d5184.svg"
   },
@@ -206,5 +214,9 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "91af39196e22ae67e243eab414db9dcf",
     "url": "./static/media/unlink.91af3919.svg"
+  },
+  {
+    "revision": "8f09dd633b612e977219cd13a854f730",
+    "url": "./static/media/unstackwhite.8f09dd63.svg"
   }
 ]);

@@ -1,5 +1,6 @@
 import React from "react";
 import './CommonMenu.css';
+import {inputCopyPasteHandler} from "../../AwesomwGridLayoutHelper";
 
 export default class TextInput extends React.Component {
     onChange = (e) => {
@@ -20,6 +21,7 @@ export default class TextInput extends React.Component {
                 onChange={this.onChange}
                 type="text"
                 style={inputStyle}
+                onKeyDown={inputCopyPasteHandler}
             />
         )
     }

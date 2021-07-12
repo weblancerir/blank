@@ -2,6 +2,7 @@ import React from "react";
 import './Menu.css';
 import MiniMenu from "./MiniMenu/MiniMenu";
 import {createContextMenu} from "../AwesomwGridLayoutHelper";
+import GroupMiniMenu from "./MiniMenu/GroupMiniMenu";
 
 const miniMenuHolderId = "wl_menu_holder";
 export default class MenuHolder extends React.Component {
@@ -13,10 +14,12 @@ export default class MenuHolder extends React.Component {
         };
 
         this.miniMenuRef = React.createRef();
+        this.groupMenuRef = React.createRef();
     }
 
     clearMiniMenu = () => {
         this.state.active && this.miniMenuRef.current.clear();
+        this.state.active && this.groupMenuRef.current.clear();
     };
 
     addMiniMenu = (item) => {
@@ -26,7 +29,17 @@ export default class MenuHolder extends React.Component {
                 item.getShortcutOptions() || [],
                 item.getPrimaryOptions() || [],
                 item
-        );
+            );
+        this.state.active && this.groupMenuRef.current.clear();
+    };
+
+    addGroupMenu = (group, shortcut, primary) => {
+        if (group && this.state.active)
+            this.groupMenuRef.current.update(
+                group,
+                shortcut || [],
+                primary || []
+            );
     };
 
     addMenu = (menu) => {
@@ -79,6 +92,11 @@ export default class MenuHolder extends React.Component {
                     itemId={this.state.miniMenuItem && this.state.miniMenuItem.props.id}
                     key={"miniMenu"}
                     ref={this.miniMenuRef}
+                />
+                <GroupMiniMenu
+                    group={this.state.group}
+                    key={"miniMenu2"}
+                    ref={this.groupMenuRef}
                 />
                 {
                     !this.state.contextMenu &&

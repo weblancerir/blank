@@ -49,25 +49,26 @@ export default class ComponentGrid extends React.Component {
     createItemAndDrag = (item, e) => {
         let {pageRef, editor} = this.props;
         let selectedItem = editor.select.getSelected();
-        if (!selectedItem)
+
+        let handle = () => {
+            createItem(selectedItem, {
+                tagName: item.tagName,
+                props: cloneObject(item.presetProps)
+            }, undefined, undefined, undefined, (agl) => {
+                if (agl.props.input.mouseDown) {
+                    window.requestAnimationFrame(() => {
+                        agl.onMouseDown(e, true);
+                    });
+                }
+            });
+        }
+
+        if (!selectedItem) {
             selectedItem = pageRef.current;
+        }
         selectedItem = selectedItem.getContainerParent();
 
-        createItem(selectedItem, {
-            tagName: item.tagName,
-            props: cloneObject(item.presetProps)
-        }, undefined, undefined, undefined, (agl) => {
-            if (agl.props.input.mouseDown) {
-                window.requestAnimationFrame(() => {
-                    agl.onMouseDown(e, true);
-                });
-            }
-            // else {
-            //     window.requestAnimationFrame(() => {
-            //         this.changeItemParent(agl, selectedItem);
-            //     });
-            // }
-        });
+        handle();
     };
 
     changeItemParent = (agl, selectedItem) => {

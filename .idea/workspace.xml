@@ -5,13 +5,81 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ee3df027-738a-4634-bc4a-d7b9163847a2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/Domains.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Adjustment/AdjustmentItemMove.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Stack/Stack2.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Stack/Stack2.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/MiniMenu/GroupMiniMenu.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/icons/move-arrows.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/icons/stackwhite.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/icons/unstackwhite.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManager.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManager.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/asset-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/precache-manifest.d87f2522a993bc38c3583138f2dfee42.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/service-worker.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/service-worker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/css/main.06414239.chunk.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/css/main.06414239.chunk.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/2.233223a6.chunk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/2.233223a6.chunk.js.LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/2.233223a6.chunk.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/main.876195b1.chunk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/static/js/main.876195b1.chunk.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Adjustment/Adjustment.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Adjustment/Adjustment.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Adjustment/AdjustmentResize.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Adjustment/AdjustmentResize.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Adjustment/AdjustmentResizeWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Adjustment/AdjustmentResizeWrapper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Adjustment/AdjustmentStretch.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Adjustment/AdjustmentStretch.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/AwesomeGridLayout2.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/AwesomeGridLayout2.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/AwesomwGridLayoutHelper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/AwesomwGridLayoutHelper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Button/Menus/ButtonTextAppearance.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Button/Menus/ButtonTextAppearance.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/Components/NewFolder.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/Components/NewFolder.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/Components/UploadButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/Components/UploadButton.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/FileManager/FileManager.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Image/Image.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Image/Image.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Image/Menus/ImageBehavior.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Image/Menus/ImageBehavior.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Image/Menus/ScaleProportionallyInspectorSize.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Image/Menus/ScaleProportionallyInspectorSize.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Menu/Menus/MenuLayoutAppearance.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Menu/Menus/MenuLayoutAppearance.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Stack/Stack.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Stack/Stack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Stack/StackSpacer.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Stack/StackSpacer.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Stack/StackSpacer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Stack/StackSpacer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Stack/StackSpacerContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Stack/StackSpacerContainer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Text/Menus/components/FontSizeAutoComplete.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Text/Menus/components/FontSizeAutoComplete.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Text/Menus/components/LinkGenerator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Text/Menus/components/LinkGenerator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Text/TextWrapper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Text/TextWrapper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Video/Menus/VideoSource.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Components/Video/Menus/VideoSource.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Dynamic/DynamicComponents.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Dynamic/DynamicComponents.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Breakpoints/EditorHeaderBreakpoints.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Breakpoints/EditorHeaderBreakpoints.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Breakpoints/EditorHeaderBreakpointsSettingItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Breakpoints/EditorHeaderBreakpointsSettingItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Breakpoints/PreviewHeaderBreakpoints.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Breakpoints/PreviewHeaderBreakpoints.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteDashboard.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteSetting.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content/SiteSetting.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeColorPicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Theme/ThemeColorPicker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/DomainManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/DomainManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorBoundary.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/EditorContext.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/PageRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/PageRouter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/PageSelect/EditorHeaderPageSelect.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/PageSelect/EditorHeaderPageSelect.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/GridChildContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/GridChildContainer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/IdManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/IdManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/MenuManager/CreateMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/MenuManager/CreateMenu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/ColorPicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/ColorPicker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/NumberInput.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/NumberInput.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/NumberInputEnterToChange.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/NumberInputEnterToChange.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/NumberInputWithUnit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/NumberInputWithUnit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/TextInput.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/CommonComponents/TextInput.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/MenuHolder.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Menus/MenuHolder.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/SelectManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/SelectManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/AddComponent/ComponentGrid.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/AddComponent/ComponentGrid.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/EventTrigger.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/EventTrigger.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Inspector/InspectorPadding.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Inspector/InspectorPadding.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Inspector/InspectorPosition.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Inspector/InspectorPosition.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/Layout/Layout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/PageInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/PageInfo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/Permissions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/Permissions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/SeoGoogle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/SeoGoogle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/SocialShare.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/Test/PageManager/PageSetting/SocialShare.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AwesomeGridLayout/UndoRedo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AwesomeGridLayout/UndoRedo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/allComponentData.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/allComponentData.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +136,7 @@
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://H:/Weblancer/WeblancerEditor/test-project/node_modules/react-sortable-tree/dist/index.esm.js&#10;adjustmentPa&#9;FILE&#9;file://E:/BussinesProjects/AwesomeGridLayout/awesomegridlayout/src/AwesomeGridLayout/Adjustment/AdjustmentResizePage.js&#10;stack&#9;FILE&#9;file://E:/BussinesProjects/AwesomeGridLayout/awesomegridlayout/src/AwesomeGridLayout/Test/Stack.js&#10; =&gt; {&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/AwesomeGridLayout/Editor/Dashboard/Content" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/AwesomeGridLayout/icons" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -84,11 +152,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\icons" />
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Adjustment" />
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Menus\MiniMenu" />
+      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Components\Stack" />
       <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Editor\Dashboard\Content" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\image" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Editor\Dashboard\Components" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Editor" />
-      <recent name="H:\Weblancer\WeblancerEditor\test-project\src\AwesomeGridLayout\Components\FileManager" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="H:\Weblancer\WeblancerEditor\test-project\public\static\icon" />
@@ -270,7 +338,8 @@
       <workItem from="1625495182100" duration="18311000" />
       <workItem from="1625636597220" duration="596000" />
       <workItem from="1625752549206" duration="9960000" />
-      <workItem from="1625820733437" duration="18754000" />
+      <workItem from="1625820733437" duration="19301000" />
+      <workItem from="1625988257816" duration="47004000" />
     </task>
     <servers />
   </component>

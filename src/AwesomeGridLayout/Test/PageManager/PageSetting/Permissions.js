@@ -10,6 +10,7 @@ import Menu from "@material-ui/core/Menu/Menu";
 import MenuItem from "@material-ui/core/MenuItem/MenuItem";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
 import {EditorContext} from "../../../Editor/EditorContext";
+import {inputCopyPasteHandler} from "../../../AwesomwGridLayoutHelper";
 
 export default class Permissions extends React.Component {
     static contextType = EditorContext;
@@ -149,6 +150,7 @@ export default class Permissions extends React.Component {
                             className="NumberInput PageManagerRenameInput PageInfoNameInput"
                             type="text"
                             onChange={this.onSetPassword}
+                            onKeyDown={inputCopyPasteHandler}
                         >
                         </input>
                     </div>

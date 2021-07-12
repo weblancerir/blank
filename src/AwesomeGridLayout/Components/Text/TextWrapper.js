@@ -103,42 +103,44 @@ export default class TextWrapper extends React.PureComponent {
                     dangerouslySetInnerHTML={{ __html: textStaticData.textValue }}
                 >
                 </TextTag>
-                <ClickAwayListener onClickAway={(e) => this.setEditMode(false)}>
-                    <>
-                        {
-                            this.state.iframeNode && this.state.editMode &&
-                            <TextEditor
-                                ref={this.textEditorRef}
-                                onChangeData={this.props.onChangeData}
-                                inputWrapperRef={this.inputWrapperRef}
-                                onChange={this.props.onChange}
-                                textStaticData={textStaticData}
-                                textTheme={textTheme}
-                                textDesignData={textDesignData}
-                                anchorEI={this.state.iframeNode}
-                                iframeNode={this.state.iframeNode}
-                                updateInputWrapper={this.updateInputWrapper}
-                                doc={this.doc}
-                            />
-                        }
-                        <div id="TextEditorIFrame">
-                        <Frame
-                            id={"Hello"}
-                            key={'textEditorFrame'}
-                            ref={this.iframe}
-                            title="TextEditorIFrame"
-                            style={{
-                                width: this.state.iframeWidth || "unset",
-                                height: this.state.iframeHeight || "unset",
-                                border: 0,
-                                display: "block",
-                                ...editDisplayNoneStyle
-                            }}
-                            head={<>
-                                <link id="wix_richtext_font_url_googleFonts" type="text/css" rel="stylesheet"
-                                      href="https://weblancerstaticdata.s3.ir-thr-at1.arvanstorage.com/StaticFonts.css"/>
-                                <style type="text/css">
-                                    {`
+                {
+                    this.context.isEditor() &&
+                    <ClickAwayListener onClickAway={(e) => this.setEditMode(false)}>
+                        <>
+                            {
+                                this.state.iframeNode && this.state.editMode &&
+                                <TextEditor
+                                    ref={this.textEditorRef}
+                                    onChangeData={this.props.onChangeData}
+                                    inputWrapperRef={this.inputWrapperRef}
+                                    onChange={this.props.onChange}
+                                    textStaticData={textStaticData}
+                                    textTheme={textTheme}
+                                    textDesignData={textDesignData}
+                                    anchorEI={this.state.iframeNode}
+                                    iframeNode={this.state.iframeNode}
+                                    updateInputWrapper={this.updateInputWrapper}
+                                    doc={this.doc}
+                                />
+                            }
+                            <div id="TextEditorIFrame">
+                                <Frame
+                                    id={"Hello"}
+                                    key={'textEditorFrame'}
+                                    ref={this.iframe}
+                                    title="TextEditorIFrame"
+                                    style={{
+                                        width: this.state.iframeWidth || "unset",
+                                        height: this.state.iframeHeight || "unset",
+                                        border: 0,
+                                        display: "block",
+                                        ...editDisplayNoneStyle
+                                    }}
+                                    head={<>
+                                        <link id="wix_richtext_font_url_googleFonts" type="text/css" rel="stylesheet"
+                                              href="https://weblancerstaticdata.s3.ir-thr-at1.arvanstorage.com/StaticFonts.css"/>
+                                        <style type="text/css">
+                                            {`
                             body{
                                 width: fit-content;
                                 height: fit-content;
@@ -158,38 +160,39 @@ export default class TextWrapper extends React.PureComponent {
                             
 
                         `}
-                                </style>
-                            </>}
-                            documentRef={(doc) => {
-                                this.doc = doc;
-                                this.doc.addEventListener("click", (e) => {
-                                    this.onIframeTextClicked(e);
-                                })
-                            }}
-                        >
-                            <InputWrapper
-                                onLoad={() => {
-                                    this.resizeIFrameToFitContent(this.doc);
-                                }}
-                                onUpdate={() => {
-                                    this.resizeIFrameToFitContent(this.doc);
-                                }}
-                                onChange={this.props.onChange}
-                                value={textStaticData.textValue}
-                                width={this.props.width}
-                                ref={this.inputWrapperRef}
-                                tag={this.getTag()}
-                                textTheme={textTheme}
-                                textStaticData={textStaticData}
-                                textDesignData={textDesignData}
-                                iframeNode={this.state.iframeNode}
-                                doc={this.doc}
-                            >
-                            </InputWrapper>
-                        </Frame>
-                        </div>
-                    </>
-                </ClickAwayListener>
+                                        </style>
+                                    </>}
+                                    documentRef={(doc) => {
+                                        this.doc = doc;
+                                        this.doc.addEventListener("click", (e) => {
+                                            this.onIframeTextClicked(e);
+                                        })
+                                    }}
+                                >
+                                    <InputWrapper
+                                        onLoad={() => {
+                                            this.resizeIFrameToFitContent(this.doc);
+                                        }}
+                                        onUpdate={() => {
+                                            this.resizeIFrameToFitContent(this.doc);
+                                        }}
+                                        onChange={this.props.onChange}
+                                        value={textStaticData.textValue}
+                                        width={this.props.width}
+                                        ref={this.inputWrapperRef}
+                                        tag={this.getTag()}
+                                        textTheme={textTheme}
+                                        textStaticData={textStaticData}
+                                        textDesignData={textDesignData}
+                                        iframeNode={this.state.iframeNode}
+                                        doc={this.doc}
+                                    >
+                                    </InputWrapper>
+                                </Frame>
+                            </div>
+                        </>
+                    </ClickAwayListener>
+                }
             </>
         )
     }

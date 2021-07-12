@@ -79,6 +79,9 @@ export default class SiteDashboard extends React.Component {
                     <div className="SiteDashboardMainTop">
                         <div className="SiteDashboardMainTopImageRoot">
                             {
+                                console.log("this.getUrl()", this.getUrl())
+                            }
+                            {
                                 isPublished &&
                                     <iframe
                                         className="SiteDashboardMainTopImageIframe"

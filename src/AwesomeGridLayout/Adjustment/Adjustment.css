@@ -34,6 +34,24 @@
     background-color: white;
     border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0,0,0,.2);
+    user-select: none;
+}
+.AdjustmentItemMoveRoot {
+    cursor: move ;
+    position: absolute;
+    z-index: 99999999;
+    pointer-events: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 10px;
+    left: 10px;
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,.2);
+    user-select: none;
 }
 .AdjustmentStretchButton {
     width: 100%;

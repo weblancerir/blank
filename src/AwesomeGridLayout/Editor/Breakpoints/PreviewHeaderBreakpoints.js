@@ -82,7 +82,9 @@ export default class PreviewHeaderBreakpoints extends React.Component {
                             options={editorContext.siteData ? this.getOptions(editorContext) : ["..."]}
                             onChange={(bpData) => {
                                 this.setState({lastBpData: bpData});
-                                editorContext.setPageSizeWidth(bpData.prefer || bpData.start);
+
+                                editorContext.editor.onPageResize(bpData.prefer || bpData.start);
+                                // editorContext.setPageSizeWidth(bpData.prefer || bpData.start);
                             }}
                             value={editorContext.pageData ? this.getCurrentValue(editorContext) : "..."}
                             spanStyle={{
@@ -192,7 +194,8 @@ export default class PreviewHeaderBreakpoints extends React.Component {
                                     max={9999}
                                     value={editorContext.editor.rootLayoutRef.current.getSize(false).width}
                                     onChange={(width) => {
-                                        editorContext.setPageSizeWidth(width);
+                                        editorContext.editor.onPageResize(width);
+                                        // editorContext.setPageSizeWidth(width);
                                     }}
                                 />
                             </>

@@ -4,6 +4,7 @@ import '../PageManager.css';
 import Image from "../../../Menus/CommonComponents/Image";
 import Button from "@material-ui/core/Button/Button";
 import {EditorContext} from "../../../Editor/EditorContext";
+import {inputCopyPasteHandler} from "../../../AwesomwGridLayoutHelper";
 
 export default class SocialShare extends React.Component {
     static contextType = EditorContext;
@@ -101,10 +102,11 @@ export default class SocialShare extends React.Component {
                         onBlur={(e) => {
                             this.onChangeSocialShareSetting("title")(e, this.newTitle);
                         }}
-                        onKeyPress={(e) => {
+                        onKeyDown={(e) => {
                             if((e.keyCode || e.which) === 13) {
                                 this.onChangeSocialShareSetting("title")(e, this.newTitle);
                             }
+                            inputCopyPasteHandler(e)
                         }}
                     >
                     </input>
@@ -129,7 +131,7 @@ export default class SocialShare extends React.Component {
                         onBlur={(e) => {
                             this.onChangeSocialShareSetting("description")(e, this.newDescription);
                         }}
-                        onKeyPress={(e) => {
+                        onKeyDown={(e) => {
                             if((e.keyCode || e.which) === 13) {
                                 this.onChangeSocialShareSetting("description")(e, this.newDescription);
                             }

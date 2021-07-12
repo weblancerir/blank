@@ -5,6 +5,7 @@ import Image from "../../../Menus/CommonComponents/Image";
 import Button from "@material-ui/core/Button/Button";
 import {EditorContext} from "../../../Editor/EditorContext";
 import {resolveDefaultMenu} from "../../../MenuManager/MenuManager";
+import {inputCopyPasteHandler} from "../../../AwesomwGridLayoutHelper";
 
 export default class PageInfo extends React.Component {
     static contextType = EditorContext;
@@ -68,10 +69,11 @@ export default class PageInfo extends React.Component {
                         type="text"
                         onChange={this.onRename}
                         onBlur={this.rename}
-                        onKeyPress={(e) => {
+                        onKeyDown={(e) => {
                             if((e.keyCode || e.which) === 13) {
                                 this.rename()
                             }
+                            inputCopyPasteHandler(e)
                         }}
                     >
                     </input>

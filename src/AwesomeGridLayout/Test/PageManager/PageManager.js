@@ -9,6 +9,7 @@ import AddNewPageDialog from "./AddNewPageDialog";
 import {v4 as uuidv4} from "uuid";
 import {EditorContext} from "../../Editor/EditorContext";
 import {resolveDefaultMenu} from "../../MenuManager/MenuManager";
+import {inputCopyPasteHandler} from "../../AwesomwGridLayoutHelper";
 
 export default class PageManager extends React.Component {
     static contextType = EditorContext;
@@ -106,7 +107,8 @@ export default class PageManager extends React.Component {
     };
 
     onPageClick = (pageData) => {
-        this.context.setPageData(pageData.props.pageId);
+        // this.context.setPageData(pageData.props.pageId);
+        this.context.editor.onPageChange(pageData.props.pageId);
     };
 
     onAddNormalPage = () => {
@@ -185,6 +187,7 @@ export default class PageManager extends React.Component {
                             className="NumberInput PageManagerSearchInput"
                             type="text"
                             onChange={this.onChangeSearch}
+                            onKeyDown={inputCopyPasteHandler}
                         >
                         </input>
 

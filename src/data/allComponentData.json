@@ -2940,6 +2940,20 @@
               }
             ]
           }
+        ],
+        "Stacks": [
+          {
+            "name": "Stacks",
+            "listName": "Layout Tools",
+            "allItems": [
+              {
+                "tagName": "Stack2",
+                "width": 3,
+                "height": 2,
+                "presetProps": {}
+              }
+            ]
+          }
         ]
       }
     },

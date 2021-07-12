@@ -247,7 +247,7 @@ export default class GridChildContainer extends React.Component {
         if (!this.props.show)
             return null;
         this.saveState();
-        let {allChildren, id, grid, isPage, page, size, getChildrenOverride, agl, editor} = this.props;
+        let {allChildren, id, grid, isPage, page, size, getChildrenOverride, agl, editor, containerStyle} = this.props;
 
         let overflowClasses = classNames(
             this.getOverflowStyleId()
@@ -292,6 +292,7 @@ export default class GridChildContainer extends React.Component {
                         id={`${id}_container`}
                         className={containerClasses}
                         ref={this.props.containerRef}
+                        style={containerStyle}
                     >
                         {
                             this.props.padding && (this.props.selectAsParent || this.props.selected) &&

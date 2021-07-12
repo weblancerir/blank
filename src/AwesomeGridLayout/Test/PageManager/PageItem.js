@@ -10,6 +10,7 @@ import PageSetting from "./PageSetting/PageSetting";
 import {v4 as uuidv4} from "uuid";
 import {EditorContext} from "../../Editor/EditorContext";
 import {resolveDefaultMenu} from "../../MenuManager/MenuManager";
+import {inputCopyPasteHandler} from "../../AwesomwGridLayoutHelper";
 
 export default class PageItem extends React.Component {
     static contextType = EditorContext;
@@ -134,10 +135,11 @@ export default class PageItem extends React.Component {
                         type="text"
                         onChange={this.onRename}
                         onBlur={(e) => this.rename(false)}
-                        onKeyPress={(e) => {
+                        onKeyDown={(e) => {
                             if((e.keyCode || e.which) === 13) {
                                 this.rename(false)
                             }
+                            inputCopyPasteHandler(e)
                         }}
                         onClick={(e) => {
                             e.stopPropagation();

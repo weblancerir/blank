@@ -7,6 +7,7 @@ import UploadButton from "../../../Components/FileManager/Components/UploadButto
 import FileManagerHelper from "../../../Components/FileManager/FileManagerHelper";
 import {getRandomLinkId} from "../../../Components/Text/TextHelper";
 import Confirm from "../Components/Confirm";
+import {inputCopyPasteHandler} from "../../../AwesomwGridLayoutHelper";
 
 export default class SiteSetting extends React.Component {
     static contextType = EditorContext;
@@ -252,6 +253,7 @@ export default class SiteSetting extends React.Component {
                             type="text"
                             onChange={this.onRename}
                             value={isPublished? website.name: undefined}
+                            onKeyDown={inputCopyPasteHandler}
                         >
                         </input>
 
@@ -287,6 +289,7 @@ export default class SiteSetting extends React.Component {
                             onChange={(e) => {
                                 this.newDescription = e.target.value;
                             }}
+                            onKeyDown={inputCopyPasteHandler}
                         >
                         </input>
 

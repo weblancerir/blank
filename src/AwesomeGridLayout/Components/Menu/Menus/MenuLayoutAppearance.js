@@ -7,6 +7,7 @@ import DropDown from "../../../Menus/CommonComponents/DropDown";
 import FontSizeSelector2 from "../../Button/Menus/FontSizeSelector2";
 import IconButton from "../../../HelperComponents/IconButton";
 import Switch from "@material-ui/core/Switch/Switch";
+import {inputCopyPasteHandler} from "../../../AwesomwGridLayoutHelper";
 
 export default class MenuLayoutAppearance extends React.Component {
     changeMoreText = () => {
@@ -238,10 +239,11 @@ export default class MenuLayoutAppearance extends React.Component {
                         type="text"
                         onChange={(e) => {this.tempMoreText = e.target.value;}}
                         onBlur={this.changeMoreText}
-                        onKeyPress={(e) => {
+                        onKeyDown={(e) => {
                             if((e.keyCode || e.which) === 13) {
                                 this.changeMoreText()
                             }
+                            inputCopyPasteHandler(e);
                         }}
                     >
                     </input>

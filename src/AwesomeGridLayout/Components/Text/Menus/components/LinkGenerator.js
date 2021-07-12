@@ -9,6 +9,7 @@ import LightTooltip from "../../../Containers/Menus/Components/LightTooltip";
 import Button from "@material-ui/core/Button/Button";
 import SmallRadio from "../../../../HelperComponents/SmallRadio";
 import DropDown from "../../../../Menus/CommonComponents/DropDown";
+import {inputCopyPasteHandler} from "../../../../AwesomwGridLayoutHelper";
 
 export default class LinkGenerator extends React.Component {
     static contextType = EditorContext;
@@ -236,7 +237,7 @@ export default class LinkGenerator extends React.Component {
                                                 linkData.data.url = this.tempUrl || "";
                                                 this.setState({linkData});
                                             }}
-                                            onKeyPress={(e) => {
+                                            onKeyDown={(e) => {
                                                 if((e.keyCode || e.which) === 13) {
                                                     if (this.validURL(this.tempUrl)) {
                                                         this.tempUrl = this.validURL(this.tempUrl);
@@ -244,6 +245,7 @@ export default class LinkGenerator extends React.Component {
                                                     linkData.data.url = this.tempUrl || "";
                                                     this.setState({linkData});
                                                 }
+                                                inputCopyPasteHandler(e)
                                             }}
                                         >
                                         </input>
@@ -433,11 +435,12 @@ export default class LinkGenerator extends React.Component {
                                             onBlur={() => {
                                                 linkData.data.number = this.tempNumber || "";
                                             }}
-                                            onKeyPress={(e) => {
+                                            onKeyDown={(e) => {
                                                 if((e.keyCode || e.which) === 13) {
                                                     linkData.data.number = this.tempNumber || "";
                                                     this.setState({linkData});
                                                 }
+                                                inputCopyPasteHandler(e)
                                             }}
                                         >
                                         </input>
@@ -477,11 +480,12 @@ export default class LinkGenerator extends React.Component {
                                             onBlur={() => {
                                                 linkData.data.email = this.tempEmail || "";
                                             }}
-                                            onKeyPress={(e) => {
+                                            onKeyDown={(e) => {
                                                 if((e.keyCode || e.which) === 13) {
                                                     linkData.data.email = this.tempEmail || "";
                                                     this.setState({linkData});
                                                 }
+                                                inputCopyPasteHandler(e)
                                             }}
                                         >
                                         </input>
@@ -517,11 +521,12 @@ export default class LinkGenerator extends React.Component {
                                             onBlur={() => {
                                                 linkData.data.subject = this.tempSubject || "";
                                             }}
-                                            onKeyPress={(e) => {
+                                            onKeyDown={(e) => {
                                                 if((e.keyCode || e.which) === 13) {
                                                     linkData.data.subject = this.tempSubject || "";
                                                     this.setState({linkData});
                                                 }
+                                                inputCopyPasteHandler(e)
                                             }}
                                         >
                                         </input>

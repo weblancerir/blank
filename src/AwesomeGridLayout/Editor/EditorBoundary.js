@@ -295,7 +295,15 @@ export default class EditorBoundary extends React.Component{
 
             if (!this.context.production) {
                 this.context.setPageData(undefined ,force, () => {
-                    this.context.setPageData(pageId, false, callback);
+                    this.context.setPageData(pageId, false, () => {
+                        if (this.rootLayoutRef.current) {
+                            this.rootLayoutRef.current.onSelect(true, callback);
+                        }
+                        else
+                        {
+                            callback && callback();
+                        }
+                    });
                 });
             } else {
                 let page = Object.values(this.context.siteData.allPages).find(pageData => {
@@ -307,10 +315,14 @@ export default class EditorBoundary extends React.Component{
                 this.redirect(`/${page.props.pageName.toLowerCase()}`);
             }
         };
-        if (this.rootLayoutRef.current)
+
+        if (this.rootLayoutRef.current) {
             this.rootLayoutRef.current.onSelect(true, todo);
+        }
         else
+        {
             todo();
+        }
     };
 
     togglePreview = (preview) => {
@@ -347,8 +359,10 @@ export default class EditorBoundary extends React.Component{
     };
 
     notifyBreakpointChange = (width, newBreakpointName, devicePixelRatio) => {
+        console.log("notifyBreakpointChange")
         this.rootLayoutRef.current.props.aglComponent.updateTemplates();
         this.rootLayoutRef.current.onBreakpointChange(width, newBreakpointName, devicePixelRatio);
+        this.select.onScrollItem();
     };
 
     onZoomLevelChange = (newDevicePixelRatio) => {

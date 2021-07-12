@@ -4,6 +4,7 @@ import IconButton from "../../HelperComponents/IconButton";
 import Menu from "@material-ui/core/Menu/Menu";
 import MenuItem from "@material-ui/core/MenuItem/MenuItem";
 import classNames from "classnames";
+import {inputCopyPasteHandler} from "../../AwesomwGridLayoutHelper";
 
 export default class NumberInputWithUnit extends React.Component {
     constructor(props) {
@@ -24,6 +25,7 @@ export default class NumberInputWithUnit extends React.Component {
                 okay = true;
         } catch {}
         if (okay) {
+            console.log("inputFilter", this.props.min, value)
             value = Math.min(this.props.max, value);
             value = Math.max(this.props.min, value);
             return value;
@@ -34,8 +36,13 @@ export default class NumberInputWithUnit extends React.Component {
         return oldValue;
     };
 
-    onChange = (e) => {
+    onChange = (e, final) => {
         let value = e.target.value;
+        if (!final && (isNaN(value) || value.endsWith("."))) {
+            this.setState({tempValue: value});
+            return;
+        }
+        this.setState({tempValue: undefined});
         if (value.endsWith("."))
             value += "0";
         value = this.inputFilter(value, this.getValue(this.props.value));
@@ -90,8 +97,17 @@ export default class NumberInputWithUnit extends React.Component {
                         width: 64
                     }, ...this.props.inputStyle}}
                     className="NumberInput"
-                    value={!["%", "px", "vw", "vh", "°"].includes(this.props.unit) ? "" :
-                        (this.getValue(this.props.value) || 0)}
+                    onKeyDown={(e) => {
+                        if((e.keyCode || e.which) === 13) {
+                            this.onChange(e, true);
+                        }
+                        inputCopyPasteHandler(e);
+                    }}
+                    onBlur={(e) => {
+                        this.onChange(e, true);
+                    }}
+                    value={this.state.tempValue || (!["%", "px", "vw", "vh", "°"].includes(this.props.unit) ? "" :
+                        (this.getValue(this.props.value) || 0))}
                     onChange={this.onChange}
                     type="text"
                     disabled={!["%", "px", "vw", "vh", "°"].includes(this.props.unit) || this.props.disabled}

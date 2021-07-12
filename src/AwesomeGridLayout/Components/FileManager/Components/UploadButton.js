@@ -1,6 +1,7 @@
 import React from "react";
 import {EditorContext} from "../../../Editor/EditorContext";
 import ButtonBase from "@material-ui/core/ButtonBase/ButtonBase";
+import {inputCopyPasteHandler} from "../../../AwesomwGridLayoutHelper";
 
 export default class UploadButton extends React.Component {
     static contextType = EditorContext;
@@ -16,6 +17,7 @@ export default class UploadButton extends React.Component {
             <>
                 <input
                     style={{display: "none"}}
+                    onKeyDown={inputCopyPasteHandler}
                     type="file" name="file" onChange={this.props.onFileSelected} ref={this.inputRef}
                     multiple={this.props.multiple}
                     accept={this.props.accept}

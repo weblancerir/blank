@@ -3,6 +3,7 @@ import './PageSetting.css';
 import '../PageManager.css';
 import Switch from "@material-ui/core/Switch/Switch";
 import {EditorContext} from "../../../Editor/EditorContext";
+import {inputCopyPasteHandler} from "../../../AwesomwGridLayoutHelper";
 
 export default class SeoGoogle extends React.Component {
     static contextType = EditorContext;
@@ -90,10 +91,11 @@ export default class SeoGoogle extends React.Component {
                             this.setState({endUrlError: undefined});
                         }}
                         onBlur={this.onChangeSeoSetting("endUrl")}
-                        onKeyPress={(e) => {
+                        onKeyDown={(e) => {
                             if((e.keyCode || e.which) === 13) {
                                 this.onChangeSeoSetting("endUrl")(e);
                             }
+                            inputCopyPasteHandler(e)
                         }}
                     >
                     </input>
@@ -114,10 +116,11 @@ export default class SeoGoogle extends React.Component {
                         onBlur={(e) => {
                             this.onChangeSeoSetting("pageTitle")(e, this.newPageTitle);
                         }}
-                        onKeyPress={(e) => {
+                        onKeyDown={(e) => {
                             if((e.keyCode || e.which) === 13) {
                                 this.onChangeSeoSetting("pageTitle")(e, this.newPageTitle);
                             }
+                            inputCopyPasteHandler(e)
                         }}
                     >
                     </input>
@@ -141,7 +144,7 @@ export default class SeoGoogle extends React.Component {
                         onBlur={(e) => {
                             this.onChangeSeoSetting("pageDescription")(e, this.newPageDescription);
                         }}
-                        onKeyPress={(e) => {
+                        onKeyDown={(e) => {
                             if((e.keyCode || e.which) === 13) {
                                 this.onChangeSeoSetting("pageDescription")(e, this.newPageDescription);
                             }

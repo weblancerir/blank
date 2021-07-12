@@ -22,7 +22,7 @@ export default class Stack extends AGLComponent{
 
     getDefaultData = () => {
         return {
-            isContainer: true,
+            isContainer: true
         };
     };
 

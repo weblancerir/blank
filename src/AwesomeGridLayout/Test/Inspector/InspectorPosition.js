@@ -208,7 +208,7 @@ export default class InspectorPosition extends React.Component {
                         <div className="InspectorOverflowMarginRoot">
                             <NumberInputWithUnit
                                 className="InspectorOverflowMargin"
-                                min={0}
+                                min={-Infinity}
                                 max={Infinity}
                                 disabled={!docks.top || auto}
                                 value={docks.top && (runtimeStyle && runtimeGridItemStyle ?
@@ -236,7 +236,7 @@ export default class InspectorPosition extends React.Component {
                             />
                             <NumberInputWithUnit
                                 className="InspectorOverflowMargin"
-                                min={0}
+                                min={-Infinity}
                                 max={Infinity}
                                 disabled={!docks.left || auto}
                                 value={docks.left && (runtimeStyle && runtimeGridItemStyle ?
@@ -262,7 +262,7 @@ export default class InspectorPosition extends React.Component {
                             />
                             <NumberInputWithUnit
                                 className="InspectorOverflowMargin"
-                                min={0}
+                                min={-Infinity}
                                 max={Infinity}
                                 disabled={!docks.bottom || auto}
                                 value={docks.bottom && (runtimeStyle && runtimeGridItemStyle ?
@@ -288,7 +288,7 @@ export default class InspectorPosition extends React.Component {
                             />
                             <NumberInputWithUnit
                                 className="InspectorOverflowMargin"
-                                min={0}
+                                min={-Infinity}
                                 max={Infinity}
                                 disabled={!docks.right || auto}
                                 value={docks.right && (runtimeStyle && runtimeGridItemStyle ?

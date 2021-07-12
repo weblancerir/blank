@@ -39,7 +39,7 @@ export default class AdjustmentResizeWrapper extends React.Component {
                     <AdjustmentResize
                         id={item.props.id}
                         key={`resize`}
-                        sides={item.props.resizeSides || ['n','s','e','w','ne','nw','se','sw']}
+                        sides={item.getResizeSides() || ['n','s','e','w','ne','nw','se','sw']}
                         onResizeStart={item.onResizeStart}
                         onResize={item.onResize}
                         onResizeStop={item.onResizeStop}

@@ -4,6 +4,7 @@ import ResizePane from "./ResizePane";
 import AdjustmentStretch from "./AdjustmentStretch";
 import {cloneObject, shallowEqual} from "../AwesomeGridLayoutUtils";
 import classNames from "classnames";
+import AdjustmentItemMove from "./AdjustmentItemMove";
 
 export default class AdjustmentResize extends React.Component {
     constructor (props) {
@@ -64,6 +65,16 @@ export default class AdjustmentResize extends React.Component {
                         itemId={itemId}
                     />
                 }
+                {
+                    !(item.getCompositeFromData("transform") || {}).rotateDegree && !item.props.noStretch &&
+                    <AdjustmentItemMove
+                        isStretch={isStretch}
+                        idMan={idMan}
+                        itemId={itemId}
+                    />
+                }
+
+
             </div>
         )
     }

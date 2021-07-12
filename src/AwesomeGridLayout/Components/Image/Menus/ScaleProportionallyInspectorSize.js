@@ -9,6 +9,20 @@ export default class ScaleProportionallyInspectorSize extends React.Component {
         this.inspectorRef = React.createRef();
     }
 
+    componentDidMount() {
+        this.props.item && this.props.item.onPropsChange.addListener(this.onItemPropsChange);
+        this.mounted = true;
+    }
+
+    componentWillUnmount() {
+        this.mounted = false;
+        this.props.item && this.props.item.onPropsChange.removeListener(this.onItemPropsChange);
+    }
+
+    onItemPropsChange = (owner) => {
+        this.setState({reload: true});
+    };
+
     getInspectorProps = () => {
         let {getScaleProportionally} = this.props;
         if (getScaleProportionally().enable) {
@@ -42,10 +56,12 @@ export default class ScaleProportionallyInspectorSize extends React.Component {
         if (e.target.checked) {
             let parentRect = item.props.parent.getSize(false);
             item.setStyleParam("height", "auto");
+            item.setStyleParam("minHeight", "unset");
             this.inspectorRef.current.onUnitChange("width", "%", parentRect.scrollWidthMinusPadding);
         } else {
             let rect = item.getSize(false);
             item.setStyleParam("height", `${rect.height}px`);
+            item.props.select.onScrollItem();
         }
 
         this.forceUpdate();
@@ -53,6 +69,7 @@ export default class ScaleProportionallyInspectorSize extends React.Component {
 
     render() {
         let {getScaleProportionally} = this.props;
+        console.log("ScaleProportionallyInspectorSize")
         return (
             <>
                 <InspectorSize

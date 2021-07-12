@@ -6,6 +6,7 @@ import {getFontDataByFamily, getFontDataByName} from "../../Text/TextHelper";
 import DropDown from "../../../Menus/CommonComponents/DropDown";
 import FontSizeSelector2 from "./FontSizeSelector2";
 import TextEditorButton from "../../Text/Menus/TextEditorButton";
+import {inputCopyPasteHandler} from "../../../AwesomwGridLayoutHelper";
 
 export default class ButtonTextAppearance extends React.Component {
     changeText = () => {
@@ -24,10 +25,11 @@ export default class ButtonTextAppearance extends React.Component {
                         type="text"
                         onChange={(e) => {this.tempText = e.target.value;}}
                         onBlur={this.changeText}
-                        onKeyPress={(e) => {
+                        onKeyDown={(e) => {
                             if((e.keyCode || e.which) === 13) {
                                 this.changeText()
                             }
+                            inputCopyPasteHandler(e);
                         }}
                     >
                     </input>

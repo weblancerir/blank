@@ -4,6 +4,7 @@ import IconButton from "../HelperComponents/IconButton";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button/Button";
 import './CreateMenu.css'
+import {inputCopyPasteHandler} from "../AwesomwGridLayoutHelper";
 
 export default class CreateMenu extends React.Component {
     static contextType = EditorContext;
@@ -59,13 +60,14 @@ export default class CreateMenu extends React.Component {
                         className="NumberInput PageManagerRenameInput PageInfoNameInput"
                         type="text"
                         onChange={this.rename}
-                        onKeyPress={(e) => {
+                        onKeyDown={(e) => {
                             if((e.keyCode || e.which) === 13) {
                                 if (this.state.name.length >= 3) {
                                     this.props.onClose();
                                     this.props.onDone(this.state.name)
                                 }
                             }
+                            inputCopyPasteHandler(e)
                         }}
                         autoFocus
                     >

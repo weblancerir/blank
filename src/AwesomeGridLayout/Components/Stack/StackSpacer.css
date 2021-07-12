@@ -2,7 +2,14 @@
     width: 100%;
     background-color: rgba(0, 0, 0, 0.37);
     position: relative;
-    opacity: 0.3;
+    opacity: 0.6;
+}
+.StackSpacerRootNone {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.37);
+    position: relative;
+    opacity: 0.6;
+    visibility: hidden;
 }
 .StackSpacerRoot:hover {
     opacity: 1;
@@ -18,6 +25,7 @@
     overflow: hidden;
     color: rgb(255, 255, 255);
     font-size: 0.75em;
+    pointer-events: none;
 }
 .StackSpacerSizeText {
     justify-content: center;
@@ -30,6 +38,7 @@
     margin: 0;
     color: rgb(255, 255, 255);
     font-size: 0.75em;
+    pointer-events: none;
 }
 .StackSpacerResizerRoot {
     cursor: ns-resize;
@@ -42,4 +51,5 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 1;
+    pointer-events: none;
 }

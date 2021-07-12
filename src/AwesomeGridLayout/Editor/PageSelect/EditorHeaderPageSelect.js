@@ -53,7 +53,8 @@ export default class EditorHeaderPageSelect extends React.Component {
                                 });
 
                                 if (pageData)
-                                    editorContext.setPageData(pageData.props.pageId);
+                                    editorContext.editor.onPageChange(pageData.props.pageId);
+                                // editorContext.setPageData(pageData.props.pageId);
                             }}
                             value={editorContext.pageData ? editorContext.pageData.props.pageName : "..."}
                             spanStyle={{

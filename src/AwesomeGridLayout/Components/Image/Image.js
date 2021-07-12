@@ -29,6 +29,7 @@ import InspectorAdjustment from "../../Test/Inspector/InspectorAdjustment";
 import InspectorAnchor from "../../Test/Inspector/InspectorAnchor";
 import ScaleProportionallyInspectorSize from "./Menus/ScaleProportionallyInspectorSize";
 import DomainManager from "../../Editor/DomainManager";
+import debounce from "lodash.debounce";
 
 export default class Image extends AGLComponent{
     static contextType = EditorContext;
@@ -53,7 +54,7 @@ export default class Image extends AGLComponent{
 
     crop = (callback) => {
         if (this.cropped) {
-            callback(false);
+            callback && callback(false);
             return;
         }
 
@@ -61,7 +62,7 @@ export default class Image extends AGLComponent{
 
         let cropData = getFromTempData(this, "cropData") || {};
         if (!cropData.croppedAreaPixels) {
-            callback(false);
+            callback && callback(false);
             return;
         }
 
@@ -83,7 +84,7 @@ export default class Image extends AGLComponent{
             cropData.croppedAreaPixels.height,
         );
 
-        callback(true);
+        callback && callback(true);
         this.setState({altSrc: canvas.toDataURL()});
     }
 
@@ -356,9 +357,10 @@ export default class Image extends AGLComponent{
         this.setState({hover: false});
     };
 
-    onInvalidateSize = () => {
-        this.setState({reload: true});
-    }
+    onInvalidateSize = debounce((e) => {
+        console.log("onInvalidateSize")
+        // this.setState({reload: true});
+    }, 200);
 
     getInspectorOverride = () => {
         return (
@@ -459,7 +461,6 @@ export default class Image extends AGLComponent{
 
         let imageStyle = {
             objectFit: imageData.fit,
-            // objectPosition: `${imageData.objectPosition.x} ${imageData.objectPosition.y}`
         };
 
         let totalSize = this.getAgl()? this.getAgl().getSize() : null;

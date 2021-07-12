@@ -1,5 +1,6 @@
 import React from "react";
 import './CommonMenu.css';
+import {inputCopyPasteHandler} from "../../AwesomwGridLayoutHelper";
 
 export default class NumberInput extends React.Component {
     inputFilter = (value, oldValue) => {
@@ -26,6 +27,7 @@ export default class NumberInput extends React.Component {
                 className="NumberInput"
                 value={this.props.value || 0}
                 onChange={this.onChange}
+                onKeyDown={inputCopyPasteHandler}
                 type="text"
                 style={this.props.inputStyle}
             />

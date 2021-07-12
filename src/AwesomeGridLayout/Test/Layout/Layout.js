@@ -61,7 +61,8 @@ export default class Layout extends React.Component {
     };
 
     setLayout = (layout) => {
-        this.processLayout(layout)
+        if (this.state.open)
+            this.processLayout(layout)
     };
 
     processLayout = (layout) => {

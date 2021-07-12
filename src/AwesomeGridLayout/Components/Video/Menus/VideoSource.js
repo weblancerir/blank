@@ -2,6 +2,7 @@ import React from "react";
 import '../../../Menus/Menu.css';
 import Divider from "../../../Menus/CommonComponents/Divider";
 import DropDown from "../../../Menus/CommonComponents/DropDown";
+import {inputCopyPasteHandler} from "../../../AwesomwGridLayoutHelper";
 
 export default class VideoSource extends React.Component {
     changeUrl = () => {
@@ -23,10 +24,11 @@ export default class VideoSource extends React.Component {
                         type="text"
                         onChange={(e) => {this.tempEmbedUrl = e.target.value;}}
                         onBlur={this.changeUrl}
-                        onKeyPress={(e) => {
+                        onKeyDown={(e) => {
                             if((e.keyCode || e.which) === 13) {
                                 this.changeUrl()
                             }
+                            inputCopyPasteHandler(e)
                         }}
                     >
                     </input>
@@ -43,10 +45,11 @@ export default class VideoSource extends React.Component {
                         type="text"
                         onChange={(e) => {this.tempAltText = e.target.value;}}
                         onBlur={this.changeAltText}
-                        onKeyPress={(e) => {
+                        onKeyDown={(e) => {
                             if((e.keyCode || e.which) === 13) {
                                 this.changeAltText()
                             }
+                            inputCopyPasteHandler(e)
                         }}
                     >
                     </input>

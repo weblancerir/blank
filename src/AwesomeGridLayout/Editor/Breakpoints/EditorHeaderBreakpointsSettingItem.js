@@ -120,7 +120,7 @@ export default class EditorHeaderBreakpointsSettingItem extends React.Component 
                                 onChange={(tempEnd) => {
                                     this.tempEnd = tempEnd;
                                 }}
-                                onKeyPress={() => {
+                                onKeyDown={() => {
                                     bpData.name?
                                         this.done(editorContext):
                                         this.create(editorContext);

@@ -2,14 +2,20 @@ import React from "react";
 import "./StackSpacer.css";
 import AdjustmentMove from "../../Adjustment/AdjustmentMove";
 import StackSpacerResizer from "./StackSpacerResizer";
+import {EditorContext} from "../../Editor/EditorContext";
 
 export default class StackSpacer extends React.PureComponent{
-    constructor() {
-        super();
+    static contextType = EditorContext;
+    constructor(props) {
+        super(props);
 
         this.state = {
             pointerEvents: "auto"
         }
+
+        this.id = props.stackId + "_" + props.index;
+        console.log("constructor", this.id);
+        props.idMan.setItem(this.id, this);
     }
 
     componentDidMount(){
@@ -24,8 +30,22 @@ export default class StackSpacer extends React.PureComponent{
         this.mounted && this.setState({pointerEvents});
     };
 
-    updateSpacerData = (newHeight) => {
+    updateSpacerData = (newHeight, firstHeight, fromUndoRedo) => {
+        if (!fromUndoRedo) {
+            let oldHeight = firstHeight;
+            let id = this.id;
+            console.log("updateSpacerData", id, newHeight);
+            this.props.undoredo.add((idMan) => {
+                let spacer = idMan.getItem(id);
+                spacer.updateSpacerData(newHeight, undefined, true);
+            }, (idMan) => {
+                console.log("updateSpacerData back", id, oldHeight);
+                let spacer = idMan.getItem(id);
+                spacer.updateSpacerData(oldHeight, undefined, true);
+            });
+        }
         this.props.spacerData.height = newHeight;
+        this.props.onSpacerUpdate(this.props.spacerData, this.props.index);
         this.props.stack.props.select.updateSize();
         this.forceUpdate();
     };
@@ -51,10 +71,15 @@ export default class StackSpacer extends React.PureComponent{
         let newHeight = this.dragData.firstHeight + deltaY;
 
         newHeight = Math.max(0, newHeight);
-        this.updateSpacerData(newHeight);
+        this.updateSpacerData(newHeight, this.dragData.firstHeight, true);
     };
 
     onDragStop = (e) => {
+        let deltaY = (e.clientY - this.dragData.lastMouseY);
+        let newHeight = this.dragData.firstHeight + deltaY;
+        newHeight = Math.max(0, newHeight);
+        this.updateSpacerData(newHeight, this.dragData.firstHeight);
+
         if (this.props.onDragStop)
             this.props.onDragStop(e);
     };
@@ -62,7 +87,7 @@ export default class StackSpacer extends React.PureComponent{
     render() {
         return (
             <div
-                className="StackSpacerRoot"
+                className={this.context.isEditor()? "StackSpacerRoot": "StackSpacerRootNone"}
                 style={{
                     height: `${this.props.spacerData.height}px`,
                     order: this.props.order,

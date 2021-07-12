@@ -1,12 +1,14 @@
 import {throttleDebounce} from "./AwesomeGridLayoutUtils";
 import {
-    createStack,
-    getSectionId,
+    createStack, createStack2,
+    getSectionId, hasSameParent,
 } from "./AwesomwGridLayoutHelper";
 import React from "react";
 import './AwesomwGridLayoutHelper.css';
 import throttle from "lodash.throttle";
 import Text from "./Components/Text/Text";
+import TextDesign from "./Components/Button/Menus/TextDesign";
+import MenuButton from "./Menus/MenuBase/MenuButton";
 
 export default class SelectManager {
     constructor(inputManager, groupSelectRef, pageAglRef, miniMenuHolderRef,
@@ -169,9 +171,27 @@ export default class SelectManager {
         });
 
         this.updateGroupRect();
-        this.clearMiniMenu();
+        this.setGroupMiniMenu(this.group);
         this.updateMenu();
     };
+
+    setGroupMiniMenu = (group) => {
+        this.clearMiniMenu();
+        if (group.length > 1) {
+            if (hasSameParent(group)) {
+                this.miniMenuHolderRef.current.addGroupMenu(group, undefined, [<MenuButton
+                    key={0}
+                    icon={ <img draggable={false} width={16} height={16}
+                                src={require('./icons/stackwhite.svg')} /> }
+                    select={this}
+                    title={"Stack"}
+                    onClick={(e) => {
+                        createStack2(group);
+                    }}
+                />]);
+            }
+        }
+    }
 
     groupDragStart = (e, mainItem) => {
         this.group.forEach(item => {
@@ -196,6 +216,7 @@ export default class SelectManager {
         });
 
         this.updateGroupRect();
+        this.setGroupMiniMenu(this.group)
     };
 
     deleteGroup = () => {

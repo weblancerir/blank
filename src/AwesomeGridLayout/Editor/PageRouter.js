@@ -154,10 +154,9 @@ const MainRouter = withRouter(props =>
 );
 
 const PageRouter = (props) => {
-    let websiteName = DomainManager.getWebsiteName(props.website, props.siteData);
-    console.log("props.siteData", props.siteData, websiteName);
+    let basename = DomainManager.getBaseName(props.website, props.siteData);
     return (
-        <Router basename={websiteName}>
+        <Router basename={basename}>
             <MainRouter {...props}/>
         </Router>
     )

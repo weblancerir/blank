@@ -1,5 +1,7 @@
 import {throttleDebounce} from "../AwesomeGridLayoutUtils";
 
+let allEventTriggers = [];
+
 export default class EventTrigger {
     constructor(owner, defaultListener) {
         this.owner = owner;
@@ -25,4 +27,14 @@ export default class EventTrigger {
         if (index >= 0)
             this.listeners.splice(index, 1);
     };
+
+    static clear = () => {
+        allEventTriggers = [];
+    }
+
+    static getEventTrigger = (item) => {
+        if (!allEventTriggers[item.props.id])
+            allEventTriggers[item.props.id] = new EventTrigger(item);
+        return allEventTriggers[item.props.id];
+    }
 }

@@ -23,6 +23,7 @@ import Button from "../Components/Button/Button";
 import Image from "../Components/Image/Image";
 import Video from "../Components/Video/Video";
 import HorizontalMenu from "../Components/Menu/HorizontalMenu";
+import Stack2 from "../Components/Stack/Stack2";
 
 let DynamicComponents = {};
 
@@ -33,6 +34,7 @@ export let initDynamicComponents = () => {
     DynamicComponents["Footer"] = Footer;
     DynamicComponents["Section"] = Section;
     DynamicComponents["Stack"] = Stack;
+    DynamicComponents["Stack2"] = Stack2;
     DynamicComponents["VerticalSpacer"] = VerticalSpacer;
     DynamicComponents["Text"] = Text;
     DynamicComponents["Button"] = Button;

@@ -20,14 +20,25 @@ export default class AdjustmentStretch extends React.Component {
         return false;
     };
 
-    isDragging = () => {
+    dontDisplay = () => {
         let {itemId, idMan} = this.props;
-        return idMan.getItem(itemId).state.draggingStart;
+        let item = idMan.getItem(itemId);
+        if (item.props.isStack)
+            return true;
+        if (item.getSize().width < 80 || item.getSize().height < 40)
+            return true;
+        if (item.resizing)
+            return true;
+        if (item.props.aglComponent && item.props.aglComponent.getScaleProportionally &&
+            item.props.aglComponent.getScaleProportionally().enable) {
+            return true
+        }
+        return item.state.draggingStart;
     }
 
     render () {
         let {isStretch} = this.props;
-        if (this.isDragging())
+        if (this.dontDisplay())
             return null;
         return (
             <div
